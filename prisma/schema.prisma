@@ -1,0 +1,72 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum PostStatus {
+  DRAFT
+  PUBLISHED
+}
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  role         String   @default("ADMIN")
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  posts        Post[]
+  assets       Asset[]
+}
+
+model Post {
+  id          String     @id @default(cuid())
+  slug        String     @unique
+  title       String
+  excerpt     String?
+  contentMd   String
+  status      PostStatus @default(DRAFT)
+  publishedAt DateTime?
+  authorId    String
+  author      User       @relation(fields: [authorId], references: [id], onDelete: Restrict)
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  assets      PostAssetRef[]
+
+  @@index([status, publishedAt(sort: Desc)])
+  @@index([authorId, createdAt(sort: Desc)])
+}
+
+model Asset {
+  id        String   @id @default(cuid())
+  ossKey    String   @unique
+  url       String
+  mime      String
+  size      Int
+  sha256    String
+  ownerId   String
+  owner     User     @relation(fields: [ownerId], references: [id], onDelete: Restrict)
+  isPublic  Boolean  @default(true)
+  refCount  Int      @default(0)
+  deletedAt DateTime?
+  createdAt DateTime @default(now())
+  refs      PostAssetRef[]
+
+  @@index([ownerId, createdAt(sort: Desc)])
+  @@index([sha256])
+}
+
+model PostAssetRef {
+  postId    String
+  assetId   String
+  createdAt DateTime @default(now())
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  asset     Asset    @relation(fields: [assetId], references: [id], onDelete: Restrict)
+
+  @@id([postId, assetId])
+  @@index([assetId])
+}
