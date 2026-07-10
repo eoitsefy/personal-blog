@@ -7,3 +7,15 @@ coverage
 .env.*
 !.env.example
 admin.cookie
+
+node_modules
+.next
+dist
+build
+.env
+.env.*
+*.log
+.DS_Store
+uploads
+*.pem
+*.key

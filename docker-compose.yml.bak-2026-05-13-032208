@@ -1,19 +1,5 @@
+version: "3.9"
 services:
-  app:
-    build: .
-    container_name: blog-app
-    restart: unless-stopped
-    env_file:
-      - .env
-    environment:
-      NODE_ENV: production
-      DATABASE_URL: postgresql://blog:blogpass@postgres:5432/blogdb?schema=public
-    depends_on:
-      - postgres
-      - redis
-    ports:
-      - "127.0.0.1:3000:3000"
-
   postgres:
     image: postgres:16
     container_name: blog-postgres
@@ -22,14 +8,17 @@ services:
       POSTGRES_USER: blog
       POSTGRES_PASSWORD: blogpass
       POSTGRES_DB: blogdb
+    ports:
+      - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
-      - /root/personal-blog-web/uploads:/app/uploads
 
   redis:
     image: redis:7-alpine
     container_name: blog-redis
     restart: unless-stopped
+    ports:
+      - "6379:6379"
     volumes:
       - redis_data:/data
 

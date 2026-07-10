@@ -5,9 +5,6 @@ services:
     restart: unless-stopped
     env_file:
       - .env
-    environment:
-      NODE_ENV: production
-      DATABASE_URL: postgresql://blog:blogpass@postgres:5432/blogdb?schema=public
     depends_on:
       - postgres
       - redis
@@ -24,7 +21,9 @@ services:
       POSTGRES_DB: blogdb
     volumes:
       - postgres_data:/var/lib/postgresql/data
-      - /root/personal-blog-web/uploads:/app/uploads
+    # 生产建议不暴露公网端口；如需临时调试再打开
+    ports:
+      - "127.0.0.1:5432:5432"
 
   redis:
     image: redis:7-alpine
@@ -32,6 +31,8 @@ services:
     restart: unless-stopped
     volumes:
       - redis_data:/data
+    ports:
+      - "127.0.0.1:6379:6379"
 
 volumes:
   postgres_data:

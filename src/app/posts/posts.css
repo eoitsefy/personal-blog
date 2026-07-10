@@ -1,0 +1,42 @@
+.posts-container {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+.posts-header h1 {
+  margin: 0 0 8px;
+  font-size: 1.8rem;
+}
+
+.posts-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.post-item {
+  border-bottom: 1px solid #e5e7eb;
+  padding: 14px 0;
+}
+
+.post-item h2 {
+  margin: 0 0 8px;
+  font-size: 1.2rem;
+}
+
+.post-item p {
+  margin: 0 0 6px;
+  color: #4b5563;
+}
+
+.pagination {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 16px;
+}
+
+.pagination .disabled {
+  pointer-events: none;
+  opacity: 0.4;
+}

@@ -24,7 +24,6 @@ services:
       POSTGRES_DB: blogdb
     volumes:
       - postgres_data:/var/lib/postgresql/data
-      - /root/personal-blog-web/uploads:/app/uploads
 
   redis:
     image: redis:7-alpine
