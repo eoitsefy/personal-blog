@@ -3,26 +3,30 @@ import { notFound } from "next/navigation";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { prisma } from "@/lib/prisma";
+import { isPublishedPost } from "@/lib/post-visibility";
 
 type PageProps = {
   params: Promise<{ slug: string }>;
 };
 
 async function getPublishedPostBySlug(slug: string) {
-  return prisma.post.findFirst({
-    where: { slug, status: "PUBLISHED" },
+  const post = await prisma.post.findUnique({
+    where: { slug },
     select: {
       id: true,
       slug: true,
       title: true,
       excerpt: true,
       contentMd: true,
+      status: true,
       publishedAt: true,
       createdAt: true,
       updatedAt: true,
       author: { select: { id: true } },
     },
   });
+
+  return isPublishedPost(post) ? post : null;
 }
 
 export const revalidate = 60;
@@ -31,11 +35,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const { slug } = await params;
   const post = await getPublishedPostBySlug(slug);
 
-  if (!post) return { title: "文章不存在", description: "你访问的文章不存在或未发布" };
+  if (!post) {
+    return { title: "文章不存在", description: "你访问的文章不存在或尚未发布。" };
+  }
 
   const description = post.excerpt ?? post.title;
   return {
-    title: `${post.title} | EastherPhil Blog`,
+    title: post.title,
     description,
     openGraph: {
       title: post.title,

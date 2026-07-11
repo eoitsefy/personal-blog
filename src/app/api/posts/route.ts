@@ -3,13 +3,12 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import { prisma } from "@/lib/prisma";
 import { getRequestId } from "@/lib/api";
-import { PostStatus } from "@prisma/client";
 
 const createPostSchema = z.object({
   title: z.string().min(1).max(120),
   slug: z.string().min(1).max(160).regex(/^[a-z0-9-]+$/),
   contentMd: z.string().min(1),
-  status: z.nativeEnum(PostStatus).default(PostStatus.DRAFT),
+  status: z.enum(["DRAFT", "PUBLISHED"]).default("DRAFT"),
 });
 
 function json(
@@ -47,7 +46,7 @@ export async function GET(req: Request) {
   const requestId = getRequestId(req);
 
   const posts = await prisma.post.findMany({
-    where: { status: PostStatus.PUBLISHED },
+    where: { status: "PUBLISHED" },
     orderBy: { createdAt: "desc" },
     select: {
       id: true,

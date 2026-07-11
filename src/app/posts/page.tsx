@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { PostStatus } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
 import { postListQuerySchema } from "@/lib/validators/post";
 import "./posts.css";
@@ -27,10 +26,10 @@ export default async function PostsPage({ searchParams }: PageProps) {
 
   const [total, posts] = await Promise.all([
     prisma.post.count({
-      where: { status: PostStatus.PUBLISHED },
+      where: { status: "PUBLISHED" },
     }),
     prisma.post.findMany({
-      where: { status: PostStatus.PUBLISHED },
+      where: { status: "PUBLISHED" },
       orderBy: [{ publishedAt: "desc" }, { createdAt: "desc" }],
       skip,
       take: PAGE_SIZE,

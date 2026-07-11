@@ -59,13 +59,13 @@ export async function POST(req: Request) {
     res.cookies.set("admin_session", sessionToken, {
       httpOnly: true,
       sameSite: "lax",
-      secure: false, // 生产 HTTPS 改 true
+      secure: process.env.NODE_ENV === "production",
       path: "/",
       maxAge: 60 * 60 * 24 * 7,
     });
 
     return res;
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       {
         success: false,
