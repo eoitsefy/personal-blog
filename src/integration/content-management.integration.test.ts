@@ -3,6 +3,7 @@ import test from "node:test";
 import { PrismaClient } from "@prisma/client";
 import { POST as createPost } from "@/app/api/admin/posts/route";
 import { DELETE as deletePost } from "@/app/api/admin/posts/[id]/route";
+import { DELETE as purgePost } from "@/app/api/admin/posts/[id]/purge/route";
 import { POST as restorePost } from "@/app/api/admin/posts/[id]/restore/route";
 import { POST as login } from "@/app/api/auth/login/route";
 import { GET as listPublicPosts } from "@/app/api/posts/route";
@@ -98,6 +99,89 @@ test("authenticated article lifecycle integrates taxonomy, search and soft delet
     if (throttleKey) await prisma.loginThrottle.deleteMany({ where: { key: throttleKey } });
     await prisma.category.deleteMany({ where: { posts: { none: {} } } });
     await prisma.tag.deleteMany({ where: { posts: { none: {} } } });
+    await prisma.$disconnect();
+  }
+});
+
+test("permanent deletion is restricted to trashed posts", async () => {
+  const suffix = `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+  const email = `purge-${suffix}@example.test`;
+  let userId = "";
+  let activePostId = "";
+  let trashedPostId = "";
+  let assetId = "";
+
+  process.env.JWT_SECRET = "integration-test-secret-with-at-least-32-characters";
+
+  try {
+    const user = await prisma.user.create({
+      data: { email, passwordHash: await hashPassword("correct-horse-battery-staple"), role: "ADMIN" },
+      select: { id: true },
+    });
+    userId = user.id;
+
+    const loginResponse = await login(new Request("http://localhost/api/auth/login", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ email, password: "correct-horse-battery-staple" }),
+    }));
+    const cookie = loginResponse.headers.get("set-cookie")?.split(";", 1)[0];
+    assert.ok(cookie);
+
+    const [activePost, trashedPost] = await Promise.all([
+      prisma.post.create({
+        data: { title: "Active purge guard", slug: `active-${suffix}`, contentMd: "active", authorId: userId },
+        select: { id: true },
+      }),
+      prisma.post.create({
+        data: {
+          title: "Trashed purge target",
+          slug: `trashed-${suffix}`,
+          contentMd: "trashed",
+          authorId: userId,
+          deletedAt: new Date(),
+        },
+        select: { id: true },
+      }),
+    ]);
+    activePostId = activePost.id;
+    trashedPostId = trashedPost.id;
+
+    const asset = await prisma.asset.create({
+      data: {
+        ossKey: `purge-${suffix}.png`,
+        url: `/uploads/purge-${suffix}.png`,
+        mime: "image/png",
+        size: 1,
+        sha256: "a".repeat(64),
+        ownerId: userId,
+        refCount: 1,
+        refs: { create: { postId: trashedPostId } },
+      },
+      select: { id: true },
+    });
+    assetId = asset.id;
+
+    const activeResponse = await purgePost(
+      new Request(`http://localhost/api/admin/posts/${activePostId}/purge`, { method: "DELETE", headers: { cookie } }),
+      { params: Promise.resolve({ id: activePostId }) },
+    );
+    assert.equal(activeResponse.status, 409);
+    assert.equal(await prisma.post.count({ where: { id: activePostId } }), 1);
+
+    const purgeResponse = await purgePost(
+      new Request(`http://localhost/api/admin/posts/${trashedPostId}/purge`, { method: "DELETE", headers: { cookie } }),
+      { params: Promise.resolve({ id: trashedPostId }) },
+    );
+    assert.equal(purgeResponse.status, 200);
+    assert.equal(await prisma.post.count({ where: { id: trashedPostId } }), 0);
+    assert.equal(await prisma.postAssetRef.count({ where: { assetId } }), 0);
+    assert.equal((await prisma.asset.findUniqueOrThrow({ where: { id: assetId } })).refCount, 0);
+    trashedPostId = "";
+  } finally {
+    await prisma.post.deleteMany({ where: { id: { in: [activePostId, trashedPostId].filter(Boolean) } } });
+    if (assetId) await prisma.asset.deleteMany({ where: { id: assetId } });
+    if (userId) await prisma.user.deleteMany({ where: { id: userId } });
     await prisma.$disconnect();
   }
 });
