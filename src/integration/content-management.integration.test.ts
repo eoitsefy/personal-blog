@@ -259,11 +259,22 @@ test("media upload, article references and protected deletion work end to end", 
     );
     assert.equal(blockedDelete.status, 409);
 
-    const detachResponse = await updatePost(
+    const protectedDetachResponse = await updatePost(
       new Request(`http://localhost/api/admin/posts/${postId}`, {
         method: "PATCH",
         headers: { "content-type": "application/json", cookie, origin: "http://localhost" },
         body: JSON.stringify({ assetIds: [] }),
+      }),
+      { params: Promise.resolve({ id: postId }) },
+    );
+    assert.equal(protectedDetachResponse.status, 200);
+    assert.equal((await prisma.asset.findUniqueOrThrow({ where: { id: assetId } })).refCount, 1);
+
+    const detachResponse = await updatePost(
+      new Request(`http://localhost/api/admin/posts/${postId}`, {
+        method: "PATCH",
+        headers: { "content-type": "application/json", cookie, origin: "http://localhost" },
+        body: JSON.stringify({ contentMd: "Media reference removed.", assetIds: [] }),
       }),
       { params: Promise.resolve({ id: postId }) },
     );
