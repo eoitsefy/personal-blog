@@ -24,36 +24,85 @@ model User {
 }
 
 model Post {
-  id          String     @id @default(cuid())
-  slug        String     @unique
+  id          String         @id @default(cuid())
+  slug        String         @unique
   title       String
   excerpt     String?
   contentMd   String
-  status      PostStatus @default(DRAFT)
+  status      PostStatus     @default(DRAFT)
   publishedAt DateTime?
+  deletedAt   DateTime?
   authorId    String
-  author      User       @relation(fields: [authorId], references: [id], onDelete: Restrict)
-  createdAt   DateTime   @default(now())
-  updatedAt   DateTime   @updatedAt
+  author      User           @relation(fields: [authorId], references: [id], onDelete: Restrict)
+  categoryId  String?
+  category    Category?      @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
   assets      PostAssetRef[]
+  tags        PostTag[]
 
   @@index([status, publishedAt(sort: Desc)])
   @@index([authorId, createdAt(sort: Desc)])
+  @@index([categoryId, status, publishedAt(sort: Desc)])
+  @@index([deletedAt, updatedAt(sort: Desc)])
+}
+
+model Category {
+  id        String   @id @default(cuid())
+  name      String
+  slug      String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  posts     Post[]
+
+  @@index([name])
+}
+
+model Tag {
+  id        String    @id @default(cuid())
+  name      String
+  slug      String    @unique
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  posts     PostTag[]
+
+  @@index([name])
+}
+
+model PostTag {
+  postId    String
+  tagId     String
+  createdAt DateTime @default(now())
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  tag       Tag      @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@id([postId, tagId])
+  @@index([tagId])
+}
+
+model LoginThrottle {
+  key             String    @id
+  attempts        Int       @default(0)
+  windowStartedAt DateTime
+  blockedUntil    DateTime?
+  updatedAt       DateTime  @updatedAt
+
+  @@index([updatedAt])
 }
 
 model Asset {
-  id        String   @id @default(cuid())
-  ossKey    String   @unique
+  id        String         @id @default(cuid())
+  ossKey    String         @unique
   url       String
   mime      String
   size      Int
   sha256    String
   ownerId   String
-  owner     User     @relation(fields: [ownerId], references: [id], onDelete: Restrict)
-  isPublic  Boolean  @default(true)
-  refCount  Int      @default(0)
+  owner     User           @relation(fields: [ownerId], references: [id], onDelete: Restrict)
+  isPublic  Boolean        @default(true)
+  refCount  Int            @default(0)
   deletedAt DateTime?
-  createdAt DateTime @default(now())
+  createdAt DateTime       @default(now())
   refs      PostAssetRef[]
 
   @@index([ownerId, createdAt(sort: Desc)])

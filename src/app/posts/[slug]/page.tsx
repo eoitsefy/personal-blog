@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
@@ -10,8 +11,8 @@ type PageProps = {
 };
 
 async function getPublishedPostBySlug(slug: string) {
-  const post = await prisma.post.findUnique({
-    where: { slug },
+  const post = await prisma.post.findFirst({
+    where: { slug, deletedAt: null },
     select: {
       id: true,
       slug: true,
@@ -23,6 +24,8 @@ async function getPublishedPostBySlug(slug: string) {
       createdAt: true,
       updatedAt: true,
       author: { select: { id: true } },
+      category: { select: { name: true, slug: true } },
+      tags: { select: { tag: { select: { name: true, slug: true } } } },
     },
   });
 
@@ -70,6 +73,27 @@ export default async function PostDetailPage({ params }: PageProps) {
               {publishDate.toLocaleDateString("zh-CN")}
             </time>
           </div>
+          {post.category || post.tags.length ? (
+            <div className="mt-4 flex flex-wrap gap-2 text-sm">
+              {post.category ? (
+                <Link
+                  href={`/posts?category=${encodeURIComponent(post.category.slug)}`}
+                  className="rounded-full bg-neutral-100 px-3 py-1 dark:bg-neutral-800"
+                >
+                  {post.category.name}
+                </Link>
+              ) : null}
+              {post.tags.map(({ tag }) => (
+                <Link
+                  key={tag.slug}
+                  href={`/posts?tag=${encodeURIComponent(tag.slug)}`}
+                  className="rounded-full border border-neutral-300 px-3 py-1 dark:border-neutral-700"
+                >
+                  #{tag.name}
+                </Link>
+              ))}
+            </div>
+          ) : null}
           {post.excerpt ? <p className="mt-4 text-base leading-7">{post.excerpt}</p> : null}
         </header>
 

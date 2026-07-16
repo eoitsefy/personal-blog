@@ -1,21 +1,18 @@
-import { NextRequest, NextResponse } from "next/server";
-import { isAdmin } from "@/lib/auth";
+import { NextRequest } from "next/server";
+import { fail, ok } from "@/lib/api";
 import { prisma } from "@/lib/prisma";
+import { requireAdmin } from "@/lib/require-admin";
 
 export async function GET(
   req: NextRequest,
   { params }: { params: Promise<{ slug: string }> },
 ) {
-  if (!(await isAdmin(req))) {
-    return NextResponse.json(
-      { code: "UNAUTHORIZED", message: "Admin authentication required" },
-      { status: 401 },
-    );
-  }
+  const auth = await requireAdmin(req);
+  if (!auth.ok) return auth.response;
 
   const { slug } = await params;
-  const post = await prisma.post.findUnique({
-    where: { slug },
+  const post = await prisma.post.findFirst({
+    where: { slug, deletedAt: null },
     select: {
       id: true,
       slug: true,
@@ -26,12 +23,14 @@ export async function GET(
       publishedAt: true,
       createdAt: true,
       updatedAt: true,
+      category: { select: { name: true, slug: true } },
+      tags: { select: { tag: { select: { name: true, slug: true } } } },
     },
   });
 
   if (!post) {
-    return NextResponse.json({ code: "POST_NOT_FOUND", message: "Post not found" }, { status: 404 });
+    return fail("NOT_FOUND", "文章不存在", 404, auth.requestId);
   }
 
-  return NextResponse.json({ code: "OK", data: post }, { status: 200 });
+  return ok({ post }, auth.requestId);
 }

@@ -11,9 +11,11 @@
     "build": "next build",
     "start": "next start",
     "postinstall": "prisma generate",
+    "admin:create": "node scripts/create-admin.mjs",
     "lint": "eslint",
     "typecheck": "next typegen && tsc --noEmit --incremental false",
-    "test": "tsx --test src/lib/auth.test.ts src/lib/post-visibility.test.ts"
+    "test": "node scripts/run-unit-tests.mjs",
+    "test:integration": "node scripts/run-integration-tests.mjs"
   },
   "dependencies": {
     "@prisma/client": "^6.16.2",

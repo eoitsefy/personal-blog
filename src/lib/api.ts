@@ -4,12 +4,13 @@ export type ApiErrorCode =
   | "FORBIDDEN"
   | "CONFLICT"
   | "NOT_FOUND"
+  | "RATE_LIMITED"
   | "INTERNAL_ERROR";
 
-export function ok<T>(data: T, requestId: string) {
+export function ok<T>(data: T, requestId: string, status = 200) {
   return Response.json(
     { success: true, data, error: null, requestId },
-    { status: 200 }
+    { status, headers: { "Cache-Control": "no-store" } }
   );
 }
 
@@ -17,11 +18,12 @@ export function fail(
   code: ApiErrorCode,
   message: string,
   status: number,
-  requestId: string
+  requestId: string,
+  headers?: HeadersInit,
 ) {
   return Response.json(
     { success: false, data: null, error: { code, message }, requestId },
-    { status }
+    { status, headers: { "Cache-Control": "no-store", ...Object.fromEntries(new Headers(headers)) } }
   );
 }
 
