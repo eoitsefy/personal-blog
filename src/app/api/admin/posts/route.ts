@@ -1,11 +1,26 @@
 import { Prisma } from "@prisma/client";
 import { fail, logApi, ok } from "@/lib/api";
+import { InvalidAssetReferenceError, syncPostAssets } from "@/lib/media/references";
 import { prisma } from "@/lib/prisma";
 import { requireAdmin } from "@/lib/require-admin";
 import { ADMIN_POST_PAGE_SIZE } from "@/lib/post-query";
 import { normalizeTags, normalizeTaxonomyTerm } from "@/lib/post-taxonomy";
 import { readJsonMutation } from "@/lib/request-security";
 import { adminPostListQuerySchema, CreatePostInputSchema } from "@/lib/validators/post";
+
+const postSelect = {
+  id: true,
+  title: true,
+  slug: true,
+  excerpt: true,
+  status: true,
+  publishedAt: true,
+  createdAt: true,
+  updatedAt: true,
+  category: { select: { name: true, slug: true } },
+  tags: { select: { tag: { select: { name: true, slug: true } } } },
+  assets: { select: { assetId: true } },
+} satisfies Prisma.PostSelect;
 
 export async function GET(req: Request) {
   const auth = await requireAdmin(req);
@@ -79,43 +94,36 @@ export async function POST(req: Request) {
     const input = parsed.data;
     const category = normalizeTaxonomyTerm(input.category);
     const tags = normalizeTags(input.tags);
-    const post = await prisma.post.create({
-      data: {
-        title: input.title,
-        slug: input.slug,
-        excerpt: input.excerpt || null,
-        contentMd: input.contentMd,
-        status: input.status,
-        publishedAt: input.status === "PUBLISHED" ? new Date() : null,
-        author: { connect: { id: auth.user.id } },
-        ...(category
-          ? {
-              category: {
-                connectOrCreate: {
-                  where: { slug: category.slug },
-                  create: category,
+    const post = await prisma.$transaction(async (tx) => {
+      const created = await tx.post.create({
+        data: {
+          title: input.title,
+          slug: input.slug,
+          excerpt: input.excerpt || null,
+          contentMd: input.contentMd,
+          status: input.status,
+          publishedAt: input.status === "PUBLISHED" ? new Date() : null,
+          author: { connect: { id: auth.user.id } },
+          ...(category
+            ? {
+                category: {
+                  connectOrCreate: {
+                    where: { slug: category.slug },
+                    create: category,
+                  },
                 },
-              },
-            }
-          : {}),
-        tags: {
-          create: tags.map((tag) => ({
-            tag: { connectOrCreate: { where: { slug: tag.slug }, create: tag } },
-          })),
+              }
+            : {}),
+          tags: {
+            create: tags.map((tag) => ({
+              tag: { connectOrCreate: { where: { slug: tag.slug }, create: tag } },
+            })),
+          },
         },
-      },
-      select: {
-        id: true,
-        title: true,
-        slug: true,
-        excerpt: true,
-        status: true,
-        publishedAt: true,
-        createdAt: true,
-        updatedAt: true,
-        category: { select: { name: true, slug: true } },
-        tags: { select: { tag: { select: { name: true, slug: true } } } },
-      },
+        select: { id: true },
+      });
+      await syncPostAssets(tx, created.id, input.assetIds, input.contentMd);
+      return tx.post.findUniqueOrThrow({ where: { id: created.id }, select: postSelect });
     });
 
     logApi({
@@ -128,6 +136,9 @@ export async function POST(req: Request) {
     });
     return ok({ post }, auth.requestId, 201);
   } catch (error) {
+    if (error instanceof InvalidAssetReferenceError) {
+      return fail("BAD_REQUEST", error.message, 400, auth.requestId);
+    }
     if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === "P2002") {
       return fail("CONFLICT", "文章 slug 已存在", 409, auth.requestId);
     }

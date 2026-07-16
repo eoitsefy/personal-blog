@@ -9,11 +9,13 @@ A personal publishing application built with Next.js 16, PostgreSQL, Prisma, and
 - Drafts remain private; published posts receive basic metadata and Open Graph fields.
 - Database-backed administrator login with a signed HttpOnly session cookie.
 - Protected administration pages for creating, editing, previewing, publishing, unpublishing, soft-deleting, and restoring posts.
+- Authenticated JPEG, PNG, and WebP uploads with signature, size, dimension, and path validation.
+- A media library and recycle bin with article-reference tracking, deletion protection, restoration, and permanent deletion.
 - Database-backed login throttling, same-origin mutation checks, JSON size/type validation, and no-store API responses.
 - PostgreSQL and Redis services through Docker Compose.
 - Database backup and restore-drill scripts.
 
-Media uploads, sitemap/feed generation, and the AI assistant are later milestones.
+Sitemap/feed generation and the AI assistant are later milestones.
 
 ## Requirements
 
@@ -43,7 +45,7 @@ npm run test:integration
 npm run build
 ```
 
-Unit tests run without external services. Integration tests require `TEST_DATABASE_URL` pointing to a disposable PostgreSQL database; the script applies migrations before running the authenticated article lifecycle. GitHub Actions provisions this database automatically for pull requests.
+Unit tests run without external services. Integration tests require `TEST_DATABASE_URL` pointing to a disposable PostgreSQL database; the script applies migrations before running the authenticated article and media lifecycles. GitHub Actions provisions this database automatically for pull requests.
 
 ## Production notes
 

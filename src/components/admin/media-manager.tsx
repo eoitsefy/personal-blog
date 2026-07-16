@@ -1,0 +1,164 @@
+"use client";
+
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import type { MediaAsset } from "@/lib/media/types";
+
+type MediaManagerProps = {
+  assets: MediaAsset[];
+  deletedView: boolean;
+};
+
+type ApiBody = { success?: boolean; error?: { message?: string } | null };
+
+function humanBytes(bytes: number) {
+  if (bytes < 1024) return `${bytes} B`;
+  if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KiB`;
+  return `${(bytes / 1024 / 1024).toFixed(1)} MiB`;
+}
+
+export function MediaManager({ assets, deletedView }: MediaManagerProps) {
+  const router = useRouter();
+  const [busyId, setBusyId] = useState("");
+  const [uploading, setUploading] = useState(false);
+  const [message, setMessage] = useState("");
+
+  async function upload(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const form = event.currentTarget;
+    const formData = new FormData(form);
+    setUploading(true);
+    setMessage("");
+    try {
+      const response = await fetch("/api/admin/assets", {
+        method: "POST",
+        credentials: "include",
+        body: formData,
+      });
+      const body = (await response.json()) as ApiBody;
+      if (response.status === 401) {
+        router.replace("/admin/login");
+        return;
+      }
+      if (!response.ok) {
+        setMessage(body.error?.message ?? "上传失败");
+        return;
+      }
+      form.reset();
+      setMessage("图片上传成功");
+      router.refresh();
+    } catch {
+      setMessage("无法连接服务器，请稍后重试");
+    } finally {
+      setUploading(false);
+    }
+  }
+
+  async function mutate(asset: MediaAsset, action: "delete" | "restore" | "purge") {
+    const label = asset.originalName ?? "该媒体";
+    if (action === "delete" && !window.confirm(`将《${label}》移入媒体回收站吗？`)) return;
+    if (action === "purge" && !window.confirm(`永久删除《${label}》及其存储文件吗？此操作无法撤销。`)) return;
+
+    setBusyId(asset.id);
+    setMessage("");
+    const endpoint = action === "delete"
+      ? `/api/admin/assets/${asset.id}`
+      : `/api/admin/assets/${asset.id}/${action}`;
+    try {
+      const response = await fetch(endpoint, {
+        method: action === "restore" ? "POST" : "DELETE",
+        credentials: "include",
+      });
+      const body = (await response.json()) as ApiBody;
+      if (response.status === 401) {
+        router.replace("/admin/login");
+        return;
+      }
+      if (!response.ok) {
+        setMessage(body.error?.message ?? "操作失败");
+        return;
+      }
+      router.refresh();
+    } catch {
+      setMessage("无法连接服务器，请稍后重试");
+    } finally {
+      setBusyId("");
+    }
+  }
+
+  async function copyMarkdown(asset: MediaAsset) {
+    const alt = (asset.originalName ?? "图片").replace(/[\[\]]/g, "");
+    try {
+      await navigator.clipboard.writeText(`![${alt}](${asset.url})`);
+      setMessage("Markdown 已复制");
+    } catch {
+      setMessage("复制失败，请手动复制图片地址");
+    }
+  }
+
+  return (
+    <div className="mt-8 grid gap-8">
+      {!deletedView ? (
+        <form onSubmit={upload} className="flex flex-wrap items-end gap-3 rounded-2xl border border-neutral-200 bg-white p-5 dark:border-neutral-800 dark:bg-neutral-900">
+          <label className="grid min-w-64 flex-1 gap-2">
+            <span className="font-medium">上传图片</span>
+            <input name="file" type="file" accept="image/jpeg,image/png,image/webp" required className="rounded-xl border border-neutral-300 p-3 text-sm dark:border-neutral-700" />
+            <span className="text-xs text-neutral-500">JPEG、PNG 或 WebP，最大 8 MiB；服务端会验证真实格式和尺寸。</span>
+          </label>
+          <button type="submit" disabled={uploading} className="rounded-xl bg-neutral-900 px-5 py-3 font-medium text-white disabled:opacity-60 dark:bg-white dark:text-neutral-900">
+            {uploading ? "上传中…" : "上传"}
+          </button>
+        </form>
+      ) : null}
+
+      {message ? <p role="status" className="rounded-xl bg-neutral-100 px-4 py-3 text-sm dark:bg-neutral-900">{message}</p> : null}
+
+      {assets.length === 0 ? (
+        <p className="rounded-2xl border border-dashed border-neutral-300 p-8 text-center text-neutral-500 dark:border-neutral-700">
+          {deletedView ? "媒体回收站为空。" : "尚未上传媒体。"}
+        </p>
+      ) : (
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {assets.map((asset) => (
+            <article key={asset.id} className="overflow-hidden rounded-2xl border border-neutral-200 bg-white dark:border-neutral-800 dark:bg-neutral-900">
+              <div className="relative aspect-video bg-neutral-100 dark:bg-neutral-950">
+                <Image src={asset.url} alt={asset.originalName ?? "媒体图片"} fill sizes="(max-width: 640px) 100vw, 33vw" className="object-cover" unoptimized />
+              </div>
+              <div className="grid gap-3 p-4">
+                <div>
+                  <p className="truncate font-medium" title={asset.originalName ?? asset.url}>{asset.originalName ?? "未命名图片"}</p>
+                  <p className="mt-1 text-xs text-neutral-500">
+                    {asset.width && asset.height ? `${asset.width}×${asset.height} · ` : ""}{humanBytes(asset.size)} · 引用 {asset.refCount}
+                  </p>
+                </div>
+                <a href={asset.url} target="_blank" rel="noreferrer" className="truncate text-xs text-neutral-500 underline" title={asset.url}>{asset.url}</a>
+                <div className="flex flex-wrap gap-3 text-sm">
+                  {!deletedView ? (
+                    <>
+                      <button type="button" onClick={() => copyMarkdown(asset)} className="font-medium underline-offset-4 hover:underline">复制 Markdown</button>
+                      <button
+                        type="button"
+                        disabled={busyId === asset.id || asset.refCount > 0}
+                        onClick={() => mutate(asset, "delete")}
+                        title={asset.refCount > 0 ? "请先从文章中解除引用" : undefined}
+                        className="font-medium text-red-700 underline-offset-4 hover:underline disabled:cursor-not-allowed disabled:opacity-40"
+                      >
+                        移入回收站
+                      </button>
+                    </>
+                  ) : (
+                    <>
+                      <button type="button" disabled={busyId === asset.id} onClick={() => mutate(asset, "restore")} className="font-medium text-emerald-700 underline-offset-4 hover:underline disabled:opacity-40">恢复</button>
+                      <button type="button" disabled={busyId === asset.id || asset.refCount > 0} onClick={() => mutate(asset, "purge")} className="font-medium text-red-700 underline-offset-4 hover:underline disabled:opacity-40">永久删除</button>
+                    </>
+                  )}
+                </div>
+              </div>
+            </article>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}

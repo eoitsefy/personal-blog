@@ -38,7 +38,9 @@ Confirm:
 - certificate is currently valid;
 - the previous application image/tag or commit is recorded.
 - `POSTGRES_PASSWORD`, `DATABASE_URL`, and `JWT_SECRET` contain non-placeholder production values.
+- `UPLOAD_ROOT=/app/uploads`, `MAX_UPLOAD_BYTES` is an approved positive limit, and `/var/www/personal-blog/uploads` exists with write access for the application container.
 - the Phase 1B migration has been reviewed; it adds taxonomy, login-throttle, and soft-delete columns without dropping content.
+- the Phase 2 migration has been reviewed; it adds optional asset filename/dimension metadata and an asset recycle-bin index without dropping media records.
 
 ## Manual backup before a risky release
 
@@ -125,7 +127,8 @@ Functional checks:
 - create/edit/preview/publish flow works;
 - keyword/category/tag filters return only published, non-deleted posts;
 - moving a test draft to the recycle bin and restoring it leaves it as a draft;
-- uploaded image is stored and served;
+- a valid JPEG/PNG/WebP upload is stored and served from a stable `/uploads/...` URL;
+- an invalid or oversized upload is rejected, a referenced image cannot be deleted, and an unreferenced image can complete the recycle-bin restore/purge lifecycle;
 - database and cache operations succeed;
 - AI feature flag is disabled if provider connectivity is not healthy;
 - no repeated errors appear in application or Nginx logs.
@@ -182,6 +185,8 @@ sudo du -sh /var/www/personal-blog/uploads
 ```
 
 Verify ownership and that the application can write only to the intended directory. Never mount the entire `/root` directory into Nginx or the application for uploads.
+
+The HTTPS Nginx server should cap request bodies slightly above `MAX_UPLOAD_BYTES` (the checked-in configuration uses `10m` for the default 8 MiB application limit) and serve `/uploads/` from `/var/www/personal-blog/uploads/` with directory listing disabled.
 
 ## Routine operations
 

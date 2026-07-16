@@ -4,12 +4,15 @@ import { fileURLToPath } from "node:url";
 import path from "node:path";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const testDirectories = [path.join(root, "src", "lib"), path.join(root, "src", "lib", "validators")];
-const tests = testDirectories.flatMap((directory) =>
-  readdirSync(directory, { withFileTypes: true })
-    .filter((entry) => entry.isFile() && entry.name.endsWith(".test.ts"))
-    .map((entry) => path.join(directory, entry.name)),
-);
+function findTests(directory) {
+  return readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {
+    const resolved = path.join(directory, entry.name);
+    if (entry.isDirectory()) return findTests(resolved);
+    return entry.isFile() && entry.name.endsWith(".test.ts") ? [resolved] : [];
+  });
+}
+
+const tests = findTests(path.join(root, "src", "lib"));
 
 const result = spawnSync(
   process.execPath,

@@ -69,6 +69,8 @@ Phase 1B verification:
 
 Priority: P1
 
+Status: `[IMPLEMENTED 2026-07-16; PENDING CI AND PRODUCTION VERIFICATION]` Secure local image upload, media management, article references, deletion protection, storage abstraction, and automated coverage are present on the Phase 2 branch.
+
 Tasks:
 
 - Inspect existing `Asset` and `PostAssetRef` schema and code.
@@ -85,6 +87,12 @@ Acceptance:
 - Invalid files and oversized files are rejected.
 - Public URL is stable and cannot traverse directories.
 - Deleting a referenced asset is safely blocked or deferred.
+
+Verification notes:
+
+- Unit tests cover image signature/type/size validation and storage path containment.
+- The PostgreSQL integration lifecycle covers upload, article attachment, blocked deletion, detachment, recycle-bin restore, and permanent deletion.
+- Docker and Nginx retain `/var/www/personal-blog/uploads` as the persistent host directory mounted at `/app/uploads`.
 
 ## Phase 3 — SEO, accessibility, and performance
 
