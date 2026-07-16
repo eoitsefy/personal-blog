@@ -91,22 +91,26 @@ model LoginThrottle {
 }
 
 model Asset {
-  id        String         @id @default(cuid())
-  ossKey    String         @unique
-  url       String
-  mime      String
-  size      Int
-  sha256    String
-  ownerId   String
-  owner     User           @relation(fields: [ownerId], references: [id], onDelete: Restrict)
-  isPublic  Boolean        @default(true)
-  refCount  Int            @default(0)
-  deletedAt DateTime?
-  createdAt DateTime       @default(now())
-  refs      PostAssetRef[]
+  id           String         @id @default(cuid())
+  ossKey       String         @unique
+  url          String
+  originalName String?
+  mime         String
+  size         Int
+  width        Int?
+  height       Int?
+  sha256       String
+  ownerId      String
+  owner        User           @relation(fields: [ownerId], references: [id], onDelete: Restrict)
+  isPublic     Boolean        @default(true)
+  refCount     Int            @default(0)
+  deletedAt    DateTime?
+  createdAt    DateTime       @default(now())
+  refs         PostAssetRef[]
 
   @@index([ownerId, createdAt(sort: Desc)])
   @@index([sha256])
+  @@index([deletedAt, createdAt(sort: Desc)])
 }
 
 model PostAssetRef {

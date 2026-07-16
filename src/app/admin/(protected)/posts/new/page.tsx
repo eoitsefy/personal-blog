@@ -6,9 +6,15 @@ export const metadata = { title: "新建文章", robots: { index: false, follow:
 
 export default async function NewPostPage() {
   await requireAdminPage();
-  const [categories, tags] = await Promise.all([
+  const [categories, tags, media] = await Promise.all([
     prisma.category.findMany({ orderBy: { name: "asc" }, select: { name: true } }),
     prisma.tag.findMany({ orderBy: { name: "asc" }, select: { name: true } }),
+    prisma.asset.findMany({
+      where: { deletedAt: null, isPublic: true },
+      orderBy: { createdAt: "desc" },
+      take: 24,
+      select: { id: true, url: true, originalName: true, mime: true, size: true, width: true, height: true, refCount: true, deletedAt: true, createdAt: true },
+    }),
   ]);
 
   return (
@@ -19,6 +25,7 @@ export default async function NewPostPage() {
         mode="create"
         categoryOptions={categories.map(({ name }) => name)}
         tagOptions={tags.map(({ name }) => name)}
+        mediaOptions={media}
       />
     </main>
   );

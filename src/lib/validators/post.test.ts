@@ -42,3 +42,15 @@ test("post input limits taxonomy values", () => {
   assert.equal(CreatePostInputSchema.safeParse({ ...base, tags: ["Next.js"] }).success, true);
   assert.equal(CreatePostInputSchema.safeParse({ ...base, tags: Array.from({ length: 11 }, (_, index) => `tag-${index}`) }).success, false);
 });
+
+test("post input limits and deduplicates media references", () => {
+  const base = {
+    title: "媒体文章",
+    slug: "media-post",
+    contentMd: "正文",
+    status: "DRAFT" as const,
+  };
+  assert.equal(CreatePostInputSchema.safeParse({ ...base, assetIds: ["asset-1"] }).success, true);
+  assert.equal(CreatePostInputSchema.safeParse({ ...base, assetIds: ["asset-1", "asset-1"] }).success, false);
+  assert.equal(CreatePostInputSchema.safeParse({ ...base, assetIds: Array.from({ length: 21 }, (_, index) => `asset-${index}`) }).success, false);
+});

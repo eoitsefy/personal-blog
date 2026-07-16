@@ -1,5 +1,6 @@
 import { Prisma } from "@prisma/client";
 import { fail, logApi, ok } from "@/lib/api";
+import { InvalidAssetReferenceError, syncPostAssets } from "@/lib/media/references";
 import { prisma } from "@/lib/prisma";
 import { requireAdmin } from "@/lib/require-admin";
 import { normalizeTags, normalizeTaxonomyTerm } from "@/lib/post-taxonomy";
@@ -21,6 +22,7 @@ const postSelect = {
   deletedAt: true,
   category: { select: { name: true, slug: true } },
   tags: { select: { tag: { select: { name: true, slug: true } } } },
+  assets: { select: { assetId: true } },
 } satisfies Prisma.PostSelect;
 
 export async function GET(req: Request, { params }: RouteParams) {
@@ -51,7 +53,14 @@ export async function PATCH(req: Request, { params }: RouteParams) {
 
     const existing = await prisma.post.findUnique({
       where: { id },
-      select: { id: true, status: true, publishedAt: true, deletedAt: true },
+      select: {
+        id: true,
+        status: true,
+        publishedAt: true,
+        deletedAt: true,
+        contentMd: true,
+        assets: { select: { assetId: true } },
+      },
     });
     if (!existing) return fail("NOT_FOUND", "文章不存在", 404, auth.requestId);
     if (existing.deletedAt) return fail("CONFLICT", "请先从回收站恢复文章", 409, auth.requestId);
@@ -88,7 +97,18 @@ export async function PATCH(req: Request, { params }: RouteParams) {
       data.publishedAt = null;
     }
 
-    const post = await prisma.post.update({ where: { id }, data, select: postSelect });
+    const post = await prisma.$transaction(async (tx) => {
+      await tx.post.update({ where: { id }, data });
+      if (input.assetIds !== undefined || input.contentMd !== undefined) {
+        await syncPostAssets(
+          tx,
+          id,
+          input.assetIds ?? existing.assets.map(({ assetId }) => assetId),
+          input.contentMd ?? existing.contentMd,
+        );
+      }
+      return tx.post.findUniqueOrThrow({ where: { id }, select: postSelect });
+    });
     logApi({
       requestId: auth.requestId,
       path: `/api/admin/posts/${id}`,
@@ -99,6 +119,9 @@ export async function PATCH(req: Request, { params }: RouteParams) {
     });
     return ok({ post }, auth.requestId);
   } catch (error) {
+    if (error instanceof InvalidAssetReferenceError) {
+      return fail("BAD_REQUEST", error.message, 400, auth.requestId);
+    }
     if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === "P2002") {
       return fail("CONFLICT", "文章 slug 已存在", 409, auth.requestId);
     }

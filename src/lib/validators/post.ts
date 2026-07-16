@@ -9,6 +9,11 @@ export const postListQuerySchema = z.object({
 
 export type PostListQuery = z.infer<typeof postListQuerySchema>;
 
+const AssetIdsSchema = z
+  .array(z.string().trim().min(1).max(64))
+  .max(20, "每篇文章最多关联20个媒体文件")
+  .refine((ids) => new Set(ids).size === ids.length, "媒体引用不能重复");
+
 const PostInputFieldsSchema = z.object({
   title: z.string().trim().min(1, "标题不能为空").max(120, "标题不能超过120字符"),
   slug: z
@@ -27,12 +32,14 @@ const PostInputFieldsSchema = z.object({
   status: z.enum(["DRAFT", "PUBLISHED"]),
   category: z.string().trim().max(50, "分类名称不能超过50个字符").optional().or(z.literal("")),
   tags: z.array(z.string().trim().min(1).max(40)).max(10, "每篇文章最多添加10个标签"),
+  assetIds: AssetIdsSchema,
 });
 
 export const CreatePostInputSchema = PostInputFieldsSchema.extend({
   status: z.enum(["DRAFT", "PUBLISHED"]).default("DRAFT"),
   category: z.string().trim().max(50).default(""),
   tags: z.array(z.string().trim().min(1).max(40)).max(10).default([]),
+  assetIds: AssetIdsSchema.default([]),
 });
 
 export type CreatePostInput = z.infer<typeof CreatePostInputSchema>;

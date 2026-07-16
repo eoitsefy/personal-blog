@@ -1,7 +1,9 @@
 "use client";
 
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
+import type { MediaAsset } from "@/lib/media/types";
 import { CreatePostInputSchema, type CreatePostInput } from "@/lib/validators/post";
 
 type PostFormProps = {
@@ -10,6 +12,7 @@ type PostFormProps = {
   initialValue?: CreatePostInput;
   categoryOptions?: string[];
   tagOptions?: string[];
+  mediaOptions?: MediaAsset[];
 };
 
 type ApiResponse = {
@@ -25,6 +28,7 @@ const EMPTY_POST: CreatePostInput = {
   status: "DRAFT",
   category: "",
   tags: [],
+  assetIds: [],
 };
 
 export function PostForm({
@@ -33,6 +37,7 @@ export function PostForm({
   initialValue = EMPTY_POST,
   categoryOptions = [],
   tagOptions = [],
+  mediaOptions = [],
 }: PostFormProps) {
   const router = useRouter();
   const [form, setForm] = useState<CreatePostInput>(initialValue);
@@ -54,6 +59,22 @@ export function PostForm({
       .replace(/[^a-z0-9-]/g, "")
       .replace(/-+/g, "-")
       .replace(/^-|-$/g, "");
+  }
+
+  function toggleAsset(assetId: string) {
+    update(
+      "assetIds",
+      form.assetIds.includes(assetId)
+        ? form.assetIds.filter((id) => id !== assetId)
+        : [...form.assetIds, assetId],
+    );
+  }
+
+  function insertAsset(asset: MediaAsset) {
+    const alt = (asset.originalName ?? "图片").replace(/[\[\]]/g, "");
+    const markdown = `![${alt}](${asset.url})`;
+    update("contentMd", `${form.contentMd.trimEnd()}${form.contentMd ? "\n\n" : ""}${markdown}\n`);
+    if (!form.assetIds.includes(asset.id)) update("assetIds", [...form.assetIds, asset.id]);
   }
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
@@ -205,6 +226,59 @@ export function PostForm({
         />
         {errors.contentMd ? <span className="text-sm text-red-600">{errors.contentMd}</span> : null}
       </label>
+
+      <section className="grid gap-3" aria-labelledby="post-media-heading">
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <div>
+            <h2 id="post-media-heading" className="font-medium">文章媒体</h2>
+            <p className="text-sm text-neutral-500">插入图片会自动建立引用，防止媒体被误删。</p>
+          </div>
+          <button
+            type="button"
+            onClick={() => router.push("/admin/media")}
+            className="rounded-lg border border-neutral-300 px-3 py-2 text-sm dark:border-neutral-700"
+          >
+            管理媒体
+          </button>
+        </div>
+        {mediaOptions.length === 0 ? (
+          <p className="rounded-xl border border-dashed border-neutral-300 p-4 text-sm text-neutral-500 dark:border-neutral-700">
+            暂无可用媒体，请先前往媒体管理上传图片。
+          </p>
+        ) : (
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            {mediaOptions.map((asset) => {
+              const selected = form.assetIds.includes(asset.id);
+              const usedInContent = form.contentMd.includes(asset.url);
+              return (
+                <article key={asset.id} className={`overflow-hidden rounded-xl border ${selected ? "border-neutral-900 dark:border-white" : "border-neutral-200 dark:border-neutral-800"}`}>
+                  <div className="relative aspect-video bg-neutral-100 dark:bg-neutral-900">
+                    <Image src={asset.url} alt={asset.originalName ?? "媒体图片"} fill sizes="(max-width: 640px) 100vw, 33vw" className="object-cover" unoptimized />
+                  </div>
+                  <div className="grid gap-2 p-3">
+                    <p className="truncate text-sm" title={asset.originalName ?? asset.url}>{asset.originalName ?? "未命名图片"}</p>
+                    <div className="flex flex-wrap gap-3 text-sm">
+                      <button type="button" onClick={() => insertAsset(asset)} className="font-medium underline-offset-4 hover:underline">
+                        插入 Markdown
+                      </button>
+                      <label className="flex items-center gap-2">
+                        <input
+                          type="checkbox"
+                          checked={selected || usedInContent}
+                          disabled={usedInContent}
+                          onChange={() => toggleAsset(asset.id)}
+                        />
+                        保持引用
+                      </label>
+                    </div>
+                  </div>
+                </article>
+              );
+            })}
+          </div>
+        )}
+        {errors.assetIds ? <span className="text-sm text-red-600">{errors.assetIds}</span> : null}
+      </section>
 
       {message ? (
         <p role="alert" className="rounded-xl bg-red-50 px-4 py-3 text-red-700 dark:bg-red-950/40 dark:text-red-300">

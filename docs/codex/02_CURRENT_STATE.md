@@ -55,7 +55,7 @@
 - `[VERIFIED]` Next.js App Router and TypeScript strict mode are documented as the intended stack.
 - `[VERIFIED]` PostgreSQL 16 and Redis 7 Alpine run in Docker.
 - `[VERIFIED]` Prisma is present in the project context; tables observed in the audit include `Post`, `User`, `Asset`, `PostAssetRef`, and `_prisma_migrations`.
-- `[VERIFIED 2026-07-16]` Prisma schema, migrations, authentication, route organization, tests, and editor implementation were inspected for Phase 1. Upload APIs remain a Phase 2 task.
+- `[VERIFIED 2026-07-16]` Prisma schema, migrations, authentication, route organization, tests, and editor implementation were inspected for Phase 1.
 - `[CHECK]` The task inventory marks public blog pages, admin CRUD, SEO, responsiveness, dark mode, accessibility, and caching as needing code verification.
 
 ## Production infrastructure
@@ -89,7 +89,10 @@ The audit certificate expired on 2026-08-07 unless renewed. This is not a curren
 
 - `[VERIFIED]` Static upload delivery through Nginx was reported working with HTTP 200.
 - `[VERIFIED]` Current standard directory: `/var/www/personal-blog/uploads`.
-- `[CHECK]` Application upload API, authorization, MIME/size validation, metadata persistence, post references, cleanup, and recycle-bin behavior were incomplete or unverified.
+- `[IMPLEMENTED 2026-07-16]` Authenticated image uploads validate request size, MIME declaration, file signature, extension, dimensions, pixel count, and animation before writing to storage.
+- `[IMPLEMENTED 2026-07-16]` Asset metadata includes the original name, SHA-256, MIME, size, dimensions, owner, stable storage key, and public URL.
+- `[IMPLEMENTED 2026-07-16]` The administrator media library supports selection, Markdown insertion, reference-aware soft deletion, restoration, and guarded permanent deletion.
+- `[AUTOMATED]` Unit coverage validates images and storage paths; PostgreSQL integration coverage exercises upload, article references, blocked deletion, detach, restore, and purge. CI verification is pending for this branch.
 - `[PLANNED]` Move to OSS-compatible storage later without changing application-level storage interfaces.
 
 ## Database
