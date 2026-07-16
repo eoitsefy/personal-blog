@@ -61,6 +61,7 @@ Phase 1B verification:
 - Category and tag relations are covered by a forward-only Prisma migration.
 - Public list/API filters preserve pagination and always require published, non-deleted content.
 - Deletion moves posts to a recoverable recycle bin and forces restored posts to remain drafts.
+- Recycle-bin posts can be permanently deleted with explicit confirmation; active posts are protected from purge requests.
 - Login throttling is persisted in PostgreSQL; mutation requests validate origin, JSON type, and size.
 - GitHub Actions runs unit checks plus a PostgreSQL-backed authenticated article lifecycle.
 

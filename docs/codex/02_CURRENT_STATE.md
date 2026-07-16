@@ -45,6 +45,7 @@
 - `[VERIFIED]` Posts support one category and up to ten normalized tags; the editor can reuse or create taxonomy terms.
 - `[VERIFIED]` Public articles support keyword, category, tag, and page filters while excluding drafts and soft-deleted content.
 - `[VERIFIED]` Administration supports search, status filters, pagination, a recycle bin, and draft-only restoration.
+- `[IMPLEMENTED]` Recycle-bin posts support explicit permanent deletion, with active-post protection and media reference-count maintenance; PostgreSQL integration verification is pending CI.
 - `[VERIFIED]` Login failures are throttled in PostgreSQL; JSON mutations validate origin, content type, and payload size.
 - `[VERIFIED]` Unit coverage includes visibility, taxonomy normalization, query construction, request guards, authentication, and validators.
 - `[AUTOMATED]` GitHub Actions provisions PostgreSQL 16 and runs the authenticated login/create/search/delete/restore integration lifecycle on pull requests.

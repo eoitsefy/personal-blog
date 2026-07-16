@@ -95,17 +95,54 @@ export function PostActions({ id, title, status, deleted = false }: PostActionsP
     }
   }
 
+  async function purge() {
+    if (!window.confirm(`永久删除《${title}》吗？此操作无法撤销。`)) return;
+
+    setBusy(true);
+    setError("");
+    try {
+      const response = await fetch(`/api/admin/posts/${id}/purge`, {
+        method: "DELETE",
+        credentials: "include",
+      });
+      if (response.status === 401) {
+        router.replace("/admin/login");
+        return;
+      }
+      if (!response.ok) {
+        const body = (await response.json()) as { error?: { message?: string } };
+        setError(body.error?.message ?? "永久删除失败");
+        return;
+      }
+      router.refresh();
+    } catch {
+      setError("无法连接服务器，请稍后重试");
+    } finally {
+      setBusy(false);
+    }
+  }
+
   return (
     <div className="flex flex-wrap items-center gap-3">
       {deleted ? (
-        <button
-          type="button"
-          disabled={busy}
-          onClick={restore}
-          className="text-sm font-medium text-emerald-700 underline-offset-4 hover:underline disabled:opacity-50"
-        >
-          恢复
-        </button>
+        <>
+          <button
+            type="button"
+            disabled={busy}
+            onClick={restore}
+            className="text-sm font-medium text-emerald-700 underline-offset-4 hover:underline disabled:opacity-50"
+          >
+            恢复
+          </button>
+          <button
+            type="button"
+            disabled={busy}
+            onClick={purge}
+            className="text-sm font-medium text-red-700 underline-offset-4 hover:underline disabled:opacity-50"
+          >
+            永久删除
+          </button>
+        </>
       ) : (
         <>
           <button
