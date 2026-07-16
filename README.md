@@ -1,36 +1,56 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# EastherPhil Blog
 
-## Getting Started
+A personal publishing application built with Next.js 16, PostgreSQL, Prisma, and Docker Compose.
 
-First, run the development server:
+## Current capabilities
+
+- Public home, searchable and paginated published-post list, and Markdown post pages.
+- Category and tag assignment with public filtering and taxonomy links.
+- Drafts remain private; published posts receive basic metadata and Open Graph fields.
+- Database-backed administrator login with a signed HttpOnly session cookie.
+- Protected administration pages for creating, editing, previewing, publishing, unpublishing, soft-deleting, and restoring posts.
+- Database-backed login throttling, same-origin mutation checks, JSON size/type validation, and no-store API responses.
+- PostgreSQL and Redis services through Docker Compose.
+- Database backup and restore-drill scripts.
+
+Media uploads, sitemap/feed generation, and the AI assistant are later milestones.
+
+## Requirements
+
+- Node.js 20.19 or newer.
+- npm 10.5 or newer.
+- PostgreSQL 16, either local or through Docker Compose.
+
+## Local setup
+
+1. Copy `.env.example` to `.env` and replace every placeholder.
+2. Install dependencies with `npm ci`.
+3. Apply production-safe migrations with `npx prisma migrate deploy`.
+4. Create or rotate the single administrator with `npm run admin:create`.
+5. Start the development server with `npm run dev`.
+
+The administrator command requires `DATABASE_URL`, `ADMIN_EMAIL`, and `ADMIN_PASSWORD`. The password must contain at least 12 characters. Do not retain `ADMIN_PASSWORD` in long-lived production environment files after initialization.
+
+The administration interface is available at `/admin/login`.
+
+## Verification
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm run lint
+npm run typecheck
+npm test
+npm run test:integration
+npm run build
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Unit tests run without external services. Integration tests require `TEST_DATABASE_URL` pointing to a disposable PostgreSQL database; the script applies migrations before running the authenticated article lifecycle. GitHub Actions provisions this database automatically for pull requests.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Production notes
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- Nginx should be the only public application entry point and proxy to `127.0.0.1:3000`.
+- PostgreSQL and Redis must not be published on public interfaces.
+- The persistent upload directory is `/var/www/personal-blog/uploads` and is mounted into the application container at `/app/uploads`.
+- Run `scripts/backup-db.sh` and verify the backup before a production deployment.
+- Validate the application with `/api/healthz` after deployment.
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+See `docs/codex/06_DEPLOYMENT_RUNBOOK.md` for the deployment and rollback procedure.

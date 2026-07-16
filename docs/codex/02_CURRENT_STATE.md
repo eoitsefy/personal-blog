@@ -28,14 +28,33 @@
 - `[VERIFIED]` Draft preview requires the configured administrator session cookie.
 - `[VERIFIED]` Public diagnostic routes were removed.
 - `[VERIFIED]` Minimal automated checks cover published visibility, draft rejection, and preview authorization.
-- `[CHECK]` The Phase 0 `npm test` script intentionally names the two current test files explicitly for reliable Windows/npm execution. Future test files must be added to that script, or the project must adopt a reliable cross-platform test discovery mechanism.
+- `[CHECK]` The `npm test` script intentionally names the three current test files explicitly for reliable Windows/npm execution. Future test files must be added to that script, or the project must adopt a reliable cross-platform test discovery mechanism.
+
+## Core blog Phase 1A evidence — 2026-07-16
+
+- `[VERIFIED]` Administrator authentication is consolidated on database credentials and a signed HttpOnly cookie.
+- `[VERIFIED]` Public administrator registration and duplicate login/token paths were removed.
+- `[VERIFIED]` The protected administration interface supports article listing, create, edit, preview, publish, unpublish, and delete.
+- `[VERIFIED]` Public article pages reject drafts and no longer expose the administrator email address.
+- `[VERIFIED]` Administrator creation/password rotation is an explicit `npm run admin:create` operation.
+- `[VERIFIED]` ESLint, direct TypeScript compilation, eight tests, and a Next.js production build passed.
+- `[CHECK]` Run login and full article-lifecycle integration checks against a production-like PostgreSQL instance before deployment.
+
+## Core blog Phase 1B evidence — 2026-07-16
+
+- `[VERIFIED]` Posts support one category and up to ten normalized tags; the editor can reuse or create taxonomy terms.
+- `[VERIFIED]` Public articles support keyword, category, tag, and page filters while excluding drafts and soft-deleted content.
+- `[VERIFIED]` Administration supports search, status filters, pagination, a recycle bin, and draft-only restoration.
+- `[VERIFIED]` Login failures are throttled in PostgreSQL; JSON mutations validate origin, content type, and payload size.
+- `[VERIFIED]` Unit coverage includes visibility, taxonomy normalization, query construction, request guards, authentication, and validators.
+- `[AUTOMATED]` GitHub Actions provisions PostgreSQL 16 and runs the authenticated login/create/search/delete/restore integration lifecycle on pull requests.
 
 ## Application stack
 
 - `[VERIFIED]` Next.js App Router and TypeScript strict mode are documented as the intended stack.
 - `[VERIFIED]` PostgreSQL 16 and Redis 7 Alpine run in Docker.
 - `[VERIFIED]` Prisma is present in the project context; tables observed in the audit include `Post`, `User`, `Asset`, `PostAssetRef`, and `_prisma_migrations`.
-- `[CHECK]` Inspect the actual Prisma schema, migrations, authentication implementation, route organization, upload APIs, tests, and editor implementation.
+- `[VERIFIED 2026-07-16]` Prisma schema, migrations, authentication, route organization, tests, and editor implementation were inspected for Phase 1. Upload APIs remain a Phase 2 task.
 - `[CHECK]` The task inventory marks public blog pages, admin CRUD, SEO, responsiveness, dark mode, accessibility, and caching as needing code verification.
 
 ## Production infrastructure
@@ -48,7 +67,8 @@
 - `[VERIFIED]` Nginx configuration previously passed `nginx -t`.
 - `[VERIFIED]` Docker containers recorded: `blog-app`, `blog-postgres`, `blog-redis`.
 - `[VERIFIED]` PostgreSQL and Redis were mapped to loopback in the earlier audit.
-- `[CHECK]` A historical public Next.js process on port 3001 was closed; a local process on port 3002 requires confirmation.
+- `[VERIFIED 2026-07-16]` An unmanaged Next.js 16.2.6 process was listening on public port 3001 from `/root/personal-blog-web`; identify and remove it before deployment.
+- `[VERIFIED 2026-07-16]` The Nginx-targeted `blog-app` container was still using an image created on 2026-05-17 while the server working tree was at `2b1e80e`, two commits behind `origin/main`.
 - `[CHECK]` Re-check disk usage. Different audit dates recorded approximately 28% and 57% use on a 40 GB disk.
 
 ## Nginx and HTTPS

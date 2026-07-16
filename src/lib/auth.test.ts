@@ -1,30 +1,41 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { isAdmin } from "./auth";
+import {
+  ADMIN_SESSION_COOKIE_NAME,
+  parseCookie,
+  signAdminSession,
+  verifyAdminSession,
+} from "./auth";
 
-test("preview authorization rejects anonymous requests", async () => {
-  const previousToken = process.env.ADMIN_SESSION_TOKEN;
-  process.env.ADMIN_SESSION_TOKEN = "test-admin-session";
+test("admin sessions are signed and verified", () => {
+  const previousSecret = process.env.JWT_SECRET;
+  process.env.JWT_SECRET = "test-secret-that-is-long-enough-for-unit-tests";
 
   try {
-    assert.equal(await isAdmin(new Request("https://example.test/api/preview/posts/draft")), false);
+    const token = signAdminSession({ userId: "admin-1", role: "ADMIN" });
+    assert.deepEqual(verifyAdminSession(token), { userId: "admin-1", role: "ADMIN" });
   } finally {
-    if (previousToken === undefined) delete process.env.ADMIN_SESSION_TOKEN;
-    else process.env.ADMIN_SESSION_TOKEN = previousToken;
+    if (previousSecret === undefined) delete process.env.JWT_SECRET;
+    else process.env.JWT_SECRET = previousSecret;
   }
 });
 
-test("preview authorization accepts the configured admin session", async () => {
-  const previousToken = process.env.ADMIN_SESSION_TOKEN;
-  process.env.ADMIN_SESSION_TOKEN = "test-admin-session";
+test("invalid or tampered sessions are rejected", () => {
+  const previousSecret = process.env.JWT_SECRET;
+  process.env.JWT_SECRET = "test-secret-that-is-long-enough-for-unit-tests";
 
   try {
-    const request = new Request("https://example.test/api/preview/posts/draft", {
-      headers: { cookie: "admin_session=test-admin-session" },
-    });
-    assert.equal(await isAdmin(request), true);
+    assert.equal(verifyAdminSession("not-a-token"), null);
+    const token = signAdminSession({ userId: "admin-1", role: "ADMIN" });
+    assert.equal(verifyAdminSession(`${token}tampered`), null);
   } finally {
-    if (previousToken === undefined) delete process.env.ADMIN_SESSION_TOKEN;
-    else process.env.ADMIN_SESSION_TOKEN = previousToken;
+    if (previousSecret === undefined) delete process.env.JWT_SECRET;
+    else process.env.JWT_SECRET = previousSecret;
   }
+});
+
+test("cookie parsing reads the admin session safely", () => {
+  const cookies = parseCookie(`theme=dark; ${ADMIN_SESSION_COOKIE_NAME}=signed%20token`);
+  assert.equal(cookies[ADMIN_SESSION_COOKIE_NAME], "signed token");
+  assert.equal(cookies.theme, "dark");
 });

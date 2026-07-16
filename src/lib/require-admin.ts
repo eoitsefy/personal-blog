@@ -1,46 +1,20 @@
-import { fail } from "@/lib/api";
+import { fail, getRequestId } from "@/lib/api";
+import { getAdminFromRequest, type AdminUser } from "@/lib/auth";
 
-type AdminAuthOk = {
-  ok: true;
-  requestId: string;
-  user: {
-    userId: string;
-    role: "ADMIN";
-  };
-};
+type AdminAuthResult =
+  | { ok: true; requestId: string; user: AdminUser }
+  | { ok: false; response: Response };
 
-type AdminAuthFail = {
-  ok: false;
-  response: Response;
-};
+export async function requireAdmin(req: Request): Promise<AdminAuthResult> {
+  const requestId = getRequestId(req);
+  const user = await getAdminFromRequest(req);
 
-export type AdminAuthResult = AdminAuthOk | AdminAuthFail;
-
-export function requireAdmin(req: Request): AdminAuthResult {
-  const requestId = req.headers.get("x-request-id") ?? crypto.randomUUID();
-  const token = req.headers.get("x-admin-token");
-  const expected = process.env.ADMIN_TOKEN;
-
-  if (!expected) {
+  if (!user) {
     return {
       ok: false,
-      response: fail("INTERNAL_ERROR", "ADMIN_TOKEN is not configured", 500, requestId),
+      response: fail("UNAUTHORIZED", "管理员登录已失效，请重新登录", 401, requestId),
     };
   }
 
-  if (!token || token !== expected) {
-    return {
-      ok: false,
-      response: fail("UNAUTHORIZED", "Admin authorization required", 401, requestId),
-    };
-  }
-
-  return {
-    ok: true,
-    requestId,
-    user: {
-      userId: "admin-token-user",
-      role: "ADMIN",
-    },
-  };
+  return { ok: true, requestId, user };
 }

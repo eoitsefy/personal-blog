@@ -31,6 +31,8 @@ Acceptance:
 
 Priority: P0/P1
 
+Status: `[COMPLETE 2026-07-16]` Phase 1A and 1B provide unified administrator authentication, protected article management, taxonomy, search/filter pagination, soft deletion/restoration, request hardening, and PostgreSQL integration coverage in CI.
+
 Tasks:
 
 - Verify or implement home, post detail, category/tag pages, pagination, and search.
@@ -45,6 +47,22 @@ Acceptance:
 - Admin can create, preview, publish, edit, unpublish, and delete/soft-delete a post.
 - Anonymous users cannot access admin routes or drafts.
 - Production build passes.
+
+Phase 1A verification:
+
+- Administrator login uses the database password hash and a signed HttpOnly cookie.
+- Administrator initialization is an explicit CLI operation; there is no public registration route.
+- Protected pages support create, edit, preview, publish, unpublish, and delete.
+- Public post responses no longer expose the administrator email address.
+- Lint, direct TypeScript compilation, eight tests, and the Next.js production build passed on 2026-07-16.
+
+Phase 1B verification:
+
+- Category and tag relations are covered by a forward-only Prisma migration.
+- Public list/API filters preserve pagination and always require published, non-deleted content.
+- Deletion moves posts to a recoverable recycle bin and forces restored posts to remain drafts.
+- Login throttling is persisted in PostgreSQL; mutation requests validate origin, JSON type, and size.
+- GitHub Actions runs unit checks plus a PostgreSQL-backed authenticated article lifecycle.
 
 ## Phase 2 — Media pipeline
 

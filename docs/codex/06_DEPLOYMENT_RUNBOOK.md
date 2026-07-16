@@ -37,6 +37,8 @@ Confirm:
 - upload directory is mounted/preserved;
 - certificate is currently valid;
 - the previous application image/tag or commit is recorded.
+- `POSTGRES_PASSWORD`, `DATABASE_URL`, and `JWT_SECRET` contain non-placeholder production values.
+- the Phase 1B migration has been reviewed; it adds taxonomy, login-throttle, and soft-delete columns without dropping content.
 
 ## Manual backup before a risky release
 
@@ -86,6 +88,8 @@ docker compose run --rm app npx prisma migrate deploy
 
 Do not run `prisma migrate dev` in production.
 
+For a first deployment, create the administrator after migrations with `npm run admin:create`. Supply `ADMIN_EMAIL` and `ADMIN_PASSWORD` through an approved temporary secret mechanism, and remove the plaintext password from the environment immediately afterward. Re-running the command rotates the password for the same administrator; it refuses to create a second administrator.
+
 Start/update services:
 
 ```bash
@@ -106,8 +110,7 @@ sudo systemctl reload nginx
 ```bash
 curl -I http://eastherphil.cn
 curl -I https://eastherphil.cn
-curl -fsS https://eastherphil.cn/api/health/live
-curl -fsS https://eastherphil.cn/api/health/ready
+curl -fsS https://eastherphil.cn/api/healthz
 
 docker compose ps
 docker compose logs --tail=200 app
@@ -120,6 +123,8 @@ Functional checks:
 - HTTP redirects to HTTPS;
 - admin login works;
 - create/edit/preview/publish flow works;
+- keyword/category/tag filters return only published, non-deleted posts;
+- moving a test draft to the recycle bin and restoring it leaves it as a draft;
 - uploaded image is stored and served;
 - database and cache operations succeed;
 - AI feature flag is disabled if provider connectivity is not healthy;
