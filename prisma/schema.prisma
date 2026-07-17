@@ -30,6 +30,11 @@ enum UserStatus {
   DISABLED
 }
 
+enum UserTokenType {
+  INVITE
+  PASSWORD_RESET
+}
+
 model User {
   id              String        @id @default(cuid())
   email           String        @unique
@@ -42,6 +47,8 @@ model User {
   posts           Post[]
   assets          Asset[]
   sessions        UserSession[]
+  tokens          UserToken[]   @relation("TokenUser")
+  createdTokens   UserToken[]   @relation("TokenCreator")
 }
 
 model UserSession {
@@ -56,6 +63,24 @@ model UserSession {
 
   @@index([userId, revokedAt, expiresAt])
   @@index([expiresAt])
+}
+
+model UserToken {
+  id          String        @id @default(cuid())
+  tokenHash   String        @unique
+  type        UserTokenType
+  email       String
+  userId      String?
+  user        User?         @relation("TokenUser", fields: [userId], references: [id], onDelete: Cascade)
+  createdById String
+  createdBy   User          @relation("TokenCreator", fields: [createdById], references: [id], onDelete: Cascade)
+  expiresAt   DateTime
+  usedAt      DateTime?
+  createdAt   DateTime      @default(now())
+
+  @@index([email, type, usedAt, expiresAt])
+  @@index([userId, type, usedAt, expiresAt])
+  @@index([createdById, createdAt(sort: Desc)])
 }
 
 model Post {

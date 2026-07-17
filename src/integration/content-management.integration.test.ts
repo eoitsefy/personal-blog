@@ -14,6 +14,11 @@ import { DELETE as purgePost } from "@/app/api/admin/posts/[id]/purge/route";
 import { POST as restorePost } from "@/app/api/admin/posts/[id]/restore/route";
 import { POST as login } from "@/app/api/auth/login/route";
 import { POST as logout } from "@/app/api/auth/logout/route";
+import { POST as createInvitation } from "@/app/api/admin/users/invitations/route";
+import { PATCH as updateUserStatus } from "@/app/api/admin/users/[id]/route";
+import { POST as createPasswordReset } from "@/app/api/admin/users/[id]/password-reset/route";
+import { POST as acceptInvitationRoute } from "@/app/api/auth/invitations/accept/route";
+import { POST as resetPasswordRoute } from "@/app/api/auth/password-reset/route";
 import { GET as listPublicPosts } from "@/app/api/posts/route";
 import { hashPassword, hashSessionToken, parseCookie, SESSION_COOKIE_NAME } from "@/lib/auth";
 import { loginThrottleKey } from "@/lib/login-throttle";
@@ -23,6 +28,93 @@ const PNG_1X1 = Buffer.from(
   "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAusB9Y9ZlZsAAAAASUVORK5CYII=",
   "base64",
 );
+
+test("invited users register, reset passwords and lose access when disabled", async () => {
+  const suffix = `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+  const adminEmail = `lifecycle-admin-${suffix}@example.test`;
+  const userEmail = `lifecycle-user-${suffix}@example.test`;
+  const address = `203.0.113.${Math.floor(Math.random() * 200) + 1}`;
+  let adminId = "";
+  let userId = "";
+
+  const loginRequest = (email: string, password: string, audience: "ADMIN" | "USER") => new Request("http://localhost/api/auth/login", {
+    method: "POST",
+    headers: { "content-type": "application/json", "x-real-ip": address },
+    body: JSON.stringify({ email, password, audience }),
+  });
+
+  try {
+    const admin = await prisma.user.create({
+      data: { email: adminEmail, passwordHash: await hashPassword("AdminPassword2026"), role: "ADMIN", emailVerifiedAt: new Date() },
+      select: { id: true },
+    });
+    adminId = admin.id;
+    const adminLogin = await login(loginRequest(adminEmail, "AdminPassword2026", "ADMIN"));
+    const adminCookie = adminLogin.headers.get("set-cookie")?.split(";", 1)[0];
+    assert.equal(adminLogin.status, 200);
+    if (!adminCookie) throw new Error("Admin session cookie is missing");
+
+    const invitationResponse = await createInvitation(new Request("http://localhost/api/admin/users/invitations", {
+      method: "POST",
+      headers: { "content-type": "application/json", cookie: adminCookie },
+      body: JSON.stringify({ email: userEmail }),
+    }));
+    assert.equal(invitationResponse.status, 201);
+    const invitationUrl = ((await invitationResponse.json()) as { data: { invitationUrl: string } }).data.invitationUrl;
+    const invitationToken = new URL(invitationUrl).searchParams.get("token");
+    assert.ok(invitationToken);
+
+    const acceptResponse = await acceptInvitationRoute(new Request("http://localhost/api/auth/invitations/accept", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ token: invitationToken, password: "ReaderPassword2026" }),
+    }));
+    assert.equal(acceptResponse.status, 201);
+    const userCookie = acceptResponse.headers.get("set-cookie")?.split(";", 1)[0];
+    if (!userCookie) throw new Error("User session cookie is missing");
+    const user = await prisma.user.findUniqueOrThrow({ where: { email: userEmail } });
+    userId = user.id;
+    assert.equal(user.role, "USER");
+    assert.ok(user.emailVerifiedAt);
+
+    const forbiddenAdminMutation = await createPost(new Request("http://localhost/api/admin/posts", {
+      method: "POST",
+      headers: { "content-type": "application/json", cookie: userCookie },
+      body: JSON.stringify({ title: "Forbidden", slug: `forbidden-${suffix}`, contentMd: "Denied", status: "DRAFT" }),
+    }));
+    assert.equal(forbiddenAdminMutation.status, 401);
+
+    const resetResponse = await createPasswordReset(new Request(`http://localhost/api/admin/users/${userId}/password-reset`, {
+      method: "POST", headers: { cookie: adminCookie },
+    }), { params: Promise.resolve({ id: userId }) });
+    assert.equal(resetResponse.status, 201);
+    const resetUrl = ((await resetResponse.json()) as { data: { resetUrl: string } }).data.resetUrl;
+    const resetToken = new URL(resetUrl).searchParams.get("token");
+    assert.ok(resetToken);
+    const passwordReset = await resetPasswordRoute(new Request("http://localhost/api/auth/password-reset", {
+      method: "POST", headers: { "content-type": "application/json" },
+      body: JSON.stringify({ token: resetToken, password: "UpdatedPassword2026" }),
+    }));
+    assert.equal(passwordReset.status, 200);
+    assert.equal((await login(loginRequest(userEmail, "ReaderPassword2026", "USER"))).status, 401);
+    const newLogin = await login(loginRequest(userEmail, "UpdatedPassword2026", "USER"));
+    assert.equal(newLogin.status, 200);
+    const newUserCookie = newLogin.headers.get("set-cookie")?.split(";", 1)[0];
+    if (!newUserCookie) throw new Error("Updated user session cookie is missing");
+
+    const disableResponse = await updateUserStatus(new Request(`http://localhost/api/admin/users/${userId}`, {
+      method: "PATCH", headers: { "content-type": "application/json", cookie: adminCookie },
+      body: JSON.stringify({ status: "DISABLED" }),
+    }), { params: Promise.resolve({ id: userId }) });
+    assert.equal(disableResponse.status, 200);
+    assert.equal((await login(loginRequest(userEmail, "UpdatedPassword2026", "USER"))).status, 401);
+  } finally {
+    if (userId) await prisma.user.deleteMany({ where: { id: userId } });
+    if (adminId) await prisma.user.deleteMany({ where: { id: adminId } });
+    await prisma.loginThrottle.deleteMany({ where: { key: { in: [loginThrottleKey(loginRequest(adminEmail, "x", "ADMIN"), adminEmail), loginThrottleKey(loginRequest(userEmail, "x", "USER"), userEmail)] } } });
+    await prisma.$disconnect();
+  }
+});
 
 test("database sessions can be revoked and disabled accounts lose access", async () => {
   const suffix = `${Date.now()}-${Math.random().toString(36).slice(2)}`;
