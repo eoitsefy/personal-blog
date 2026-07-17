@@ -2,6 +2,8 @@ import { z } from "zod";
 
 export const adminAssetListQuerySchema = z.object({
   page: z.coerce.number().int().min(1).default(1),
+  q: z.string().trim().max(120).default(""),
+  kind: z.enum(["ALL", "IMAGE", "AUDIO"]).default("ALL"),
   deleted: z.enum(["active", "trash"]).default("active"),
 });
 

@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm";
+import { RichMarkdown } from "@/components/content/rich-markdown";
 import { requireAdminPage } from "@/lib/admin-auth";
 import { prisma } from "@/lib/prisma";
 
@@ -14,7 +13,16 @@ export default async function PreviewPostPage({ params }: PageProps) {
   const { id } = await params;
   const post = await prisma.post.findFirst({
     where: { id, deletedAt: null },
-    select: { id: true, title: true, slug: true, excerpt: true, contentMd: true, status: true, updatedAt: true },
+    select: {
+      id: true,
+      title: true,
+      slug: true,
+      excerpt: true,
+      contentMd: true,
+      status: true,
+      updatedAt: true,
+      assets: { select: { asset: { select: { url: true, kind: true, originalName: true, mime: true } } } },
+    },
   });
   if (!post) notFound();
 
@@ -31,7 +39,7 @@ export default async function PreviewPostPage({ params }: PageProps) {
           <p className="mt-4 text-sm text-neutral-500">最后更新：{post.updatedAt.toLocaleString("zh-CN")}</p>
         </header>
         <section className="prose prose-neutral max-w-none dark:prose-invert" aria-label="文章预览正文">
-          <ReactMarkdown remarkPlugins={[remarkGfm]}>{post.contentMd}</ReactMarkdown>
+          <RichMarkdown markdown={post.contentMd} assets={post.assets.map(({ asset }) => asset)} />
         </section>
       </article>
     </main>

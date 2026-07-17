@@ -11,3 +11,8 @@ test("external and unsafe upload paths are ignored", () => {
   assert.deepEqual(extractLocalAssetUrls("https://example.com/image.png"), []);
   assert.deepEqual(extractLocalAssetUrls("/uploads/../secret.png"), []);
 });
+
+test("local audio references are tracked like image references", () => {
+  const url = "/uploads/media/2026/07/0123456789abcdef0123456789abcdef.ogg";
+  assert.deepEqual(extractLocalAssetUrls(`[audio:field recording](${url})`), [url]);
+});

@@ -12,6 +12,14 @@ enum PostStatus {
   PUBLISHED
 }
 
+enum AssetKind {
+  IMAGE
+  AUDIO
+  DOCUMENT
+  VIDEO
+  OTHER
+}
+
 model User {
   id           String   @id @default(cuid())
   email        String   @unique
@@ -95,10 +103,12 @@ model Asset {
   ossKey       String         @unique
   url          String
   originalName String?
+  kind         AssetKind      @default(IMAGE)
   mime         String
   size         Int
   width        Int?
   height       Int?
+  durationMs   Int?
   sha256       String
   ownerId      String
   owner        User           @relation(fields: [ownerId], references: [id], onDelete: Restrict)
@@ -111,6 +121,7 @@ model Asset {
   @@index([ownerId, createdAt(sort: Desc)])
   @@index([sha256])
   @@index([deletedAt, createdAt(sort: Desc)])
+  @@index([kind, deletedAt, createdAt(sort: Desc)])
 }
 
 model PostAssetRef {

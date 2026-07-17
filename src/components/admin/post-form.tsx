@@ -71,8 +71,10 @@ export function PostForm({
   }
 
   function insertAsset(asset: MediaAsset) {
-    const alt = (asset.originalName ?? "图片").replace(/[\[\]]/g, "");
-    const markdown = `![${alt}](${asset.url})`;
+    const title = (asset.originalName ?? (asset.kind === "AUDIO" ? "音频" : "图片")).replace(/[\[\]]/g, "");
+    const markdown = asset.kind === "AUDIO"
+      ? `[audio:${title}](${asset.url})`
+      : `![${title}](${asset.url})`;
     update("contentMd", `${form.contentMd.trimEnd()}${form.contentMd ? "\n\n" : ""}${markdown}\n`);
     if (!form.assetIds.includes(asset.id)) update("assetIds", [...form.assetIds, asset.id]);
   }
@@ -231,7 +233,7 @@ export function PostForm({
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
             <h2 id="post-media-heading" className="font-medium">文章媒体</h2>
-            <p className="text-sm text-neutral-500">插入图片会自动建立引用，防止媒体被误删。</p>
+            <p className="text-sm text-neutral-500">插入图片或音频会自动建立引用，防止媒体被误删。</p>
           </div>
           <button
             type="button"
@@ -243,7 +245,7 @@ export function PostForm({
         </div>
         {mediaOptions.length === 0 ? (
           <p className="rounded-xl border border-dashed border-neutral-300 p-4 text-sm text-neutral-500 dark:border-neutral-700">
-            暂无可用媒体，请先前往媒体管理上传图片。
+            暂无可用媒体，请先前往媒体管理上传图片或音频。
           </p>
         ) : (
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
@@ -252,8 +254,12 @@ export function PostForm({
               const usedInContent = form.contentMd.includes(asset.url);
               return (
                 <article key={asset.id} className={`overflow-hidden rounded-xl border ${selected ? "border-neutral-900 dark:border-white" : "border-neutral-200 dark:border-neutral-800"}`}>
-                  <div className="relative aspect-video bg-neutral-100 dark:bg-neutral-900">
-                    <Image src={asset.url} alt={asset.originalName ?? "媒体图片"} fill sizes="(max-width: 640px) 100vw, 33vw" className="object-cover" unoptimized />
+                  <div className="relative grid aspect-video place-items-center bg-neutral-100 dark:bg-neutral-900">
+                    {asset.kind === "IMAGE" ? (
+                      <Image src={asset.url} alt={asset.originalName ?? "媒体图片"} fill sizes="(max-width: 640px) 100vw, 33vw" className="object-cover" unoptimized />
+                    ) : (
+                      <audio controls preload="metadata" src={asset.url} className="w-[90%]">浏览器不支持音频播放。</audio>
+                    )}
                   </div>
                   <div className="grid gap-2 p-3">
                     <p className="truncate text-sm" title={asset.originalName ?? asset.url}>{asset.originalName ?? "未命名图片"}</p>

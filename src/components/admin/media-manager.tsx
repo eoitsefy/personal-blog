@@ -18,6 +18,14 @@ function humanBytes(bytes: number) {
   return `${(bytes / 1024 / 1024).toFixed(1)} MiB`;
 }
 
+function humanDuration(durationMs: number | null) {
+  if (!durationMs) return "时长由播放器读取";
+  const totalSeconds = Math.round(durationMs / 1000);
+  const minutes = Math.floor(totalSeconds / 60);
+  const seconds = String(totalSeconds % 60).padStart(2, "0");
+  return `${minutes}:${seconds}`;
+}
+
 export function MediaManager({ assets, deletedView }: MediaManagerProps) {
   const router = useRouter();
   const [busyId, setBusyId] = useState("");
@@ -46,7 +54,7 @@ export function MediaManager({ assets, deletedView }: MediaManagerProps) {
         return;
       }
       form.reset();
-      setMessage("图片上传成功");
+      setMessage("媒体上传成功");
       router.refresh();
     } catch {
       setMessage("无法连接服务器，请稍后重试");
@@ -88,9 +96,12 @@ export function MediaManager({ assets, deletedView }: MediaManagerProps) {
   }
 
   async function copyMarkdown(asset: MediaAsset) {
-    const alt = (asset.originalName ?? "图片").replace(/[\[\]]/g, "");
+    const title = (asset.originalName ?? (asset.kind === "AUDIO" ? "音频" : "图片")).replace(/[\[\]]/g, "");
+    const markdown = asset.kind === "AUDIO"
+      ? `[audio:${title}](${asset.url})`
+      : `![${title}](${asset.url})`;
     try {
-      await navigator.clipboard.writeText(`![${alt}](${asset.url})`);
+      await navigator.clipboard.writeText(markdown);
       setMessage("Markdown 已复制");
     } catch {
       setMessage("复制失败，请手动复制图片地址");
@@ -102,9 +113,9 @@ export function MediaManager({ assets, deletedView }: MediaManagerProps) {
       {!deletedView ? (
         <form onSubmit={upload} className="flex flex-wrap items-end gap-3 rounded-2xl border border-neutral-200 bg-white p-5 dark:border-neutral-800 dark:bg-neutral-900">
           <label className="grid min-w-64 flex-1 gap-2">
-            <span className="font-medium">上传图片</span>
-            <input name="file" type="file" accept="image/jpeg,image/png,image/webp" required className="rounded-xl border border-neutral-300 p-3 text-sm dark:border-neutral-700" />
-            <span className="text-xs text-neutral-500">JPEG、PNG 或 WebP，最大 8 MiB；服务端会验证真实格式和尺寸。</span>
+            <span className="font-medium">上传图片或音频</span>
+            <input name="file" type="file" accept="image/jpeg,image/png,image/webp,audio/mpeg,audio/wav,audio/ogg,audio/opus" required className="rounded-xl border border-neutral-300 p-3 text-sm dark:border-neutral-700" />
+            <span className="text-xs text-neutral-500">图片支持 JPEG、PNG、WebP；音频支持 MP3、WAV、OGG、Opus。服务端会验证真实内容与扩展名。</span>
           </label>
           <button type="submit" disabled={uploading} className="rounded-xl bg-neutral-900 px-5 py-3 font-medium text-white disabled:opacity-60 dark:bg-white dark:text-neutral-900">
             {uploading ? "上传中…" : "上传"}
@@ -122,14 +133,23 @@ export function MediaManager({ assets, deletedView }: MediaManagerProps) {
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {assets.map((asset) => (
             <article key={asset.id} className="overflow-hidden rounded-2xl border border-neutral-200 bg-white dark:border-neutral-800 dark:bg-neutral-900">
-              <div className="relative aspect-video bg-neutral-100 dark:bg-neutral-950">
-                <Image src={asset.url} alt={asset.originalName ?? "媒体图片"} fill sizes="(max-width: 640px) 100vw, 33vw" className="object-cover" unoptimized />
+              <div className="relative grid aspect-video place-items-center bg-neutral-100 dark:bg-neutral-950">
+                {asset.kind === "IMAGE" ? (
+                  <Image src={asset.url} alt={asset.originalName ?? "媒体图片"} fill sizes="(max-width: 640px) 100vw, 33vw" className="object-cover" unoptimized />
+                ) : asset.kind === "AUDIO" ? (
+                  <div className="grid w-full gap-3 px-4 text-center">
+                    <span className="text-xs font-medium tracking-[0.18em] text-neutral-500">AUDIO / {humanDuration(asset.durationMs)}</span>
+                    <audio controls preload="metadata" src={asset.url} className="w-full">浏览器不支持音频播放。</audio>
+                  </div>
+                ) : (
+                  <span className="text-sm text-neutral-500">{asset.kind}</span>
+                )}
               </div>
               <div className="grid gap-3 p-4">
                 <div>
-                  <p className="truncate font-medium" title={asset.originalName ?? asset.url}>{asset.originalName ?? "未命名图片"}</p>
+                  <p className="truncate font-medium" title={asset.originalName ?? asset.url}>{asset.originalName ?? "未命名媒体"}</p>
                   <p className="mt-1 text-xs text-neutral-500">
-                    {asset.width && asset.height ? `${asset.width}×${asset.height} · ` : ""}{humanBytes(asset.size)} · 引用 {asset.refCount}
+                    {asset.kind} · {asset.width && asset.height ? `${asset.width}×${asset.height} · ` : ""}{humanBytes(asset.size)} · 引用 {asset.refCount}
                   </p>
                 </div>
                 <a href={asset.url} target="_blank" rel="noreferrer" className="truncate text-xs text-neutral-500 underline" title={asset.url}>{asset.url}</a>

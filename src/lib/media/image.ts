@@ -31,9 +31,9 @@ export function getMaxUploadBytes() {
     : DEFAULT_MAX_UPLOAD_BYTES;
 }
 
-function safeOriginalName(input: string) {
-  const basename = input.replace(/\\/g, "/").split("/").pop()?.trim() || "image";
-  return basename.replace(/[^\p{L}\p{N}._ -]/gu, "_").slice(0, 180) || "image";
+export function safeOriginalName(input: string, fallback = "asset") {
+  const basename = input.replace(/\\/g, "/").split("/").pop()?.trim() || fallback;
+  return basename.replace(/[^\p{L}\p{N}._ -]/gu, "_").slice(0, 180) || fallback;
 }
 
 export async function validateImageUpload(file: File): Promise<ValidatedImage> {
@@ -42,7 +42,7 @@ export async function validateImageUpload(file: File): Promise<ValidatedImage> {
   if (file.size > maxBytes) throw new MediaValidationError(`图片不能超过 ${Math.floor(maxBytes / 1024 / 1024)} MiB`);
 
   const bytes = Buffer.from(await file.arrayBuffer());
-  const originalName = safeOriginalName(file.name);
+  const originalName = safeOriginalName(file.name, "image");
   const sourceExtension = originalName.toLowerCase().split(".").pop() ?? "";
 
   let metadata: Metadata;

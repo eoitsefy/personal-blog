@@ -1,7 +1,8 @@
 import { createHash } from "node:crypto";
 import { Prisma } from "@prisma/client";
 import { fail, logApi, ok } from "@/lib/api";
-import { getMaxUploadBytes, MediaValidationError, validateImageUpload } from "@/lib/media/image";
+import { getMaxUploadBytes, MediaValidationError } from "@/lib/media/image";
+import { validateAssetUpload } from "@/lib/media/upload";
 import { ADMIN_ASSET_PAGE_SIZE, adminAssetListQuerySchema } from "@/lib/media/validators";
 import { prisma } from "@/lib/prisma";
 import { requireAdmin } from "@/lib/require-admin";
@@ -12,10 +13,12 @@ const assetSelect = {
   id: true,
   url: true,
   originalName: true,
+  kind: true,
   mime: true,
   size: true,
   width: true,
   height: true,
+  durationMs: true,
   refCount: true,
   deletedAt: true,
   createdAt: true,
@@ -31,6 +34,8 @@ export async function GET(req: Request) {
   const query = parsed.data;
   const where: Prisma.AssetWhereInput = {
     deletedAt: query.deleted === "trash" ? { not: null } : null,
+    kind: query.kind === "ALL" ? undefined : query.kind,
+    originalName: query.q ? { contains: query.q, mode: "insensitive" } : undefined,
   };
   const [total, assets] = await Promise.all([
     prisma.asset.count({ where }),
@@ -82,22 +87,24 @@ export async function POST(req: Request) {
   try {
     const formData = await req.formData();
     const file = formData.get("file");
-    if (!(file instanceof File)) return fail("BAD_REQUEST", "请选择图片文件", 400, auth.requestId);
+    if (!(file instanceof File)) return fail("BAD_REQUEST", "请选择媒体文件", 400, auth.requestId);
 
-    const image = await validateImageUpload(file);
-    key = createAssetKey(image.extension);
-    await storage.write(key, image.bytes);
+    const upload = await validateAssetUpload(file);
+    key = createAssetKey(upload.extension);
+    await storage.write(key, upload.bytes);
 
     const asset = await prisma.asset.create({
       data: {
         ossKey: key,
         url: publicAssetUrl(key),
-        originalName: image.originalName,
-        mime: image.mime,
-        size: image.size,
-        width: image.width,
-        height: image.height,
-        sha256: createHash("sha256").update(image.bytes).digest("hex"),
+        originalName: upload.originalName,
+        kind: upload.kind,
+        mime: upload.mime,
+        size: upload.size,
+        width: upload.width,
+        height: upload.height,
+        durationMs: upload.durationMs,
+        sha256: createHash("sha256").update(upload.bytes).digest("hex"),
         ownerId: auth.user.id,
       },
       select: assetSelect,
@@ -118,6 +125,6 @@ export async function POST(req: Request) {
       return fail("BAD_REQUEST", error.message, 400, auth.requestId);
     }
     console.error("[POST /api/admin/assets] failed", error);
-    return fail("INTERNAL_ERROR", "图片上传失败", 500, auth.requestId);
+    return fail("INTERNAL_ERROR", "媒体上传失败", 500, auth.requestId);
   }
 }

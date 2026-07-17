@@ -13,7 +13,7 @@ export default async function NewPostPage() {
       where: { deletedAt: null, isPublic: true },
       orderBy: { createdAt: "desc" },
       take: 24,
-      select: { id: true, url: true, originalName: true, mime: true, size: true, width: true, height: true, refCount: true, deletedAt: true, createdAt: true },
+      select: { id: true, url: true, originalName: true, kind: true, mime: true, size: true, width: true, height: true, durationMs: true, refCount: true, deletedAt: true, createdAt: true },
     }),
   ]);
 

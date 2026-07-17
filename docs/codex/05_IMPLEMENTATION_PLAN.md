@@ -69,7 +69,7 @@ Phase 1B verification:
 
 Priority: P1
 
-Status: `[IMPLEMENTED 2026-07-16; PENDING CI AND PRODUCTION VERIFICATION]` Secure local image upload, media management, article references, deletion protection, storage abstraction, and automated coverage are present on the Phase 2 branch.
+Status: `[COMPLETE 2026-07-16]` Secure local image upload, media management, article references, deletion protection, storage abstraction, CI coverage, persistent upload mounting, and production verification are complete.
 
 Tasks:
 
@@ -98,7 +98,7 @@ Verification notes:
 
 Priority: P1
 
-Status: `[IMPLEMENTED 2026-07-17; PENDING PR AND PRODUCTION VERIFICATION]` Canonical metadata, Open Graph/Twitter sharing data, article JSON-LD, published-only sitemap, robots policy, RSS discovery/feed, skip navigation, reduced-motion preservation, static hero image metadata, and baseline browser security headers are implemented on the Phase 3B branch.
+Status: `[DEPLOYED 2026-07-17; BROWSER AUDIT PENDING]` Canonical metadata, Open Graph/Twitter sharing data, article JSON-LD, published-only sitemap, robots policy, RSS discovery/feed, skip navigation, reduced-motion preservation, static hero image metadata, and baseline browser security headers are deployed at `b767eb4`. Automated production checks passed; Lighthouse, full keyboard navigation, and screen-reader sampling remain.
 
 Tasks:
 
@@ -123,30 +123,59 @@ Verification notes:
 - Unit tests, ESLint, direct TypeScript checking, the Next.js production build, and database-free preview route checks passed locally.
 - Production Lighthouse/accessibility measurements and post-deployment header checks remain required before this phase is marked complete.
 
-## Phase 4 — Text RAG assistant
+## Phase 4A — General media, audio, and controlled video
 
 Priority: P1
+
+Status: `[IN PROGRESS 2026-07-17]` The first slice extends the existing image pipeline with typed assets and validated local audio while preserving reference and deletion safety.
+
+Tasks:
+
+- Add explicit asset kinds and forward-only migrations.
+- Validate audio by declared MIME, extension, and real file structure.
+- Add media type/name filters, audio playback, structured insertion, and reference protection.
+- Add controlled trusted video embeds without arbitrary HTML or iframe support.
+- Add document/other-file policy, storage quotas, and operational usage reporting.
+
+Acceptance:
+
+- Images and audio can be uploaded, reused, restored, and safely purged.
+- Referenced assets cannot be deleted.
+- Unsupported, spoofed, oversized, or unsafe files are rejected.
+- Audio and allowed video embeds are keyboard accessible and fail with a usable fallback link.
+
+## Phase 4B — Registered users and comments
+
+Priority: P1
+
+Tasks:
+
+- Add verified user registration, login, reset, suspension, and role boundaries.
+- Add authenticated comments, first-level replies, moderation, reporting, and anti-spam controls.
+- Add privacy and user-content rules before public registration opens.
+
+## Phase 5 — Places and public map
+
+Priority: P2
+
+Tasks:
+
+- Add place records, article relations, privacy precision, and provider adapters.
+- Provide a public clustered map plus an accessible text-list fallback.
+
+## Phase 6A — Text RAG assistant
+
+Priority: P1/P2
 
 Prerequisite: reachable production AI provider/gateway.
 
 Tasks:
 
 - Implement provider-neutral embedding and generation interfaces.
-- Build published-post extraction, chunking, indexing, update, and removal flow.
-- Implement retrieval with thresholds and source metadata.
-- Add `/api/assistant/query` or repository-consistent equivalent.
-- Add rate limiting, caching, timeouts, stable errors, usage logging, and feature flag.
-- Build text chat UI with citations and clear no-evidence behavior.
-- Test prompt-injection resistance at the retrieval and authorization layers.
+- Index only published content and return source citations.
+- Add rate limits, budgets, timeouts, logging, feature flags, and safe no-evidence behavior.
 
-Acceptance:
-
-- Answers cite only valid published posts.
-- No-evidence questions fail safely.
-- Provider outage leaves the blog operational.
-- Usage and latency are observable without logging secrets.
-
-## Phase 5 — Voice input and speech output
+## Phase 6B — Voice input and speech output
 
 Priority: P1/P2
 
@@ -165,7 +194,7 @@ Acceptance:
 - Text fallback works for denied permission, unsupported audio, and provider failure.
 - Raw audio retention is disabled by default and verified.
 
-## Phase 6 — Deployment, security, and operations
+## Phase 7 — Deployment, security, and operations
 
 Priority: P0/P1
 
