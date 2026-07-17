@@ -127,7 +127,7 @@ Verification notes:
 
 Priority: P1
 
-Status: `[IN PROGRESS 2026-07-17]` The first slice extends the existing image pipeline with typed assets and validated local audio while preserving reference and deletion safety.
+Status: `[IN PROGRESS 2026-07-17]` Typed assets, validated local audio, media filtering, protected audio references, native playback, and allowlisted Bilibili/YouTube structured embeds are implemented on the development branch. Document assets, quotas, CI integration execution, review, and production verification remain.
 
 Tasks:
 

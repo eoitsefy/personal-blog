@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
 import type { MediaAsset } from "@/lib/media/types";
+import { parseTrustedVideoUrl } from "@/lib/media/video";
 import { CreatePostInputSchema, type CreatePostInput } from "@/lib/validators/post";
 
 type PostFormProps = {
@@ -44,6 +45,9 @@ export function PostForm({
   const [tagsText, setTagsText] = useState(initialValue.tags.join(", "));
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [message, setMessage] = useState("");
+  const [videoTitle, setVideoTitle] = useState("");
+  const [videoUrl, setVideoUrl] = useState("");
+  const [videoError, setVideoError] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const canSubmit = useMemo(() => !submitting, [submitting]);
 
@@ -77,6 +81,20 @@ export function PostForm({
       : `![${title}](${asset.url})`;
     update("contentMd", `${form.contentMd.trimEnd()}${form.contentMd ? "\n\n" : ""}${markdown}\n`);
     if (!form.assetIds.includes(asset.id)) update("assetIds", [...form.assetIds, asset.id]);
+  }
+
+  function insertVideo() {
+    const video = parseTrustedVideoUrl(videoUrl);
+    if (!video) {
+      setVideoError("请输入哔哩哔哩或 YouTube 的 HTTPS 正式视频链接；不支持短链和其他域名。");
+      return;
+    }
+    const title = (videoTitle.trim() || "视频").replace(/[\[\]\r\n]/g, " ").slice(0, 160).trim();
+    const markdown = `[video:${title}](${video.sourceUrl})`;
+    update("contentMd", `${form.contentMd.trimEnd()}${form.contentMd ? "\n\n" : ""}${markdown}\n`);
+    setVideoTitle("");
+    setVideoUrl("");
+    setVideoError("");
   }
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
@@ -284,6 +302,27 @@ export function PostForm({
           </div>
         )}
         {errors.assetIds ? <span className="text-sm text-red-600">{errors.assetIds}</span> : null}
+      </section>
+
+      <section className="grid gap-3 rounded-2xl border border-neutral-200 p-4 dark:border-neutral-800" aria-labelledby="post-video-heading">
+        <div>
+          <h2 id="post-video-heading" className="font-medium">受控视频嵌入</h2>
+          <p className="mt-1 text-sm text-neutral-500">仅支持哔哩哔哩和 YouTube 正式 HTTPS 链接；系统不会保存或执行任意 iframe HTML。</p>
+        </div>
+        <div className="grid gap-3 md:grid-cols-[0.8fr_1.4fr_auto]">
+          <label className="grid gap-1 text-sm">
+            <span>视频标题</span>
+            <input value={videoTitle} onChange={(event) => setVideoTitle(event.target.value)} maxLength={160} placeholder="例如：雨夜记录" className={fieldClass} />
+          </label>
+          <label className="grid gap-1 text-sm">
+            <span>视频链接</span>
+            <input value={videoUrl} onChange={(event) => setVideoUrl(event.target.value)} type="url" inputMode="url" placeholder="https://www.bilibili.com/video/BV..." className={fieldClass} />
+          </label>
+          <button type="button" onClick={insertVideo} className="self-end rounded-xl border border-neutral-300 px-4 py-3 text-sm font-medium dark:border-neutral-700">
+            插入视频
+          </button>
+        </div>
+        {videoError ? <p role="alert" className="text-sm text-red-600">{videoError}</p> : null}
       </section>
 
       {message ? (

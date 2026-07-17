@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { extractVideoDirectives, parseTrustedVideoUrl } from "@/lib/media/video";
 
 export const postListQuerySchema = z.object({
   page: z.coerce.number().int().min(1).default(1),
@@ -28,7 +29,16 @@ const PostInputFieldsSchema = z.object({
     .max(300, "摘要不能超过300字符")
     .optional()
     .or(z.literal("")),
-  contentMd: z.string().min(1, "内容不能为空"),
+  contentMd: z.string().min(1, "内容不能为空").superRefine((markdown, context) => {
+    for (const directive of extractVideoDirectives(markdown)) {
+      if (!parseTrustedVideoUrl(directive.url)) {
+        context.addIssue({
+          code: "custom",
+          message: "视频仅支持哔哩哔哩或 YouTube 的 HTTPS 正式链接",
+        });
+      }
+    }
+  }),
   status: z.enum(["DRAFT", "PUBLISHED"]),
   category: z.string().trim().max(50, "分类名称不能超过50个字符").optional().or(z.literal("")),
   tags: z.array(z.string().trim().min(1).max(40)).max(10, "每篇文章最多添加10个标签"),
