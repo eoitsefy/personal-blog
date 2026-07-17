@@ -8,7 +8,7 @@ export interface StorageAdapter {
   delete(key: string): Promise<void>;
 }
 
-const SAFE_KEY = /^[a-z0-9][a-z0-9/_-]*\.(?:jpg|jpeg|png|webp|mp3|wav|ogg|opus)$/;
+const SAFE_KEY = /^[a-z0-9][a-z0-9/_-]*\.(?:jpg|jpeg|png|webp|mp3|wav|ogg|opus|pdf|txt|md)$/;
 
 export function assertSafeStorageKey(key: string) {
   if (!SAFE_KEY.test(key) || key.includes("..") || key.includes("\\")) {
@@ -49,7 +49,7 @@ export class LocalStorageAdapter implements StorageAdapter {
 }
 
 export function createAssetKey(extension: string, now = new Date()) {
-  if (!/^(?:jpg|png|webp|mp3|wav|ogg|opus)$/.test(extension)) throw new Error("Unsupported asset extension");
+  if (!/^(?:jpg|png|webp|mp3|wav|ogg|opus|pdf|txt|md)$/.test(extension)) throw new Error("Unsupported asset extension");
   const year = now.getUTCFullYear();
   const month = String(now.getUTCMonth() + 1).padStart(2, "0");
   return `media/${year}/${month}/${randomUUID().replace(/-/g, "")}.${extension}`;

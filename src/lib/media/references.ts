@@ -2,7 +2,7 @@ import type { Prisma } from "@prisma/client";
 
 export class InvalidAssetReferenceError extends Error {}
 
-const LOCAL_ASSET_URL = /\/uploads\/[a-z0-9][a-z0-9/_-]*\.(?:jpg|jpeg|png|webp|mp3|wav|ogg|opus)/g;
+const LOCAL_ASSET_URL = /\/uploads\/[a-z0-9][a-z0-9/_-]*\.(?:jpg|jpeg|png|webp|mp3|wav|ogg|opus|pdf|txt|md)/g;
 
 export function extractLocalAssetUrls(markdown: string) {
   return [...new Set(markdown.match(LOCAL_ASSET_URL) ?? [])];

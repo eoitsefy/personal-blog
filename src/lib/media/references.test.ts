@@ -16,3 +16,9 @@ test("local audio references are tracked like image references", () => {
   const url = "/uploads/media/2026/07/0123456789abcdef0123456789abcdef.ogg";
   assert.deepEqual(extractLocalAssetUrls(`[audio:field recording](${url})`), [url]);
 });
+
+test("local document links are tracked like other media references", () => {
+  const pdf = "/uploads/media/2026/07/0123456789abcdef0123456789abcdef.pdf";
+  const markdown = "/uploads/media/2026/07/abcdef0123456789abcdef0123456789.md";
+  assert.deepEqual(extractLocalAssetUrls(`[旅行清单](${pdf})\n[日志](${markdown})`), [pdf, markdown]);
+});

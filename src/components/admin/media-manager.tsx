@@ -8,6 +8,12 @@ import type { MediaAsset } from "@/lib/media/types";
 type MediaManagerProps = {
   assets: MediaAsset[];
   deletedView: boolean;
+  storage: {
+    usedBytes: number;
+    quotaBytes: number;
+    remainingBytes: number;
+    usagePercent: number;
+  };
 };
 
 type ApiBody = { success?: boolean; error?: { message?: string } | null };
@@ -15,7 +21,8 @@ type ApiBody = { success?: boolean; error?: { message?: string } | null };
 function humanBytes(bytes: number) {
   if (bytes < 1024) return `${bytes} B`;
   if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KiB`;
-  return `${(bytes / 1024 / 1024).toFixed(1)} MiB`;
+  if (bytes < 1024 * 1024 * 1024) return `${(bytes / 1024 / 1024).toFixed(1)} MiB`;
+  return `${(bytes / 1024 / 1024 / 1024).toFixed(2)} GiB`;
 }
 
 function humanDuration(durationMs: number | null) {
@@ -26,7 +33,7 @@ function humanDuration(durationMs: number | null) {
   return `${minutes}:${seconds}`;
 }
 
-export function MediaManager({ assets, deletedView }: MediaManagerProps) {
+export function MediaManager({ assets, deletedView, storage }: MediaManagerProps) {
   const router = useRouter();
   const [busyId, setBusyId] = useState("");
   const [uploading, setUploading] = useState(false);
@@ -96,26 +103,44 @@ export function MediaManager({ assets, deletedView }: MediaManagerProps) {
   }
 
   async function copyMarkdown(asset: MediaAsset) {
-    const title = (asset.originalName ?? (asset.kind === "AUDIO" ? "音频" : "图片")).replace(/[\[\]]/g, "");
+    const fallback = asset.kind === "AUDIO" ? "音频" : asset.kind === "DOCUMENT" ? "文档" : "图片";
+    const title = (asset.originalName ?? fallback).replace(/[\[\]]/g, "");
     const markdown = asset.kind === "AUDIO"
       ? `[audio:${title}](${asset.url})`
-      : `![${title}](${asset.url})`;
+      : asset.kind === "DOCUMENT"
+        ? `[${title}](${asset.url})`
+        : `![${title}](${asset.url})`;
     try {
       await navigator.clipboard.writeText(markdown);
       setMessage("Markdown 已复制");
     } catch {
-      setMessage("复制失败，请手动复制图片地址");
+      setMessage("复制失败，请手动复制媒体地址");
     }
   }
 
   return (
     <div className="mt-8 grid gap-8">
+      <section className={`rounded-2xl border p-5 ${storage.usagePercent >= 80 ? "border-amber-400 bg-amber-50 dark:border-amber-700 dark:bg-amber-950/30" : "border-neutral-200 bg-white dark:border-neutral-800 dark:bg-neutral-900"}`} aria-labelledby="media-storage-heading">
+        <div className="flex flex-wrap items-end justify-between gap-2">
+          <div>
+            <h2 id="media-storage-heading" className="font-medium">媒体存储空间</h2>
+            <p className="mt-1 text-sm text-neutral-600 dark:text-neutral-400">
+              已使用 {humanBytes(storage.usedBytes)} / {humanBytes(storage.quotaBytes)}；回收站文件在永久删除前仍占用空间。
+            </p>
+          </div>
+          <span className="text-sm font-medium">{storage.usagePercent.toFixed(1)}%</span>
+        </div>
+        <div className="mt-3 h-2 overflow-hidden rounded-full bg-neutral-200 dark:bg-neutral-800" role="progressbar" aria-label="媒体存储使用率" aria-valuemin={0} aria-valuemax={100} aria-valuenow={Math.round(storage.usagePercent)}>
+          <div className={`h-full rounded-full ${storage.usagePercent >= 80 ? "bg-amber-500" : "bg-emerald-600"}`} style={{ width: `${Math.max(0, Math.min(100, storage.usagePercent))}%` }} />
+        </div>
+      </section>
+
       {!deletedView ? (
         <form onSubmit={upload} className="flex flex-wrap items-end gap-3 rounded-2xl border border-neutral-200 bg-white p-5 dark:border-neutral-800 dark:bg-neutral-900">
           <label className="grid min-w-64 flex-1 gap-2">
-            <span className="font-medium">上传图片或音频</span>
-            <input name="file" type="file" accept="image/jpeg,image/png,image/webp,audio/mpeg,audio/wav,audio/ogg,audio/opus" required className="rounded-xl border border-neutral-300 p-3 text-sm dark:border-neutral-700" />
-            <span className="text-xs text-neutral-500">图片支持 JPEG、PNG、WebP；音频支持 MP3、WAV、OGG、Opus。服务端会验证真实内容与扩展名。</span>
+            <span className="font-medium">上传图片、音频或文档</span>
+            <input name="file" type="file" accept="image/jpeg,image/png,image/webp,audio/mpeg,audio/wav,audio/ogg,audio/opus,application/pdf,text/plain,text/markdown,.md,.markdown" required className="rounded-xl border border-neutral-300 p-3 text-sm dark:border-neutral-700" />
+            <span className="text-xs text-neutral-500">支持 JPEG、PNG、WebP、MP3、WAV、OGG、Opus、PDF、UTF-8 TXT/Markdown。服务端会验证真实内容、扩展名与安全边界。</span>
           </label>
           <button type="submit" disabled={uploading} className="rounded-xl bg-neutral-900 px-5 py-3 font-medium text-white disabled:opacity-60 dark:bg-white dark:text-neutral-900">
             {uploading ? "上传中…" : "上传"}
@@ -141,6 +166,11 @@ export function MediaManager({ assets, deletedView }: MediaManagerProps) {
                     <span className="text-xs font-medium tracking-[0.18em] text-neutral-500">AUDIO / {humanDuration(asset.durationMs)}</span>
                     <audio controls preload="metadata" src={asset.url} className="w-full">浏览器不支持音频播放。</audio>
                   </div>
+                ) : asset.kind === "DOCUMENT" ? (
+                  <div className="grid gap-2 px-5 text-center">
+                    <span className="text-xs font-medium tracking-[0.18em] text-neutral-500">DOCUMENT / {asset.mime === "application/pdf" ? "PDF" : asset.mime === "text/markdown" ? "MARKDOWN" : "TEXT"}</span>
+                    <span className="line-clamp-2 text-sm font-medium">{asset.originalName ?? "未命名文档"}</span>
+                  </div>
                 ) : (
                   <span className="text-sm text-neutral-500">{asset.kind}</span>
                 )}
@@ -152,7 +182,7 @@ export function MediaManager({ assets, deletedView }: MediaManagerProps) {
                     {asset.kind} · {asset.width && asset.height ? `${asset.width}×${asset.height} · ` : ""}{humanBytes(asset.size)} · 引用 {asset.refCount}
                   </p>
                 </div>
-                <a href={asset.url} target="_blank" rel="noreferrer" className="truncate text-xs text-neutral-500 underline" title={asset.url}>{asset.url}</a>
+                <a href={asset.url} target="_blank" rel="noreferrer" download={asset.kind === "DOCUMENT" ? (asset.originalName ?? true) : undefined} className="truncate text-xs text-neutral-500 underline" title={asset.url}>{asset.kind === "DOCUMENT" ? "下载文档" : asset.url}</a>
                 <div className="flex flex-wrap gap-3 text-sm">
                   {!deletedView ? (
                     <>

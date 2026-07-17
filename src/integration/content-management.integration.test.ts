@@ -221,13 +221,16 @@ test("media upload, article references and protected deletion work end to end", 
   const email = `media-${suffix}@example.test`;
   const uploadRoot = await mkdtemp(path.join(os.tmpdir(), "blog-media-integration-"));
   const previousUploadRoot = process.env.UPLOAD_ROOT;
+  const previousStorageQuota = process.env.MAX_MEDIA_STORAGE_BYTES;
   let userId = "";
   let postId = "";
   let assetId = "";
   let audioAssetId = "";
+  let documentAssetId = "";
 
   process.env.JWT_SECRET = "integration-test-secret-with-at-least-32-characters";
   process.env.UPLOAD_ROOT = uploadRoot;
+  process.env.MAX_MEDIA_STORAGE_BYTES = String(2 * 1024 * 1024 * 1024);
 
   try {
     const user = await prisma.user.create({
@@ -274,15 +277,32 @@ test("media upload, article references and protected deletion work end to end", 
     const audioStoredPath = path.join(uploadRoot, ...audioUploaded.data.asset.url.replace("/uploads/", "").split("/"));
     await access(audioStoredPath);
 
+    const documentFormData = new FormData();
+    documentFormData.set("file", new File(["# Packing list\n\n- recorder\n"], "packing-list.md", { type: "text/markdown" }));
+    const documentUploadResponse = await uploadAsset(new Request("http://localhost/api/admin/assets", {
+      method: "POST",
+      headers: { cookie, origin: "http://localhost", "content-length": "512" },
+      body: documentFormData,
+    }));
+    assert.equal(documentUploadResponse.status, 201);
+    const documentUploaded = await documentUploadResponse.json() as {
+      data: { asset: { id: string; url: string; kind: string; mime: string } };
+    };
+    documentAssetId = documentUploaded.data.asset.id;
+    assert.equal(documentUploaded.data.asset.kind, "DOCUMENT");
+    assert.equal(documentUploaded.data.asset.mime, "text/markdown");
+    const documentStoredPath = path.join(uploadRoot, ...documentUploaded.data.asset.url.replace("/uploads/", "").split("/"));
+    await access(documentStoredPath);
+
     const createResponse = await createPost(new Request("http://localhost/api/admin/posts", {
       method: "POST",
       headers: { "content-type": "application/json", cookie },
       body: JSON.stringify({
         title: "Media lifecycle",
         slug: `media-${suffix}`,
-        contentMd: `![pixel](${uploaded.data.asset.url})\n\n[audio:field note](${audioUploaded.data.asset.url})`,
+        contentMd: `![pixel](${uploaded.data.asset.url})\n\n[audio:field note](${audioUploaded.data.asset.url})\n\n[Packing list](${documentUploaded.data.asset.url})`,
         status: "DRAFT",
-        assetIds: [assetId, audioAssetId],
+        assetIds: [assetId, audioAssetId, documentAssetId],
       }),
     }));
     assert.equal(createResponse.status, 201);
@@ -290,6 +310,7 @@ test("media upload, article references and protected deletion work end to end", 
     postId = created.data.post.id;
     assert.equal((await prisma.asset.findUniqueOrThrow({ where: { id: assetId } })).refCount, 1);
     assert.equal((await prisma.asset.findUniqueOrThrow({ where: { id: audioAssetId } })).refCount, 1);
+    assert.equal((await prisma.asset.findUniqueOrThrow({ where: { id: documentAssetId } })).refCount, 1);
 
     const blockedDelete = await deleteAsset(
       new Request(`http://localhost/api/admin/assets/${assetId}`, { method: "DELETE", headers: { cookie, origin: "http://localhost" } }),
@@ -301,6 +322,11 @@ test("media upload, article references and protected deletion work end to end", 
       { params: Promise.resolve({ id: audioAssetId }) },
     );
     assert.equal(blockedAudioDelete.status, 409);
+    const blockedDocumentDelete = await deleteAsset(
+      new Request(`http://localhost/api/admin/assets/${documentAssetId}`, { method: "DELETE", headers: { cookie, origin: "http://localhost" } }),
+      { params: Promise.resolve({ id: documentAssetId }) },
+    );
+    assert.equal(blockedDocumentDelete.status, 409);
 
     const protectedDetachResponse = await updatePost(
       new Request(`http://localhost/api/admin/posts/${postId}`, {
@@ -313,6 +339,7 @@ test("media upload, article references and protected deletion work end to end", 
     assert.equal(protectedDetachResponse.status, 200);
     assert.equal((await prisma.asset.findUniqueOrThrow({ where: { id: assetId } })).refCount, 1);
     assert.equal((await prisma.asset.findUniqueOrThrow({ where: { id: audioAssetId } })).refCount, 1);
+    assert.equal((await prisma.asset.findUniqueOrThrow({ where: { id: documentAssetId } })).refCount, 1);
 
     const detachResponse = await updatePost(
       new Request(`http://localhost/api/admin/posts/${postId}`, {
@@ -325,6 +352,18 @@ test("media upload, article references and protected deletion work end to end", 
     assert.equal(detachResponse.status, 200);
     assert.equal((await prisma.asset.findUniqueOrThrow({ where: { id: assetId } })).refCount, 0);
     assert.equal((await prisma.asset.findUniqueOrThrow({ where: { id: audioAssetId } })).refCount, 0);
+    assert.equal((await prisma.asset.findUniqueOrThrow({ where: { id: documentAssetId } })).refCount, 0);
+
+    process.env.MAX_MEDIA_STORAGE_BYTES = "1";
+    const quotaFormData = new FormData();
+    quotaFormData.set("file", new File(["quota check"], "quota.txt", { type: "text/plain" }));
+    const quotaResponse = await uploadAsset(new Request("http://localhost/api/admin/assets", {
+      method: "POST",
+      headers: { cookie, origin: "http://localhost", "content-length": "256" },
+      body: quotaFormData,
+    }));
+    assert.equal(quotaResponse.status, 507);
+    process.env.MAX_MEDIA_STORAGE_BYTES = String(2 * 1024 * 1024 * 1024);
 
     const deleteResponse = await deleteAsset(
       new Request(`http://localhost/api/admin/assets/${assetId}`, { method: "DELETE", headers: { cookie, origin: "http://localhost" } }),
@@ -361,13 +400,27 @@ test("media upload, article references and protected deletion work end to end", 
     )).status, 200);
     await assert.rejects(access(audioStoredPath));
     audioAssetId = "";
+
+    assert.equal((await deleteAsset(
+      new Request(`http://localhost/api/admin/assets/${documentAssetId}`, { method: "DELETE", headers: { cookie, origin: "http://localhost" } }),
+      { params: Promise.resolve({ id: documentAssetId }) },
+    )).status, 200);
+    assert.equal((await purgeAsset(
+      new Request(`http://localhost/api/admin/assets/${documentAssetId}/purge`, { method: "DELETE", headers: { cookie, origin: "http://localhost" } }),
+      { params: Promise.resolve({ id: documentAssetId }) },
+    )).status, 200);
+    await assert.rejects(access(documentStoredPath));
+    documentAssetId = "";
   } finally {
     if (postId) await prisma.post.deleteMany({ where: { id: postId } });
     if (assetId) await prisma.asset.deleteMany({ where: { id: assetId } });
     if (audioAssetId) await prisma.asset.deleteMany({ where: { id: audioAssetId } });
+    if (documentAssetId) await prisma.asset.deleteMany({ where: { id: documentAssetId } });
     if (userId) await prisma.user.deleteMany({ where: { id: userId } });
     if (previousUploadRoot === undefined) delete process.env.UPLOAD_ROOT;
     else process.env.UPLOAD_ROOT = previousUploadRoot;
+    if (previousStorageQuota === undefined) delete process.env.MAX_MEDIA_STORAGE_BYTES;
+    else process.env.MAX_MEDIA_STORAGE_BYTES = previousStorageQuota;
     await rm(uploadRoot, { recursive: true, force: true });
     await prisma.$disconnect();
   }

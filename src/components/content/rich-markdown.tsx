@@ -28,10 +28,13 @@ export function RichMarkdown({ markdown, assets = [] }: RichMarkdownProps) {
             <span className="mb-3 block text-sm font-medium">{title}</span>
             <audio controls preload="metadata" className="w-full">
               <source src={asset.url} type={asset.mime} />
-              浏览器不支持音频播放。你可以<a href={asset.url}>下载音频文件</a>。
+              浏览器不支持音频播放。你可以<a href={asset.url} download={asset.originalName ?? true}>下载音频文件</a>。
             </audio>
           </span>
         );
+      }
+      if (asset?.kind === "DOCUMENT") {
+        return <a href={href} download={asset.originalName ?? true}>{children}</a>;
       }
       if (href && label.toLowerCase().startsWith("video:")) {
         const video = parseTrustedVideoUrl(href);

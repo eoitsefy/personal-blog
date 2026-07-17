@@ -2,6 +2,7 @@ import { createHash } from "node:crypto";
 import { Prisma } from "@prisma/client";
 import { fail, logApi, ok } from "@/lib/api";
 import { getMaxUploadBytes, MediaValidationError } from "@/lib/media/image";
+import { getMediaStorageQuotaBytes, mediaStorageStatus, wouldExceedMediaStorageQuota } from "@/lib/media/quota";
 import { validateAssetUpload } from "@/lib/media/upload";
 import { ADMIN_ASSET_PAGE_SIZE, adminAssetListQuerySchema } from "@/lib/media/validators";
 import { prisma } from "@/lib/prisma";
@@ -24,6 +25,8 @@ const assetSelect = {
   createdAt: true,
 } satisfies Prisma.AssetSelect;
 
+class MediaStorageQuotaError extends Error {}
+
 export async function GET(req: Request) {
   const auth = await requireAdmin(req);
   if (!auth.ok) return auth.response;
@@ -35,9 +38,10 @@ export async function GET(req: Request) {
   const where: Prisma.AssetWhereInput = {
     deletedAt: query.deleted === "trash" ? { not: null } : null,
     kind: query.kind === "ALL" ? undefined : query.kind,
+    refCount: query.referenced === "REFERENCED" ? { gt: 0 } : query.referenced === "UNUSED" ? 0 : undefined,
     originalName: query.q ? { contains: query.q, mode: "insensitive" } : undefined,
   };
-  const [total, assets] = await Promise.all([
+  const [total, assets, usage] = await Promise.all([
     prisma.asset.count({ where }),
     prisma.asset.findMany({
       where,
@@ -46,6 +50,7 @@ export async function GET(req: Request) {
       take: ADMIN_ASSET_PAGE_SIZE,
       select: assetSelect,
     }),
+    prisma.asset.aggregate({ _sum: { size: true } }),
   ]);
 
   return ok({
@@ -56,6 +61,7 @@ export async function GET(req: Request) {
       total,
       totalPages: Math.max(1, Math.ceil(total / ADMIN_ASSET_PAGE_SIZE)),
     },
+    storage: mediaStorageStatus(usage._sum.size ?? 0),
   }, auth.requestId);
 }
 
@@ -90,24 +96,32 @@ export async function POST(req: Request) {
     if (!(file instanceof File)) return fail("BAD_REQUEST", "请选择媒体文件", 400, auth.requestId);
 
     const upload = await validateAssetUpload(file);
-    key = createAssetKey(upload.extension);
-    await storage.write(key, upload.bytes);
+    const quotaBytes = getMediaStorageQuotaBytes();
+    const asset = await prisma.$transaction(async (tx) => {
+      await tx.$queryRaw`SELECT pg_advisory_xact_lock(734281946)`;
+      const usage = await tx.asset.aggregate({ _sum: { size: true } });
+      if (wouldExceedMediaStorageQuota(usage._sum.size ?? 0, upload.size, quotaBytes)) {
+        throw new MediaStorageQuotaError();
+      }
 
-    const asset = await prisma.asset.create({
-      data: {
-        ossKey: key,
-        url: publicAssetUrl(key),
-        originalName: upload.originalName,
-        kind: upload.kind,
-        mime: upload.mime,
-        size: upload.size,
-        width: upload.width,
-        height: upload.height,
-        durationMs: upload.durationMs,
-        sha256: createHash("sha256").update(upload.bytes).digest("hex"),
-        ownerId: auth.user.id,
-      },
-      select: assetSelect,
+      key = createAssetKey(upload.extension);
+      await storage.write(key, upload.bytes);
+      return tx.asset.create({
+        data: {
+          ossKey: key,
+          url: publicAssetUrl(key),
+          originalName: upload.originalName,
+          kind: upload.kind,
+          mime: upload.mime,
+          size: upload.size,
+          width: upload.width,
+          height: upload.height,
+          durationMs: upload.durationMs,
+          sha256: createHash("sha256").update(upload.bytes).digest("hex"),
+          ownerId: auth.user.id,
+        },
+        select: assetSelect,
+      });
     });
 
     logApi({
@@ -121,6 +135,9 @@ export async function POST(req: Request) {
     return ok({ asset }, auth.requestId, 201);
   } catch (error) {
     if (key) await storage.delete(key).catch(() => undefined);
+    if (error instanceof MediaStorageQuotaError) {
+      return fail("CONFLICT", "媒体存储空间不足，请永久删除不再使用的回收站文件后重试", 507, auth.requestId);
+    }
     if (error instanceof MediaValidationError) {
       return fail("BAD_REQUEST", error.message, 400, auth.requestId);
     }

@@ -127,7 +127,7 @@ Verification notes:
 
 Priority: P1
 
-Status: `[IN PROGRESS 2026-07-17]` Typed assets, validated local audio, media filtering, protected audio references, native playback, and allowlisted Bilibili/YouTube structured embeds are implemented on the development branch. Document assets, quotas, CI integration execution, review, and production verification remain.
+Status: `[IN PROGRESS 2026-07-17]` Typed assets, validated local audio, protected media references, native playback, allowlisted Bilibili/YouTube structured embeds, controlled PDF/TXT/Markdown documents, reference-state filtering, and total-storage quota protection are implemented on the development branch. CI integration execution, review, merge, and production verification remain.
 
 Tasks:
 
@@ -136,6 +136,8 @@ Tasks:
 - Add media type/name filters, audio playback, structured insertion, and reference protection.
 - Add controlled trusted video embeds without arbitrary HTML or iframe support.
 - Add document/other-file policy, storage quotas, and operational usage reporting.
+
+Current document policy intentionally allows only passive PDF and UTF-8 TXT/Markdown. HTML, SVG, Office documents, archives, executables, and PDFs with obvious script/attachment actions are rejected rather than stored as generic files. The configured total quota counts recycle-bin assets until permanent deletion removes the physical file.
 
 Acceptance:
 
