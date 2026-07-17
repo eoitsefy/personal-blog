@@ -98,7 +98,8 @@ export async function POST(req: Request) {
     const upload = await validateAssetUpload(file);
     const quotaBytes = getMediaStorageQuotaBytes();
     const asset = await prisma.$transaction(async (tx) => {
-      await tx.$queryRaw`SELECT pg_advisory_xact_lock(734281946)`;
+      // Prisma cannot deserialize PostgreSQL's void return type, so expose the lock result as text.
+      await tx.$queryRaw`SELECT pg_advisory_xact_lock(734281946)::text AS "lockResult"`;
       const usage = await tx.asset.aggregate({ _sum: { size: true } });
       if (wouldExceedMediaStorageQuota(usage._sum.size ?? 0, upload.size, quotaBytes)) {
         throw new MediaStorageQuotaError();
