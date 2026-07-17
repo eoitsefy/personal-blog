@@ -4,7 +4,8 @@ import { fail, getRequestId, logApi } from "@/lib/api";
 import {
   ADMIN_SESSION_COOKIE_NAME,
   ADMIN_SESSION_MAX_AGE,
-  signAdminSession,
+  issueUserSession,
+  LEGACY_ADMIN_SESSION_COOKIE_NAME,
   verifyPassword,
 } from "@/lib/auth";
 import {
@@ -51,7 +52,7 @@ export async function POST(req: Request) {
 
     const user = await prisma.user.findUnique({
       where: { email },
-      select: { id: true, email: true, passwordHash: true, role: true },
+      select: { id: true, email: true, passwordHash: true, role: true, status: true },
     });
 
     // Always run a bcrypt comparison so unknown accounts do not create a timing side channel.
@@ -61,7 +62,7 @@ export async function POST(req: Request) {
       user?.passwordHash ?? fallbackHash,
     ).catch(() => false);
 
-    if (!user || user.role !== "ADMIN" || !passwordMatches) {
+    if (!user || user.role !== "ADMIN" || user.status !== "ACTIVE" || !passwordMatches) {
       await recordLoginFailure(throttleKey);
       logApi({
         requestId,
@@ -75,7 +76,7 @@ export async function POST(req: Request) {
 
     await clearLoginFailures(throttleKey);
 
-    const token = signAdminSession({ userId: user.id, role: "ADMIN" });
+    const session = await issueUserSession(user.id);
     const response = NextResponse.json(
       {
         success: true,
@@ -86,13 +87,20 @@ export async function POST(req: Request) {
       { headers: { "Cache-Control": "no-store" } },
     );
 
-    response.cookies.set(ADMIN_SESSION_COOKIE_NAME, token, {
+    response.cookies.set(ADMIN_SESSION_COOKIE_NAME, session.token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "lax",
       path: "/",
       maxAge: ADMIN_SESSION_MAX_AGE,
       priority: "high",
+    });
+    response.cookies.set(LEGACY_ADMIN_SESSION_COOKIE_NAME, "", {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
+      path: "/",
+      maxAge: 0,
     });
 
     logApi({

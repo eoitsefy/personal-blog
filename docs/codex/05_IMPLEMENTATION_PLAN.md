@@ -127,7 +127,7 @@ Verification notes:
 
 Priority: P1
 
-Status: `[IN PROGRESS 2026-07-17]` Typed assets, validated local audio, protected media references, native playback, allowlisted Bilibili/YouTube structured embeds, controlled PDF/TXT/Markdown documents, reference-state filtering, and total-storage quota protection are implemented on the development branch. CI integration execution, review, merge, and production verification remain.
+Status: `[DEPLOYED AND VERIFIED 2026-07-17]` Typed assets, validated local audio, protected media references, native playback, allowlisted Bilibili/YouTube structured embeds, controlled PDF/TXT/Markdown documents, reference-state filtering, and serialized total-storage quota protection are deployed at `25743e5`. Migration, Nginx MIME, CSP, quota, public routes, recycle-bin behavior, and browser workflows passed production verification.
 
 Tasks:
 
@@ -150,8 +150,11 @@ Acceptance:
 
 Priority: P1
 
+Status: `[IN PROGRESS 2026-07-17]` The first foundation slice adds closed user roles, active/disabled account state, email-verification state, and revocable hashed database sessions. Public registration, password reset, and comment submission remain disabled.
+
 Tasks:
 
+- Deploy and verify the account/session migration; confirm the one-time administrator sign-in reset and disabled-account enforcement.
 - Add verified user registration, login, reset, suspension, and role boundaries.
 - Add authenticated comments, first-level replies, moderation, reporting, and anti-spam controls.
 - Add privacy and user-content rules before public registration opens.

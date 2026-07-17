@@ -25,10 +25,12 @@ async function main() {
   const passwordHash = await bcrypt.hash(password, 12);
   const admin = await prisma.user.upsert({
     where: { email },
-    update: { passwordHash, role: "ADMIN" },
-    create: { email, passwordHash, role: "ADMIN" },
+    update: { passwordHash, role: "ADMIN", status: "ACTIVE", emailVerifiedAt: new Date() },
+    create: { email, passwordHash, role: "ADMIN", status: "ACTIVE", emailVerifiedAt: new Date() },
     select: { id: true, email: true, role: true },
   });
+
+  await prisma.userSession.deleteMany({ where: { userId: admin.id } });
 
   console.log(`Administrator ready: ${admin.email} (${admin.id})`);
 }

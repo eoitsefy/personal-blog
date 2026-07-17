@@ -29,7 +29,6 @@ jobs:
     env:
       DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:5432/personal_blog_test?schema=public
       TEST_DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:5432/personal_blog_test?schema=public
-      JWT_SECRET: github-actions-integration-secret-with-at-least-32-characters
       NEXT_TELEMETRY_DISABLED: "1"
     steps:
       - uses: actions/checkout@v4
