@@ -37,10 +37,11 @@ Confirm:
 - upload directory is mounted/preserved;
 - certificate is currently valid;
 - the previous application image/tag or commit is recorded.
-- `POSTGRES_PASSWORD`, `DATABASE_URL`, and `JWT_SECRET` contain non-placeholder production values.
+- `POSTGRES_PASSWORD` and `DATABASE_URL` contain non-placeholder production values. Phase 4B sessions are opaque, hashed database records and no longer require `JWT_SECRET`.
 - `UPLOAD_ROOT=/app/uploads`, `MAX_UPLOAD_BYTES` is an approved positive per-file limit, `MAX_MEDIA_STORAGE_BYTES` is an approved positive total quota, and `/var/www/personal-blog/uploads` exists with write access for the application container.
 - the Phase 1B migration has been reviewed; it adds taxonomy, login-throttle, and soft-delete columns without dropping content.
 - the Phase 2 migration has been reviewed; it adds optional asset filename/dimension metadata and an asset recycle-bin index without dropping media records.
+- the Phase 4B migration has been reviewed; it converts roles to a closed enum, adds account status and database sessions, and intentionally signs administrators out once during deployment.
 
 ## Manual backup before a risky release
 

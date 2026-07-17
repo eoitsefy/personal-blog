@@ -13,8 +13,9 @@ import { DELETE as deletePost, PATCH as updatePost } from "@/app/api/admin/posts
 import { DELETE as purgePost } from "@/app/api/admin/posts/[id]/purge/route";
 import { POST as restorePost } from "@/app/api/admin/posts/[id]/restore/route";
 import { POST as login } from "@/app/api/auth/login/route";
+import { POST as logout } from "@/app/api/auth/logout/route";
 import { GET as listPublicPosts } from "@/app/api/posts/route";
-import { hashPassword } from "@/lib/auth";
+import { hashPassword, hashSessionToken, parseCookie, SESSION_COOKIE_NAME } from "@/lib/auth";
 import { loginThrottleKey } from "@/lib/login-throttle";
 
 const prisma = new PrismaClient();
@@ -22,6 +23,89 @@ const PNG_1X1 = Buffer.from(
   "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAusB9Y9ZlZsAAAAASUVORK5CYII=",
   "base64",
 );
+
+test("database sessions can be revoked and disabled accounts lose access", async () => {
+  const suffix = `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+  const email = `session-${suffix}@example.test`;
+  const address = `198.51.100.${Math.floor(Math.random() * 200) + 1}`;
+  let userId = "";
+  let postId = "";
+  let throttleKey = "";
+
+  try {
+    const user = await prisma.user.create({
+      data: {
+        email,
+        passwordHash: await hashPassword("correct-horse-battery-staple"),
+        role: "ADMIN",
+        emailVerifiedAt: new Date(),
+      },
+      select: { id: true },
+    });
+    userId = user.id;
+
+    const loginRequest = () => new Request("http://localhost/api/auth/login", {
+      method: "POST",
+      headers: { "content-type": "application/json", "x-real-ip": address },
+      body: JSON.stringify({ email, password: "correct-horse-battery-staple" }),
+    });
+    throttleKey = loginThrottleKey(loginRequest(), email);
+    const loginResponse = await login(loginRequest());
+    assert.equal(loginResponse.status, 200);
+    const cookie = loginResponse.headers.get("set-cookie")?.split(";", 1)[0];
+    if (!cookie?.startsWith(`${SESSION_COOKIE_NAME}=`)) throw new Error("Database session cookie is missing");
+    const rawToken = parseCookie(cookie)[SESSION_COOKIE_NAME];
+    assert.ok(rawToken);
+
+    const session = await prisma.userSession.findUniqueOrThrow({
+      where: { tokenHash: hashSessionToken(rawToken) },
+      select: { revokedAt: true, userId: true },
+    });
+    assert.equal(session.userId, userId);
+    assert.equal(session.revokedAt, null);
+
+    const createResponse = await createPost(new Request("http://localhost/api/admin/posts", {
+      method: "POST",
+      headers: { "content-type": "application/json", cookie },
+      body: JSON.stringify({ title: "Session boundary", slug: `session-${suffix}`, contentMd: "Session test", status: "DRAFT" }),
+    }));
+    assert.equal(createResponse.status, 201);
+    postId = ((await createResponse.json()) as { data: { post: { id: string } } }).data.post.id;
+
+    const logoutResponse = await logout(new Request("http://localhost/api/auth/logout", {
+      method: "POST",
+      headers: { cookie, origin: "http://localhost" },
+    }));
+    assert.equal(logoutResponse.status, 200);
+    assert.ok((await prisma.userSession.findUniqueOrThrow({ where: { tokenHash: hashSessionToken(rawToken) } })).revokedAt);
+
+    const revokedResponse = await createPost(new Request("http://localhost/api/admin/posts", {
+      method: "POST",
+      headers: { "content-type": "application/json", cookie },
+      body: JSON.stringify({ title: "Revoked", slug: `revoked-${suffix}`, contentMd: "Denied", status: "DRAFT" }),
+    }));
+    assert.equal(revokedResponse.status, 401);
+
+    const secondLogin = await login(loginRequest());
+    const secondCookie = secondLogin.headers.get("set-cookie")?.split(";", 1)[0];
+    assert.equal(secondLogin.status, 200);
+    if (!secondCookie) throw new Error("Second database session cookie is missing");
+    await prisma.user.update({ where: { id: userId }, data: { status: "DISABLED" } });
+
+    const disabledResponse = await createPost(new Request("http://localhost/api/admin/posts", {
+      method: "POST",
+      headers: { "content-type": "application/json", cookie: secondCookie },
+      body: JSON.stringify({ title: "Disabled", slug: `disabled-${suffix}`, contentMd: "Denied", status: "DRAFT" }),
+    }));
+    assert.equal(disabledResponse.status, 401);
+    assert.equal((await login(loginRequest())).status, 401);
+  } finally {
+    if (postId) await prisma.post.deleteMany({ where: { id: postId } });
+    if (userId) await prisma.user.deleteMany({ where: { id: userId } });
+    if (throttleKey) await prisma.loginThrottle.deleteMany({ where: { key: throttleKey } });
+    await prisma.$disconnect();
+  }
+});
 
 function pcmWav() {
   const dataSize = 8_000;
@@ -49,8 +133,6 @@ test("authenticated article lifecycle integrates taxonomy, search and soft delet
   let userId = "";
   let postId = "";
   let throttleKey = "";
-
-  process.env.JWT_SECRET = "integration-test-secret-with-at-least-32-characters";
 
   try {
     const user = await prisma.user.create({
@@ -141,8 +223,6 @@ test("permanent deletion is restricted to trashed posts", async () => {
   let trashedPostId = "";
   let assetId = "";
 
-  process.env.JWT_SECRET = "integration-test-secret-with-at-least-32-characters";
-
   try {
     const user = await prisma.user.create({
       data: { email, passwordHash: await hashPassword("correct-horse-battery-staple"), role: "ADMIN" },
@@ -228,7 +308,6 @@ test("media upload, article references and protected deletion work end to end", 
   let audioAssetId = "";
   let documentAssetId = "";
 
-  process.env.JWT_SECRET = "integration-test-secret-with-at-least-32-characters";
   process.env.UPLOAD_ROOT = uploadRoot;
   process.env.MAX_MEDIA_STORAGE_BYTES = String(2 * 1024 * 1024 * 1024);
 
