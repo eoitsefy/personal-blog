@@ -1,0 +1,518 @@
+.page {
+  overflow-x: clip;
+  color: #f5f3ed;
+  background: var(--night);
+}
+
+.hero {
+  position: relative;
+  min-height: min(900px, 100svh);
+  overflow: hidden;
+  isolation: isolate;
+  background: #101319;
+}
+
+.heroImage {
+  z-index: -4;
+  object-fit: cover;
+  object-position: center;
+}
+
+.heroShade {
+  position: absolute;
+  z-index: -3;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(8, 10, 13, 0.99) 0%, rgba(8, 10, 13, 0.9) 28%, rgba(8, 10, 13, 0.22) 68%, rgba(8, 10, 13, 0.12) 100%),
+    linear-gradient(180deg, rgba(8, 10, 13, 0.08) 52%, rgba(8, 10, 13, 0.94) 100%);
+}
+
+.heroGrid {
+  position: absolute;
+  z-index: -2;
+  inset: 0;
+  opacity: 0.2;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.06) 1px, transparent 1px);
+  background-size: 96px 96px;
+  mask-image: linear-gradient(90deg, #000, transparent 68%);
+}
+
+.heroContent {
+  width: min(100% - 48px, 1320px);
+  min-height: min(900px, 100svh);
+  margin: 0 auto;
+  padding: 148px 0 108px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 80px;
+}
+
+.heroCopy {
+  width: min(680px, 58vw);
+}
+
+.eyebrow,
+.cardTopline,
+.sectionHeading > div > span,
+.aboutLabel {
+  font-family: "Arial Narrow", Arial, sans-serif;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-bottom: 30px;
+  color: var(--signal-strong);
+  font-size: 0.65rem;
+}
+
+.eyebrow span:first-child::before {
+  content: "";
+  display: inline-block;
+  width: 30px;
+  height: 2px;
+  margin: 0 12px 3px 0;
+  background: currentColor;
+}
+
+.eyebrow span:last-child {
+  color: rgba(255,255,255,0.46);
+}
+
+.heroCopy h1 {
+  max-width: 680px;
+  margin: 0;
+  font-family: Georgia, "Noto Serif SC", "Songti SC", serif;
+  font-size: clamp(3.7rem, 7vw, 7.4rem);
+  font-weight: 600;
+  line-height: 1.02;
+  letter-spacing: -0.055em;
+  text-shadow: 0 12px 40px rgba(0,0,0,0.4);
+}
+
+.heroCopy h1 em {
+  color: var(--signal-strong);
+  font-style: normal;
+}
+
+.heroCopy > p {
+  margin: 30px 0 0;
+  color: rgba(245,243,237,0.7);
+  font-family: Georgia, "Noto Serif SC", serif;
+  font-size: 1rem;
+  line-height: 2;
+}
+
+.heroActions {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  margin-top: 38px;
+}
+
+.primaryAction,
+.secondaryAction {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  font-size: 0.82rem;
+  letter-spacing: 0.06em;
+  transition: transform 180ms ease, background 180ms ease, color 180ms ease;
+}
+
+.primaryAction {
+  gap: 28px;
+  padding: 0 22px;
+  color: var(--night);
+  background: var(--signal-strong);
+}
+
+.primaryAction:hover {
+  transform: translateY(-2px);
+  background: #ffd55d;
+}
+
+.secondaryAction {
+  color: rgba(255,255,255,0.7);
+  border-bottom: 1px solid rgba(255,255,255,0.34);
+}
+
+.secondaryAction:hover {
+  color: white;
+}
+
+.coordinateCard {
+  width: 230px;
+  align-self: flex-end;
+  margin-bottom: 46px;
+  padding: 17px;
+  display: grid;
+  gap: 18px;
+  color: rgba(255,255,255,0.76);
+  border: 1px solid rgba(255,255,255,0.18);
+  background: rgba(10,12,15,0.58);
+  backdrop-filter: blur(12px);
+}
+
+.coordinateIndex {
+  padding-bottom: 12px;
+  color: var(--signal-strong);
+  border-bottom: 1px solid rgba(255,255,255,0.14);
+  font-family: monospace;
+  font-size: 0.7rem;
+}
+
+.coordinateCard div {
+  display: grid;
+  gap: 5px;
+}
+
+.coordinateCard small {
+  font-size: 0.52rem;
+  letter-spacing: 0.16em;
+  opacity: 0.5;
+}
+
+.coordinateCard strong {
+  font-family: monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.04em;
+}
+
+.coordinateCard strong i {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  margin-right: 5px;
+  border-radius: 50%;
+  background: #75d49b;
+  box-shadow: 0 0 10px #75d49b;
+}
+
+.scrollHint {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  color: rgba(255,255,255,0.45);
+  font-family: monospace;
+  font-size: 0.57rem;
+  letter-spacing: 0.16em;
+  transform: translateX(-50%);
+}
+
+.scrollHint i {
+  width: 28px;
+  height: 1px;
+  background: currentColor;
+}
+
+.notebooks {
+  padding: 116px max(24px, calc((100vw - 1320px) / 2));
+  color: var(--ink);
+  background:
+    linear-gradient(rgba(20,22,25,0.035) 1px, transparent 1px),
+    var(--paper);
+  background-size: 100% 68px;
+}
+
+.sectionHeading {
+  display: grid;
+  grid-template-columns: 1.4fr 0.6fr;
+  gap: 60px;
+  align-items: end;
+  margin-bottom: 52px;
+}
+
+.sectionHeading > div > span {
+  color: #9a7621;
+  font-size: 0.66rem;
+}
+
+.sectionHeading h2,
+.aboutCopy h2 {
+  margin: 13px 0 0;
+  font-family: Georgia, "Noto Serif SC", serif;
+  font-size: clamp(2rem, 3.5vw, 3.8rem);
+  font-weight: 500;
+  line-height: 1.28;
+  letter-spacing: -0.035em;
+}
+
+.sectionHeading > p {
+  max-width: 390px;
+  margin: 0;
+  color: var(--ink-soft);
+  font-family: Georgia, "Noto Serif SC", serif;
+  font-size: 0.9rem;
+  line-height: 1.9;
+}
+
+.notebookGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border-top: 1px solid var(--line);
+  border-left: 1px solid var(--line);
+}
+
+.notebookCard {
+  position: relative;
+  min-height: 350px;
+  padding: 31px;
+  overflow: hidden;
+  border-right: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  background: rgba(248,247,242,0.56);
+  transition: color 220ms ease, background 220ms ease;
+}
+
+.notebookCard:hover {
+  color: #f4f2ec;
+  background: var(--night-soft);
+}
+
+.cardAccent {
+  position: absolute;
+  inset: 0 0 auto;
+  height: 4px;
+  transform: scaleX(0.18);
+  transform-origin: left;
+  transition: transform 260ms ease;
+}
+
+.notebookCard:hover .cardAccent {
+  transform: scaleX(1);
+}
+
+.amber { background: var(--signal); }
+.blue { background: #628aa0; }
+.red { background: #a84b43; }
+
+.cardTopline {
+  display: flex;
+  justify-content: space-between;
+  color: var(--ink-soft);
+  font-size: 0.58rem;
+}
+
+.notebookCard:hover .cardTopline {
+  color: rgba(255,255,255,0.5);
+}
+
+.notebookCard h3 {
+  margin: 86px 0 17px;
+  font-family: Georgia, "Noto Serif SC", serif;
+  font-size: 1.65rem;
+  font-weight: 500;
+}
+
+.notebookCard p {
+  max-width: 310px;
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 0.88rem;
+  line-height: 1.8;
+}
+
+.notebookCard:hover p {
+  color: rgba(255,255,255,0.62);
+}
+
+.cardArrow {
+  position: absolute;
+  right: 28px;
+  bottom: 24px;
+  font-size: 1.35rem;
+}
+
+.about {
+  width: min(100% - 48px, 1320px);
+  min-height: 540px;
+  margin: 0 auto;
+  padding: 100px 0;
+  display: grid;
+  grid-template-columns: 0.35fr 1fr 0.65fr;
+  gap: 60px;
+  align-items: center;
+}
+
+.aboutLabel {
+  align-self: start;
+  display: grid;
+  gap: 12px;
+  color: rgba(255,255,255,0.45);
+  font-size: 0.56rem;
+}
+
+.aboutLabel b {
+  color: var(--signal);
+  font-weight: 500;
+}
+
+.aboutCopy h2 {
+  max-width: 650px;
+}
+
+.aboutCopy p {
+  max-width: 680px;
+  margin: 26px 0 0;
+  color: rgba(255,255,255,0.58);
+  font-family: Georgia, "Noto Serif SC", serif;
+  font-size: 0.95rem;
+  line-height: 2;
+}
+
+.aboutCopy a {
+  display: inline-flex;
+  gap: 24px;
+  margin-top: 32px;
+  padding-bottom: 8px;
+  color: var(--signal-strong);
+  border-bottom: 1px solid rgba(233,185,73,0.42);
+  font-size: 0.82rem;
+}
+
+.aboutGraphic {
+  position: relative;
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(255,255,255,0.14);
+  transform: rotate(45deg);
+}
+
+.aboutGraphic::before,
+.aboutGraphic::after {
+  content: "";
+  position: absolute;
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+.aboutGraphic::before { inset: 15%; }
+.aboutGraphic::after { inset: 31%; }
+
+.aboutGraphic span,
+.aboutGraphic b {
+  position: absolute;
+  font-family: monospace;
+  font-weight: 400;
+  transform: rotate(-45deg);
+}
+
+.aboutGraphic span {
+  font-size: clamp(2.5rem, 5vw, 5.4rem);
+  letter-spacing: -0.1em;
+}
+
+.aboutGraphic b {
+  right: 4%;
+  bottom: 7%;
+  color: var(--signal);
+  font-size: 0.65rem;
+}
+
+.aboutGraphic i {
+  width: 8px;
+  height: 8px;
+  background: var(--signal);
+}
+
+@media (max-width: 980px) {
+  .coordinateCard,
+  .aboutGraphic {
+    display: none;
+  }
+
+  .heroCopy {
+    width: min(650px, 78vw);
+  }
+
+  .notebookGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .notebookCard {
+    min-height: 280px;
+  }
+
+  .notebookCard h3 {
+    margin-top: 54px;
+  }
+
+  .about {
+    grid-template-columns: 0.3fr 1fr;
+  }
+}
+
+@media (max-width: 700px) {
+  .hero {
+    min-height: 780px;
+  }
+
+  .heroImage {
+    object-position: 68% center;
+  }
+
+  .heroShade {
+    background:
+      linear-gradient(90deg, rgba(8,10,13,0.96), rgba(8,10,13,0.55)),
+      linear-gradient(180deg, transparent 40%, rgba(8,10,13,0.94));
+  }
+
+  .heroContent {
+    width: min(100% - 30px, 1320px);
+    min-height: 780px;
+    padding: 130px 0 92px;
+  }
+
+  .heroCopy {
+    width: 100%;
+  }
+
+  .heroCopy h1 {
+    font-size: clamp(3.2rem, 17vw, 5.2rem);
+  }
+
+  .heroCopy > p br {
+    display: none;
+  }
+
+  .heroActions {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .scrollHint {
+    display: none;
+  }
+
+  .notebooks {
+    padding: 80px 15px;
+  }
+
+  .sectionHeading {
+    grid-template-columns: 1fr;
+    gap: 22px;
+  }
+
+  .notebookCard {
+    padding: 25px;
+  }
+
+  .about {
+    width: min(100% - 30px, 1320px);
+    padding: 76px 0;
+    grid-template-columns: 1fr;
+    gap: 34px;
+  }
+}
