@@ -20,6 +20,7 @@ import { readJsonMutation } from "@/lib/request-security";
 const LoginSchema = z.object({
   email: z.string().trim().email().max(120),
   password: z.string().min(8).max(128),
+  audience: z.enum(["ADMIN", "USER"]).default("ADMIN"),
 });
 
 export async function POST(req: Request) {
@@ -52,7 +53,7 @@ export async function POST(req: Request) {
 
     const user = await prisma.user.findUnique({
       where: { email },
-      select: { id: true, email: true, passwordHash: true, role: true, status: true },
+      select: { id: true, email: true, passwordHash: true, role: true, status: true, emailVerifiedAt: true },
     });
 
     // Always run a bcrypt comparison so unknown accounts do not create a timing side channel.
@@ -62,7 +63,10 @@ export async function POST(req: Request) {
       user?.passwordHash ?? fallbackHash,
     ).catch(() => false);
 
-    if (!user || user.role !== "ADMIN" || user.status !== "ACTIVE" || !passwordMatches) {
+    const audienceAllowed = parsed.data.audience === "ADMIN"
+      ? user?.role === "ADMIN"
+      : Boolean(user?.emailVerifiedAt);
+    if (!user || !audienceAllowed || user.status !== "ACTIVE" || !passwordMatches) {
       await recordLoginFailure(throttleKey);
       logApi({
         requestId,
@@ -80,7 +84,7 @@ export async function POST(req: Request) {
     const response = NextResponse.json(
       {
         success: true,
-        data: { user: { id: user.id, email: user.email, role: "ADMIN" } },
+        data: { user: { id: user.id, email: user.email, role: user.role } },
         error: null,
         requestId,
       },

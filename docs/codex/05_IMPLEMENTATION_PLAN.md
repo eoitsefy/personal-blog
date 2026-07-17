@@ -150,7 +150,7 @@ Acceptance:
 
 Priority: P1
 
-Status: `[IN PROGRESS 2026-07-17]` The first foundation slice adds closed user roles, active/disabled account state, email-verification state, and revocable hashed database sessions. Public registration, password reset, and comment submission remain disabled.
+Status: `[IN PROGRESS 2026-07-17]` The first foundation slice is deployed at `e2865a5`. The second slice adds administrator-issued invitations, verified user login/account pages, one-time password reset, user status management, and session revocation. Self-service registration and comments remain disabled.
 
 Tasks:
 
