@@ -98,6 +98,8 @@ Verification notes:
 
 Priority: P1
 
+Status: `[IMPLEMENTED 2026-07-17; PENDING PR AND PRODUCTION VERIFICATION]` Canonical metadata, Open Graph/Twitter sharing data, article JSON-LD, published-only sitemap, robots policy, RSS discovery/feed, skip navigation, reduced-motion preservation, static hero image metadata, and baseline browser security headers are implemented on the Phase 3B branch.
+
 Tasks:
 
 - Implement page metadata, canonical URLs, Open Graph/social data.
@@ -112,6 +114,14 @@ Acceptance:
 - Key public pages have unique metadata.
 - Lighthouse/accessibility checks have no critical defects.
 - Published content appears in sitemap and unpublished content does not.
+
+Verification notes:
+
+- Filtered and paginated archive URLs point to the canonical archive and are excluded from indexing when query parameters are active.
+- Sitemap and RSS routes are generated at request time so Docker builds do not require a live database; both query only published, non-deleted posts.
+- Administrator routes remain `noindex`; `robots.txt` blocks administrator and API crawling.
+- Unit tests, ESLint, direct TypeScript checking, the Next.js production build, and database-free preview route checks passed locally.
+- Production Lighthouse/accessibility measurements and post-deployment header checks remain required before this phase is marked complete.
 
 ## Phase 4 — Text RAG assistant
 

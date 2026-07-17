@@ -3,14 +3,10 @@ import Link from "next/link";
 import { SiteFooter, SiteHeader } from "@/components/site/site-shell";
 import { buildPublicPostWhere, listHref, PUBLIC_POST_PAGE_SIZE } from "@/lib/post-query";
 import { prisma } from "@/lib/prisma";
+import { absoluteUrl, SITE_DESCRIPTION, SITE_NAME, SITE_OG_IMAGE } from "@/lib/site";
 import { getUiPreviewPostList, isUiPreviewEnabled } from "@/lib/ui-preview";
 import { postListQuerySchema } from "@/lib/validators/post";
 import styles from "./posts.module.css";
-
-export const metadata: Metadata = {
-  title: "日志索引",
-  description: "浏览全部日志，并按关键词、分类和标签筛选。",
-};
 
 type PageProps = {
   searchParams: Promise<Record<string, string | string[] | undefined>>;
@@ -26,6 +22,30 @@ function formatDate(date: Date) {
     month: "2-digit",
     day: "2-digit",
   }).format(date);
+}
+
+export async function generateMetadata({ searchParams }: PageProps): Promise<Metadata> {
+  const values = Object.values(await searchParams).flatMap((value) => value ?? []);
+  const isFiltered = values.some((value) => value.trim().length > 0 && value !== "1");
+
+  return {
+    title: isFiltered ? "日志筛选结果" : "日志索引",
+    description: "浏览全部日志，并按关键词、分类和标签筛选。",
+    alternates: {
+      canonical: "/posts",
+      types: { "application/rss+xml": absoluteUrl("/feed.xml") },
+    },
+    robots: isFiltered ? { index: false, follow: true } : undefined,
+    openGraph: {
+      type: "website",
+      title: "日志索引",
+      description: "浏览 EastherPhil 的全部公开日志。",
+      url: "/posts",
+      locale: "zh_CN",
+      siteName: SITE_NAME,
+      images: [{ url: SITE_OG_IMAGE, width: 1672, height: 941, alt: SITE_DESCRIPTION }],
+    },
+  };
 }
 
 export default async function PostsPage({ searchParams }: PageProps) {
