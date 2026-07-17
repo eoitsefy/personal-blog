@@ -38,7 +38,7 @@ Confirm:
 - certificate is currently valid;
 - the previous application image/tag or commit is recorded.
 - `POSTGRES_PASSWORD`, `DATABASE_URL`, and `JWT_SECRET` contain non-placeholder production values.
-- `UPLOAD_ROOT=/app/uploads`, `MAX_UPLOAD_BYTES` is an approved positive limit, and `/var/www/personal-blog/uploads` exists with write access for the application container.
+- `UPLOAD_ROOT=/app/uploads`, `MAX_UPLOAD_BYTES` is an approved positive per-file limit, `MAX_MEDIA_STORAGE_BYTES` is an approved positive total quota, and `/var/www/personal-blog/uploads` exists with write access for the application container.
 - the Phase 1B migration has been reviewed; it adds taxonomy, login-throttle, and soft-delete columns without dropping content.
 - the Phase 2 migration has been reviewed; it adds optional asset filename/dimension metadata and an asset recycle-bin index without dropping media records.
 

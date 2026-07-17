@@ -31,7 +31,7 @@ export default async function EditPostPage({ params }: PageProps) {
       where: { deletedAt: null, isPublic: true },
       orderBy: { createdAt: "desc" },
       take: 24,
-      select: { id: true, url: true, originalName: true, mime: true, size: true, width: true, height: true, refCount: true, deletedAt: true, createdAt: true },
+      select: { id: true, url: true, originalName: true, kind: true, mime: true, size: true, width: true, height: true, durationMs: true, refCount: true, deletedAt: true, createdAt: true },
     }),
   ]);
   if (!post) notFound();
@@ -42,7 +42,7 @@ export default async function EditPostPage({ params }: PageProps) {
   const referencedMedia = missingReferencedIds.length > 0
     ? await prisma.asset.findMany({
         where: { id: { in: missingReferencedIds }, deletedAt: null, isPublic: true },
-        select: { id: true, url: true, originalName: true, mime: true, size: true, width: true, height: true, refCount: true, deletedAt: true, createdAt: true },
+        select: { id: true, url: true, originalName: true, kind: true, mime: true, size: true, width: true, height: true, durationMs: true, refCount: true, deletedAt: true, createdAt: true },
       })
     : [];
   const media = [...referencedMedia, ...latestMedia];

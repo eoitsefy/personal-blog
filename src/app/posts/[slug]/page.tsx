@@ -3,8 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { cache } from "react";
-import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm";
+import { RichMarkdown } from "@/components/content/rich-markdown";
 import { SiteFooter, SiteHeader } from "@/components/site/site-shell";
 import { prisma } from "@/lib/prisma";
 import { isPublishedPost } from "@/lib/post-visibility";
@@ -20,7 +19,8 @@ type PageProps = {
 
 const getPublishedPostBySlug = cache(async (slug: string) => {
   if (isUiPreviewEnabled()) {
-    return getUiPreviewPost(slug);
+    const post = getUiPreviewPost(slug);
+    return post ? { ...post, assets: [] } : null;
   }
 
   const post = await prisma.post.findFirst({
@@ -38,6 +38,7 @@ const getPublishedPostBySlug = cache(async (slug: string) => {
       author: { select: { id: true } },
       category: { select: { name: true, slug: true } },
       tags: { select: { tag: { select: { name: true, slug: true } } } },
+      assets: { select: { asset: { select: { url: true, kind: true, originalName: true, mime: true } } } },
     },
   });
 
@@ -202,7 +203,7 @@ export default async function PostDetailPage({ params }: PageProps) {
 
         <article className={styles.article}>
           <section className={styles.prose} aria-label="文章正文">
-            <ReactMarkdown remarkPlugins={[remarkGfm]}>{post.contentMd}</ReactMarkdown>
+            <RichMarkdown markdown={post.contentMd} assets={post.assets.map(({ asset }) => asset)} />
           </section>
 
           <footer className={styles.articleEnd}>

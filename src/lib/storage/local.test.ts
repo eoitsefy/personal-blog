@@ -24,4 +24,8 @@ test("storage keys cannot escape the upload root", () => {
   assert.throws(() => assertSafeStorageKey("media\\secret.png"));
   assert.equal(publicAssetUrl("media/2026/07/photo.webp"), "/uploads/media/2026/07/photo.webp");
   assert.match(createAssetKey("jpg", new Date("2026-07-16T00:00:00Z")), /^media\/2026\/07\/[a-f0-9]{32}\.jpg$/);
+  assert.match(createAssetKey("mp3", new Date("2026-07-16T00:00:00Z")), /^media\/2026\/07\/[a-f0-9]{32}\.mp3$/);
+  assert.match(createAssetKey("pdf", new Date("2026-07-16T00:00:00Z")), /^media\/2026\/07\/[a-f0-9]{32}\.pdf$/);
+  assert.doesNotThrow(() => assertSafeStorageKey("media/2026/07/field-recording.opus"));
+  assert.doesNotThrow(() => assertSafeStorageKey("media/2026/07/daily-note.md"));
 });

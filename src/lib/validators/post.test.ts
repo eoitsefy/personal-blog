@@ -54,3 +54,19 @@ test("post input limits and deduplicates media references", () => {
   assert.equal(CreatePostInputSchema.safeParse({ ...base, assetIds: ["asset-1", "asset-1"] }).success, false);
   assert.equal(CreatePostInputSchema.safeParse({ ...base, assetIds: Array.from({ length: 21 }, (_, index) => `asset-${index}`) }).success, false);
 });
+
+test("post input accepts trusted video directives and rejects untrusted embeds", () => {
+  const base = {
+    title: "视频文章",
+    slug: "video-post",
+    status: "DRAFT" as const,
+  };
+  assert.equal(CreatePostInputSchema.safeParse({
+    ...base,
+    contentMd: "[video:公开记录](https://www.bilibili.com/video/BV1xx411c7mD)",
+  }).success, true);
+  assert.equal(CreatePostInputSchema.safeParse({
+    ...base,
+    contentMd: "[video:不可信来源](https://evil.example/video/123)",
+  }).success, false);
+});

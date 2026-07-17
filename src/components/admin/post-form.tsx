@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
 import type { MediaAsset } from "@/lib/media/types";
+import { parseTrustedVideoUrl } from "@/lib/media/video";
 import { CreatePostInputSchema, type CreatePostInput } from "@/lib/validators/post";
 
 type PostFormProps = {
@@ -44,6 +45,9 @@ export function PostForm({
   const [tagsText, setTagsText] = useState(initialValue.tags.join(", "));
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [message, setMessage] = useState("");
+  const [videoTitle, setVideoTitle] = useState("");
+  const [videoUrl, setVideoUrl] = useState("");
+  const [videoError, setVideoError] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const canSubmit = useMemo(() => !submitting, [submitting]);
 
@@ -71,10 +75,29 @@ export function PostForm({
   }
 
   function insertAsset(asset: MediaAsset) {
-    const alt = (asset.originalName ?? "图片").replace(/[\[\]]/g, "");
-    const markdown = `![${alt}](${asset.url})`;
+    const fallback = asset.kind === "AUDIO" ? "音频" : asset.kind === "DOCUMENT" ? "文档" : "图片";
+    const title = (asset.originalName ?? fallback).replace(/[\[\]]/g, "");
+    const markdown = asset.kind === "AUDIO"
+      ? `[audio:${title}](${asset.url})`
+      : asset.kind === "DOCUMENT"
+        ? `[${title}](${asset.url})`
+        : `![${title}](${asset.url})`;
     update("contentMd", `${form.contentMd.trimEnd()}${form.contentMd ? "\n\n" : ""}${markdown}\n`);
     if (!form.assetIds.includes(asset.id)) update("assetIds", [...form.assetIds, asset.id]);
+  }
+
+  function insertVideo() {
+    const video = parseTrustedVideoUrl(videoUrl);
+    if (!video) {
+      setVideoError("请输入哔哩哔哩或 YouTube 的 HTTPS 正式视频链接；不支持短链和其他域名。");
+      return;
+    }
+    const title = (videoTitle.trim() || "视频").replace(/[\[\]\r\n]/g, " ").slice(0, 160).trim();
+    const markdown = `[video:${title}](${video.sourceUrl})`;
+    update("contentMd", `${form.contentMd.trimEnd()}${form.contentMd ? "\n\n" : ""}${markdown}\n`);
+    setVideoTitle("");
+    setVideoUrl("");
+    setVideoError("");
   }
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
@@ -231,7 +254,7 @@ export function PostForm({
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
             <h2 id="post-media-heading" className="font-medium">文章媒体</h2>
-            <p className="text-sm text-neutral-500">插入图片会自动建立引用，防止媒体被误删。</p>
+            <p className="text-sm text-neutral-500">插入图片、音频或文档会自动建立引用，防止媒体被误删。</p>
           </div>
           <button
             type="button"
@@ -243,7 +266,7 @@ export function PostForm({
         </div>
         {mediaOptions.length === 0 ? (
           <p className="rounded-xl border border-dashed border-neutral-300 p-4 text-sm text-neutral-500 dark:border-neutral-700">
-            暂无可用媒体，请先前往媒体管理上传图片。
+            暂无可用媒体，请先前往媒体管理上传图片、音频或文档。
           </p>
         ) : (
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
@@ -252,8 +275,17 @@ export function PostForm({
               const usedInContent = form.contentMd.includes(asset.url);
               return (
                 <article key={asset.id} className={`overflow-hidden rounded-xl border ${selected ? "border-neutral-900 dark:border-white" : "border-neutral-200 dark:border-neutral-800"}`}>
-                  <div className="relative aspect-video bg-neutral-100 dark:bg-neutral-900">
-                    <Image src={asset.url} alt={asset.originalName ?? "媒体图片"} fill sizes="(max-width: 640px) 100vw, 33vw" className="object-cover" unoptimized />
+                  <div className="relative grid aspect-video place-items-center bg-neutral-100 dark:bg-neutral-900">
+                    {asset.kind === "IMAGE" ? (
+                      <Image src={asset.url} alt={asset.originalName ?? "媒体图片"} fill sizes="(max-width: 640px) 100vw, 33vw" className="object-cover" unoptimized />
+                    ) : asset.kind === "AUDIO" ? (
+                      <audio controls preload="metadata" src={asset.url} className="w-[90%]">浏览器不支持音频播放。</audio>
+                    ) : (
+                      <div className="grid gap-2 px-4 text-center">
+                        <span className="text-xs font-medium tracking-[0.18em] text-neutral-500">DOCUMENT</span>
+                        <span className="line-clamp-2 text-sm">{asset.originalName ?? "未命名文档"}</span>
+                      </div>
+                    )}
                   </div>
                   <div className="grid gap-2 p-3">
                     <p className="truncate text-sm" title={asset.originalName ?? asset.url}>{asset.originalName ?? "未命名图片"}</p>
@@ -278,6 +310,27 @@ export function PostForm({
           </div>
         )}
         {errors.assetIds ? <span className="text-sm text-red-600">{errors.assetIds}</span> : null}
+      </section>
+
+      <section className="grid gap-3 rounded-2xl border border-neutral-200 p-4 dark:border-neutral-800" aria-labelledby="post-video-heading">
+        <div>
+          <h2 id="post-video-heading" className="font-medium">受控视频嵌入</h2>
+          <p className="mt-1 text-sm text-neutral-500">仅支持哔哩哔哩和 YouTube 正式 HTTPS 链接；系统不会保存或执行任意 iframe HTML。</p>
+        </div>
+        <div className="grid gap-3 md:grid-cols-[0.8fr_1.4fr_auto]">
+          <label className="grid gap-1 text-sm">
+            <span>视频标题</span>
+            <input value={videoTitle} onChange={(event) => setVideoTitle(event.target.value)} maxLength={160} placeholder="例如：雨夜记录" className={fieldClass} />
+          </label>
+          <label className="grid gap-1 text-sm">
+            <span>视频链接</span>
+            <input value={videoUrl} onChange={(event) => setVideoUrl(event.target.value)} type="url" inputMode="url" placeholder="https://www.bilibili.com/video/BV..." className={fieldClass} />
+          </label>
+          <button type="button" onClick={insertVideo} className="self-end rounded-xl border border-neutral-300 px-4 py-3 text-sm font-medium dark:border-neutral-700">
+            插入视频
+          </button>
+        </div>
+        {videoError ? <p role="alert" className="text-sm text-red-600">{videoError}</p> : null}
       </section>
 
       {message ? (
