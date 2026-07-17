@@ -9,6 +9,9 @@ import { SiteFooter, SiteHeader } from "@/components/site/site-shell";
 import { prisma } from "@/lib/prisma";
 import { isPublishedPost } from "@/lib/post-visibility";
 import { getUiPreviewPost, isUiPreviewEnabled } from "@/lib/ui-preview";
+import { absoluteUrl, SITE_AUTHOR, SITE_NAME, SITE_OG_IMAGE } from "@/lib/site";
+import { safeJsonLd } from "@/lib/seo";
+import dawnArchive from "../../../../public/images/journal/dawn-archive.png";
 import styles from "./post.module.css";
 
 type PageProps = {
@@ -72,13 +75,28 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   return {
     title: post.title,
     description,
+    alternates: {
+      canonical: `/posts/${post.slug}`,
+      types: { "application/rss+xml": absoluteUrl("/feed.xml") },
+    },
+    authors: [{ name: SITE_AUTHOR }],
     openGraph: {
       title: post.title,
       description,
       type: "article",
+      locale: "zh_CN",
+      siteName: SITE_NAME,
       publishedTime: post.publishedAt?.toISOString(),
       modifiedTime: post.updatedAt.toISOString(),
       url: `/posts/${post.slug}`,
+      authors: [SITE_AUTHOR],
+      images: [{ url: SITE_OG_IMAGE, width: 1672, height: 941, alt: post.title }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: post.title,
+      description,
+      images: [SITE_OG_IMAGE],
     },
   };
 }
@@ -90,17 +108,34 @@ export default async function PostDetailPage({ params }: PageProps) {
 
   const publishDate = post.publishedAt ?? post.createdAt;
   const readingMinutes = estimateReadingMinutes(post.contentMd);
+  const articleJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: post.title,
+    description: post.excerpt ?? post.title,
+    datePublished: publishDate.toISOString(),
+    dateModified: post.updatedAt.toISOString(),
+    mainEntityOfPage: absoluteUrl(`/posts/${post.slug}`),
+    image: absoluteUrl(SITE_OG_IMAGE),
+    author: { "@type": "Person", name: SITE_AUTHOR },
+    publisher: { "@type": "Person", name: SITE_AUTHOR },
+  };
 
   return (
     <div className={styles.page}>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: safeJsonLd(articleJsonLd) }}
+      />
       <SiteHeader tone="light" active="posts" />
 
       <header className={styles.articleHero}>
         <Image
-          src="/images/journal/dawn-archive.png"
+          src={dawnArchive}
           alt="晨光下穿过旷野的原创移动城市与远行者"
           fill
           priority
+          placeholder="blur"
           sizes="100vw"
           className={styles.heroImage}
         />
