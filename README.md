@@ -35,6 +35,19 @@ The administrator command requires `DATABASE_URL`, `ADMIN_EMAIL`, and `ADMIN_PAS
 
 The administration interface is available at `/admin/login`.
 
+### UI preview without PostgreSQL
+
+Public list and article layouts can be reviewed with deterministic sample content when PostgreSQL is unavailable. Preview data requires an explicit flag and is ignored whenever `DATABASE_URL` is configured, so it never replaces a configured database.
+
+PowerShell:
+
+```powershell
+$env:UI_PREVIEW_MODE="true"
+npm run dev
+```
+
+Then open `/posts` and select any preview article. Unset `UI_PREVIEW_MODE` or restart the shell to return to database-backed content.
+
 ## Verification
 
 ```bash
