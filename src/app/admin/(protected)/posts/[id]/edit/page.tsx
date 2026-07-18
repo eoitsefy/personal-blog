@@ -10,7 +10,7 @@ export const metadata = { title: "编辑文章", robots: { index: false, follow:
 export default async function EditPostPage({ params }: PageProps) {
   await requireAdminPage();
   const { id } = await params;
-  const [post, categories, tags, latestMedia] = await Promise.all([
+  const [post, categories, tags, latestMedia, places] = await Promise.all([
     prisma.post.findFirst({
       where: { id, deletedAt: null },
       select: {
@@ -23,6 +23,7 @@ export default async function EditPostPage({ params }: PageProps) {
         category: { select: { name: true } },
         tags: { select: { tag: { select: { name: true } } } },
         assets: { select: { assetId: true } },
+        places: { select: { placeId: true } },
       },
     }),
     prisma.category.findMany({ orderBy: { name: "asc" }, select: { name: true } }),
@@ -33,6 +34,7 @@ export default async function EditPostPage({ params }: PageProps) {
       take: 24,
       select: { id: true, url: true, originalName: true, kind: true, mime: true, size: true, width: true, height: true, durationMs: true, refCount: true, deletedAt: true, createdAt: true },
     }),
+    prisma.place.findMany({ where: { deletedAt: null }, orderBy: { name: "asc" }, select: { id: true, name: true, locationLabel: true, privacy: true } }),
   ]);
   if (!post) notFound();
   const latestIds = new Set(latestMedia.map(({ id: assetId }) => assetId));
@@ -63,10 +65,12 @@ export default async function EditPostPage({ params }: PageProps) {
           category: post.category?.name ?? "",
           tags: post.tags.map(({ tag }) => tag.name),
           assetIds: post.assets.map(({ assetId }) => assetId),
+          placeIds: post.places.map(({ placeId }) => placeId),
         }}
         categoryOptions={categories.map(({ name }) => name)}
         tagOptions={tags.map(({ name }) => name)}
         mediaOptions={media}
+        placeOptions={places}
       />
     </main>
   );

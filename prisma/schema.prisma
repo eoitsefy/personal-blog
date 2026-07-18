@@ -48,6 +48,19 @@ enum CommentReportStatus {
   DISMISSED
 }
 
+enum PlacePrivacy {
+  EXACT
+  APPROXIMATE
+  CITY_ONLY
+  HIDDEN
+}
+
+enum CoordinateSystem {
+  WGS84
+  GCJ02
+  BD09
+}
+
 model User {
   id              String          @id @default(cuid())
   email           String          @unique
@@ -116,6 +129,7 @@ model Post {
   assets         PostAssetRef[]
   tags           PostTag[]
   comments       Comment[]
+  places         PostPlace[]
   commentsLocked Boolean        @default(false)
 
   @@index([status, publishedAt(sort: Desc)])
@@ -186,11 +200,49 @@ model Asset {
   deletedAt    DateTime?
   createdAt    DateTime       @default(now())
   refs         PostAssetRef[]
+  placeCovers  Place[]        @relation("PlaceCover")
 
   @@index([ownerId, createdAt(sort: Desc)])
   @@index([sha256])
   @@index([deletedAt, createdAt(sort: Desc)])
   @@index([kind, deletedAt, createdAt(sort: Desc)])
+}
+
+model Place {
+  id               String           @id @default(cuid())
+  slug             String           @unique
+  name             String
+  summary          String?
+  locationLabel    String
+  latitude         Decimal          @db.Decimal(9, 6)
+  longitude        Decimal          @db.Decimal(9, 6)
+  publicLatitude   Decimal?         @db.Decimal(9, 6)
+  publicLongitude  Decimal?         @db.Decimal(9, 6)
+  privacy          PlacePrivacy     @default(HIDDEN)
+  coordinateSystem CoordinateSystem @default(WGS84)
+  coordinateSource String
+  occurredAt       DateTime?
+  coverAssetId     String?
+  coverAsset       Asset?           @relation("PlaceCover", fields: [coverAssetId], references: [id], onDelete: SetNull)
+  deletedAt        DateTime?
+  createdAt        DateTime         @default(now())
+  updatedAt        DateTime         @updatedAt
+  posts            PostPlace[]
+
+  @@index([deletedAt, updatedAt(sort: Desc)])
+  @@index([privacy, deletedAt, occurredAt(sort: Desc)])
+  @@index([coverAssetId])
+}
+
+model PostPlace {
+  postId    String
+  placeId   String
+  createdAt DateTime @default(now())
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  place     Place    @relation(fields: [placeId], references: [id], onDelete: Restrict)
+
+  @@id([postId, placeId])
+  @@index([placeId])
 }
 
 model Comment {

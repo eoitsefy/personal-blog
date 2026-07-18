@@ -22,6 +22,11 @@ export function buildSitemap(posts: PublicPostSeoRecord[]): MetadataRoute.Sitema
       changeFrequency: "weekly",
       priority: 0.9,
     },
+    {
+      url: absoluteUrl("/places"),
+      changeFrequency: "weekly",
+      priority: 0.7,
+    },
     ...posts.map((post) => ({
       url: absoluteUrl(`/posts/${encodeURIComponent(post.slug)}`),
       lastModified: post.updatedAt,

@@ -26,6 +26,11 @@ import { POST as reportComment } from "@/app/api/comments/[id]/reports/route";
 import { DELETE as deleteAdminComment, PATCH as moderateComment } from "@/app/api/admin/comments/[id]/route";
 import { DELETE as purgeComment } from "@/app/api/admin/comments/[id]/purge/route";
 import { PATCH as lockComments } from "@/app/api/admin/posts/[id]/comments/route";
+import { POST as createPlace } from "@/app/api/admin/places/route";
+import { DELETE as deletePlace } from "@/app/api/admin/places/[id]/route";
+import { POST as restorePlace } from "@/app/api/admin/places/[id]/restore/route";
+import { DELETE as purgePlace } from "@/app/api/admin/places/[id]/purge/route";
+import { GET as listPublicPlaces } from "@/app/api/places/route";
 import { hashPassword, hashSessionToken, issueUserSession, parseCookie, SESSION_COOKIE_NAME } from "@/lib/auth";
 import { commentRateLimitKey } from "@/lib/comments";
 import { loginThrottleKey } from "@/lib/login-throttle";
@@ -35,6 +40,78 @@ const PNG_1X1 = Buffer.from(
   "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAusB9Y9ZlZsAAAAASUVORK5CYII=",
   "base64",
 );
+
+test("places enforce privacy, published relations, recycle-bin rules and cover references", async () => {
+  const suffix = `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+  let userId = "";
+  let postId = "";
+  let approximateId = "";
+  let hiddenId = "";
+  let unlinkedId = "";
+  let assetId = "";
+
+  try {
+    const user = await prisma.user.create({ data: { email: `places-${suffix}@example.test`, passwordHash: await hashPassword("correct-horse-battery-staple"), role: "ADMIN" } });
+    userId = user.id;
+    const session = await issueUserSession(user.id);
+    const cookie = `${SESSION_COOKIE_NAME}=${session.token}`;
+    const headers = { "content-type": "application/json", cookie, origin: "http://localhost" };
+    const route = (id: string) => ({ params: Promise.resolve({ id }) });
+
+    const cover = await prisma.asset.create({ data: { ossKey: `place-cover-${suffix}.png`, url: `/uploads/place-cover-${suffix}.png`, originalName: "地点封面.png", kind: "IMAGE", mime: "image/png", size: 1, sha256: "b".repeat(64), ownerId: user.id } });
+    assetId = cover.id;
+    const makePlace = async (slugPrefix: string, privacy: "APPROXIMATE" | "HIDDEN" | "EXACT", extra: Record<string, unknown> = {}) => {
+      const response = await createPlace(new Request("http://localhost/api/admin/places", { method: "POST", headers, body: JSON.stringify({
+        name: `${slugPrefix} place`, slug: `${slugPrefix}-${suffix}`, locationLabel: "杭州市", summary: "integration place",
+        latitude: 30.123456, longitude: 120.654321, privacy, coordinateSystem: "GCJ02", coordinateSource: "integration fixture",
+        publicLatitude: privacy === "APPROXIMATE" ? 30.1 : null,
+        publicLongitude: privacy === "APPROXIMATE" ? 120.6 : null,
+        ...extra,
+      }) }));
+      assert.equal(response.status, 201);
+      return ((await response.json()) as { data: { place: { id: string } } }).data.place.id;
+    };
+
+    approximateId = await makePlace("approximate", "APPROXIMATE", { coverAssetId: assetId });
+    hiddenId = await makePlace("hidden", "HIDDEN");
+    unlinkedId = await makePlace("unlinked", "EXACT");
+    assert.equal((await prisma.asset.findUniqueOrThrow({ where: { id: assetId } })).refCount, 1);
+    assert.equal((await deleteAsset(new Request(`http://localhost/api/admin/assets/${assetId}`, { method: "DELETE", headers: { cookie, origin: "http://localhost" } }), route(assetId))).status, 409);
+
+    const postResponse = await createPost(new Request("http://localhost/api/admin/posts", { method: "POST", headers, body: JSON.stringify({ title: "Place integration", slug: `place-post-${suffix}`, contentMd: "Published place note", status: "PUBLISHED", placeIds: [approximateId, hiddenId] }) }));
+    assert.equal(postResponse.status, 201);
+    postId = ((await postResponse.json()) as { data: { post: { id: string } } }).data.post.id;
+
+    const publicResponse = await listPublicPlaces(new Request("http://localhost/api/places"));
+    assert.equal(publicResponse.status, 200);
+    const publicText = await publicResponse.text();
+    const publicBody = JSON.parse(publicText) as { data: { places: Array<{ id: string; coordinates: { latitude: number; longitude: number } }> } };
+    assert.deepEqual(publicBody.data.places.map(({ id }) => id), [approximateId]);
+    assert.deepEqual(publicBody.data.places[0]?.coordinates, { latitude: 30.1, longitude: 120.6 });
+    assert.equal(publicText.includes("30.123456"), false);
+    assert.equal(publicText.includes("120.654321"), false);
+    assert.equal(publicText.includes(hiddenId), false);
+    assert.equal(publicText.includes(unlinkedId), false);
+
+    assert.equal((await deletePlace(new Request(`http://localhost/api/admin/places/${approximateId}`, { method: "DELETE", headers: { cookie, origin: "http://localhost" } }), route(approximateId))).status, 200);
+    const afterDelete = await listPublicPlaces(new Request("http://localhost/api/places"));
+    assert.equal(((await afterDelete.json()) as { data: { places: unknown[] } }).data.places.length, 0);
+    assert.equal((await purgePlace(new Request(`http://localhost/api/admin/places/${approximateId}/purge`, { method: "DELETE", headers: { cookie, origin: "http://localhost" } }), route(approximateId))).status, 409);
+    assert.equal((await restorePlace(new Request(`http://localhost/api/admin/places/${approximateId}/restore`, { method: "POST", headers: { cookie, origin: "http://localhost" } }), route(approximateId))).status, 200);
+
+    assert.equal((await updatePost(new Request(`http://localhost/api/admin/posts/${postId}`, { method: "PATCH", headers, body: JSON.stringify({ placeIds: [] }) }), route(postId))).status, 200);
+    assert.equal((await deletePlace(new Request(`http://localhost/api/admin/places/${approximateId}`, { method: "DELETE", headers: { cookie, origin: "http://localhost" } }), route(approximateId))).status, 200);
+    assert.equal((await purgePlace(new Request(`http://localhost/api/admin/places/${approximateId}/purge`, { method: "DELETE", headers: { cookie, origin: "http://localhost" } }), route(approximateId))).status, 200);
+    approximateId = "";
+    assert.equal((await prisma.asset.findUniqueOrThrow({ where: { id: assetId } })).refCount, 0);
+  } finally {
+    if (postId) await prisma.post.deleteMany({ where: { id: postId } });
+    await prisma.place.deleteMany({ where: { id: { in: [approximateId, hiddenId, unlinkedId].filter(Boolean) } } });
+    if (assetId) await prisma.asset.deleteMany({ where: { id: assetId } });
+    if (userId) await prisma.user.deleteMany({ where: { id: userId } });
+    await prisma.$disconnect();
+  }
+});
 
 test("verified comments integrate moderation, replies, reports, locking and deletion", async () => {
   const suffix = `${Date.now()}-${Math.random().toString(36).slice(2)}`;

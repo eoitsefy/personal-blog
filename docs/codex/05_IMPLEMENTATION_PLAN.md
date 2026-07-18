@@ -163,10 +163,14 @@ Tasks:
 
 Priority: P2
 
+Status: `[PHASE 5A IMPLEMENTED, PENDING MERGE AND DEPLOYMENT 2026-07-18]` Provider-neutral place records, four-level privacy precision, coordinate provenance, cover references, administrator lifecycle, post relations, privacy-safe public API, searchable text directory, and coordinate preview are implemented. Phase 5B remains blocked on an explicit map provider, key, coordinate-conversion, and deployment-region compliance decision.
+
 Tasks:
 
 - Add place records, article relations, privacy precision, and provider adapters.
 - Provide a public clustered map plus an accessible text-list fallback.
+
+Phase 5A deliberately ships the accessible text list and a provider-neutral coordinate preview without third-party map scripts. Production deployment must apply `20260718150000_phase_5a_places` and verify that hidden, draft-only, deleted, and internal-coordinate data never appears in `/api/places` or `/places`.
 
 ## Phase 6A — Text RAG assistant
 

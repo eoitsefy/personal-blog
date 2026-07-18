@@ -1,0 +1,42 @@
+.page { min-height: 100vh; background: var(--paper); color: var(--ink); }
+.hero { width: min(100% - 48px, 1320px); margin: 0 auto; min-height: 300px; padding: 72px 0 48px; display: flex; align-items: end; justify-content: space-between; gap: 40px; border-bottom: 1px solid var(--line); }
+.hero p, .panelHeading p, .listHeading p { margin: 0 0 12px; font: 0.62rem/1.2 monospace; letter-spacing: .18em; color: #82631f; }
+.hero h1 { margin: 0; font: 500 clamp(3rem, 8vw, 6.5rem)/.95 Georgia, "Noto Serif SC", serif; }
+.hero span { display: block; max-width: 650px; margin-top: 22px; color: var(--ink-soft); line-height: 1.8; }
+.hero > b { font: 400 clamp(5rem, 13vw, 10rem)/.7 "Arial Narrow", sans-serif; opacity: .08; }
+.workspace { width: min(100% - 48px, 1320px); margin: 0 auto; padding: 42px 0 100px; }
+.search { display: flex; align-items: end; gap: 12px; }
+.search label { display: grid; flex: 1; gap: 8px; font-size: .75rem; letter-spacing: .08em; }
+.search input { width: 100%; padding: 13px 15px; border: 1px solid var(--line); background: var(--paper-bright); }
+.search button, .search a { padding: 13px 18px; border: 1px solid var(--ink); background: transparent; cursor: pointer; }
+.search button { color: var(--paper-bright); background: var(--ink); }
+.coordinatePanel { margin-top: 36px; border: 1px solid var(--line); background: #171a1d; color: #f5f3e9; }
+.panelHeading { padding: 24px; display: flex; justify-content: space-between; gap: 30px; border-bottom: 1px solid rgba(255,255,255,.14); }
+.panelHeading h2, .listHeading h2 { margin: 0; font: 500 1.6rem Georgia, "Noto Serif SC", serif; }
+.panelHeading > span { max-width: 420px; color: rgba(255,255,255,.58); font-size: .76rem; line-height: 1.7; }
+.plot { position: relative; min-height: 460px; overflow: hidden; background-image: linear-gradient(rgba(255,255,255,.055) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.055) 1px, transparent 1px); background-size: 48px 48px; }
+.plot::after { content: "SAFE COORDINATE PLANE / NO TILE PROVIDER"; position: absolute; right: 18px; bottom: 14px; color: rgba(255,255,255,.23); font: .55rem monospace; letter-spacing: .16em; }
+.marker { position: absolute; z-index: 2; display: flex; align-items: center; gap: 8px; transform: translate(-16px,-16px); color: #fff; font-size: .72rem; white-space: nowrap; }
+.marker i { width: 32px; height: 32px; display: grid; place-items: center; color: #151719; background: var(--signal); border: 4px solid rgba(255,255,255,.22); border-radius: 50%; font-style: normal; font-weight: 800; box-shadow: 0 0 0 1px #111; }
+.marker span { padding: 5px 7px; background: rgba(11,13,15,.82); }
+.marker:hover span { color: var(--signal); }
+.emptyPlot { min-height: 240px; display: grid; place-items: center; padding: 30px; color: rgba(255,255,255,.55); text-align: center; }
+.listSection { padding-top: 68px; }
+.listHeading { margin-bottom: 26px; }
+.placeList { margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 22px; list-style: none; }
+.placeCard { min-width: 0; display: grid; grid-template-columns: minmax(150px,.75fr) 1.25fr; border: 1px solid var(--line); background: var(--paper-bright); scroll-margin-top: 100px; }
+.cover, .coverFallback { position: relative; min-height: 260px; overflow: hidden; background: #22262a; }
+.coverImage { object-fit: cover; filter: saturate(.72); transition: transform .4s ease; }
+.placeCard:hover .coverImage { transform: scale(1.03); }
+.coverFallback { display: grid; place-items: center; background-image: linear-gradient(145deg, transparent 48%, rgba(233,185,73,.55) 49%, rgba(233,185,73,.55) 50%, transparent 51%), radial-gradient(circle, rgba(255,255,255,.12) 1px, transparent 1px); background-size: auto, 18px 18px; }
+.coverFallback span { color: rgba(255,255,255,.7); font: 3rem "Arial Narrow", sans-serif; }
+.placeBody { padding: 25px; display: flex; flex-direction: column; }
+.placeMeta { display: flex; flex-wrap: wrap; gap: 8px 12px; color: var(--ink-soft); font: .58rem monospace; letter-spacing: .08em; }
+.placeBody h3 { margin: 22px 0 12px; font: 500 1.55rem Georgia, "Noto Serif SC", serif; }
+.placeBody > p { margin: 0; color: var(--ink-soft); font: .88rem/1.75 Georgia, "Noto Serif SC", serif; }
+.postLinks { margin-top: auto; padding-top: 24px; display: grid; gap: 8px; }
+.postLinks a { padding-top: 9px; display: flex; justify-content: space-between; gap: 10px; border-top: 1px solid var(--line); font-size: .78rem; }
+.postLinks a:hover { color: #82631f; }
+.empty { padding: 50px; border: 1px dashed var(--line); text-align: center; color: var(--ink-soft); }
+@media (max-width: 980px) { .placeList { grid-template-columns: 1fr; } }
+@media (max-width: 640px) { .hero, .workspace { width: min(100% - 30px, 1320px); } .hero { min-height: 260px; padding-top: 50px; } .hero > b { display:none; } .search { align-items: stretch; flex-wrap: wrap; } .search label { flex-basis: 100%; } .panelHeading { display: grid; } .plot { min-height: 360px; } .placeCard { grid-template-columns: 1fr; } .cover, .coverFallback { min-height: 220px; } }

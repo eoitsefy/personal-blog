@@ -15,6 +15,11 @@ const AssetIdsSchema = z
   .max(20, "每篇文章最多关联20个媒体文件")
   .refine((ids) => new Set(ids).size === ids.length, "媒体引用不能重复");
 
+const PlaceIdsSchema = z
+  .array(z.string().trim().min(1).max(64))
+  .max(10, "每篇文章最多关联10个地点")
+  .refine((ids) => new Set(ids).size === ids.length, "地点引用不能重复");
+
 const PostInputFieldsSchema = z.object({
   title: z.string().trim().min(1, "标题不能为空").max(120, "标题不能超过120字符"),
   slug: z
@@ -43,6 +48,7 @@ const PostInputFieldsSchema = z.object({
   category: z.string().trim().max(50, "分类名称不能超过50个字符").optional().or(z.literal("")),
   tags: z.array(z.string().trim().min(1).max(40)).max(10, "每篇文章最多添加10个标签"),
   assetIds: AssetIdsSchema,
+  placeIds: PlaceIdsSchema,
 });
 
 export const CreatePostInputSchema = PostInputFieldsSchema.extend({
@@ -50,6 +56,7 @@ export const CreatePostInputSchema = PostInputFieldsSchema.extend({
   category: z.string().trim().max(50).default(""),
   tags: z.array(z.string().trim().min(1).max(40)).max(10).default([]),
   assetIds: AssetIdsSchema.default([]),
+  placeIds: PlaceIdsSchema.default([]),
 });
 
 export type CreatePostInput = z.infer<typeof CreatePostInputSchema>;
