@@ -26,6 +26,7 @@
 - Both SNI names served certificate DER SHA-256 `6eda8715a32713f7d607af1837831f077645ff0b9888964f0dfc8ccf6601ffa1` during migration acceptance.
 - The root `acme.sh` cron entry completed successfully and selected its next ARI renewal window for 2026-09-17. The obsolete `certbot.timer` was disabled without uninstalling Certbot.
 - The first switch probe safely rolled back after observing an old Nginx worker during graceful reload. The corrected bounded retry then accepted the new certificate on both names. Rollback evidence is retained under `/root/backups/phase7a-certificate-20260719-011752`; the successful migration backup is `/root/backups/phase7a-certificate-20260719-012445`.
+- A separate read-only verification produced `phase7a_certificate_acceptance=passed`, confirmed application health with AMap and DeepSeek enabled, and was saved locally as `phase7a-certificate-acceptance-20260719-074623.txt`. Browser checks of both public names completed without certificate warnings.
 
 ## Repository-side controls in this phase
 
