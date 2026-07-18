@@ -72,7 +72,7 @@ Ordinary dump backup/restore and PostgreSQL PITR are different capabilities. The
 
 ### AI connectivity
 
-The production server was able to install Codex through npm but timed out connecting to OpenAI service endpoints. A second direct API attempt on 2026-07-18 also timed out before authentication with HTTP status `000`; successful package installation or cached login does not prove model/API connectivity. The product decision therefore changed to DeepSeek, which still requires an independent production-server connectivity and authenticated-call gate before the assistant is enabled.
+The production server was able to install Codex through npm but timed out connecting to OpenAI service endpoints. A second direct API attempt on 2026-07-18 also timed out before authentication with HTTP status `000`; successful package installation or cached login did not prove model/API connectivity. The product decision therefore changed to DeepSeek. Independent ECS DNS, TLS, authentication, model-list, bounded JSON and grounded-answer gates passed on 2026-07-19 before the assistant was enabled.
 
 ## Sensitive-data policy
 

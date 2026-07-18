@@ -166,7 +166,7 @@ Version the prompt and record the prompt version in usage logs.
 
 ## Connectivity gate
 
-The current ECS could not reach OpenAI endpoints during the recorded sessions. Text generation has since selected DeepSeek, while STT and TTS remain undecided. The voice assistant is `[BLOCKED]` for production until the complete selected STT/LLM/TTS path is reachable and tested from the deployment environment.
+The current ECS could not reach OpenAI endpoints during the recorded sessions. DeepSeek text generation was subsequently connected, enabled and accepted in production on 2026-07-19, while STT and TTS remain undecided. The voice assistant is `[BLOCKED]` until the complete selected STT/LLM/TTS path is reachable and tested from the deployment environment.
 
 Required pre-production check:
 
