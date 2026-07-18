@@ -58,6 +58,15 @@
 - `[VERIFIED 2026-07-16]` Prisma schema, migrations, authentication, route organization, tests, and editor implementation were inspected for Phase 1.
 - `[CHECK]` The task inventory marks public blog pages, admin CRUD, SEO, responsiveness, dark mode, accessibility, and caching as needing code verification.
 
+## Phase 4B account and comments evidence — 2026-07-18
+
+- `[VERIFIED]` Production runs database-backed revocable sessions, closed USER/ADMIN roles, account status, invitation registration, one-time password reset, user suspension, and administrator user management.
+- `[VERIFIED]` Published articles support moderated comments and one reply level; visitors are read-only and public comment payloads do not expose account email addresses.
+- `[VERIFIED]` Users can edit or soft-delete their own comments and report public comments; edits return to pending review.
+- `[VERIFIED]` Administrators can publish, hide, mark spam, restore, permanently delete, inspect reports, and lock each article's comment area.
+- `[VERIFIED]` Comment input limits length, link count, active content, duplicate content, and submission frequency. Comment participation and minimum-data rules are publicly documented.
+- `[AUTOMATED AND BROWSER VERIFIED]` PostgreSQL CI and production checks cover anonymous rejection, pending visibility, approval, reply depth, reports, edit review, locking, recycle-bin restore, and purge. Production commit: `e51b390`.
+
 ## Production infrastructure
 
 - `[VERIFIED]` Alibaba Cloud ECS with Ubuntu 22.04.5 LTS.
