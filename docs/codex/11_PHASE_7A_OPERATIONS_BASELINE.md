@@ -14,8 +14,9 @@
 - SSH allowed root login, password authentication, X11 forwarding, and TCP forwarding. No named sudo operator existed, fail2ban was absent, and 63 rejected or invalid SSH events occurred in 24 hours.
 - The latest database dump passed `gzip -t`, but backups were mode 0644, upload backups were deployment-only, and no off-host destination or `rclone` installation existed.
 - `/etc/fstab` contained the same `/swapfile` entry twice. The active 2 GiB swap itself was healthy.
-- The Nginx-served Certbot certificate expires on 2026-08-08. `certbot.service` has failed since 2026-07-10. A separate `acme.sh` installation successfully issued an ECDSA certificate on 2026-07-08, so certificate ownership must be standardized before renewal automation is changed.
-- TLS 1.0 and 1.1 handshakes were rejected. TLS 1.2 passed; TLS 1.3 needs a corrected probe before acceptance. HSTS was not observed.
+- The Nginx-served Certbot certificate expires on 2026-08-08. `certbot.service` has failed since 2026-07-10. A separate `acme.sh` installation successfully issued an ECDSA certificate on 2026-07-08 that expires on 2026-10-06 and installs to `/etc/nginx/ssl/eastherphil.cn`, but Nginx does not use that path yet.
+- The current `acme.sh` domain record has `Le_Domain='eastherphil.cn'` and `Le_Alt='no'`. Because the Nginx virtual host also serves `www.eastherphil.cn`, the replacement certificate must prove both SANs before Nginx is switched and Certbot is disabled.
+- TLS 1.0 and 1.1 handshakes were rejected. Corrected probes verified TLS 1.2 and TLS 1.3. HSTS was not observed.
 - Twenty-four package upgrades were available and no reboot was required at audit time.
 
 ## Repository-side controls in this phase
@@ -31,7 +32,7 @@
 ## Staged production rollout
 
 1. Back up the database, uploads, environment, Nginx, SSH, UFW, Docker, and fstab configuration.
-2. Repair certificate ownership first and prove automated renewal plus Nginx reload without replacing a valid certificate blindly.
+2. Issue or verify an `acme.sh` certificate covering both `eastherphil.cn` and `www.eastherphil.cn`, prove its key pair and SANs, switch Nginx with an immediate rollback path, then prove automated renewal and reload before disabling Certbot.
 3. Create a named operations account with a unique public key and sudo access; verify a second concurrent login before changing SSH policy.
 4. Remove the stale UFW 3002 rules and reconcile the Alibaba Cloud security group. Preserve 22/80/443 until SSH and HTTPS acceptance passes.
 5. Deploy the container and local operations controls. Confirm upload ownership for UID 1000 before replacing the application container.
@@ -41,13 +42,13 @@
 ## Rollback boundaries
 
 - Do not disable root or password login until the named account, key, sudo, and emergency console path are verified.
-- Keep the current certificate and Nginx backup until the selected ACME client completes a dry run and Nginx reload.
+- Keep the current certificate and Nginx backup until the selected ACME client proves both required SANs, completes a renewal test, and reloads Nginx successfully.
 - Keep the current application image tag and environment backup until health, uploads, media playback, map, assistant, and login checks pass.
 - UFW changes must be applied by numbered rule or exact rule and immediately followed by listener and remote connectivity checks.
 
 ## Acceptance criteria
 
-- Certificate renewal dry run succeeds, the served certificate path is documented, and the expiry alert passes.
+- The served certificate covers both the apex and `www` names, its path is documented, renewal/reload verification succeeds, and the expiry alert passes.
 - Named operator login and sudo work; password SSH is disabled; emergency access is documented and tested.
 - Only intended public ports are allowed in both UFW and the Alibaba Cloud security group.
 - Containers are healthy, the app runs non-root, logs rotate, limits are visible through `docker inspect`, and uploads remain writable.
