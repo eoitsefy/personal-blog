@@ -111,7 +111,7 @@
 .nav {
   display: flex;
   align-items: center;
-  gap: 34px;
+  gap: 26px;
   font-size: 0.82rem;
   letter-spacing: 0.08em;
 }
@@ -232,7 +232,7 @@
     font-size: 0.74rem;
   }
 
-  .nav a:last-child {
+  .nav a:nth-last-child(-n + 2) {
     display: none;
   }
 }

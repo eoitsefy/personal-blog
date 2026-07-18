@@ -180,11 +180,14 @@ Priority: P1/P2
 
 Prerequisite: reachable production AI provider/gateway.
 
+Status: `[IN DEVELOPMENT 2026-07-18]` The provider-neutral, disabled-by-default text-assistant foundation is being implemented. Production enablement remains gated on a selected provider, server-side credentials, connectivity, authentication, timeout and failure-path verification.
+
 Tasks:
 
 - Implement provider-neutral embedding and generation interfaces.
 - Index only published content and return source citations.
 - Add rate limits, budgets, timeouts, logging, feature flags, and safe no-evidence behavior.
+- Keep article publishing independent from provider availability by synchronizing local chunks transactionally and generating embeddings through an explicit administrator rebuild operation.
 
 ## Phase 6B — Voice input and speech output
 

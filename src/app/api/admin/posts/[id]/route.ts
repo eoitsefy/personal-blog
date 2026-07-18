@@ -1,5 +1,6 @@
 import { Prisma } from "@prisma/client";
 import { fail, logApi, ok } from "@/lib/api";
+import { syncPostAssistantIndex } from "@/lib/assistant/indexing";
 import { InvalidAssetReferenceError, syncPostAssets } from "@/lib/media/references";
 import { prisma } from "@/lib/prisma";
 import { requireAdmin } from "@/lib/require-admin";
@@ -113,6 +114,7 @@ export async function PATCH(req: Request, { params }: RouteParams) {
       if (input.placeIds !== undefined) {
         await syncPostPlaces(tx, id, input.placeIds);
       }
+      await syncPostAssistantIndex(tx, id);
       return tx.post.findUniqueOrThrow({ where: { id }, select: postSelect });
     });
     logApi({
@@ -150,9 +152,12 @@ export async function DELETE(req: Request, { params }: RouteParams) {
   if (!existing) return fail("NOT_FOUND", "文章不存在", 404, auth.requestId);
 
   if (!existing.deletedAt) {
-    await prisma.post.update({
-      where: { id },
-      data: { deletedAt: new Date(), status: "DRAFT", publishedAt: null },
+    await prisma.$transaction(async (tx) => {
+      await tx.post.update({
+        where: { id },
+        data: { deletedAt: new Date(), status: "DRAFT", publishedAt: null },
+      });
+      await syncPostAssistantIndex(tx, id);
     });
   }
   logApi({

@@ -1,4 +1,5 @@
 import { fail, logApi, ok } from "@/lib/api";
+import { syncPostAssistantIndex } from "@/lib/assistant/indexing";
 import { prisma } from "@/lib/prisma";
 import { requireAdmin } from "@/lib/require-admin";
 import { validateMutationOrigin } from "@/lib/request-security";
@@ -18,7 +19,10 @@ export async function POST(req: Request, { params }: RouteParams) {
   if (!existing) return fail("NOT_FOUND", "文章不存在", 404, auth.requestId);
 
   if (existing.deletedAt) {
-    await prisma.post.update({ where: { id }, data: { deletedAt: null } });
+    await prisma.$transaction(async (tx) => {
+      await tx.post.update({ where: { id }, data: { deletedAt: null } });
+      await syncPostAssistantIndex(tx, id);
+    });
   }
 
   logApi({

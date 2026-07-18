@@ -438,6 +438,10 @@ test("authenticated article lifecycle integrates taxonomy, search and soft delet
     assert.equal(createResponse.status, 201);
     const created = await createResponse.json() as { data: { post: { id: string } } };
     postId = created.data.post.id;
+    const indexedChunks = await prisma.aiContentChunk.findMany({ where: { postId }, orderBy: { chunkIndex: "asc" } });
+    assert.ok(indexedChunks.length > 0);
+    assert.match(indexedChunks[0].content, /integration-keyword/);
+    assert.equal(indexedChunks[0].embedding, null);
 
     const publicResponse = await listPublicPosts(new Request(`http://localhost/api/posts?q=integration-keyword&category=${encodeURIComponent("技术")}&tag=prisma`));
     assert.equal(publicResponse.status, 200);
@@ -450,6 +454,7 @@ test("authenticated article lifecycle integrates taxonomy, search and soft delet
     );
     assert.equal(deleteResponse.status, 200);
     assert.equal(await prisma.post.count({ where: { id: postId, deletedAt: null } }), 0);
+    assert.equal(await prisma.aiContentChunk.count({ where: { postId } }), 0);
 
     const hiddenResponse = await listPublicPosts(new Request("http://localhost/api/posts?q=integration-keyword"));
     const hiddenBody = await hiddenResponse.json() as { data: { posts: Array<{ id: string }> } };
@@ -463,6 +468,7 @@ test("authenticated article lifecycle integrates taxonomy, search and soft delet
     const restored = await prisma.post.findUniqueOrThrow({ where: { id: postId }, select: { deletedAt: true, status: true } });
     assert.equal(restored.deletedAt, null);
     assert.equal(restored.status, "DRAFT");
+    assert.equal(await prisma.aiContentChunk.count({ where: { postId } }), 0);
 
     const blockedEmail = `blocked-${suffix}@example.test`;
     const blockedRequest = () => new Request("http://localhost/api/auth/login", {

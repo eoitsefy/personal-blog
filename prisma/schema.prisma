@@ -61,6 +61,15 @@ enum CoordinateSystem {
   BD09
 }
 
+enum AiUsageStatus {
+  SUCCESS
+  NO_EVIDENCE
+  RATE_LIMITED
+  BUDGET_EXHAUSTED
+  PROVIDER_ERROR
+  TIMEOUT
+}
+
 model User {
   id              String          @id @default(cuid())
   email           String          @unique
@@ -131,11 +140,68 @@ model Post {
   comments       Comment[]
   places         PostPlace[]
   commentsLocked Boolean        @default(false)
+  aiChunks        AiContentChunk[]
 
   @@index([status, publishedAt(sort: Desc)])
   @@index([authorId, createdAt(sort: Desc)])
   @@index([categoryId, status, publishedAt(sort: Desc)])
   @@index([deletedAt, updatedAt(sort: Desc)])
+}
+
+model AiContentChunk {
+  id             String   @id @default(cuid())
+  postId         String
+  post           Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  contentVersion String
+  heading        String?
+  chunkIndex     Int
+  content        String
+  embedding      Json?
+  embeddingModel String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@unique([postId, chunkIndex])
+  @@index([postId, contentVersion])
+  @@index([embeddingModel])
+}
+
+model AiUsage {
+  requestId      String        @id
+  actorKeyHash   String
+  provider       String
+  model          String?
+  promptVersion  String
+  status         AiUsageStatus
+  latencyMs      Int
+  inputUnits     Int           @default(0)
+  outputUnits    Int           @default(0)
+  retrievalCount Int           @default(0)
+  sourcePostIds  Json
+  errorCategory  String?
+  createdAt      DateTime      @default(now())
+
+  @@index([createdAt(sort: Desc)])
+  @@index([actorKeyHash, createdAt(sort: Desc)])
+  @@index([status, createdAt(sort: Desc)])
+}
+
+model AiRateLimit {
+  key             String    @id
+  attempts        Int       @default(0)
+  windowStartedAt DateTime
+  blockedUntil    DateTime?
+  updatedAt       DateTime  @updatedAt
+
+  @@index([updatedAt])
+}
+
+model AiBudgetUsage {
+  periodKey    String   @id
+  requestCount Int      @default(0)
+  inputUnits   Int      @default(0)
+  outputUnits  Int      @default(0)
+  updatedAt    DateTime @updatedAt
 }
 
 model Category {

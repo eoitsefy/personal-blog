@@ -1,0 +1,29 @@
+.panel { width: min(100% - 48px, 900px); margin: 0 auto; padding: 88px 0 120px; }
+.status { display: flex; align-items: center; gap: 9px; font: 700 .66rem/1 Arial, sans-serif; letter-spacing: .16em; }
+.status span { width: 8px; height: 8px; border-radius: 50%; }
+.online { background: #4f8f63; box-shadow: 0 0 0 5px rgba(79,143,99,.13); }
+.offline { background: #8a8174; box-shadow: 0 0 0 5px rgba(138,129,116,.13); }
+.panel h1 { max-width: 720px; margin: 24px 0 18px; font: 400 clamp(2.6rem, 7vw, 5.6rem)/.96 Georgia, "Noto Serif SC", serif; letter-spacing: -.055em; }
+.intro { max-width: 660px; margin: 0 0 46px; color: var(--ink-soft); line-height: 1.8; }
+.form { padding: 28px; border: 1px solid var(--line); background: var(--paper-bright); }
+.form label { display: block; margin-bottom: 12px; font-size: .75rem; font-weight: 700; letter-spacing: .08em; }
+.form textarea { width: 100%; resize: vertical; padding: 16px; color: var(--ink); border: 1px solid var(--line); background: transparent; line-height: 1.7; }
+.form textarea:disabled { opacity: .58; }
+.formMeta { display: flex; justify-content: space-between; align-items: center; margin-top: 16px; }
+.formMeta span { color: var(--ink-soft); font-size: .72rem; }
+.formMeta button { padding: 12px 18px; border: 1px solid var(--night); color: var(--paper-bright); background: var(--night); cursor: pointer; }
+.formMeta button:disabled { cursor: not-allowed; opacity: .45; }
+.notice, .error, .answer { margin-top: 24px; border: 1px solid var(--line); background: rgba(248,247,242,.72); }
+.notice, .error { padding: 22px 24px; }
+.notice p, .error p { margin: 7px 0 0; color: var(--ink-soft); line-height: 1.65; }
+.error { border-color: rgba(188,73,63,.45); }
+.answer { padding: 30px; }
+.answer > header { display: flex; justify-content: space-between; gap: 20px; padding-bottom: 16px; border-bottom: 1px solid var(--line); font-size: .68rem; letter-spacing: .12em; }
+.answer > p { margin: 28px 0; font: 1.15rem/1.9 Georgia, "Noto Serif SC", serif; white-space: pre-wrap; }
+.answer h2 { font-size: .8rem; letter-spacing: .1em; }
+.answer ol { margin: 16px 0 0; padding: 0; list-style: none; }
+.answer li { padding: 18px 0; border-top: 1px solid var(--line); }
+.answer li a { font-weight: 700; }
+.answer li p { margin: 8px 0 0; color: var(--ink-soft); line-height: 1.65; }
+.answer footer { margin-top: 22px; color: var(--ink-soft); font-size: .66rem; }
+@media (max-width: 760px) { .panel { width: min(100% - 30px, 900px); padding: 58px 0 90px; } .form, .answer { padding: 20px; } .answer > header { flex-direction: column; } }
