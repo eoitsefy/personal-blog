@@ -5,7 +5,7 @@ import { FormEvent, useState } from "react";
 import styles from "./assistant-panel.module.css";
 
 type Source = { postId: string; title: string; url: string; excerpt: string };
-type Answer = { answer: string; sources: Source[]; confidence: "high" | "medium" | "low"; requestId: string };
+type Answer = { answer: string; sources: Source[]; confidence: "high" | "medium" | "low"; mode: "grounded" | "conversation" | "no_evidence"; requestId: string };
 
 export function AssistantPanel({ enabled, maxQuestionChars }: { enabled: boolean; maxQuestionChars: number }) {
   const [question, setQuestion] = useState("");
@@ -46,6 +46,6 @@ export function AssistantPanel({ enabled, maxQuestionChars }: { enabled: boolean
     </form>
     {!enabled ? <div className={styles.notice}><strong>助手尚未开放</strong><p>AI 供应商连通性与生产额度通过验收后才会启用；文章浏览、搜索和地图不受影响。</p></div> : null}
     {error ? <div className={styles.error} role="alert"><strong>本次请求未完成</strong><p>{error}</p></div> : null}
-    {answer ? <article className={styles.answer} aria-live="polite"><header><span>GROUNDED ANSWER</span><small>可信度：{answer.confidence === "high" ? "较高" : answer.confidence === "medium" ? "中等" : "较低"}</small></header><p>{answer.answer}</p><section><h2>参考原文</h2>{answer.sources.length ? <ol>{answer.sources.map((source) => <li key={source.postId}><Link href={source.url}>{source.title} <span>↗</span></Link><p>{source.excerpt}</p></li>)}</ol> : <p>没有找到足够可靠的公开文章证据。</p>}</section><footer>请求编号：{answer.requestId}</footer></article> : null}
+    {answer ? <article className={styles.answer} aria-live="polite"><header><span>{answer.mode === "conversation" ? "LOCAL CONVERSATION" : "GROUNDED ANSWER"}</span><small>可信度：{answer.confidence === "high" ? "较高" : answer.confidence === "medium" ? "中等" : "较低"}</small></header><p>{answer.answer}</p><section><h2>参考原文</h2>{answer.sources.length ? <ol>{answer.sources.map((source) => <li key={source.postId}><Link href={source.url}>{source.title} <span>↗</span></Link><p>{source.excerpt}</p></li>)}</ol> : <p>{answer.mode === "conversation" ? "本次简短对话在本地完成，没有调用 AI，也不消耗模型用量。" : "没有找到足够可靠的公开文章证据。"}</p>}</section><footer>请求编号：{answer.requestId}</footer></article> : null}
   </section>;
 }

@@ -6,6 +6,20 @@ import { rankEvidence, type RetrievalCandidate } from "./retrieval";
 
 type EnabledConfig = Extract<AssistantConfig, { enabled: true }>;
 
+export function answerLocalConversation(question: string) {
+  const normalized = question.trim().toLocaleLowerCase().replace(/[\s，。！？!?,.]+/gu, "");
+  if (/^(你好|您好|嗨|哈喽|hello|hi)$/.test(normalized)) {
+    return "你好，我可以帮你从已发布的博客文章中寻找答案。你可以直接问一件记录过的事。";
+  }
+  if (/^(谢谢|感谢|多谢|thankyou|thanks)$/.test(normalized)) {
+    return "不客气。想继续查找博客里的内容时，直接告诉我关键词就好。";
+  }
+  if (/^(再见|拜拜|下次见|bye|goodbye)$/.test(normalized)) {
+    return "再见，祝你今天顺利。";
+  }
+  return null;
+}
+
 function asEmbedding(value: Prisma.JsonValue | null): number[] | null {
   return Array.isArray(value) && value.every((item) => typeof item === "number") ? value : null;
 }
@@ -44,6 +58,17 @@ export async function retrieveAssistantEvidence(question: string, config: Enable
 }
 
 export async function answerAssistantQuestion(question: string, config: EnabledConfig) {
+  const localAnswer = answerLocalConversation(question);
+  if (localAnswer) {
+    return {
+      answer: localAnswer,
+      sources: [],
+      confidence: "high" as const,
+      usage: { inputUnits: 0, outputUnits: 0 },
+      retrievalCount: 0,
+      mode: "conversation" as const,
+    };
+  }
   const evidence = await retrieveAssistantEvidence(question, config);
   if (!evidence.length) {
     return {
@@ -52,6 +77,7 @@ export async function answerAssistantQuestion(question: string, config: EnabledC
       confidence: "low" as const,
       usage: { inputUnits: 0, outputUnits: 0 },
       retrievalCount: 0,
+      mode: "no_evidence" as const,
     };
   }
   const provider = createAssistantProvider(config);
@@ -77,6 +103,7 @@ export async function answerAssistantQuestion(question: string, config: EnabledC
     confidence: topScore >= 0.65 ? "high" as const : topScore >= 0.3 ? "medium" as const : "low" as const,
     usage: { inputUnits: generated.inputUnits, outputUnits: generated.outputUnits },
     retrievalCount: evidence.length,
+    mode: "grounded" as const,
   };
 }
 

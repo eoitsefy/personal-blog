@@ -9,26 +9,27 @@ test("assistant stays disabled by default without exposing secrets", () => {
   });
 });
 
-test("assistant accepts a complete server-only OpenAI-compatible configuration", () => {
+test("assistant accepts a server-only OpenAI configuration with low-usage defaults", () => {
   const config = getAssistantConfig({
     AI_ASSISTANT_ENABLED: "true",
-    AI_PROVIDER: "openai-compatible",
-    AI_BASE_URL: "https://gateway.example/v1/",
+    AI_PROVIDER: "openai",
     AI_API_KEY: "secret",
-    AI_GENERATION_MODEL: "answer-model",
-    AI_EMBEDDING_MODEL: "embedding-model",
     AI_ACTOR_SALT: "private-rate-limit-salt",
   });
   assert.equal(config.enabled, true);
   if (config.enabled) {
-    assert.equal(config.baseUrl, "https://gateway.example/v1");
-    assert.equal(config.embeddingModel, "embedding-model");
+    assert.equal(config.baseUrl, "https://api.openai.com/v1");
+    assert.equal(config.generationModel, "gpt-5-nano");
+    assert.equal(config.embeddingModel, "text-embedding-3-small");
+    assert.equal(config.reasoningEffort, "minimal");
+    assert.equal(config.maxOutputTokens, 300);
+    assert.equal(config.retrievalLimit, 4);
   }
 });
 
 test("assistant rejects insecure remote provider URLs", () => {
   assert.deepEqual(getAssistantConfig({
-    AI_ASSISTANT_ENABLED: "true", AI_PROVIDER: "openai-compatible", AI_BASE_URL: "http://gateway.example/v1",
+    AI_ASSISTANT_ENABLED: "true", AI_PROVIDER: "openai", AI_BASE_URL: "http://gateway.example/v1",
     AI_API_KEY: "secret", AI_GENERATION_MODEL: "model", AI_ACTOR_SALT: "salt",
   }), { enabled: false, reason: "invalid_configuration" });
 });

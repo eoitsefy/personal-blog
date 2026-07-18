@@ -2,11 +2,12 @@ export type AssistantConfig =
   | { enabled: false; reason: "feature_disabled" | "invalid_configuration" }
   | {
       enabled: true;
-      provider: "openai-compatible";
+      provider: "openai";
       baseUrl: string;
       apiKey: string;
       generationModel: string;
       embeddingModel: string | null;
+      reasoningEffort: "minimal" | "low" | "medium" | "high";
       timeoutMs: number;
       maxQuestionChars: number;
       maxOutputTokens: number;
@@ -40,11 +41,12 @@ export function getAssistantConfig(environment: AssistantEnvironment = process.e
   }
 
   const provider = environment.AI_PROVIDER?.trim().toLowerCase();
-  const rawBaseUrl = environment.AI_BASE_URL?.trim();
+  const rawBaseUrl = environment.AI_BASE_URL?.trim() || "https://api.openai.com/v1";
   const apiKey = environment.AI_API_KEY?.trim();
-  const generationModel = environment.AI_GENERATION_MODEL?.trim();
+  const generationModel = environment.AI_GENERATION_MODEL?.trim() || "gpt-5-nano";
   const actorSalt = environment.AI_ACTOR_SALT?.trim();
-  if (provider !== "openai-compatible" || !rawBaseUrl || !apiKey || !generationModel || !actorSalt) {
+  const reasoningEffort = environment.AI_REASONING_EFFORT?.trim().toLowerCase() || "minimal";
+  if (provider !== "openai" || !apiKey || !actorSalt || !["minimal", "low", "medium", "high"].includes(reasoningEffort)) {
     return { enabled: false, reason: "invalid_configuration" };
   }
 
@@ -59,16 +61,17 @@ export function getAssistantConfig(environment: AssistantEnvironment = process.e
       baseUrl: baseUrl.toString().replace(/\/$/, ""),
       apiKey,
       generationModel,
-      embeddingModel: environment.AI_EMBEDDING_MODEL?.trim() || null,
+      embeddingModel: environment.AI_EMBEDDING_MODEL?.trim() || "text-embedding-3-small",
+      reasoningEffort: reasoningEffort as "minimal" | "low" | "medium" | "high",
       timeoutMs: integer(environment.AI_TIMEOUT_MS, 15_000, 1_000, 60_000),
-      maxQuestionChars: integer(environment.AI_MAX_QUESTION_CHARS, 1_000, 50, 4_000),
-      maxOutputTokens: integer(environment.AI_MAX_OUTPUT_TOKENS, 600, 64, 4_096),
-      retrievalLimit: integer(environment.AI_RETRIEVAL_LIMIT, 6, 1, 12),
+      maxQuestionChars: integer(environment.AI_MAX_QUESTION_CHARS, 500, 50, 4_000),
+      maxOutputTokens: integer(environment.AI_MAX_OUTPUT_TOKENS, 300, 64, 4_096),
+      retrievalLimit: integer(environment.AI_RETRIEVAL_LIMIT, 4, 1, 12),
       minRelevance: decimal(environment.AI_MIN_RELEVANCE, 0.12, 0.01, 1),
       rateLimitWindowMs: integer(environment.AI_RATE_LIMIT_WINDOW_SECONDS, 600, 10, 86_400) * 1_000,
-      maxRequestsPerWindow: integer(environment.AI_MAX_REQUESTS_PER_WINDOW, 5, 1, 100),
+      maxRequestsPerWindow: integer(environment.AI_MAX_REQUESTS_PER_WINDOW, 4, 1, 100),
       blockMs: integer(environment.AI_RATE_LIMIT_BLOCK_SECONDS, 1_800, 10, 86_400) * 1_000,
-      maxDailyRequests: integer(environment.AI_MAX_DAILY_REQUESTS, 100, 1, 100_000),
+      maxDailyRequests: integer(environment.AI_MAX_DAILY_REQUESTS, 50, 1, 100_000),
       maxConcurrentRequests: integer(environment.AI_MAX_CONCURRENT_REQUESTS, 2, 1, 20),
       circuitFailureThreshold: integer(environment.AI_CIRCUIT_FAILURE_THRESHOLD, 3, 1, 20),
       circuitCooldownMs: integer(environment.AI_CIRCUIT_COOLDOWN_SECONDS, 60, 10, 3_600) * 1_000,

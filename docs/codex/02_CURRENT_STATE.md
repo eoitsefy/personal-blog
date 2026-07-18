@@ -170,5 +170,6 @@ Historical scripts to archive or verify:
 ## AI and Codex connectivity
 
 - `[VERIFIED]` On 2026-07-10 the ECS timed out connecting to `api.openai.com:443` and `chatgpt.com:443`.
-- `[BLOCKED]` Direct production use of an unreachable AI provider.
-- `[PLANNED]` Use a provider adapter and verify egress connectivity before enabling the AI assistant in production.
+- `[DEPLOYED DISABLED]` Phase 6A local indexing, retrieval, limits, usage records and provider isolation were deployed at `f724027` on 2026-07-18; the public provider call path remains disabled.
+- `[SELECTED]` OpenAI API with `gpt-5-nano` generation, `text-embedding-3-small` retrieval embeddings, Responses API, `store=false`, minimal reasoning and bounded output.
+- `[BLOCKED]` Production enablement still requires a server-only API key plus successful ECS DNS/TLS/authentication, reindex, grounded-answer, budget and failure-path checks.
