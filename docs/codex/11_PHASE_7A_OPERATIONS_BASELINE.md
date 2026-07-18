@@ -2,7 +2,7 @@
 
 ## Status
 
-`[IN PROGRESS]` The production read-only audit completed on 2026-07-19. Repository-side changes are implemented on `agent/phase-7a-operations-baseline`; production changes and acceptance evidence remain pending.
+`[IN PROGRESS]` The production read-only audit completed on 2026-07-19. Certificate ownership and renewal were standardized on `acme.sh`; the remaining server and repository controls are still staged on `agent/phase-7a-operations-baseline`.
 
 ## Verified production baseline
 
@@ -19,6 +19,14 @@
 - TLS 1.0 and 1.1 handshakes were rejected. Corrected probes verified TLS 1.2 and TLS 1.3. HSTS was not observed.
 - Twenty-four package upgrades were available and no reboot was required at audit time.
 
+## Completed production change: certificate ownership
+
+- On 2026-07-19, `acme.sh` issued an ECDSA certificate covering both `eastherphil.cn` and `www.eastherphil.cn`, valid through 2026-10-16.
+- Nginx now reads `/etc/nginx/ssl/eastherphil.cn/fullchain.pem` and `/etc/nginx/ssl/eastherphil.cn/privkey.pem` rather than the old Certbot live path.
+- Both SNI names served certificate DER SHA-256 `6eda8715a32713f7d607af1837831f077645ff0b9888964f0dfc8ccf6601ffa1` during migration acceptance.
+- The root `acme.sh` cron entry completed successfully and selected its next ARI renewal window for 2026-09-17. The obsolete `certbot.timer` was disabled without uninstalling Certbot.
+- The first switch probe safely rolled back after observing an old Nginx worker during graceful reload. The corrected bounded retry then accepted the new certificate on both names. Rollback evidence is retained under `/root/backups/phase7a-certificate-20260719-011752`; the successful migration backup is `/root/backups/phase7a-certificate-20260719-012445`.
+
 ## Repository-side controls in this phase
 
 - Build the runtime image from production dependencies only and run the Next.js process as the Alpine `node` user.
@@ -32,7 +40,7 @@
 ## Staged production rollout
 
 1. Back up the database, uploads, environment, Nginx, SSH, UFW, Docker, and fstab configuration.
-2. Issue or verify an `acme.sh` certificate covering both `eastherphil.cn` and `www.eastherphil.cn`, prove its key pair and SANs, switch Nginx with an immediate rollback path, then prove automated renewal and reload before disabling Certbot.
+2. `[COMPLETE 2026-07-19]` Issue an `acme.sh` certificate covering both names, prove its key pair and SANs, switch Nginx with an immediate rollback path, verify renewal/reload, and disable the obsolete Certbot timer.
 3. Create a named operations account with a unique public key and sudo access; verify a second concurrent login before changing SSH policy.
 4. Remove the stale UFW 3002 rules and reconcile the Alibaba Cloud security group. Preserve 22/80/443 until SSH and HTTPS acceptance passes.
 5. Deploy the container and local operations controls. Confirm upload ownership for UID 1000 before replacing the application container.
@@ -42,13 +50,13 @@
 ## Rollback boundaries
 
 - Do not disable root or password login until the named account, key, sudo, and emergency console path are verified.
-- Keep the current certificate and Nginx backup until the selected ACME client proves both required SANs, completes a renewal test, and reloads Nginx successfully.
+- Keep the 2026-07-19 Nginx and certificate backups until the next automatic `acme.sh` renewal and reload complete successfully.
 - Keep the current application image tag and environment backup until health, uploads, media playback, map, assistant, and login checks pass.
 - UFW changes must be applied by numbered rule or exact rule and immediately followed by listener and remote connectivity checks.
 
 ## Acceptance criteria
 
-- The served certificate covers both the apex and `www` names, its path is documented, renewal/reload verification succeeds, and the expiry alert passes.
+- `[PASSED 2026-07-19]` The served certificate covers both names, its stable path is documented, and issuance, installation, reload, cron, and fingerprint checks passed. The Phase 7A expiry alert deployment remains pending.
 - Named operator login and sudo work; password SSH is disabled; emergency access is documented and tested.
 - Only intended public ports are allowed in both UFW and the Alibaba Cloud security group.
 - Containers are healthy, the app runs non-root, logs rotate, limits are visible through `docker inspect`, and uploads remain writable.

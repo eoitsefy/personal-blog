@@ -235,7 +235,7 @@ Acceptance:
 - Only intended public ports are exposed.
 - Alerts are tested, not only configured.
 
-Current milestone: `[IN PROGRESS — Phase 7A]` repair and standardize certificate renewal, introduce and verify a named non-root operations account before changing SSH policy, remove stale port 3002 exposure, deploy Docker retention and alerts, configure off-host backup credentials, and record rollback/restore evidence before expanding to Phase 6B voice features.
+Current milestone: `[IN PROGRESS — Phase 7A]` certificate ownership and renewal were standardized on `acme.sh` on 2026-07-19. Next, introduce and verify a named non-root operations account before changing SSH policy, remove stale port 3002 exposure, deploy Docker retention and alerts, configure off-host backup credentials, and record rollback/restore evidence before expanding to Phase 6B voice features.
 
 ## Suggested first Codex milestone
 
