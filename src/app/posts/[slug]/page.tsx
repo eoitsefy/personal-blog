@@ -4,12 +4,15 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { cache } from "react";
 import { RichMarkdown } from "@/components/content/rich-markdown";
+import { CommentSection } from "@/components/comments/comment-section";
 import { SiteFooter, SiteHeader } from "@/components/site/site-shell";
+import { listPublicComments } from "@/lib/comments";
 import { prisma } from "@/lib/prisma";
 import { isPublishedPost } from "@/lib/post-visibility";
 import { getUiPreviewPost, isUiPreviewEnabled } from "@/lib/ui-preview";
 import { absoluteUrl, SITE_AUTHOR, SITE_NAME, SITE_OG_IMAGE } from "@/lib/site";
 import { safeJsonLd } from "@/lib/seo";
+import { getCurrentUser } from "@/lib/user-auth";
 import dawnArchive from "../../../../public/images/journal/dawn-archive.png";
 import styles from "./post.module.css";
 
@@ -20,7 +23,7 @@ type PageProps = {
 const getPublishedPostBySlug = cache(async (slug: string) => {
   if (isUiPreviewEnabled()) {
     const post = getUiPreviewPost(slug);
-    return post ? { ...post, assets: [] } : null;
+    return post ? { ...post, assets: [], commentsLocked: false } : null;
   }
 
   const post = await prisma.post.findFirst({
@@ -35,6 +38,7 @@ const getPublishedPostBySlug = cache(async (slug: string) => {
       publishedAt: true,
       createdAt: true,
       updatedAt: true,
+      commentsLocked: true,
       author: { select: { id: true } },
       category: { select: { name: true, slug: true } },
       tags: { select: { tag: { select: { name: true, slug: true } } } },
@@ -106,6 +110,10 @@ export default async function PostDetailPage({ params }: PageProps) {
   const { slug } = await params;
   const post = await getPublishedPostBySlug(slug);
   if (!post) notFound();
+
+  const previewMode = isUiPreviewEnabled();
+  const currentUser = previewMode ? null : await getCurrentUser();
+  const comments = previewMode ? [] : await listPublicComments(post.id, currentUser?.id ?? null);
 
   const publishDate = post.publishedAt ?? post.createdAt;
   const readingMinutes = estimateReadingMinutes(post.contentMd);
@@ -211,6 +219,12 @@ export default async function PostDetailPage({ params }: PageProps) {
             <div className={styles.endRule}><i /></div>
             <Link href="/posts">继续浏览其他记录 →</Link>
           </footer>
+          <CommentSection
+            slug={post.slug}
+            initialComments={comments}
+            commentsLocked={post.commentsLocked}
+            signedIn={Boolean(currentUser?.emailVerifiedAt)}
+          />
         </article>
       </main>
 

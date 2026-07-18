@@ -20,7 +20,14 @@ import { POST as createPasswordReset } from "@/app/api/admin/users/[id]/password
 import { POST as acceptInvitationRoute } from "@/app/api/auth/invitations/accept/route";
 import { POST as resetPasswordRoute } from "@/app/api/auth/password-reset/route";
 import { GET as listPublicPosts } from "@/app/api/posts/route";
-import { hashPassword, hashSessionToken, parseCookie, SESSION_COOKIE_NAME } from "@/lib/auth";
+import { GET as listComments, POST as createComment } from "@/app/api/posts/[slug]/comments/route";
+import { DELETE as deleteOwnComment, PATCH as editOwnComment } from "@/app/api/comments/[id]/route";
+import { POST as reportComment } from "@/app/api/comments/[id]/reports/route";
+import { DELETE as deleteAdminComment, PATCH as moderateComment } from "@/app/api/admin/comments/[id]/route";
+import { DELETE as purgeComment } from "@/app/api/admin/comments/[id]/purge/route";
+import { PATCH as lockComments } from "@/app/api/admin/posts/[id]/comments/route";
+import { hashPassword, hashSessionToken, issueUserSession, parseCookie, SESSION_COOKIE_NAME } from "@/lib/auth";
+import { commentRateLimitKey } from "@/lib/comments";
 import { loginThrottleKey } from "@/lib/login-throttle";
 
 const prisma = new PrismaClient();
@@ -28,6 +35,102 @@ const PNG_1X1 = Buffer.from(
   "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAusB9Y9ZlZsAAAAASUVORK5CYII=",
   "base64",
 );
+
+test("verified comments integrate moderation, replies, reports, locking and deletion", async () => {
+  const suffix = `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+  const slug = `comments-${suffix}`;
+  const address = `192.0.2.${Math.floor(Math.random() * 200) + 1}`;
+  const userIds: string[] = [];
+  let postId = "";
+  let rootId = "";
+  let replyId = "";
+  const rateKeys: string[] = [];
+
+  const jsonRequest = (url: string, cookie: string | null, method: string, body?: unknown) => new Request(url, {
+    method,
+    headers: {
+      ...(body === undefined ? {} : { "content-type": "application/json" }),
+      ...(cookie ? { cookie } : {}),
+      "x-real-ip": address,
+      origin: "http://localhost",
+    },
+    ...(body === undefined ? {} : { body: JSON.stringify(body) }),
+  });
+
+  try {
+    const [admin, reader, reporter] = await Promise.all([
+      prisma.user.create({ data: { email: `comment-admin-${suffix}@example.test`, passwordHash: "unused", role: "ADMIN", emailVerifiedAt: new Date() } }),
+      prisma.user.create({ data: { email: `comment-reader-${suffix}@example.test`, passwordHash: "unused", role: "USER", emailVerifiedAt: new Date() } }),
+      prisma.user.create({ data: { email: `comment-reporter-${suffix}@example.test`, passwordHash: "unused", role: "USER", emailVerifiedAt: new Date() } }),
+    ]);
+    userIds.push(admin.id, reader.id, reporter.id);
+    const [adminSession, readerSession, reporterSession] = await Promise.all([
+      issueUserSession(admin.id), issueUserSession(reader.id), issueUserSession(reporter.id),
+    ]);
+    const adminCookie = `${SESSION_COOKIE_NAME}=${adminSession.token}`;
+    const readerCookie = `${SESSION_COOKIE_NAME}=${readerSession.token}`;
+    const reporterCookie = `${SESSION_COOKIE_NAME}=${reporterSession.token}`;
+    rateKeys.push(
+      commentRateLimitKey(jsonRequest("http://localhost", readerCookie, "GET"), reader.id),
+      commentRateLimitKey(jsonRequest("http://localhost", reporterCookie, "GET"), reporter.id),
+    );
+
+    const post = await prisma.post.create({
+      data: { slug, title: "Comment integration", contentMd: "Published", status: "PUBLISHED", publishedAt: new Date(), authorId: admin.id },
+    });
+    postId = post.id;
+
+    const anonymous = await createComment(jsonRequest(`http://localhost/api/posts/${slug}/comments`, null, "POST", { content: "匿名评论" }), { params: Promise.resolve({ slug }) });
+    assert.equal(anonymous.status, 401);
+
+    const created = await createComment(jsonRequest(`http://localhost/api/posts/${slug}/comments`, readerCookie, "POST", { content: "第一条待审核评论" }), { params: Promise.resolve({ slug }) });
+    assert.equal(created.status, 201);
+    rootId = ((await created.json()) as { data: { comment: { id: string } } }).data.comment.id;
+    assert.equal((await prisma.comment.findUniqueOrThrow({ where: { id: rootId } })).status, "PENDING");
+
+    const visitorBeforeReview = await listComments(jsonRequest(`http://localhost/api/posts/${slug}/comments`, null, "GET"), { params: Promise.resolve({ slug }) });
+    assert.equal(((await visitorBeforeReview.json()) as { data: { comments: unknown[] } }).data.comments.length, 0);
+    const ownerBeforeReview = await listComments(jsonRequest(`http://localhost/api/posts/${slug}/comments`, readerCookie, "GET"), { params: Promise.resolve({ slug }) });
+    assert.equal(((await ownerBeforeReview.json()) as { data: { comments: unknown[] } }).data.comments.length, 1);
+
+    assert.equal((await moderateComment(jsonRequest(`http://localhost/api/admin/comments/${rootId}`, adminCookie, "PATCH", { action: "PUBLISH" }), { params: Promise.resolve({ id: rootId }) })).status, 200);
+    const publicAfterReview = await listComments(jsonRequest(`http://localhost/api/posts/${slug}/comments`, null, "GET"), { params: Promise.resolve({ slug }) });
+    const publicBody = (await publicAfterReview.json()) as { data: { comments: { authorLabel: string; content: string }[] } };
+    assert.equal(publicBody.data.comments[0]?.content, "第一条待审核评论");
+    assert.doesNotMatch(publicBody.data.comments[0]?.authorLabel ?? "", /@/);
+
+    const reply = await createComment(jsonRequest(`http://localhost/api/posts/${slug}/comments`, reporterCookie, "POST", { content: "一级回复", parentId: rootId }), { params: Promise.resolve({ slug }) });
+    assert.equal(reply.status, 201);
+    replyId = ((await reply.json()) as { data: { comment: { id: string } } }).data.comment.id;
+    assert.equal((await moderateComment(jsonRequest(`http://localhost/api/admin/comments/${replyId}`, adminCookie, "PATCH", { action: "PUBLISH" }), { params: Promise.resolve({ id: replyId }) })).status, 200);
+    const nested = await createComment(jsonRequest(`http://localhost/api/posts/${slug}/comments`, readerCookie, "POST", { content: "不允许的二级回复", parentId: replyId }), { params: Promise.resolve({ slug }) });
+    assert.equal(nested.status, 400);
+
+    const report = await reportComment(jsonRequest(`http://localhost/api/comments/${rootId}/reports`, reporterCookie, "POST", { reason: "需要管理员检查" }), { params: Promise.resolve({ id: rootId }) });
+    assert.equal(report.status, 201);
+    assert.equal((await reportComment(jsonRequest(`http://localhost/api/comments/${rootId}/reports`, reporterCookie, "POST", { reason: "重复举报" }), { params: Promise.resolve({ id: rootId }) })).status, 409);
+
+    const edit = await editOwnComment(jsonRequest(`http://localhost/api/comments/${rootId}`, readerCookie, "PATCH", { content: "编辑后重新审核" }), { params: Promise.resolve({ id: rootId }) });
+    assert.equal(edit.status, 200);
+    assert.equal((await prisma.comment.findUniqueOrThrow({ where: { id: rootId } })).status, "PENDING");
+
+    assert.equal((await lockComments(jsonRequest(`http://localhost/api/admin/posts/${postId}/comments`, adminCookie, "PATCH", { locked: true }), { params: Promise.resolve({ id: postId }) })).status, 200);
+    assert.equal((await createComment(jsonRequest(`http://localhost/api/posts/${slug}/comments`, reporterCookie, "POST", { content: "锁定后禁止" }), { params: Promise.resolve({ slug }) })).status, 403);
+    assert.equal((await lockComments(jsonRequest(`http://localhost/api/admin/posts/${postId}/comments`, adminCookie, "PATCH", { locked: false }), { params: Promise.resolve({ id: postId }) })).status, 200);
+
+    assert.equal((await deleteOwnComment(jsonRequest(`http://localhost/api/comments/${replyId}`, reporterCookie, "DELETE"), { params: Promise.resolve({ id: replyId }) })).status, 200);
+    assert.ok((await prisma.comment.findUniqueOrThrow({ where: { id: replyId } })).deletedAt);
+    assert.equal((await moderateComment(jsonRequest(`http://localhost/api/admin/comments/${replyId}`, adminCookie, "PATCH", { action: "RESTORE" }), { params: Promise.resolve({ id: replyId }) })).status, 200);
+    assert.equal((await deleteAdminComment(jsonRequest(`http://localhost/api/admin/comments/${replyId}`, adminCookie, "DELETE"), { params: Promise.resolve({ id: replyId }) })).status, 200);
+    assert.equal((await purgeComment(jsonRequest(`http://localhost/api/admin/comments/${replyId}/purge`, adminCookie, "DELETE"), { params: Promise.resolve({ id: replyId }) })).status, 200);
+    replyId = "";
+  } finally {
+    if (postId) await prisma.post.deleteMany({ where: { id: postId } });
+    if (rateKeys.length) await prisma.commentRateLimit.deleteMany({ where: { key: { in: rateKeys } } });
+    if (userIds.length) await prisma.user.deleteMany({ where: { id: { in: userIds } } });
+    await prisma.$disconnect();
+  }
+});
 
 test("invited users register, reset passwords and lose access when disabled", async () => {
   const suffix = `${Date.now()}-${Math.random().toString(36).slice(2)}`;

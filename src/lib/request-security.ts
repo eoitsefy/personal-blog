@@ -2,6 +2,20 @@ const JSON_CONTENT_TYPE = "application/json";
 
 export type RequestGuardFailure = { status: 400 | 403 | 413 | 415; message: string };
 
+export function getClientAddress(req: Request) {
+  const realAddress = req.headers.get("x-real-ip")?.trim();
+  if (realAddress) return realAddress;
+
+  // Nginx appends the connecting address to X-Forwarded-For. Reading the last
+  // value avoids trusting a client-supplied first entry when the app is only
+  // reachable through the local reverse proxy.
+  const forwarded = req.headers.get("x-forwarded-for")
+    ?.split(",")
+    .map((value) => value.trim())
+    .filter(Boolean);
+  return forwarded?.at(-1) ?? "unknown";
+}
+
 export function validateMutationOrigin(req: Request): RequestGuardFailure | null {
   const origin = req.headers.get("origin");
   if (!origin) return null;
