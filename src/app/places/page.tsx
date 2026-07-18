@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { PublicPlaceMap } from "@/components/places/public-place-map";
 import { SiteFooter, SiteHeader } from "@/components/site/site-shell";
+import { getPublicMapRuntimeConfig } from "@/lib/map/config";
+import type { PublicMapPoint } from "@/lib/map/coordinates";
 import { publicPlaceSelect, publicPlaceWhere, serializePublicPlace } from "@/lib/places";
 import { prisma } from "@/lib/prisma";
 import { isUiPreviewEnabled } from "@/lib/ui-preview";
@@ -33,13 +36,17 @@ export default async function PlacesPage({ searchParams }: PageProps) {
     const place = serializePublicPlace(record);
     return place ? [{ ...place, posts: record.posts.map(({ post }) => post) }] : [];
   });
-  const plotted = places.filter((place) => place.coordinates);
-  const latitudes = plotted.map((place) => place.coordinates!.latitude);
-  const longitudes = plotted.map((place) => place.coordinates!.longitude);
-  const latMin = latitudes.length ? Math.min(...latitudes) - 0.03 : 0;
-  const latMax = latitudes.length ? Math.max(...latitudes) + 0.03 : 1;
-  const lngMin = longitudes.length ? Math.min(...longitudes) - 0.03 : 0;
-  const lngMax = longitudes.length ? Math.max(...longitudes) + 0.03 : 1;
+  const mapPoints = places.flatMap((place): PublicMapPoint[] => place.coordinates ? [{
+    id: place.id,
+    slug: place.slug,
+    name: place.name,
+    locationLabel: place.locationLabel,
+    privacy: place.privacy as "EXACT" | "APPROXIMATE",
+    coordinateSystem: place.coordinateSystem,
+    latitude: place.coordinates.latitude,
+    longitude: place.coordinates.longitude,
+  }] : []);
+  const mapConfig = getPublicMapRuntimeConfig();
 
   return <div className={styles.page}>
     <SiteHeader tone="light" active="places" />
@@ -48,16 +55,7 @@ export default async function PlacesPage({ searchParams }: PageProps) {
       <section className={styles.workspace}>
         <form action="/places" className={styles.search}><label><span>搜索地点或地区</span><input type="search" name="q" defaultValue={q} maxLength={80} placeholder="例如：杭州、展览、散步" /></label><button>检索</button>{q ? <Link href="/places">清除</Link> : null}</form>
 
-        <section className={styles.coordinatePanel} aria-labelledby="coordinate-heading">
-          <div className={styles.panelHeading}><div><p>PROVIDER-NEUTRAL PREVIEW</p><h2 id="coordinate-heading">公开坐标概览</h2></div><span>正式地图服务接入前，本图不加载第三方瓦片或脚本。</span></div>
-          {plotted.length ? <div className={styles.plot} role="group" aria-label={`显示 ${plotted.length} 个具有公开坐标的地点`}>
-            {plotted.map((place, index) => {
-              const left = ((place.coordinates!.longitude - lngMin) / Math.max(lngMax - lngMin, 0.001)) * 100;
-              const top = ((latMax - place.coordinates!.latitude) / Math.max(latMax - latMin, 0.001)) * 100;
-              return <a key={place.id} href={`#place-${place.slug}`} className={styles.marker} style={{ left: `${Math.min(96, Math.max(4, left))}%`, top: `${Math.min(92, Math.max(8, top))}%` }} aria-label={`${place.name}，${place.locationLabel}`}><i>{index + 1}</i><span>{place.name}</span></a>;
-            })}
-          </div> : <div className={styles.emptyPlot}>当前筛选结果没有可绘制的公开坐标；仅城市地点仍列在下方。</div>}
-        </section>
+        <PublicPlaceMap points={mapPoints} config={mapConfig} />
 
         <section className={styles.listSection} aria-labelledby="place-list-heading"><div className={styles.listHeading}><p>ACCESSIBLE TEXT INDEX</p><h2 id="place-list-heading">地点与关联日志</h2></div>
           {places.length === 0 ? <p className={styles.empty}>暂无符合条件的公开地点。</p> : <ol className={styles.placeList}>{places.map((place, index) => <li key={place.id} id={`place-${place.slug}`} className={styles.placeCard}>

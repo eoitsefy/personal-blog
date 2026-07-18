@@ -1,0 +1,30 @@
+# Phase 5B AMap service proxy.
+#
+# 1. Create /etc/nginx/snippets/personal-blog-amap-secret.conf with mode 600:
+#      set $amap_security_jscode "the-real-securityJsCode";
+# 2. Place these locations inside the HTTPS server block for eastherphil.cn.
+# 3. Keep the styles location before the general /_AMapService/ location.
+# 4. Never run `nginx -T` into shared logs after installing the secret snippet.
+# 5. The browser receives only serviceHost=https://eastherphil.cn/_AMapService.
+
+location = /_AMapService/v4/map/styles {
+    include /etc/nginx/snippets/personal-blog-amap-secret.conf;
+    set $args "$args&jscode=$amap_security_jscode";
+    proxy_pass https://webapi.amap.com/v4/map/styles;
+    proxy_ssl_server_name on;
+    proxy_set_header Host webapi.amap.com;
+    proxy_hide_header Set-Cookie;
+    proxy_connect_timeout 5s;
+    proxy_read_timeout 15s;
+}
+
+location ^~ /_AMapService/ {
+    include /etc/nginx/snippets/personal-blog-amap-secret.conf;
+    set $args "$args&jscode=$amap_security_jscode";
+    proxy_pass https://restapi.amap.com/;
+    proxy_ssl_server_name on;
+    proxy_set_header Host restapi.amap.com;
+    proxy_hide_header Set-Cookie;
+    proxy_connect_timeout 5s;
+    proxy_read_timeout 15s;
+}

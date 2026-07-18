@@ -1,6 +1,6 @@
 .page { min-height: 100vh; background: var(--paper); color: var(--ink); }
 .hero { width: min(100% - 48px, 1320px); margin: 0 auto; min-height: 300px; padding: 72px 0 48px; display: flex; align-items: end; justify-content: space-between; gap: 40px; border-bottom: 1px solid var(--line); }
-.hero p, .panelHeading p, .listHeading p { margin: 0 0 12px; font: 0.62rem/1.2 monospace; letter-spacing: .18em; color: #82631f; }
+.hero p, .listHeading p { margin: 0 0 12px; font: 0.62rem/1.2 monospace; letter-spacing: .18em; color: #82631f; }
 .hero h1 { margin: 0; font: 500 clamp(3rem, 8vw, 6.5rem)/.95 Georgia, "Noto Serif SC", serif; }
 .hero span { display: block; max-width: 650px; margin-top: 22px; color: var(--ink-soft); line-height: 1.8; }
 .hero > b { font: 400 clamp(5rem, 13vw, 10rem)/.7 "Arial Narrow", sans-serif; opacity: .08; }
@@ -10,17 +10,7 @@
 .search input { width: 100%; padding: 13px 15px; border: 1px solid var(--line); background: var(--paper-bright); }
 .search button, .search a { padding: 13px 18px; border: 1px solid var(--ink); background: transparent; cursor: pointer; }
 .search button { color: var(--paper-bright); background: var(--ink); }
-.coordinatePanel { margin-top: 36px; border: 1px solid var(--line); background: #171a1d; color: #f5f3e9; }
-.panelHeading { padding: 24px; display: flex; justify-content: space-between; gap: 30px; border-bottom: 1px solid rgba(255,255,255,.14); }
-.panelHeading h2, .listHeading h2 { margin: 0; font: 500 1.6rem Georgia, "Noto Serif SC", serif; }
-.panelHeading > span { max-width: 420px; color: rgba(255,255,255,.58); font-size: .76rem; line-height: 1.7; }
-.plot { position: relative; min-height: 460px; overflow: hidden; background-image: linear-gradient(rgba(255,255,255,.055) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.055) 1px, transparent 1px); background-size: 48px 48px; }
-.plot::after { content: "SAFE COORDINATE PLANE / NO TILE PROVIDER"; position: absolute; right: 18px; bottom: 14px; color: rgba(255,255,255,.23); font: .55rem monospace; letter-spacing: .16em; }
-.marker { position: absolute; z-index: 2; display: flex; align-items: center; gap: 8px; transform: translate(-16px,-16px); color: #fff; font-size: .72rem; white-space: nowrap; }
-.marker i { width: 32px; height: 32px; display: grid; place-items: center; color: #151719; background: var(--signal); border: 4px solid rgba(255,255,255,.22); border-radius: 50%; font-style: normal; font-weight: 800; box-shadow: 0 0 0 1px #111; }
-.marker span { padding: 5px 7px; background: rgba(11,13,15,.82); }
-.marker:hover span { color: var(--signal); }
-.emptyPlot { min-height: 240px; display: grid; place-items: center; padding: 30px; color: rgba(255,255,255,.55); text-align: center; }
+.listHeading h2 { margin: 0; font: 500 1.6rem Georgia, "Noto Serif SC", serif; }
 .listSection { padding-top: 68px; }
 .listHeading { margin-bottom: 26px; }
 .placeList { margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 22px; list-style: none; }
@@ -39,4 +29,4 @@
 .postLinks a:hover { color: #82631f; }
 .empty { padding: 50px; border: 1px dashed var(--line); text-align: center; color: var(--ink-soft); }
 @media (max-width: 980px) { .placeList { grid-template-columns: 1fr; } }
-@media (max-width: 640px) { .hero, .workspace { width: min(100% - 30px, 1320px); } .hero { min-height: 260px; padding-top: 50px; } .hero > b { display:none; } .search { align-items: stretch; flex-wrap: wrap; } .search label { flex-basis: 100%; } .panelHeading { display: grid; } .plot { min-height: 360px; } .placeCard { grid-template-columns: 1fr; } .cover, .coverFallback { min-height: 220px; } }
+@media (max-width: 640px) { .hero, .workspace { width: min(100% - 30px, 1320px); } .hero { min-height: 260px; padding-top: 50px; } .hero > b { display:none; } .search { align-items: stretch; flex-wrap: wrap; } .search label { flex-basis: 100%; } .placeCard { grid-template-columns: 1fr; } .cover, .coverFallback { min-height: 220px; } }
