@@ -43,6 +43,7 @@ Confirm:
 - the Phase 2 migration has been reviewed; it adds optional asset filename/dimension metadata and an asset recycle-bin index without dropping media records.
 - the Phase 4B migration has been reviewed; it converts roles to a closed enum, adds account status and database sessions, and intentionally signs administrators out once during deployment.
 - the Phase 4B lifecycle migration has been reviewed; invitation and password-reset tokens are random, stored only as hashes, expire, and can be used once.
+- the Phase 4B comments migration has been reviewed; it adds comment/report/rate-limit tables plus a non-destructive `commentsLocked` post flag, with post/comment cleanup enforced by foreign keys.
 
 ## Manual backup before a risky release
 

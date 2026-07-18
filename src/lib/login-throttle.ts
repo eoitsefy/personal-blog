@@ -1,13 +1,13 @@
 import { createHash } from "node:crypto";
 import { prisma } from "@/lib/prisma";
+import { getClientAddress } from "@/lib/request-security";
 
 const WINDOW_MS = 15 * 60 * 1000;
 const BLOCK_MS = 30 * 60 * 1000;
 const MAX_ATTEMPTS = 5;
 
 export function loginThrottleKey(req: Request, email: string): string {
-  const forwardedFor = req.headers.get("x-forwarded-for")?.split(",", 1)[0]?.trim();
-  const address = forwardedFor || req.headers.get("x-real-ip") || "unknown";
+  const address = getClientAddress(req);
   return createHash("sha256").update(`${address}|${email.trim().toLowerCase()}`).digest("hex");
 }
 

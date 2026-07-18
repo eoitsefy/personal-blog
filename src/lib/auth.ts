@@ -18,6 +18,7 @@ export type SessionUser = {
   id: string;
   email: string;
   role: UserRole;
+  emailVerifiedAt: Date | null;
 };
 
 export type AdminUser = SessionUser & { role: "ADMIN" };
@@ -120,7 +121,7 @@ export async function getUserFromSessionToken(token: string | undefined, now = n
       expiresAt: true,
       revokedAt: true,
       lastSeenAt: true,
-      user: { select: { id: true, email: true, role: true, status: true } },
+      user: { select: { id: true, email: true, role: true, status: true, emailVerifiedAt: true } },
     },
   });
 
@@ -135,7 +136,12 @@ export async function getUserFromSessionToken(token: string | undefined, now = n
     });
   }
 
-  return { id: session.user.id, email: session.user.email, role: session.user.role };
+  return {
+    id: session.user.id,
+    email: session.user.email,
+    role: session.user.role,
+    emailVerifiedAt: session.user.emailVerifiedAt,
+  };
 }
 
 export async function getAdminFromSessionToken(token: string | undefined, now = new Date()): Promise<AdminUser | null> {

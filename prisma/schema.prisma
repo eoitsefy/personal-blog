@@ -35,20 +35,35 @@ enum UserTokenType {
   PASSWORD_RESET
 }
 
+enum CommentStatus {
+  PENDING
+  PUBLISHED
+  HIDDEN
+  SPAM
+}
+
+enum CommentReportStatus {
+  OPEN
+  RESOLVED
+  DISMISSED
+}
+
 model User {
-  id              String        @id @default(cuid())
-  email           String        @unique
+  id              String          @id @default(cuid())
+  email           String          @unique
   passwordHash    String
-  role            UserRole      @default(USER)
-  status          UserStatus    @default(ACTIVE)
+  role            UserRole        @default(USER)
+  status          UserStatus      @default(ACTIVE)
   emailVerifiedAt DateTime?
-  createdAt       DateTime      @default(now())
-  updatedAt       DateTime      @updatedAt
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
   posts           Post[]
   assets          Asset[]
   sessions        UserSession[]
-  tokens          UserToken[]   @relation("TokenUser")
-  createdTokens   UserToken[]   @relation("TokenCreator")
+  tokens          UserToken[]     @relation("TokenUser")
+  createdTokens   UserToken[]     @relation("TokenCreator")
+  comments        Comment[]
+  commentReports  CommentReport[]
 }
 
 model UserSession {
@@ -84,22 +99,24 @@ model UserToken {
 }
 
 model Post {
-  id          String         @id @default(cuid())
-  slug        String         @unique
-  title       String
-  excerpt     String?
-  contentMd   String
-  status      PostStatus     @default(DRAFT)
-  publishedAt DateTime?
-  deletedAt   DateTime?
-  authorId    String
-  author      User           @relation(fields: [authorId], references: [id], onDelete: Restrict)
-  categoryId  String?
-  category    Category?      @relation(fields: [categoryId], references: [id], onDelete: SetNull)
-  createdAt   DateTime       @default(now())
-  updatedAt   DateTime       @updatedAt
-  assets      PostAssetRef[]
-  tags        PostTag[]
+  id             String         @id @default(cuid())
+  slug           String         @unique
+  title          String
+  excerpt        String?
+  contentMd      String
+  status         PostStatus     @default(DRAFT)
+  publishedAt    DateTime?
+  deletedAt      DateTime?
+  authorId       String
+  author         User           @relation(fields: [authorId], references: [id], onDelete: Restrict)
+  categoryId     String?
+  category       Category?      @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+  assets         PostAssetRef[]
+  tags           PostTag[]
+  comments       Comment[]
+  commentsLocked Boolean        @default(false)
 
   @@index([status, publishedAt(sort: Desc)])
   @@index([authorId, createdAt(sort: Desc)])
@@ -174,6 +191,53 @@ model Asset {
   @@index([sha256])
   @@index([deletedAt, createdAt(sort: Desc)])
   @@index([kind, deletedAt, createdAt(sort: Desc)])
+}
+
+model Comment {
+  id        String          @id @default(cuid())
+  content   String
+  status    CommentStatus   @default(PENDING)
+  postId    String
+  post      Post            @relation(fields: [postId], references: [id], onDelete: Cascade)
+  authorId  String
+  author    User            @relation(fields: [authorId], references: [id], onDelete: Restrict)
+  parentId  String?
+  parent    Comment?        @relation("CommentReplies", fields: [parentId], references: [id], onDelete: Cascade)
+  replies   Comment[]       @relation("CommentReplies")
+  reports   CommentReport[]
+  editedAt  DateTime?
+  deletedAt DateTime?
+  createdAt DateTime        @default(now())
+  updatedAt DateTime        @updatedAt
+
+  @@index([postId, status, deletedAt, createdAt])
+  @@index([authorId, deletedAt, createdAt(sort: Desc)])
+  @@index([parentId, status, deletedAt, createdAt])
+}
+
+model CommentReport {
+  id         String              @id @default(cuid())
+  commentId  String
+  comment    Comment             @relation(fields: [commentId], references: [id], onDelete: Cascade)
+  reporterId String
+  reporter   User                @relation(fields: [reporterId], references: [id], onDelete: Restrict)
+  reason     String
+  status     CommentReportStatus @default(OPEN)
+  createdAt  DateTime            @default(now())
+  updatedAt  DateTime            @updatedAt
+
+  @@unique([commentId, reporterId])
+  @@index([status, createdAt(sort: Desc)])
+}
+
+model CommentRateLimit {
+  key             String    @id
+  attempts        Int       @default(0)
+  windowStartedAt DateTime
+  blockedUntil    DateTime?
+  updatedAt       DateTime  @updatedAt
+
+  @@index([updatedAt])
 }
 
 model PostAssetRef {

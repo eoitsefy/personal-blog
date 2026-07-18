@@ -150,13 +150,13 @@ Acceptance:
 
 Priority: P1
 
-Status: `[IN PROGRESS 2026-07-17]` The first foundation slice is deployed at `e2865a5`. The second slice adds administrator-issued invitations, verified user login/account pages, one-time password reset, user status management, and session revocation. Self-service registration and comments remain disabled.
+Status: `[IN PROGRESS 2026-07-17]` The session foundation is deployed at `e2865a5`; the invited-user lifecycle is deployed and verified at `ced7432e`. The comments slice is implemented on `agent/phase-4b-comments` and awaits PostgreSQL CI, merge, migration, deployment, and browser acceptance. Self-service registration remains disabled.
 
 Tasks:
 
-- Deploy and verify the account/session migration; confirm the one-time administrator sign-in reset and disabled-account enforcement.
-- Add verified user registration, login, reset, suspension, and role boundaries.
-- Add authenticated comments, first-level replies, moderation, reporting, and anti-spam controls.
+- `[COMPLETE]` Deploy and verify the account/session migration; confirm the one-time administrator sign-in reset and disabled-account enforcement.
+- `[COMPLETE]` Add invited verified-user registration, login, reset, suspension, and role boundaries.
+- `[IMPLEMENTED; CI/DEPLOYMENT PENDING]` Add authenticated comments, first-level replies, moderation, reporting, locking, recycle-bin operations, and anti-spam controls.
 - Add privacy and user-content rules before public registration opens.
 
 ## Phase 5 — Places and public map
