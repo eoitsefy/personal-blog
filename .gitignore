@@ -1,6 +1,7 @@
 node_modules
 .next
 .tool-tmp
+.codex-tmp
 dist
 build
 coverage

@@ -5,6 +5,7 @@ export type ApiErrorCode =
   | "CONFLICT"
   | "NOT_FOUND"
   | "RATE_LIMITED"
+  | "SERVICE_UNAVAILABLE"
   | "INTERNAL_ERROR";
 
 export function ok<T>(data: T, requestId: string, status = 200) {

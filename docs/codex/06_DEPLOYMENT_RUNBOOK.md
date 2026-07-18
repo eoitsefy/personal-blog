@@ -203,6 +203,23 @@ Prefer immutable image tags when the Compose workflow supports them. Verify all 
 
 Do not automatically reverse database migrations. Restore or write a forward-fix only after understanding data impact.
 
+## Phase 6A text-assistant deployment gate
+
+Deploy the additive `20260718210000_phase_6a_text_assistant` migration with the assistant disabled first. Confirm ordinary article creation, publishing, unpublishing, deletion, restoration, public browsing and `/api/healthz` before adding any provider credential.
+
+Production enablement requires all of the following:
+
+- select a reachable OpenAI-compatible HTTPS gateway and exact generation/embedding model aliases;
+- set `AI_ASSISTANT_ENABLED=true`, `AI_PROVIDER=openai-compatible`, `AI_BASE_URL`, `AI_API_KEY`, `AI_GENERATION_MODEL`, optional `AI_EMBEDDING_MODEL`, and a private random `AI_ACTOR_SALT` only in the server environment;
+- set explicit timeout, question/output, retrieval, rate-limit, daily request, concurrency and circuit-breaker limits;
+- call authenticated `POST /api/admin/assistant/reindex` and record its post/chunk/embedding counts;
+- verify DNS, TLS and provider authentication from the application container without printing the API key;
+- test a grounded answer, valid source links, no-evidence behavior, 429 throttling, daily budget exhaustion, timeout, circuit opening and provider outage;
+- confirm drafts, recycle-bin posts and admin-only data never appear in chunks, requests, answers or source lists;
+- confirm `/api/healthz` reports only non-secret assistant configuration metadata.
+
+Keep `AI_ASSISTANT_ENABLED=false` if any gate fails. Application rollback may retain the additive AI tables and chunks; disabling the flag immediately removes the public provider call path without affecting publishing or browsing. Rotate the provider key if it appears in a shell transcript, log, browser bundle or repository.
+
 ## Database restore drill
 
 Always restore to a temporary database first.

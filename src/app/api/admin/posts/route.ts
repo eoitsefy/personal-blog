@@ -1,5 +1,6 @@
 import { Prisma } from "@prisma/client";
 import { fail, logApi, ok } from "@/lib/api";
+import { syncPostAssistantIndex } from "@/lib/assistant/indexing";
 import { InvalidAssetReferenceError, syncPostAssets } from "@/lib/media/references";
 import { prisma } from "@/lib/prisma";
 import { requireAdmin } from "@/lib/require-admin";
@@ -126,6 +127,7 @@ export async function POST(req: Request) {
       });
       await syncPostAssets(tx, created.id, input.assetIds, input.contentMd);
       await syncPostPlaces(tx, created.id, input.placeIds);
+      await syncPostAssistantIndex(tx, created.id);
       return tx.post.findUniqueOrThrow({ where: { id: created.id }, select: postSelect });
     });
 
