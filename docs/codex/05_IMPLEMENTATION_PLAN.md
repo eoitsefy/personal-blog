@@ -180,15 +180,15 @@ Priority: P1/P2
 
 Prerequisite: reachable production AI provider/gateway.
 
-Status: `[DEPLOYED DISABLED 2026-07-18]` The provider-neutral foundation and additive migration are in production at `f724027`. An OpenAI adapter was deployed disabled at `df224f5`, but the production ECS could not reach `api.openai.com:443`; no authenticated or billable call completed. The selected enablement increment is now DeepSeek `deepseek-v4-flash` through Chat Completions with JSON Output, explicit non-thinking mode, local lexical retrieval and conservative request/output limits. Production access remains off until a server-only key and all connectivity, reindex, citation, budget and failure-path gates pass.
+Status: `[DEPLOYED AND ACCEPTED 2026-07-19]` The provider-neutral foundation and additive migration were deployed at `f724027`. The final DeepSeek adapter was merged and deployed at `e5646d2`, then enabled after DNS, TLS, authentication, model-list and bounded JSON probes passed from the ECS. Production uses `deepseek-v4-flash`, explicit non-thinking mode, local lexical retrieval and conservative request/output limits.
 
 Tasks:
 
 - `[DONE]` Implement provider-neutral embedding and generation interfaces.
 - `[DONE]` Index only published content and return source citations.
 - `[DONE]` Add rate limits, budgets, timeouts, logging, feature flags, safe no-evidence behavior and zero-provider-cost local greetings.
-- `[IN DEVELOPMENT]` Use the DeepSeek Chat Completions API with JSON Output, validated grounded citations and conservative defaults.
-- `[PENDING PRODUCTION GATE]` Install a restricted server-side key, verify ECS connectivity, rebuild the local published-content index, run acceptance tests, and only then enable the public route.
+- `[DONE]` Use the DeepSeek Chat Completions API with JSON Output, validated grounded citations and conservative defaults.
+- `[DONE]` Install the server-side key, verify ECS connectivity, rebuild the local published-content index and pass grounded-answer, local-conversation, usage-audit and throttling acceptance gates.
 - Keep article publishing independent from provider availability by synchronizing local chunks transactionally. DeepSeek enablement uses lexical ranking; any future embedding provider must remain an explicit, separately tested administrator rebuild operation.
 
 ## Phase 6B — Voice input and speech output
@@ -232,6 +232,8 @@ Acceptance:
 - A fresh backup can be restored to a temporary database and validated.
 - Only intended public ports are exposed.
 - Alerts are tested, not only configured.
+
+Next milestone: `[NEXT — Phase 7A]` close temporary deployment access, introduce a named non-root operations account, reconcile public ports and the historical port 3002 process, establish Docker retention and disk alerts, copy backups off-host, and record rollback/restore evidence before expanding to Phase 6B voice features.
 
 ## Suggested first Codex milestone
 

@@ -224,6 +224,17 @@ Keep `AI_ASSISTANT_ENABLED=false` if any gate fails. Application rollback may re
 
 The 2026-07-18 OpenAI connectivity attempt ended in a TCP timeout before authentication and is not an approved production route. Do not retain the OpenAI key or its provider configuration when enabling DeepSeek. Use the current `deepseek-v4-flash` model identifier rather than the legacy `deepseek-chat` alias.
 
+Production acceptance completed on 2026-07-19 at commit `e5646d2` and image `sha256:74106254ad7b74b6cce1c2b521967c3e6c39eb98ffe6e15301415d0c7af41895`. The accepted evidence was:
+
+- authenticated model listing returned `deepseek-v4-flash` and `deepseek-v4-pro`;
+- the bounded non-thinking JSON probe used 64 prompt and 13 completion tokens;
+- local reindex reported 3 posts, 3 chunks and 0 embeddings;
+- the grounded production query used 229 prompt and 55 completion tokens and returned its valid article citation;
+- a local greeting used zero provider tokens;
+- four requests succeeded and the fifth returned HTTP 429 for the isolated acceptance actor;
+- usage audit records, temporary post deletion, Nginx validation and application health checks passed;
+- the pre-enable database backup is `/root/backups/blogdb-2026-07-19-000155.sql.gz` and the environment rollback copy is `/root/backups/personal-blog-env-before-phase6a-deepseek-enable-20260719-000155`.
+
 ## Database restore drill
 
 Always restore to a temporary database first.
