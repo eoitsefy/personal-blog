@@ -171,5 +171,6 @@ Historical scripts to archive or verify:
 
 - `[VERIFIED]` On 2026-07-10 the ECS timed out connecting to `api.openai.com:443` and `chatgpt.com:443`.
 - `[DEPLOYED DISABLED]` Phase 6A local indexing, retrieval, limits, usage records and provider isolation were deployed at `f724027` on 2026-07-18; the public provider call path remains disabled.
-- `[SELECTED]` OpenAI API with `gpt-5-nano` generation, `text-embedding-3-small` retrieval embeddings, Responses API, `store=false`, minimal reasoning and bounded output.
-- `[BLOCKED]` Production enablement still requires a server-only API key plus successful ECS DNS/TLS/authentication, reindex, grounded-answer, budget and failure-path checks.
+- `[VERIFIED BLOCKER]` The disabled OpenAI adapter was deployed at `df224f5`, but a direct ECS call to `api.openai.com:443` timed out with HTTP status `000`; no authenticated request or billable model call occurred.
+- `[SELECTED]` DeepSeek API with `deepseek-v4-flash`, OpenAI-compatible Chat Completions, JSON Output, explicit non-thinking mode and bounded output. Retrieval remains local lexical ranking because the selected DeepSeek API does not provide the embeddings contract used by this application.
+- `[BLOCKED]` Production enablement still requires the DeepSeek adapter deployment, a server-only API key plus successful ECS DNS/TLS/authentication, local reindex, grounded-answer, budget and failure-path checks.

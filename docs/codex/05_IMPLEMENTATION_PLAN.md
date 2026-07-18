@@ -180,16 +180,16 @@ Priority: P1/P2
 
 Prerequisite: reachable production AI provider/gateway.
 
-Status: `[DEPLOYED DISABLED 2026-07-18]` The provider-neutral foundation and additive migration are in production at `f724027`. OpenAI is selected for the enablement increment: `gpt-5-nano`, `text-embedding-3-small`, Responses API, no provider-side response storage, minimal reasoning and conservative request/output limits. Production access remains off until a server-only key and all connectivity, reindex, citation, budget and failure-path gates pass.
+Status: `[DEPLOYED DISABLED 2026-07-18]` The provider-neutral foundation and additive migration are in production at `f724027`. An OpenAI adapter was deployed disabled at `df224f5`, but the production ECS could not reach `api.openai.com:443`; no authenticated or billable call completed. The selected enablement increment is now DeepSeek `deepseek-v4-flash` through Chat Completions with JSON Output, explicit non-thinking mode, local lexical retrieval and conservative request/output limits. Production access remains off until a server-only key and all connectivity, reindex, citation, budget and failure-path gates pass.
 
 Tasks:
 
 - `[DONE]` Implement provider-neutral embedding and generation interfaces.
 - `[DONE]` Index only published content and return source citations.
 - `[DONE]` Add rate limits, budgets, timeouts, logging, feature flags, safe no-evidence behavior and zero-provider-cost local greetings.
-- `[IN DEVELOPMENT]` Use the OpenAI Responses API with a strict grounded-answer schema and conservative defaults.
-- `[PENDING PRODUCTION GATE]` Install a restricted server-side key, verify ECS connectivity, rebuild embeddings, run acceptance tests, and only then enable the public route.
-- Keep article publishing independent from provider availability by synchronizing local chunks transactionally and generating embeddings through an explicit administrator rebuild operation.
+- `[IN DEVELOPMENT]` Use the DeepSeek Chat Completions API with JSON Output, validated grounded citations and conservative defaults.
+- `[PENDING PRODUCTION GATE]` Install a restricted server-side key, verify ECS connectivity, rebuild the local published-content index, run acceptance tests, and only then enable the public route.
+- Keep article publishing independent from provider availability by synchronizing local chunks transactionally. DeepSeek enablement uses lexical ranking; any future embedding provider must remain an explicit, separately tested administrator rebuild operation.
 
 ## Phase 6B — Voice input and speech output
 

@@ -209,18 +209,20 @@ Deploy the additive `20260718210000_phase_6a_text_assistant` migration with the 
 
 Production enablement requires all of the following:
 
-- create a restricted OpenAI project API key with a small project budget; never paste it into chat, commit it, put it in a browser variable, or print it in a shell transcript;
-- set `AI_PROVIDER=openai`, `AI_BASE_URL=https://api.openai.com/v1`, `AI_GENERATION_MODEL=gpt-5-nano`, `AI_EMBEDDING_MODEL=text-embedding-3-small`, `AI_REASONING_EFFORT=minimal`, the server-only `AI_API_KEY`, and a private random `AI_ACTOR_SALT` in the root-owned production environment;
+- create a restricted DeepSeek API key with a small prepaid balance and account-side monitoring; never paste it into chat, commit it, put it in a browser variable, or print it in a shell transcript;
+- set `AI_PROVIDER=deepseek`, `AI_BASE_URL=https://api.deepseek.com`, `AI_GENERATION_MODEL=deepseek-v4-flash`, blank `AI_EMBEDDING_MODEL`, `AI_THINKING_MODE=disabled`, the server-only `AI_API_KEY`, and a private random `AI_ACTOR_SALT` in the root-owned production environment;
 - retain the low-usage defaults `AI_MAX_QUESTION_CHARS=500`, `AI_MAX_OUTPUT_TOKENS=300`, `AI_RETRIEVAL_LIMIT=4`, `AI_MAX_REQUESTS_PER_WINDOW=4`, and `AI_MAX_DAILY_REQUESTS=50` for the first acceptance window;
 - keep `AI_ASSISTANT_ENABLED=false` while testing provider authentication and the administrator reindex operation; switch it to `true` only after every remaining gate succeeds;
 - set explicit timeout, question/output, retrieval, rate-limit, daily request, concurrency and circuit-breaker limits;
-- call authenticated `POST /api/admin/assistant/reindex` and record its post/chunk/embedding counts;
+- call authenticated `POST /api/admin/assistant/reindex` and record its post/chunk counts; the expected DeepSeek embedding count is zero because lexical retrieval is used;
 - verify DNS, TLS and provider authentication from the application container without printing the API key;
 - test a grounded answer, valid source links, no-evidence behavior, 429 throttling, daily budget exhaustion, timeout, circuit opening and provider outage;
 - confirm drafts, recycle-bin posts and admin-only data never appear in chunks, requests, answers or source lists;
 - confirm `/api/healthz` reports only non-secret assistant configuration metadata.
 
 Keep `AI_ASSISTANT_ENABLED=false` if any gate fails. Application rollback may retain the additive AI tables and chunks; disabling the flag immediately removes the public provider call path without affecting publishing or browsing. Rotate the provider key if it appears in a shell transcript, log, browser bundle or repository.
+
+The 2026-07-18 OpenAI connectivity attempt ended in a TCP timeout before authentication and is not an approved production route. Do not retain the OpenAI key or its provider configuration when enabling DeepSeek. Use the current `deepseek-v4-flash` model identifier rather than the legacy `deepseek-chat` alias.
 
 ## Database restore drill
 
