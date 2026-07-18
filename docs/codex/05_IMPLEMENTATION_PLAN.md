@@ -214,14 +214,16 @@ Acceptance:
 
 Priority: P0/P1
 
+Status: `[IN PROGRESS — Phase 7A]`. A read-only production audit completed on 2026-07-19. Repository-side container, backup, restore-drill, retention, and alerting changes are being implemented; server hardening is intentionally staged to preserve emergency access.
+
 Tasks:
 
-- Add health checks and version/commit reporting.
-- Run app as non-root where feasible and apply container resource/privilege limits.
+- `[IN PROGRESS]` Add health checks and version/commit reporting.
+- `[IN PROGRESS]` Run app as non-root and apply container resource, log, PID, and privilege limits.
 - Add Nginx secure headers and endpoint-specific rate limits.
-- Reconcile cloud security group and UFW rules.
+- `[VERIFIED]` Port 3002 has no listener; `[PENDING]` remove its stale UFW and cloud security-group rules.
 - Replace routine root administration with a named sudo user; preserve emergency access and test it before changing SSH settings.
-- Add alerts for disk >80%, backup failure, unhealthy/exited containers, certificate renewal failure, and repeated app errors.
+- `[IN PROGRESS]` Add alerts for disk/inode use, backup freshness, unhealthy containers, application health, and certificate expiry, including a forced-failure acceptance path.
 - Copy backups off-host; document retention and restore.
 - Perform and record application rollback and database restore drills.
 - Resolve the unexplained port 3002 process.
@@ -233,7 +235,7 @@ Acceptance:
 - Only intended public ports are exposed.
 - Alerts are tested, not only configured.
 
-Next milestone: `[NEXT — Phase 7A]` close temporary deployment access, introduce a named non-root operations account, reconcile public ports and the historical port 3002 process, establish Docker retention and disk alerts, copy backups off-host, and record rollback/restore evidence before expanding to Phase 6B voice features.
+Current milestone: `[IN PROGRESS — Phase 7A]` repair and standardize certificate renewal, introduce and verify a named non-root operations account before changing SSH policy, remove stale port 3002 exposure, deploy Docker retention and alerts, configure off-host backup credentials, and record rollback/restore evidence before expanding to Phase 6B voice features.
 
 ## Suggested first Codex milestone
 
