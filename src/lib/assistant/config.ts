@@ -2,12 +2,12 @@ export type AssistantConfig =
   | { enabled: false; reason: "feature_disabled" | "invalid_configuration" }
   | {
       enabled: true;
-      provider: "openai";
+      provider: "deepseek";
       baseUrl: string;
       apiKey: string;
       generationModel: string;
       embeddingModel: string | null;
-      reasoningEffort: "minimal" | "low" | "medium" | "high";
+      thinkingMode: "disabled";
       timeoutMs: number;
       maxQuestionChars: number;
       maxOutputTokens: number;
@@ -41,12 +41,12 @@ export function getAssistantConfig(environment: AssistantEnvironment = process.e
   }
 
   const provider = environment.AI_PROVIDER?.trim().toLowerCase();
-  const rawBaseUrl = environment.AI_BASE_URL?.trim() || "https://api.openai.com/v1";
+  const rawBaseUrl = environment.AI_BASE_URL?.trim() || "https://api.deepseek.com";
   const apiKey = environment.AI_API_KEY?.trim();
-  const generationModel = environment.AI_GENERATION_MODEL?.trim() || "gpt-5-nano";
+  const generationModel = environment.AI_GENERATION_MODEL?.trim() || "deepseek-v4-flash";
   const actorSalt = environment.AI_ACTOR_SALT?.trim();
-  const reasoningEffort = environment.AI_REASONING_EFFORT?.trim().toLowerCase() || "minimal";
-  if (provider !== "openai" || !apiKey || !actorSalt || !["minimal", "low", "medium", "high"].includes(reasoningEffort)) {
+  const thinkingMode = environment.AI_THINKING_MODE?.trim().toLowerCase() || "disabled";
+  if (provider !== "deepseek" || !apiKey || !actorSalt || thinkingMode !== "disabled") {
     return { enabled: false, reason: "invalid_configuration" };
   }
 
@@ -61,8 +61,8 @@ export function getAssistantConfig(environment: AssistantEnvironment = process.e
       baseUrl: baseUrl.toString().replace(/\/$/, ""),
       apiKey,
       generationModel,
-      embeddingModel: environment.AI_EMBEDDING_MODEL?.trim() || "text-embedding-3-small",
-      reasoningEffort: reasoningEffort as "minimal" | "low" | "medium" | "high",
+      embeddingModel: null,
+      thinkingMode: "disabled",
       timeoutMs: integer(environment.AI_TIMEOUT_MS, 15_000, 1_000, 60_000),
       maxQuestionChars: integer(environment.AI_MAX_QUESTION_CHARS, 500, 50, 4_000),
       maxOutputTokens: integer(environment.AI_MAX_OUTPUT_TOKENS, 300, 64, 4_096),
