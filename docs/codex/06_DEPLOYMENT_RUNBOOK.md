@@ -39,6 +39,7 @@ Confirm:
 - the previous application image/tag or commit is recorded.
 - `POSTGRES_PASSWORD` and `DATABASE_URL` contain non-placeholder production values. Phase 4B sessions are opaque, hashed database records and no longer require `JWT_SECRET`.
 - `UPLOAD_ROOT=/app/uploads`, `MAX_UPLOAD_BYTES` is an approved positive per-file limit, `MAX_MEDIA_STORAGE_BYTES` is an approved positive total quota, and `/var/www/personal-blog/uploads` exists with write access for the application container.
+- Phase 5B uses `MAP_PROVIDER=amap` plus a domain-restricted `AMAP_JS_API_KEY`. The matching AMap `securityJsCode` must exist only in a root-readable Nginx snippet, never in Git, `.env`, application logs, shell history, or browser code.
 - the Phase 1B migration has been reviewed; it adds taxonomy, login-throttle, and soft-delete columns without dropping content.
 - the Phase 2 migration has been reviewed; it adds optional asset filename/dimension metadata and an asset recycle-bin index without dropping media records.
 - the Phase 4B migration has been reviewed; it converts roles to a closed enum, adds account status and database sessions, and intentionally signs administrators out once during deployment.
@@ -155,6 +156,32 @@ Before deploying Phase 5A:
 - verify `/places`, its search form, article links, mobile layout and the public article place links through Nginx.
 
 The migration is additive. Application rollback may retain the schema, but database restoration or a forward fix is required before considering any destructive schema reversal. Phase 5A does not require a map-provider key.
+
+## Phase 5B AMap deployment gate
+
+Phase 5B has no database migration. Before deployment:
+
+- create an AMap Web JS API key and matching `securityJsCode` in the AMap console;
+- restrict the browser key to the approved production domains, including `eastherphil.cn` and `www.eastherphil.cn` if both remain public;
+- configure usage/remaining-quota alerts in the AMap console;
+- set `MAP_PROVIDER=amap` and `AMAP_JS_API_KEY=<domain-restricted-browser-key>` in the production `.env`;
+- create `/etc/nginx/snippets/personal-blog-amap-secret.conf` as root with `set $amap_security_jscode "...";`, owner `root:root`, and mode `600`;
+- add the two locations from `deploy/nginx/amap-service.conf.example` to the HTTPS server block, keeping the styles location first;
+- run `nginx -t` and reload Nginx without printing the secret-bearing full configuration to deployment logs;
+- build the image after the CSP change and recreate only the application container.
+
+Production acceptance must verify:
+
+- `/api/healthz` reports `features.map.provider=amap` and `enabled=true` without returning either credential;
+- `/places` loads `https://webapi.amap.com/loader.js`, while AMap service calls use the same-origin `/_AMapService` proxy;
+- GCJ-02 points plot directly; WGS84 and BD-09 public points convert and plot in batches of no more than 40;
+- exact and approximate places use only their public serialized coordinates, city-only places remain text-only, and hidden/draft/deleted records never reach the map;
+- clustered markers work on desktop and mobile and can move the reader to the equivalent text card;
+- blocking the AMap script or disabling `MAP_PROVIDER` leaves the local coordinate preview, search and text list usable;
+- application logs contain bounded `map_client_event` records for ready/error states without coordinates, names, free text or credentials;
+- CSP has no unexpected violations and Nginx access/error logs do not expose `jscode`.
+
+Rollback removes or disables `MAP_PROVIDER=amap`, restores the previous application image, and may leave the inert Nginx proxy locations in place. Remove the proxy and secret snippet if the provider is abandoned. Rotate the Web JS API key and `securityJsCode` immediately if either was exposed.
 
 Before each release, record:
 

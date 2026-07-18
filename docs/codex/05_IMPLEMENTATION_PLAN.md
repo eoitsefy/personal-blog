@@ -163,14 +163,14 @@ Tasks:
 
 Priority: P2
 
-Status: `[PHASE 5A IMPLEMENTED, PENDING MERGE AND DEPLOYMENT 2026-07-18]` Provider-neutral place records, four-level privacy precision, coordinate provenance, cover references, administrator lifecycle, post relations, privacy-safe public API, searchable text directory, and coordinate preview are implemented. Phase 5B remains blocked on an explicit map provider, key, coordinate-conversion, and deployment-region compliance decision.
+Status: `[PHASE 5A DEPLOYED AND VERIFIED; PHASE 5B IMPLEMENTED, PENDING CREDENTIALS/DEPLOYMENT 2026-07-18]` Phase 5A is running in production at `0176f5b`. High德地图 JavaScript API 2.0 was selected for Phase 5B; the provider adapter, safe runtime configuration, coordinate conversion, clustered map, text fallback, client failure telemetry, CSP and deployment documentation are implemented without committing credentials.
 
 Tasks:
 
 - Add place records, article relations, privacy precision, and provider adapters.
 - Provide a public clustered map plus an accessible text-list fallback.
 
-Phase 5A deliberately ships the accessible text list and a provider-neutral coordinate preview without third-party map scripts. Production deployment must apply `20260718150000_phase_5a_places` and verify that hidden, draft-only, deleted, and internal-coordinate data never appears in `/api/places` or `/places`.
+Phase 5A production acceptance verified that hidden, draft-only, deleted, and internal-coordinate data never appears in `/api/places` or `/places`. Phase 5B sends only the already-serialized public coordinate to AMap, converts WGS84/BD09 in batches of at most 40, retains the local coordinate preview and text list on every failure path, and requires the AMap `securityJsCode` to remain in the Nginx `/_AMapService` proxy.
 
 ## Phase 6A — Text RAG assistant
 
