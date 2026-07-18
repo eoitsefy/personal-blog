@@ -209,8 +209,10 @@ Deploy the additive `20260718210000_phase_6a_text_assistant` migration with the 
 
 Production enablement requires all of the following:
 
-- select a reachable OpenAI-compatible HTTPS gateway and exact generation/embedding model aliases;
-- set `AI_ASSISTANT_ENABLED=true`, `AI_PROVIDER=openai-compatible`, `AI_BASE_URL`, `AI_API_KEY`, `AI_GENERATION_MODEL`, optional `AI_EMBEDDING_MODEL`, and a private random `AI_ACTOR_SALT` only in the server environment;
+- create a restricted OpenAI project API key with a small project budget; never paste it into chat, commit it, put it in a browser variable, or print it in a shell transcript;
+- set `AI_PROVIDER=openai`, `AI_BASE_URL=https://api.openai.com/v1`, `AI_GENERATION_MODEL=gpt-5-nano`, `AI_EMBEDDING_MODEL=text-embedding-3-small`, `AI_REASONING_EFFORT=minimal`, the server-only `AI_API_KEY`, and a private random `AI_ACTOR_SALT` in the root-owned production environment;
+- retain the low-usage defaults `AI_MAX_QUESTION_CHARS=500`, `AI_MAX_OUTPUT_TOKENS=300`, `AI_RETRIEVAL_LIMIT=4`, `AI_MAX_REQUESTS_PER_WINDOW=4`, and `AI_MAX_DAILY_REQUESTS=50` for the first acceptance window;
+- keep `AI_ASSISTANT_ENABLED=false` while testing provider authentication and the administrator reindex operation; switch it to `true` only after every remaining gate succeeds;
 - set explicit timeout, question/output, retrieval, rate-limit, daily request, concurrency and circuit-breaker limits;
 - call authenticated `POST /api/admin/assistant/reindex` and record its post/chunk/embedding counts;
 - verify DNS, TLS and provider authentication from the application container without printing the API key;

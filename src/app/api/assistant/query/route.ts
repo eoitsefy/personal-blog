@@ -37,7 +37,7 @@ export async function POST(req: Request) {
 
   try {
     const result = await withAssistantResilience(config, () => answerAssistantQuestion(parsed.data.question, config));
-    const status = result.sources.length ? "SUCCESS" as const : "NO_EVIDENCE" as const;
+    const status = result.mode === "grounded" || result.mode === "conversation" ? "SUCCESS" as const : "NO_EVIDENCE" as const;
     await Promise.all([
       recordBudgetUnits(result.usage.inputUnits, result.usage.outputUnits),
       recordAssistantUsage({
