@@ -5,6 +5,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import type { PublicMapRuntimeConfig } from "@/lib/map/config";
 import {
   chunkForAmapConversion,
+  findNearestMapPoint,
   getAmapConversionType,
   type PublicMapPoint,
 } from "@/lib/map/coordinates";
@@ -13,6 +14,7 @@ import styles from "./public-place-map.module.css";
 
 type AMapLngLat = { getLng(): number; getLat(): number };
 type AMapMarker = {
+  getPosition(): AMapLngLat;
   setContent(content: HTMLElement): void;
   setOffset(offset: unknown): void;
   on(event: "click", listener: () => void): void;
@@ -33,7 +35,7 @@ type AMapNamespace = {
     points: AMapClusterPoint[],
     options: {
       gridSize: number;
-      renderMarker(context: { marker: AMapMarker; data: AMapClusterPoint[] }): void;
+      renderMarker(context: { marker: AMapMarker }): void;
       renderClusterMarker(context: { marker: AMapMarker; count: number }): void;
     },
   ) => AMapCluster;
@@ -172,6 +174,7 @@ export function PublicPlaceMap({
     let cancelled = false;
     let map: AMapMap | null = null;
     let cluster: AMapCluster | null = null;
+    let stage: MapClientEvent["stage"] = "sdk_load";
     const startedAt = performance.now();
 
     async function initialize() {
@@ -187,23 +190,33 @@ export function PublicPlaceMap({
         }), LOAD_TIMEOUT_MS);
         if (cancelled || !containerRef.current) return;
 
+        stage = "coordinate_conversion";
         const conversion = await convertPublicPoints(AMap, points);
         if (cancelled || !containerRef.current) return;
         setOmittedCount(conversion.omittedCount);
         if (conversion.points.length === 0) throw new Error("No coordinates could be plotted safely");
 
+        stage = "map_create";
         map = new AMap.Map(containerRef.current, {
           viewMode: "2D",
           zoom: 5,
           mapStyle: "amap://styles/whitesmoke",
           showLabel: true,
         });
+        stage = "controls";
         map.addControl(new AMap.Scale());
         map.addControl(new AMap.ToolBar({ position: { right: "18px", top: "18px" } }));
+        stage = "marker_cluster";
         cluster = new AMap.MarkerCluster(map, conversion.points, {
           gridSize: 64,
-          renderMarker({ marker, data }) {
-            const point = data[0];
+          renderMarker({ marker }) {
+            const position = marker.getPosition();
+            const point = findNearestMapPoint(
+              conversion.points,
+              position.getLng(),
+              position.getLat(),
+            );
+            if (!point) return;
             const element = document.createElement("button");
             element.type = "button";
             element.className = styles.mapMarker;
@@ -227,6 +240,7 @@ export function PublicPlaceMap({
             marker.setOffset(new AMap.Pixel(-21, -21));
           },
         });
+        stage = "fit_view";
         map.setFitView(undefined, false, [72, 72, 72, 72], 13);
         setState("ready");
         const durationMs = Math.round(performance.now() - startedAt);
@@ -237,7 +251,7 @@ export function PublicPlaceMap({
       } catch {
         if (cancelled) return;
         setState("error");
-        reportMapEvent({ provider: "amap", kind: "map_runtime_error", pointCount: points.length, omittedCount: points.length, durationMs: Math.round(performance.now() - startedAt) });
+        reportMapEvent({ provider: "amap", kind: "map_runtime_error", stage, pointCount: points.length, omittedCount: points.length, durationMs: Math.round(performance.now() - startedAt) });
       }
     }
 

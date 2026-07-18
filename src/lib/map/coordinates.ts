@@ -13,6 +13,24 @@ export type PublicMapPoint = {
   longitude: number;
 };
 
+type PositionedMapPoint = PublicMapPoint & { lnglat: [number, number] };
+
+export function findNearestMapPoint<T extends PositionedMapPoint>(
+  points: T[],
+  longitude: number,
+  latitude: number,
+) {
+  if (points.length === 0) return null;
+
+  return points.reduce((nearest, point) => {
+    const nearestDistance = (nearest.lnglat[0] - longitude) ** 2
+      + (nearest.lnglat[1] - latitude) ** 2;
+    const pointDistance = (point.lnglat[0] - longitude) ** 2
+      + (point.lnglat[1] - latitude) ** 2;
+    return pointDistance < nearestDistance ? point : nearest;
+  });
+}
+
 export function getAmapConversionType(
   coordinateSystem: CoordinateSystem,
 ): "gps" | "baidu" | null {
