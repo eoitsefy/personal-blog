@@ -28,6 +28,9 @@ export default async function AdminLayout({ children }: { children: React.ReactN
             <Link href="/admin/comments" className="text-sm text-neutral-600 hover:text-neutral-950 dark:text-neutral-300 dark:hover:text-white">
               评论审核
             </Link>
+            <Link href="/admin/places" className="text-sm text-neutral-600 hover:text-neutral-950 dark:text-neutral-300 dark:hover:text-white">
+              地点管理
+            </Link>
             <Link href="/" className="text-sm text-neutral-600 hover:text-neutral-950 dark:text-neutral-300 dark:hover:text-white">
               查看网站
             </Link>

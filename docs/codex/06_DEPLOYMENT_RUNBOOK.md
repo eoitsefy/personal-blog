@@ -138,6 +138,24 @@ Functional checks:
 
 ## Application rollback
 
+## Phase 5A deployment gate
+
+Before deploying Phase 5A:
+
+- back up PostgreSQL and verify the gzip archive;
+- confirm the target commit contains `prisma/migrations/20260718150000_phase_5a_places/migration.sql`;
+- build the new application image before switching the running container;
+- run `npx prisma migrate deploy` once from the new image;
+- verify the `PlacePrivacy` and `CoordinateSystem` enums plus the `Place` and `PostPlace` tables;
+- create one test place for each privacy level and associate them with a disposable published article;
+- verify `/api/places` returns the public coordinates for `EXACT`, the separate public coordinates for `APPROXIMATE`, no coordinates for `CITY_ONLY`, and no record for `HIDDEN`;
+- verify draft-only, soft-deleted-place and soft-deleted-post relationships are absent;
+- verify the administrator can edit, recycle and restore a place, while permanent deletion is blocked until article relations are removed;
+- verify a place cover increments media references and cannot be deleted while referenced;
+- verify `/places`, its search form, article links, mobile layout and the public article place links through Nginx.
+
+The migration is additive. Application rollback may retain the schema, but database restoration or a forward fix is required before considering any destructive schema reversal. Phase 5A does not require a map-provider key.
+
 Before each release, record:
 
 - previous Git commit;

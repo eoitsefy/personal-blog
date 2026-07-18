@@ -12,6 +12,7 @@ import { isPublishedPost } from "@/lib/post-visibility";
 import { getUiPreviewPost, isUiPreviewEnabled } from "@/lib/ui-preview";
 import { absoluteUrl, SITE_AUTHOR, SITE_NAME, SITE_OG_IMAGE } from "@/lib/site";
 import { safeJsonLd } from "@/lib/seo";
+import { publicPlaceSelect, serializePublicPlace } from "@/lib/places";
 import { getCurrentUser } from "@/lib/user-auth";
 import dawnArchive from "../../../../public/images/journal/dawn-archive.png";
 import styles from "./post.module.css";
@@ -23,7 +24,7 @@ type PageProps = {
 const getPublishedPostBySlug = cache(async (slug: string) => {
   if (isUiPreviewEnabled()) {
     const post = getUiPreviewPost(slug);
-    return post ? { ...post, assets: [], commentsLocked: false } : null;
+    return post ? { ...post, assets: [], places: [], commentsLocked: false } : null;
   }
 
   const post = await prisma.post.findFirst({
@@ -43,6 +44,7 @@ const getPublishedPostBySlug = cache(async (slug: string) => {
       category: { select: { name: true, slug: true } },
       tags: { select: { tag: { select: { name: true, slug: true } } } },
       assets: { select: { asset: { select: { url: true, kind: true, originalName: true, mime: true } } } },
+      places: { where: { place: { deletedAt: null } }, select: { place: { select: publicPlaceSelect } } },
     },
   });
 
@@ -114,6 +116,10 @@ export default async function PostDetailPage({ params }: PageProps) {
   const previewMode = isUiPreviewEnabled();
   const currentUser = previewMode ? null : await getCurrentUser();
   const comments = previewMode ? [] : await listPublicComments(post.id, currentUser?.id ?? null);
+  const publicPlaces = post.places.flatMap(({ place }) => {
+    const publicPlace = serializePublicPlace(place);
+    return publicPlace ? [publicPlace] : [];
+  });
 
   const publishDate = post.publishedAt ?? post.createdAt;
   const readingMinutes = estimateReadingMinutes(post.contentMd);
@@ -198,6 +204,7 @@ export default async function PostDetailPage({ params }: PageProps) {
               </div>
             </div>
           ) : null}
+          {publicPlaces.length ? <div className={styles.asideBlock}><span>PLACES</span><div className={styles.tagList}>{publicPlaces.map((place) => <Link key={place.id} href={`/places#place-${place.slug}`}>{place.name} · {place.locationLabel}</Link>)}</div></div> : null}
           <div className={styles.asideBlock}>
             <span>LAST UPDATED</span>
             <time dateTime={post.updatedAt.toISOString()}>{formatDate(post.updatedAt)}</time>

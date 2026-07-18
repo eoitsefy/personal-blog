@@ -21,9 +21,10 @@ test("sitemap contains public roots and post canonical URLs", () => {
   assert.deepEqual(sitemap.map(({ url }) => url), [
     "https://eastherphil.cn/",
     "https://eastherphil.cn/posts",
+    "https://eastherphil.cn/places",
     "https://eastherphil.cn/posts/field-note",
   ]);
-  assert.equal(sitemap[2]?.lastModified, post.updatedAt);
+  assert.equal(sitemap[3]?.lastModified, post.updatedAt);
 });
 
 test("RSS escapes user-authored text and exposes stable post links", () => {

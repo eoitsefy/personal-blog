@@ -3,7 +3,7 @@ import styles from "./site-shell.module.css";
 
 type SiteHeaderProps = {
   tone?: "dark" | "light";
-  active?: "home" | "posts";
+  active?: "home" | "posts" | "places";
   overlay?: boolean;
 };
 
@@ -34,6 +34,9 @@ export function SiteHeader({ tone = "dark", active, overlay = false }: SiteHeade
           </Link>
           <Link href="/posts" aria-current={active === "posts" ? "page" : undefined}>
             日志
+          </Link>
+          <Link href="/places" aria-current={active === "places" ? "page" : undefined}>
+            地点
           </Link>
           <Link href="/#about">关于</Link>
         </nav>

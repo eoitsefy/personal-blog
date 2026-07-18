@@ -14,6 +14,7 @@ type PostFormProps = {
   categoryOptions?: string[];
   tagOptions?: string[];
   mediaOptions?: MediaAsset[];
+  placeOptions?: { id: string; name: string; locationLabel: string; privacy: "EXACT" | "APPROXIMATE" | "CITY_ONLY" | "HIDDEN" }[];
 };
 
 type ApiResponse = {
@@ -30,6 +31,7 @@ const EMPTY_POST: CreatePostInput = {
   category: "",
   tags: [],
   assetIds: [],
+  placeIds: [],
 };
 
 export function PostForm({
@@ -39,6 +41,7 @@ export function PostForm({
   categoryOptions = [],
   tagOptions = [],
   mediaOptions = [],
+  placeOptions = [],
 }: PostFormProps) {
   const router = useRouter();
   const [form, setForm] = useState<CreatePostInput>(initialValue);
@@ -331,6 +334,17 @@ export function PostForm({
           </button>
         </div>
         {videoError ? <p role="alert" className="text-sm text-red-600">{videoError}</p> : null}
+      </section>
+
+      <section className="grid gap-3 rounded-2xl border border-neutral-200 p-4 dark:border-neutral-800" aria-labelledby="post-place-heading">
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <div><h2 id="post-place-heading" className="font-medium">关联地点</h2><p className="mt-1 text-sm text-neutral-500">公开文章只按地点的隐私精度展示位置；隐藏地点不会出现在公开页面或接口中。</p></div>
+          <button type="button" onClick={() => router.push("/admin/places")} className="rounded-lg border border-neutral-300 px-3 py-2 text-sm dark:border-neutral-700">管理地点</button>
+        </div>
+        {placeOptions.length === 0 ? <p className="text-sm text-neutral-500">暂无地点，请先在地点管理中创建。</p> : <div className="grid gap-2 sm:grid-cols-2">
+          {placeOptions.map((place) => <label key={place.id} className="flex items-start gap-3 rounded-xl border border-neutral-200 p-3 text-sm dark:border-neutral-800"><input type="checkbox" className="mt-1" checked={form.placeIds.includes(place.id)} onChange={() => update("placeIds", form.placeIds.includes(place.id) ? form.placeIds.filter((id) => id !== place.id) : [...form.placeIds, place.id])} /><span><b className="block">{place.name}</b><span className="text-neutral-500">{place.locationLabel} · {place.privacy === "HIDDEN" ? "公开隐藏" : place.privacy === "CITY_ONLY" ? "仅地区" : place.privacy === "APPROXIMATE" ? "模糊坐标" : "精确坐标"}</span></span></label>)}
+        </div>}
+        {errors.placeIds ? <span className="text-sm text-red-600">{errors.placeIds}</span> : null}
       </section>
 
       {message ? (

@@ -4,6 +4,7 @@ import { InvalidAssetReferenceError, syncPostAssets } from "@/lib/media/referenc
 import { prisma } from "@/lib/prisma";
 import { requireAdmin } from "@/lib/require-admin";
 import { normalizeTags, normalizeTaxonomyTerm } from "@/lib/post-taxonomy";
+import { InvalidPlaceReferenceError, syncPostPlaces } from "@/lib/places";
 import { readJsonMutation, validateMutationOrigin } from "@/lib/request-security";
 import { UpdatePostInputSchema } from "@/lib/validators/post";
 
@@ -23,6 +24,7 @@ const postSelect = {
   category: { select: { name: true, slug: true } },
   tags: { select: { tag: { select: { name: true, slug: true } } } },
   assets: { select: { assetId: true } },
+  places: { select: { placeId: true } },
 } satisfies Prisma.PostSelect;
 
 export async function GET(req: Request, { params }: RouteParams) {
@@ -60,6 +62,7 @@ export async function PATCH(req: Request, { params }: RouteParams) {
         deletedAt: true,
         contentMd: true,
         assets: { select: { assetId: true } },
+        places: { select: { placeId: true } },
       },
     });
     if (!existing) return fail("NOT_FOUND", "文章不存在", 404, auth.requestId);
@@ -107,6 +110,9 @@ export async function PATCH(req: Request, { params }: RouteParams) {
           input.contentMd ?? existing.contentMd,
         );
       }
+      if (input.placeIds !== undefined) {
+        await syncPostPlaces(tx, id, input.placeIds);
+      }
       return tx.post.findUniqueOrThrow({ where: { id }, select: postSelect });
     });
     logApi({
@@ -119,7 +125,7 @@ export async function PATCH(req: Request, { params }: RouteParams) {
     });
     return ok({ post }, auth.requestId);
   } catch (error) {
-    if (error instanceof InvalidAssetReferenceError) {
+    if (error instanceof InvalidAssetReferenceError || error instanceof InvalidPlaceReferenceError) {
       return fail("BAD_REQUEST", error.message, 400, auth.requestId);
     }
     if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === "P2002") {

@@ -5,6 +5,7 @@ import { prisma } from "@/lib/prisma";
 import { requireAdmin } from "@/lib/require-admin";
 import { ADMIN_POST_PAGE_SIZE } from "@/lib/post-query";
 import { normalizeTags, normalizeTaxonomyTerm } from "@/lib/post-taxonomy";
+import { InvalidPlaceReferenceError, syncPostPlaces } from "@/lib/places";
 import { readJsonMutation } from "@/lib/request-security";
 import { adminPostListQuerySchema, CreatePostInputSchema } from "@/lib/validators/post";
 
@@ -20,6 +21,7 @@ const postSelect = {
   category: { select: { name: true, slug: true } },
   tags: { select: { tag: { select: { name: true, slug: true } } } },
   assets: { select: { assetId: true } },
+  places: { select: { placeId: true } },
 } satisfies Prisma.PostSelect;
 
 export async function GET(req: Request) {
@@ -123,6 +125,7 @@ export async function POST(req: Request) {
         select: { id: true },
       });
       await syncPostAssets(tx, created.id, input.assetIds, input.contentMd);
+      await syncPostPlaces(tx, created.id, input.placeIds);
       return tx.post.findUniqueOrThrow({ where: { id: created.id }, select: postSelect });
     });
 
@@ -136,7 +139,7 @@ export async function POST(req: Request) {
     });
     return ok({ post }, auth.requestId, 201);
   } catch (error) {
-    if (error instanceof InvalidAssetReferenceError) {
+    if (error instanceof InvalidAssetReferenceError || error instanceof InvalidPlaceReferenceError) {
       return fail("BAD_REQUEST", error.message, 400, auth.requestId);
     }
     if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === "P2002") {

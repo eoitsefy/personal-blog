@@ -55,6 +55,13 @@ test("post input limits and deduplicates media references", () => {
   assert.equal(CreatePostInputSchema.safeParse({ ...base, assetIds: Array.from({ length: 21 }, (_, index) => `asset-${index}`) }).success, false);
 });
 
+test("post input limits and deduplicates place references", () => {
+  const base = { title: "地点文章", slug: "place-post", contentMd: "正文", status: "DRAFT" as const };
+  assert.equal(CreatePostInputSchema.safeParse({ ...base, placeIds: ["place-1"] }).success, true);
+  assert.equal(CreatePostInputSchema.safeParse({ ...base, placeIds: ["place-1", "place-1"] }).success, false);
+  assert.equal(CreatePostInputSchema.safeParse({ ...base, placeIds: Array.from({ length: 11 }, (_, index) => `place-${index}`) }).success, false);
+});
+
 test("post input accepts trusted video directives and rejects untrusted embeds", () => {
   const base = {
     title: "视频文章",
