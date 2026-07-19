@@ -221,7 +221,7 @@ Tasks:
 - `[IN PROGRESS]` Add health checks and version/commit reporting.
 - `[IN PROGRESS]` Run app as non-root and apply container resource, log, PID, and privilege limits.
 - Add Nginx secure headers and endpoint-specific rate limits.
-- `[COMPLETE — SERVER]` Port 3002 has no listener and its stale IPv4/IPv6 UFW rules were removed on 2026-07-19; `[PENDING]` reconcile the Alibaba Cloud security group.
+- `[COMPLETE]` Port 3002 has no listener and its stale IPv4/IPv6 UFW rules were removed on 2026-07-19. The attached Alibaba Cloud security group had no 3002 rule, and the unused RDP 3389 rule was removed while preserving 22/80/443.
 - `[COMPLETE]` Replace routine root administration with the verified `blogops` sudo user and disable password SSH with rollback-protected acceptance; retain temporary public-key emergency access for the remaining Phase 7A rollout.
 - `[IN PROGRESS]` Add alerts for disk/inode use, backup freshness, unhealthy containers, application health, and certificate expiry, including a forced-failure acceptance path.
 - Copy backups off-host; document retention and restore.
@@ -235,7 +235,7 @@ Acceptance:
 - Only intended public ports are exposed.
 - Alerts are tested, not only configured.
 
-Current milestone: `[IN PROGRESS — Phase 7A]` certificate ownership, the named `blogops` operator, rollback-protected SSH password hardening, and host UFW port-3002 removal passed production acceptance on 2026-07-19. Next, reconcile the Alibaba Cloud security group, deploy Docker retention and alerts, configure off-host backup credentials, and record rollback/restore evidence before expanding to Phase 6B voice features.
+Current milestone: `[IN PROGRESS — Phase 7A]` certificate ownership, the named `blogops` operator, rollback-protected SSH password hardening, and host/cloud port reconciliation passed production acceptance on 2026-07-19. Next, deploy container limits, Docker retention and alerts, configure off-host backup credentials, and record rollback/restore evidence before expanding to Phase 6B voice features.
 
 ## Suggested first Codex milestone
 

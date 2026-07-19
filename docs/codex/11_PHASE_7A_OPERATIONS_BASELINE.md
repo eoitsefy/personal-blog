@@ -41,7 +41,7 @@
 - UFW configuration, numbered/verbose status, IPv4/IPv6 rules, and listeners were backed up under `/root/backups/phase7a-ufw-20260719-093059`.
 - The exact `3002/tcp` allowance was deleted for both IPv4 and IPv6. `OpenSSH`, `80/tcp`, and `443/tcp` remained allowed for both address families.
 - Post-change checks passed for the `127.0.0.1:3000` health endpoint and local-SNI HTTPS. Evidence is retained in `/root/server-ops/logs/phase7a-stale-port-20260719-093059.log`.
-- Alibaba Cloud security-group reconciliation remains a separate control-plane task; no completion is claimed until its inbound rules are inspected.
+- The attached Alibaba Cloud security group was inspected separately: it had no 3002 rule, and the unused system-created RDP 3389 allowance was removed. SSH 22 and public web ports 80/443 were preserved.
 
 ## Repository-side controls in this phase
 
@@ -58,7 +58,7 @@
 1. Back up the database, uploads, environment, Nginx, SSH, UFW, Docker, and fstab configuration.
 2. `[COMPLETE 2026-07-19]` Issue an `acme.sh` certificate covering both names, prove its key pair and SANs, switch Nginx with an immediate rollback path, verify renewal/reload, and disable the obsolete Certbot timer.
 3. `[COMPLETE 2026-07-19]` Create and independently verify `blogops`, then disable password SSH with automatic rollback protection while retaining and testing temporary root public-key emergency access.
-4. `[PARTIAL 2026-07-19]` The stale IPv4/IPv6 UFW 3002 rules were removed with backup and health verification. Reconcile the Alibaba Cloud security group, preserving 22/80/443.
+4. `[COMPLETE 2026-07-19]` The stale IPv4/IPv6 UFW 3002 rules were removed with backup and health verification. The Alibaba Cloud security group contained no 3002 rule; unused RDP 3389 was removed while preserving 22/80/443.
 5. Deploy the container and local operations controls. Confirm upload ownership for UID 1000 before replacing the application container.
 6. Run normal and forced-failure alert checks, a temporary-database restore drill, and an application image rollback drill.
 7. Configure and verify an off-host backup destination, then remove temporary root deployment access.
@@ -74,7 +74,7 @@
 
 - `[PASSED 2026-07-19]` The served certificate covers both names, its stable path is documented, and issuance, installation, reload, cron, and fingerprint checks passed. The Phase 7A expiry alert deployment remains pending.
 - `[PASSED 2026-07-19]` Named operator login and sudo passed; password SSH is disabled; rollback protection, a second operator session, and temporary root public-key emergency access were verified before confirmation.
-- `[PASSED — HOST UFW 2026-07-19; CLOUD PENDING]` UFW allows only intended SSH/HTTP/HTTPS ports; the Alibaba Cloud security group still requires control-plane verification.
+- `[PASSED 2026-07-19]` UFW and the Alibaba Cloud security group expose only the intended SSH/HTTP/HTTPS TCP ports; unused 3002/3389 exposure is absent.
 - Containers are healthy, the app runs non-root, logs rotate, limits are visible through `docker inspect`, and uploads remain writable.
 - Normal operations checks pass; a forced alert fails predictably and writes auditable evidence.
 - Fresh database and upload backups pass integrity checks, a temporary restore drill succeeds and cleans up, and an off-host copy is verified by checksum.
