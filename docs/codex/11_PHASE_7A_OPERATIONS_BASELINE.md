@@ -2,7 +2,7 @@
 
 ## Status
 
-`[IN PROGRESS]` The production read-only audit completed on 2026-07-19. Certificate ownership and renewal were standardized on `acme.sh`; the named operator, SSH hardening, and host UFW port cleanup passed production acceptance. The remaining cloud and repository controls are still staged on `agent/phase-7a-operations-baseline`.
+`[IN PROGRESS]` Production commit `9d73a20` has passed certificate, named-operator, SSH, firewall, limited-container, local-backup, restore-drill, and local-alert acceptance. Off-host backup, external alert delivery, first Docker-retention acceptance, and final temporary-access cleanup remain.
 
 ## Verified production baseline
 
@@ -53,14 +53,24 @@
 - Add a health script for disk, inode, containers, HTTP health, database backup freshness, and certificate expiry, with a forced-failure acceptance mode.
 - Add a provider-neutral `rclone` off-site transfer script. It remains disabled until a dedicated remote and credentials are configured outside the repository.
 
+## Completed production change: containers and local operations
+
+- On 2026-07-19, production commit `9d73a20e71b92c4aef0771bde717a5e3aaae6609` deployed image `sha256:afd5e32810f0b4cfafe1cc9b20884872e286926b4c1f9005add9247f1607fcf2`.
+- The application runs as image user `node` with UID 1000, can write the persistent upload mount, drops all capabilities, and has `no-new-privileges`, a 1 GiB memory limit, 1.5 CPU limit, 256 PID limit, and bounded JSON-file logs. PostgreSQL and Redis also have health, resource, PID, log, and privilege controls.
+- All three containers reported `running/healthy`; the application used about 93 MiB of its 1 GiB limit during acceptance. Root filesystem usage was 55% with 17 GiB free.
+- Fresh mode-0600 database and upload archives were generated. The newest database archive restored into a uniquely named temporary database, core table counts were queried, and the temporary database was removed in two seconds.
+- The normal operations check passed, a forced disk failure produced `RESULT=FAIL count=1` and auditable alert state, and the following normal run returned `RESULT=PASS` and cleared that state.
+- `/etc/cron.d/personal-blog-ops` schedules upload backup, operations checks, bounded Docker maintenance, and the monthly restore drill without altering the existing certificate and database root-crontab entries.
+- The first deployment harness mistakenly treated the expected forced-check exit code as an unexpected error and proved the application-image/Compose rollback path. The corrected deployment then verified HTTP health before redeploying; no database or upload data was lost. Evidence is under `/root/backups/phase7a-operations-20260719-104654` and `/root/server-ops/logs/deploy-phase7a-operations-20260719-104654.log`.
+
 ## Staged production rollout
 
 1. Back up the database, uploads, environment, Nginx, SSH, UFW, Docker, and fstab configuration.
 2. `[COMPLETE 2026-07-19]` Issue an `acme.sh` certificate covering both names, prove its key pair and SANs, switch Nginx with an immediate rollback path, verify renewal/reload, and disable the obsolete Certbot timer.
 3. `[COMPLETE 2026-07-19]` Create and independently verify `blogops`, then disable password SSH with automatic rollback protection while retaining and testing temporary root public-key emergency access.
 4. `[COMPLETE 2026-07-19]` The stale IPv4/IPv6 UFW 3002 rules were removed with backup and health verification. The Alibaba Cloud security group contained no 3002 rule; unused RDP 3389 was removed while preserving 22/80/443.
-5. Deploy the container and local operations controls. Confirm upload ownership for UID 1000 before replacing the application container.
-6. Run normal and forced-failure alert checks, a temporary-database restore drill, and an application image rollback drill.
+5. `[COMPLETE 2026-07-19]` Deploy the container and local operations controls. Upload ownership, UID 1000 writes, resource/privilege limits, three health checks, and HTTPS passed.
+6. `[COMPLETE 2026-07-19]` Normal and forced-failure alert checks, alert recovery, a temporary-database restore drill, and an application rollback path passed without data loss.
 7. Configure and verify an off-host backup destination, then remove temporary root deployment access.
 
 ## Rollback boundaries
@@ -75,7 +85,7 @@
 - `[PASSED 2026-07-19]` The served certificate covers both names, its stable path is documented, and issuance, installation, reload, cron, and fingerprint checks passed. The Phase 7A expiry alert deployment remains pending.
 - `[PASSED 2026-07-19]` Named operator login and sudo passed; password SSH is disabled; rollback protection, a second operator session, and temporary root public-key emergency access were verified before confirmation.
 - `[PASSED 2026-07-19]` UFW and the Alibaba Cloud security group expose only the intended SSH/HTTP/HTTPS TCP ports; unused 3002/3389 exposure is absent.
-- Containers are healthy, the app runs non-root, logs rotate, limits are visible through `docker inspect`, and uploads remain writable.
-- Normal operations checks pass; a forced alert fails predictably and writes auditable evidence.
-- Fresh database and upload backups pass integrity checks, a temporary restore drill succeeds and cleans up, and an off-host copy is verified by checksum.
-- Application rollback is demonstrated without losing database or upload data.
+- `[PASSED 2026-07-19]` Containers are healthy, the app runs non-root, logs are bounded, limits are visible through `docker inspect`, and uploads remain writable.
+- `[PASSED 2026-07-19]` Normal operations checks pass; a forced alert fails predictably, writes evidence, and is cleared by the recovery run.
+- `[PASSED — LOCAL 2026-07-19; OFF-HOST PENDING]` Fresh database and upload backups pass integrity checks and a temporary restore drill succeeds and cleans up. Off-host checksum verification remains pending.
+- `[PASSED 2026-07-19]` Application rollback was demonstrated and followed by a healthy corrected deployment without losing database or upload data.
