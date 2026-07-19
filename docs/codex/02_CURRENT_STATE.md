@@ -161,8 +161,8 @@ Historical scripts to archive or verify:
 
 - `[VERIFIED]` Public logs contain automated scanning and malicious-looking requests.
 - `[CHECK]` One suspicious request to `/` historically returned HTTP 200; verify routing, method handling, and input validation.
-- `[CHECK]` Confirm UFW and Alibaba Cloud security group alignment.
-- `[CHECK]` SSH used key authentication, but root login was historically allowed. Establish a non-root administrator and hardening plan.
+- `[PARTIAL — Phase 7A]` UFW now exposes only SSH 22 and HTTP/HTTPS 80/443; the stale IPv4/IPv6 3002 rules were removed with a verified backup and application/HTTPS checks. Alibaba Cloud security-group reconciliation remains pending.
+- `[COMPLETE — Phase 7A]` Routine administration now uses the locked-password `blogops` account with an independent Ed25519 key and verified sudo. Password SSH is disabled and root is temporarily limited to public-key emergency access.
 - `[CHECK]` Confirm fail2ban or equivalent controls.
 - `[PLANNED]` Add container least-privilege settings, secure headers, application rate limits, health checks, and external alerts.
 - `[PLANNED]` Add off-site backups; current backups are local to the same server.

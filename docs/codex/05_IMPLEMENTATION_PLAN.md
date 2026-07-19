@@ -221,12 +221,12 @@ Tasks:
 - `[IN PROGRESS]` Add health checks and version/commit reporting.
 - `[IN PROGRESS]` Run app as non-root and apply container resource, log, PID, and privilege limits.
 - Add Nginx secure headers and endpoint-specific rate limits.
-- `[VERIFIED]` Port 3002 has no listener; `[PENDING]` remove its stale UFW and cloud security-group rules.
-- Replace routine root administration with a named sudo user; preserve emergency access and test it before changing SSH settings.
+- `[COMPLETE — SERVER]` Port 3002 has no listener and its stale IPv4/IPv6 UFW rules were removed on 2026-07-19; `[PENDING]` reconcile the Alibaba Cloud security group.
+- `[COMPLETE]` Replace routine root administration with the verified `blogops` sudo user and disable password SSH with rollback-protected acceptance; retain temporary public-key emergency access for the remaining Phase 7A rollout.
 - `[IN PROGRESS]` Add alerts for disk/inode use, backup freshness, unhealthy containers, application health, and certificate expiry, including a forced-failure acceptance path.
 - Copy backups off-host; document retention and restore.
 - Perform and record application rollback and database restore drills.
-- Resolve the unexplained port 3002 process.
+- `[RESOLVED]` The historical port 3002 has no listener and no longer has a host-firewall allowance.
 
 Acceptance:
 
@@ -235,7 +235,7 @@ Acceptance:
 - Only intended public ports are exposed.
 - Alerts are tested, not only configured.
 
-Current milestone: `[IN PROGRESS — Phase 7A]` certificate ownership, the named `blogops` operator, and rollback-protected SSH password hardening passed production acceptance on 2026-07-19. Next, remove stale port 3002 exposure, deploy Docker retention and alerts, configure off-host backup credentials, and record rollback/restore evidence before expanding to Phase 6B voice features.
+Current milestone: `[IN PROGRESS — Phase 7A]` certificate ownership, the named `blogops` operator, rollback-protected SSH password hardening, and host UFW port-3002 removal passed production acceptance on 2026-07-19. Next, reconcile the Alibaba Cloud security group, deploy Docker retention and alerts, configure off-host backup credentials, and record rollback/restore evidence before expanding to Phase 6B voice features.
 
 ## Suggested first Codex milestone
 
