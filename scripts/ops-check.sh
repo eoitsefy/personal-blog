@@ -6,7 +6,7 @@ INODE_LIMIT="${OPS_INODE_LIMIT_PERCENT:-80}"
 BACKUP_MAX_AGE="${OPS_BACKUP_MAX_AGE_SECONDS:-108000}"
 CERT_MIN_DAYS="${OPS_CERT_MIN_DAYS:-21}"
 BACKUP_DIR="${BACKUP_DIR:-/root/backups}"
-CERT_FILE="${OPS_CERT_FILE:-/etc/letsencrypt/live/eastherphil.cn-0001/fullchain.pem}"
+CERT_FILE="${OPS_CERT_FILE:-/etc/nginx/ssl/eastherphil.cn/fullchain.pem}"
 ALERT_DIR="${OPS_ALERT_DIR:-/root/server-ops/alerts}"
 LOG_DIR="${OPS_LOG_DIR:-/root/server-ops/logs}"
 FAILURES=()
@@ -25,12 +25,17 @@ inodes="$(inode_percent /)"; [[ "$inodes" -lt "$INODE_LIMIT" ]] && pass "inodes=
 
 for container in blog-app blog-postgres blog-redis; do
   state="$(docker inspect -f '{{.State.Status}}' "$container" 2>/dev/null || echo missing)"
-  [[ "$state" == "running" ]] && pass "$container=$state" || fail "$container=$state"
+  health="$(docker inspect -f '{{if .State.Health}}{{.State.Health.Status}}{{else}}none{{end}}' "$container" 2>/dev/null || echo missing)"
+  if [[ "$state" == "running" && ("$health" == "healthy" || "$health" == "none") ]]; then
+    pass "$container=${state}/${health}"
+  else
+    fail "$container=${state}/${health}"
+  fi
 done
 curl -fsS --max-time 10 http://127.0.0.1:3000/api/healthz >/dev/null \
   && pass "healthz=200" || fail "healthz=failed"
 
-latest="$(find "$BACKUP_DIR" -maxdepth 1 -type f -name 'blogdb-*.sql.gz' -printf '%T@|%p\n' 2>/dev/null | sort -nr | head -n 1)"
+latest="$(find "$BACKUP_DIR" -maxdepth 1 -type f -name 'blogdb-*.sql.gz' -printf '%T@|%p\n' 2>/dev/null | sort -nr | sed -n '1p')"
 if [[ -z "$latest" ]]; then
   fail "database_backup=missing"
 else

@@ -32,7 +32,7 @@ trap cleanup EXIT
 
 echo "[INFO] restore drill started at $TS"
 echo "[INFO] container=$PG_CONTAINER production=$PROD_DB temporary=$TMP_DB"
-LATEST_BACKUP="$(find "$BACKUP_DIR" -maxdepth 1 -type f -name 'blogdb-*.sql.gz' -printf '%T@|%p\n' | sort -nr | head -n 1 | cut -d'|' -f2-)"
+LATEST_BACKUP="$(find "$BACKUP_DIR" -maxdepth 1 -type f -name 'blogdb-*.sql.gz' -printf '%T@|%p\n' | sort -nr | sed -n '1p' | cut -d'|' -f2-)"
 [[ -n "$LATEST_BACKUP" ]] || { echo "[ERROR] no backup found"; exit 1; }
 gzip -t "$LATEST_BACKUP"
 echo "[INFO] backup=$(basename "$LATEST_BACKUP") bytes=$(stat -c %s "$LATEST_BACKUP")"

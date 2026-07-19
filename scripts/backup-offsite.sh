@@ -20,8 +20,8 @@ TS="$(date +%F-%H%M%S)"
 MANIFEST="$BACKUP_DIR/offsite-manifest-$TS.sha256"
 trap 'rm -f "$MANIFEST"' EXIT
 
-DB="$(find "$BACKUP_DIR" -maxdepth 1 -type f -name 'blogdb-*.sql.gz' -printf '%T@|%p\n' | sort -nr | head -n 1 | cut -d'|' -f2-)"
-UPLOADS="$(find "$BACKUP_DIR" -maxdepth 1 -type f -name 'uploads-*.tar.gz' -printf '%T@|%p\n' | sort -nr | head -n 1 | cut -d'|' -f2-)"
+DB="$(find "$BACKUP_DIR" -maxdepth 1 -type f -name 'blogdb-*.sql.gz' -printf '%T@|%p\n' | sort -nr | sed -n '1p' | cut -d'|' -f2-)"
+UPLOADS="$(find "$BACKUP_DIR" -maxdepth 1 -type f -name 'uploads-*.tar.gz' -printf '%T@|%p\n' | sort -nr | sed -n '1p' | cut -d'|' -f2-)"
 [[ -n "$DB" && -n "$UPLOADS" ]] || { echo "database or upload backup is missing"; exit 1; }
 gzip -t "$DB"; tar -tzf "$UPLOADS" >/dev/null
 (cd "$BACKUP_DIR" && sha256sum "$(basename "$DB")" "$(basename "$UPLOADS")") >"$MANIFEST"
@@ -31,5 +31,6 @@ for file in "$DB" "$UPLOADS" "$MANIFEST"; do
     --retries 3 --low-level-retries 5
 done
 rclone check "$BACKUP_DIR" "$OFFSITE_REMOTE/$(hostname)" \
-  --include "$(basename "$DB")" --include "$(basename "$UPLOADS")" --one-way
+  --include "$(basename "$DB")" --include "$(basename "$UPLOADS")" \
+  --include "$(basename "$MANIFEST")" --one-way
 echo "[$(date '+%F %T')] off-site backup succeeded database=$(basename "$DB") uploads=$(basename "$UPLOADS")" | tee -a "$LOG"
