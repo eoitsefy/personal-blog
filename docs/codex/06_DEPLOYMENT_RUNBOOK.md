@@ -278,6 +278,17 @@ Documented cron:
 0 6 * * * /root/server-ops/scripts/daily-check.sh
 ```
 
+Phase 7A keeps the existing root-crontab certificate and database entries intact and installs this isolated schedule as `/etc/cron.d/personal-blog-ops` after production acceptance:
+
+```cron
+45 3 * * * root /root/personal-blog-web/scripts/backup-uploads.sh >/dev/null 2>&1
+*/15 * * * * root /root/personal-blog-web/scripts/ops-check.sh >/dev/null 2>&1
+30 4 * * 0 root /root/personal-blog-web/scripts/docker-maintenance.sh >/dev/null 2>&1
+15 4 1 * * root /root/personal-blog-web/scripts/restore-drill.sh >/dev/null 2>&1
+```
+
+The operations check reads the active `acme.sh` certificate from `/etc/nginx/ssl/eastherphil.cn/fullchain.pem`. Off-site transfer is intentionally not scheduled until `/etc/personal-blog/offsite-backup.env` and a dedicated `rclone` remote have been configured and verified.
+
 Weekly checks:
 
 - container state and restart count;
