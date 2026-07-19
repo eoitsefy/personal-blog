@@ -136,17 +136,24 @@ Active cron entries documented:
 0 6 * * * /root/server-ops/scripts/daily-check.sh
 ```
 
+Phase 7A also installed `/etc/cron.d/personal-blog-ops` for daily upload backups, fifteen-minute health/backup/certificate checks, weekly bounded Docker maintenance, and a monthly temporary-database restore drill.
+
 Backup behavior:
 
 - `docker exec blog-postgres pg_dump` for `blogdb`.
 - Output: `/root/backups/blogdb-YYYY-MM-DD-HHMMSS.sql.gz`.
 - Log: `/root/backups/backup.log`.
-- Retention: seven days.
+- Database and upload backup retention: 14 days for newly generated Phase 7A archives.
+- The 2026-07-19 production drill restored the newest dump into an isolated temporary database, validated core tables, and removed the drill database.
 - Historical old backup path `/srv/blog/backups/postgres` should not be treated as the active standard.
 
 Active scripts documented:
 
 - `/root/personal-blog-web/scripts/backup-db.sh`
+- `/root/personal-blog-web/scripts/backup-uploads.sh`
+- `/root/personal-blog-web/scripts/ops-check.sh`
+- `/root/personal-blog-web/scripts/docker-maintenance.sh`
+- `/root/personal-blog-web/scripts/restore-drill.sh`
 - `/root/server-ops/scripts/daily-check.sh`
 - `/root/server-ops/scripts/ops-log.sh`
 - `/root/.acme.sh/acme.sh`
@@ -164,7 +171,7 @@ Historical scripts to archive or verify:
 - `[COMPLETE — Phase 7A]` UFW now exposes only SSH 22 and HTTP/HTTPS 80/443; the stale IPv4/IPv6 3002 rules were removed with a verified backup and application/HTTPS checks. The attached Alibaba Cloud security group had no 3002 rule, and its unused RDP 3389 rule was removed.
 - `[COMPLETE — Phase 7A]` Routine administration now uses the locked-password `blogops` account with an independent Ed25519 key and verified sudo. Password SSH is disabled and root is temporarily limited to public-key emergency access.
 - `[CHECK]` Confirm fail2ban or equivalent controls.
-- `[PLANNED]` Add container least-privilege settings, secure headers, application rate limits, health checks, and external alerts.
+- `[PARTIAL — Phase 7A]` Application, PostgreSQL, and Redis health checks plus non-root/resource/PID/log/privilege container controls are deployed. Local disk/inode/backup/container/HTTP/certificate alerts passed normal and forced-failure acceptance; external notification remains pending.
 - `[PLANNED]` Add off-site backups; current backups are local to the same server.
 
 ## AI and Codex connectivity

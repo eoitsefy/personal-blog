@@ -214,18 +214,18 @@ Acceptance:
 
 Priority: P0/P1
 
-Status: `[IN PROGRESS — Phase 7A]`. A read-only production audit completed on 2026-07-19. Repository-side container, backup, restore-drill, retention, and alerting changes are being implemented; server hardening is intentionally staged to preserve emergency access.
+Status: `[IN PROGRESS — Phase 7A]`. The audit, certificate migration, named operator, SSH hardening, port reconciliation, container controls, local backups, alert checks, and restore drill passed production acceptance on 2026-07-19. Off-host backup and final access cleanup remain staged.
 
 Tasks:
 
-- `[IN PROGRESS]` Add health checks and version/commit reporting.
-- `[IN PROGRESS]` Run app as non-root and apply container resource, log, PID, and privilege limits.
+- `[PARTIAL]` Application, PostgreSQL, and Redis health checks are deployed; explicit version/commit reporting remains pending.
+- `[COMPLETE]` Run app as non-root and apply container resource, log, PID, capability, and privilege limits.
 - Add Nginx secure headers and endpoint-specific rate limits.
 - `[COMPLETE]` Port 3002 has no listener and its stale IPv4/IPv6 UFW rules were removed on 2026-07-19. The attached Alibaba Cloud security group had no 3002 rule, and the unused RDP 3389 rule was removed while preserving 22/80/443.
 - `[COMPLETE]` Replace routine root administration with the verified `blogops` sudo user and disable password SSH with rollback-protected acceptance; retain temporary public-key emergency access for the remaining Phase 7A rollout.
-- `[IN PROGRESS]` Add alerts for disk/inode use, backup freshness, unhealthy containers, application health, and certificate expiry, including a forced-failure acceptance path.
-- Copy backups off-host; document retention and restore.
-- Perform and record application rollback and database restore drills.
+- `[COMPLETE — LOCAL]` Add checks for disk/inode use, backup freshness, unhealthy containers, application health, and certificate expiry; normal, forced-failure, and recovery paths passed. External delivery remains pending.
+- `[PARTIAL]` Local database/upload backup retention and restore are documented and deployed; copy backups off-host after choosing a destination and dedicated credentials.
+- `[COMPLETE]` Record application rollback evidence and a successful isolated database restore drill without data loss.
 - `[RESOLVED]` The historical port 3002 has no listener and no longer has a host-firewall allowance.
 
 Acceptance:
@@ -235,7 +235,7 @@ Acceptance:
 - Only intended public ports are exposed.
 - Alerts are tested, not only configured.
 
-Current milestone: `[IN PROGRESS — Phase 7A]` certificate ownership, the named `blogops` operator, rollback-protected SSH password hardening, and host/cloud port reconciliation passed production acceptance on 2026-07-19. Next, deploy container limits, Docker retention and alerts, configure off-host backup credentials, and record rollback/restore evidence before expanding to Phase 6B voice features.
+Current milestone: `[IN PROGRESS — Phase 7A]` production commit `9d73a20` now runs healthy limited containers and the scheduled local operations baseline. Backups, isolated restore, forced-alert recovery, and an automatic application rollback all produced evidence. Next, verify bounded Docker retention, choose and configure off-host storage, add external alert delivery, and perform final temporary-access cleanup before expanding to Phase 6B voice features.
 
 ## Suggested first Codex milestone
 
