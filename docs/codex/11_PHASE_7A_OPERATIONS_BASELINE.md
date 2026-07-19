@@ -28,6 +28,12 @@
 - The first switch probe safely rolled back after observing an old Nginx worker during graceful reload. The corrected bounded retry then accepted the new certificate on both names. Rollback evidence is retained under `/root/backups/phase7a-certificate-20260719-011752`; the successful migration backup is `/root/backups/phase7a-certificate-20260719-012445`.
 - A separate read-only verification produced `phase7a_certificate_acceptance=passed`, confirmed application health with AMap and DeepSeek enabled, and was saved locally as `phase7a-certificate-acceptance-20260719-074623.txt`. Browser checks of both public names completed without certificate warnings.
 
+## Completed production change: named operator foundation
+
+- On 2026-07-19, the named `blogops` account was created with UID/GID 1000, membership in the `sudo` group, a locked password, and a unique Ed25519 public key.
+- `/etc/sudoers.d/90-personal-blog-ops` passed `visudo`; an independent connection as `blogops` proved public-key-only login and non-interactive sudo access to UID 0.
+- Existing root and password SSH policy remained unchanged during account creation. The next stage will disable password and keyboard-interactive authentication with automatic rollback protection while temporarily retaining root public-key emergency access.
+
 ## Repository-side controls in this phase
 
 - Build the runtime image from production dependencies only and run the Next.js process as the Alpine `node` user.
@@ -42,7 +48,7 @@
 
 1. Back up the database, uploads, environment, Nginx, SSH, UFW, Docker, and fstab configuration.
 2. `[COMPLETE 2026-07-19]` Issue an `acme.sh` certificate covering both names, prove its key pair and SANs, switch Nginx with an immediate rollback path, verify renewal/reload, and disable the obsolete Certbot timer.
-3. Create a named operations account with a unique public key and sudo access; verify a second concurrent login before changing SSH policy.
+3. `[PARTIAL 2026-07-19]` Create and independently verify the named `blogops` account, unique key, locked password, and sudo access. Password SSH hardening and emergency-access acceptance remain pending.
 4. Remove the stale UFW 3002 rules and reconcile the Alibaba Cloud security group. Preserve 22/80/443 until SSH and HTTPS acceptance passes.
 5. Deploy the container and local operations controls. Confirm upload ownership for UID 1000 before replacing the application container.
 6. Run normal and forced-failure alert checks, a temporary-database restore drill, and an application image rollback drill.
@@ -58,7 +64,7 @@
 ## Acceptance criteria
 
 - `[PASSED 2026-07-19]` The served certificate covers both names, its stable path is documented, and issuance, installation, reload, cron, and fingerprint checks passed. The Phase 7A expiry alert deployment remains pending.
-- Named operator login and sudo work; password SSH is disabled; emergency access is documented and tested.
+- `[PARTIAL 2026-07-19]` Named operator login and sudo passed. Password SSH disablement and emergency-access acceptance remain pending.
 - Only intended public ports are allowed in both UFW and the Alibaba Cloud security group.
 - Containers are healthy, the app runs non-root, logs rotate, limits are visible through `docker inspect`, and uploads remain writable.
 - Normal operations checks pass; a forced alert fails predictably and writes auditable evidence.
