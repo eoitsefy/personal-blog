@@ -14,6 +14,7 @@ This directory provides stable project context for Codex and human maintainers. 
 - `08_SOURCE_NOTES.md`: source provenance, precedence, and known conflicts.
 - `09_COMPLETED_FEATURES.md`: production feature inventory and explicit current limitations.
 - `10_PENDING_REQUIREMENTS.md`: agreed default decisions, pending requirements, dependencies, and acceptance criteria.
+- `11_PHASE_7A_OPERATIONS_BASELINE.md`: dated production audit evidence, staged hardening scope, rollback boundaries, and acceptance criteria.
 
 ## Evidence rules
 

@@ -214,17 +214,19 @@ Acceptance:
 
 Priority: P0/P1
 
+Status: `[IN PROGRESS — Phase 7A]`. A read-only production audit completed on 2026-07-19. Repository-side container, backup, restore-drill, retention, and alerting changes are being implemented; server hardening is intentionally staged to preserve emergency access.
+
 Tasks:
 
-- Add health checks and version/commit reporting.
-- Run app as non-root where feasible and apply container resource/privilege limits.
+- `[IN PROGRESS]` Add health checks and version/commit reporting.
+- `[IN PROGRESS]` Run app as non-root and apply container resource, log, PID, and privilege limits.
 - Add Nginx secure headers and endpoint-specific rate limits.
-- Reconcile cloud security group and UFW rules.
-- Replace routine root administration with a named sudo user; preserve emergency access and test it before changing SSH settings.
-- Add alerts for disk >80%, backup failure, unhealthy/exited containers, certificate renewal failure, and repeated app errors.
+- `[COMPLETE]` Port 3002 has no listener and its stale IPv4/IPv6 UFW rules were removed on 2026-07-19. The attached Alibaba Cloud security group had no 3002 rule, and the unused RDP 3389 rule was removed while preserving 22/80/443.
+- `[COMPLETE]` Replace routine root administration with the verified `blogops` sudo user and disable password SSH with rollback-protected acceptance; retain temporary public-key emergency access for the remaining Phase 7A rollout.
+- `[IN PROGRESS]` Add alerts for disk/inode use, backup freshness, unhealthy containers, application health, and certificate expiry, including a forced-failure acceptance path.
 - Copy backups off-host; document retention and restore.
 - Perform and record application rollback and database restore drills.
-- Resolve the unexplained port 3002 process.
+- `[RESOLVED]` The historical port 3002 has no listener and no longer has a host-firewall allowance.
 
 Acceptance:
 
@@ -233,7 +235,7 @@ Acceptance:
 - Only intended public ports are exposed.
 - Alerts are tested, not only configured.
 
-Next milestone: `[NEXT — Phase 7A]` close temporary deployment access, introduce a named non-root operations account, reconcile public ports and the historical port 3002 process, establish Docker retention and disk alerts, copy backups off-host, and record rollback/restore evidence before expanding to Phase 6B voice features.
+Current milestone: `[IN PROGRESS — Phase 7A]` certificate ownership, the named `blogops` operator, rollback-protected SSH password hardening, and host/cloud port reconciliation passed production acceptance on 2026-07-19. Next, deploy container limits, Docker retention and alerts, configure off-host backup credentials, and record rollback/restore evidence before expanding to Phase 6B voice features.
 
 ## Suggested first Codex milestone
 

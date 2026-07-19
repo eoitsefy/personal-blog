@@ -37,6 +37,12 @@ jobs:
           node-version: 20.19.0
           cache: npm
       - run: npm ci
+      - name: Validate operations scripts
+        run: bash -n scripts/*.sh
+      - name: Validate Docker Compose configuration
+        env:
+          POSTGRES_PASSWORD: ci-placeholder
+        run: docker compose config --quiet
       - run: npm test
       - run: npm run test:integration
       - run: npm run lint
