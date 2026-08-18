@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ICP_FILING_NUMBER, ICP_FILING_URL } from "@/lib/site";
 import styles from "./site-shell.module.css";
 
 type SiteHeaderProps = {
@@ -66,6 +67,13 @@ export function SiteFooter({ tone = "light" }: { tone?: "dark" | "light" }) {
         <div className={styles.footerMeta}>
           <span>ORIGINAL VISUAL SYSTEM / 2026</span>
           <span>BUILT FOR QUIET READING</span>
+          <a
+            className={styles.filingLink}
+            href={ICP_FILING_URL}
+            aria-label={`${ICP_FILING_NUMBER}，前往工业和信息化部政务服务平台`}
+          >
+            {ICP_FILING_NUMBER}
+          </a>
         </div>
       </div>
     </footer>

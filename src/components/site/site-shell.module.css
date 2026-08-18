@@ -180,7 +180,24 @@
   text-align: right;
   font-size: 0.58rem;
   letter-spacing: 0.16em;
+}
+
+.footerMeta > span {
   opacity: 0.5;
+}
+
+.filingLink {
+  width: fit-content;
+  justify-self: end;
+  border-bottom: 1px solid currentColor;
+  letter-spacing: 0.08em;
+  opacity: 0.72;
+  transition: opacity 180ms ease;
+}
+
+.filingLink:hover,
+.filingLink:focus-visible {
+  opacity: 1;
 }
 
 @media (max-width: 760px) {
@@ -218,6 +235,10 @@
 
   .footerMeta {
     text-align: left;
+  }
+
+  .filingLink {
+    justify-self: start;
   }
 }
 

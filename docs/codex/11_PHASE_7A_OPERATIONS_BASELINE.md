@@ -63,6 +63,13 @@
 - `/etc/cron.d/personal-blog-ops` schedules upload backup, operations checks, bounded Docker maintenance, and the monthly restore drill without altering the existing certificate and database root-crontab entries.
 - The first deployment harness mistakenly treated the expected forced-check exit code as an unexpected error and proved the application-image/Compose rollback path. The corrected deployment then verified HTTP health before redeploying; no database or upload data was lost. Evidence is under `/root/backups/phase7a-operations-20260719-104654` and `/root/server-ops/logs/deploy-phase7a-operations-20260719-104654.log`.
 
+## Completed external change: ICP filing and public reachability
+
+- ICP filing `滇ICP备2026015046号` was confirmed approved on 2026-08-18.
+- The authoritative HiChina nameservers and AliDNS public resolver returned `47.120.39.130` for both `eastherphil.cn` and `www.eastherphil.cn`.
+- Public HTTP returned the expected permanent HTTPS redirect; the HTTPS homepage returned 200 and `/api/healthz` reported AMap and the DeepSeek assistant enabled.
+- The shared public footer now includes the exact ICP filing number and links to `https://beian.miit.gov.cn/`. Production footer rendering remains a deployment acceptance item.
+
 ## Staged production rollout
 
 1. Back up the database, uploads, environment, Nginx, SSH, UFW, Docker, and fstab configuration.
