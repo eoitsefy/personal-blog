@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import { buildRssFeed, buildSitemap, safeJsonLd, type PublicPostSeoRecord } from "./seo";
-import { absoluteUrl } from "./site";
+import { absoluteUrl, ICP_FILING_NUMBER, ICP_FILING_URL } from "./site";
 
 const post: PublicPostSeoRecord = {
   slug: "field-note",
@@ -14,6 +14,11 @@ const post: PublicPostSeoRecord = {
 
 test("site URLs are canonical absolute URLs", () => {
   assert.equal(absoluteUrl("/posts"), "https://eastherphil.cn/posts");
+});
+
+test("site compliance metadata points to the official ICP filing service", () => {
+  assert.equal(ICP_FILING_NUMBER, "滇ICP备2026015046号");
+  assert.equal(ICP_FILING_URL, "https://beian.miit.gov.cn/");
 });
 
 test("sitemap contains public roots and post canonical URLs", () => {
