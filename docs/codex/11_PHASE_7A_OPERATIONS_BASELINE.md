@@ -68,7 +68,7 @@
 - ICP filing `滇ICP备2026015046号` was confirmed approved on 2026-08-18.
 - The authoritative HiChina nameservers and AliDNS public resolver returned `47.120.39.130` for both `eastherphil.cn` and `www.eastherphil.cn`.
 - Public HTTP returned the expected permanent HTTPS redirect; the HTTPS homepage returned 200 and `/api/healthz` reported AMap and the DeepSeek assistant enabled.
-- The shared public footer now includes the exact ICP filing number and links to `https://beian.miit.gov.cn/`. Production footer rendering remains a deployment acceptance item.
+- Production commit `e86be4e6adce3baffd310badff229d2b6ea694c9` now serves the exact ICP filing number and `https://beian.miit.gov.cn/` link in the shared footer. Homepage, archive, places, assistant and community-guidelines pages all passed public footer acceptance.
 
 ## Staged production rollout
 
