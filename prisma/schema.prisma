@@ -287,6 +287,7 @@ model Place {
   privacy          PlacePrivacy     @default(HIDDEN)
   coordinateSystem CoordinateSystem @default(WGS84)
   coordinateSource String
+  isFeatured       Boolean          @default(false)
   occurredAt       DateTime?
   coverAssetId     String?
   coverAsset       Asset?           @relation("PlaceCover", fields: [coverAssetId], references: [id], onDelete: SetNull)
@@ -297,6 +298,7 @@ model Place {
 
   @@index([deletedAt, updatedAt(sort: Desc)])
   @@index([privacy, deletedAt, occurredAt(sort: Desc)])
+  @@index([isFeatured, deletedAt, occurredAt(sort: Desc)])
   @@index([coverAssetId])
 }
 

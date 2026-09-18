@@ -42,7 +42,9 @@ jobs:
       - name: Validate Docker Compose configuration
         env:
           POSTGRES_PASSWORD: ci-placeholder
-        run: docker compose config --quiet
+        run: |
+          cp .env.example .env
+          docker compose config --quiet
       - run: npm test
       - run: npm run test:integration
       - run: npm run lint

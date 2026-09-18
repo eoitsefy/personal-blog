@@ -16,6 +16,7 @@ export type PublicPlaceSource = {
   publicLongitude: DecimalLike | null;
   privacy: PlacePrivacy;
   coordinateSystem: CoordinateSystem;
+  isFeatured: boolean;
   occurredAt: Date | null;
   coverAsset?: { url: string; originalName: string | null } | null;
 };
@@ -28,6 +29,7 @@ export type PublicPlace = {
   locationLabel: string;
   privacy: Exclude<PlacePrivacy, "HIDDEN">;
   coordinateSystem: CoordinateSystem;
+  isFeatured: boolean;
   coordinates: { latitude: number; longitude: number } | null;
   occurredAt: Date | null;
   cover: { url: string; alt: string } | null;
@@ -55,6 +57,7 @@ export function serializePublicPlace(place: PublicPlaceSource): PublicPlace | nu
     locationLabel: place.locationLabel,
     privacy: place.privacy,
     coordinateSystem: place.coordinateSystem,
+    isFeatured: place.isFeatured,
     coordinates,
     occurredAt: place.occurredAt,
     cover: place.coverAsset ? { url: place.coverAsset.url, alt: place.coverAsset.originalName ?? place.name } : null,
@@ -73,6 +76,7 @@ export const publicPlaceSelect = {
   publicLongitude: true,
   privacy: true,
   coordinateSystem: true,
+  isFeatured: true,
   occurredAt: true,
   coverAsset: { select: { url: true, originalName: true } },
 } satisfies Prisma.PlaceSelect;

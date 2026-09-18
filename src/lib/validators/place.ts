@@ -18,6 +18,7 @@ const placeFields = z.object({
   privacy: z.enum(["EXACT", "APPROXIMATE", "CITY_ONLY", "HIDDEN"]),
   coordinateSystem: z.enum(["WGS84", "GCJ02", "BD09"]),
   coordinateSource: z.string().trim().min(1, "坐标来源不能为空").max(160, "坐标来源不能超过160个字符"),
+  isFeatured: z.boolean(),
   occurredAt: z.string().datetime({ offset: true }).optional().or(z.literal("")),
   coverAssetId: z.string().trim().max(64).optional().or(z.literal("")),
 });
@@ -40,7 +41,9 @@ function validatePrivacy(
   }
 }
 
-export const CreatePlaceInputSchema = placeFields.superRefine(validatePrivacy);
+export const CreatePlaceInputSchema = placeFields.extend({
+  isFeatured: z.boolean().default(false),
+}).superRefine(validatePrivacy);
 export type CreatePlaceInput = z.infer<typeof CreatePlaceInputSchema>;
 
 export const UpdatePlaceInputSchema = placeFields.partial().refine(

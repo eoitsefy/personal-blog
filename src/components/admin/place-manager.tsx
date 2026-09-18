@@ -3,6 +3,8 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { PlacePicker, type PickedPlace } from "@/components/admin/place-picker";
+import type { PublicMapRuntimeConfig } from "@/lib/map/config";
 import { CreatePlaceInputSchema, type CreatePlaceInput } from "@/lib/validators/place";
 
 export type AdminPlace = {
@@ -18,6 +20,7 @@ export type AdminPlace = {
   privacy: CreatePlaceInput["privacy"];
   coordinateSystem: CreatePlaceInput["coordinateSystem"];
   coordinateSource: string;
+  isFeatured: boolean;
   occurredAt: string | null;
   coverAssetId: string | null;
   deletedAt: string | null;
@@ -38,6 +41,7 @@ const EMPTY: CreatePlaceInput = {
   privacy: "HIDDEN",
   coordinateSystem: "GCJ02",
   coordinateSource: "手工记录",
+  isFeatured: false,
   occurredAt: "",
   coverAssetId: "",
 };
@@ -55,7 +59,7 @@ function toLocalDateTimeInput(value: string | null) {
   return new Date(date.getTime() - date.getTimezoneOffset() * 60_000).toISOString().slice(0, 16);
 }
 
-export function PlaceManager({ places, imageOptions, showForm = true }: { places: AdminPlace[]; imageOptions: ImageOption[]; showForm?: boolean }) {
+export function PlaceManager({ places, imageOptions, mapConfig, showForm = true }: { places: AdminPlace[]; imageOptions: ImageOption[]; mapConfig: PublicMapRuntimeConfig; showForm?: boolean }) {
   const router = useRouter();
   const [editingId, setEditingId] = useState<string | null>(null);
   const [form, setForm] = useState<CreatePlaceInput>(EMPTY);
@@ -85,11 +89,32 @@ export function PlaceManager({ places, imageOptions, showForm = true }: { places
       privacy: place.privacy,
       coordinateSystem: place.coordinateSystem,
       coordinateSource: place.coordinateSource,
+      isFeatured: place.isFeatured,
       occurredAt: toLocalDateTimeInput(place.occurredAt),
       coverAssetId: place.coverAssetId ?? "",
     });
     setMessage("");
     window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  function applyMapPick(picked: PickedPlace) {
+    setForm((current) => {
+      const latitudeSlug = `${picked.latitude < 0 ? "s" : "n"}${Math.abs(picked.latitude).toFixed(4).replace(".", "-")}`;
+      const longitudeSlug = `${picked.longitude < 0 ? "w" : "e"}${Math.abs(picked.longitude).toFixed(4).replace(".", "-")}`;
+      const coordinateSlug = `place-${latitudeSlug}-${longitudeSlug}`;
+      const suggestedSlug = slugify(picked.name ?? "") || coordinateSlug;
+      return {
+        ...current,
+        ...(picked.name ? { name: picked.name } : {}),
+        ...(!current.slug ? { slug: suggestedSlug } : {}),
+        ...(picked.locationLabel ? { locationLabel: picked.locationLabel } : {}),
+        latitude: picked.latitude,
+        longitude: picked.longitude,
+        ...(current.privacy === "APPROXIMATE" ? { publicLatitude: "", publicLongitude: "" } : {}),
+        coordinateSystem: picked.coordinateSystem,
+        coordinateSource: picked.coordinateSource,
+      };
+    });
   }
 
   function reset() {
@@ -171,6 +196,11 @@ export function PlaceManager({ places, imageOptions, showForm = true }: { places
           <label className="grid gap-1 text-sm"><span>坐标来源（仅后台）</span><input required value={form.coordinateSource} onChange={(event) => update("coordinateSource", event.target.value)} placeholder="设备、服务商或手工记录" className={fieldClass} /></label>
           <label className="grid gap-1 text-sm"><span>封面图片</span><select value={form.coverAssetId ?? ""} onChange={(event) => update("coverAssetId", event.target.value)} className={fieldClass}><option value="">无封面</option>{imageOptions.map((image) => <option key={image.id} value={image.id}>{image.originalName ?? image.id}</option>)}</select></label>
         </div>
+        <PlacePicker config={mapConfig} latitude={form.latitude} longitude={form.longitude} onPick={applyMapPick} />
+        <label className="flex items-start gap-3 rounded-xl border border-amber-300 bg-amber-50 p-4 text-sm text-amber-950 dark:border-amber-700 dark:bg-amber-950/30 dark:text-amber-100">
+          <input type="checkbox" checked={form.isFeatured} onChange={(event) => update("isFeatured", event.target.checked)} className="mt-1" />
+          <span><strong className="block">标记为重要地点</strong><span className="mt-1 block opacity-75">重要地点会在公开地图和地点目录中优先显示，并使用醒目标记。</span></span>
+        </label>
         <label className="grid gap-1 text-sm"><span>地点说明</span><textarea rows={3} value={form.summary ?? ""} onChange={(event) => update("summary", event.target.value)} className={fieldClass} /></label>
         <p className="text-sm text-neutral-500">内部坐标只在后台保存。“模糊”需要另填公开坐标；“仅城市”与“隐藏”不会向公开接口返回坐标。</p>
         {message ? <p role="alert" className="text-sm text-red-600">{message}</p> : null}
@@ -183,7 +213,7 @@ export function PlaceManager({ places, imageOptions, showForm = true }: { places
             <div className="flex flex-wrap justify-between gap-4">
               <div className="flex min-w-0 gap-4">
                 {place.coverAssetId ? <div className="relative h-20 w-28 overflow-hidden rounded-lg bg-neutral-100"><Image src={imageOptions.find(({ id }) => id === place.coverAssetId)?.url ?? ""} alt="" fill className="object-cover" unoptimized /></div> : null}
-                <div><div className="flex flex-wrap items-center gap-2"><h2 className="text-lg font-semibold">{place.name}</h2><span className="rounded-full bg-neutral-100 px-2 py-1 text-xs dark:bg-neutral-800">{place.deletedAt ? "回收站" : privacyNames[place.privacy]}</span></div><p className="mt-1 text-sm text-neutral-500">{place.locationLabel} · {place.coordinateSystem} · {place.postCount} 篇文章</p><p className="mt-1 text-xs text-neutral-400">内部坐标 {place.latitude.toFixed(6)}, {place.longitude.toFixed(6)}</p></div>
+                <div><div className="flex flex-wrap items-center gap-2"><h2 className="text-lg font-semibold">{place.name}</h2>{place.isFeatured ? <span className="rounded-full bg-amber-100 px-2 py-1 text-xs font-medium text-amber-900 dark:bg-amber-900 dark:text-amber-100">★ 重要地点</span> : null}<span className="rounded-full bg-neutral-100 px-2 py-1 text-xs dark:bg-neutral-800">{place.deletedAt ? "回收站" : privacyNames[place.privacy]}</span></div><p className="mt-1 text-sm text-neutral-500">{place.locationLabel} · {place.coordinateSystem} · {place.postCount} 篇文章</p><p className="mt-1 text-xs text-neutral-400">内部坐标 {place.latitude.toFixed(6)}, {place.longitude.toFixed(6)}</p></div>
               </div>
               <div className="flex flex-wrap items-start gap-3 text-sm">
                 {place.deletedAt ? <><button disabled={busy} onClick={() => action(place, "restore")} className="text-emerald-700 underline">恢复</button><button disabled={busy} onClick={() => action(place, "purge")} className="text-red-700 underline">永久删除</button></> : <><button disabled={busy} onClick={() => edit(place)} className="underline">编辑</button><button disabled={busy} onClick={() => action(place, "delete")} className="text-red-600 underline">移入回收站</button></>}

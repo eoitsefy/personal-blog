@@ -72,7 +72,7 @@ test("places enforce privacy, published relations, recycle-bin rules and cover r
       return ((await response.json()) as { data: { place: { id: string } } }).data.place.id;
     };
 
-    approximateId = await makePlace("approximate", "APPROXIMATE", { coverAssetId: assetId });
+    approximateId = await makePlace("approximate", "APPROXIMATE", { coverAssetId: assetId, isFeatured: true });
     hiddenId = await makePlace("hidden", "HIDDEN");
     unlinkedId = await makePlace("unlinked", "EXACT");
     assert.equal((await prisma.asset.findUniqueOrThrow({ where: { id: assetId } })).refCount, 1);
@@ -85,9 +85,10 @@ test("places enforce privacy, published relations, recycle-bin rules and cover r
     const publicResponse = await listPublicPlaces(new Request("http://localhost/api/places"));
     assert.equal(publicResponse.status, 200);
     const publicText = await publicResponse.text();
-    const publicBody = JSON.parse(publicText) as { data: { places: Array<{ id: string; coordinates: { latitude: number; longitude: number } }> } };
+    const publicBody = JSON.parse(publicText) as { data: { places: Array<{ id: string; isFeatured: boolean; coordinates: { latitude: number; longitude: number } }> } };
     assert.deepEqual(publicBody.data.places.map(({ id }) => id), [approximateId]);
     assert.deepEqual(publicBody.data.places[0]?.coordinates, { latitude: 30.1, longitude: 120.6 });
+    assert.equal(publicBody.data.places[0]?.isFeatured, true);
     assert.equal(publicText.includes("30.123456"), false);
     assert.equal(publicText.includes("120.654321"), false);
     assert.equal(publicText.includes(hiddenId), false);
