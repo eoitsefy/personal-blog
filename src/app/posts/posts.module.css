@@ -32,7 +32,7 @@
   margin: 0 auto;
   padding: 70px 0 62px;
   display: grid;
-  grid-template-columns: 0.42fr 1fr 0.42fr;
+  grid-template-columns: 1fr auto;
   align-items: end;
   gap: 50px;
 }
@@ -418,7 +418,7 @@
 
 @media (max-width: 940px) {
   .headerInner {
-    grid-template-columns: 0.3fr 1fr;
+    grid-template-columns: 1fr auto;
   }
 
   .headerCount {

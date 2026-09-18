@@ -24,8 +24,7 @@ export function SiteHeader({ tone = "dark", active, overlay = false }: SiteHeade
         <Link href="/" className={styles.brand} aria-label="EastherPhil 沿途手记首页">
           <SiteMark />
           <span className={styles.brandCopy}>
-            <strong>EASTHER / FIELD NOTES</strong>
-            <small>个人观察与沿途记录</small>
+            <strong>EASTHERPHIL</strong>
           </span>
         </Link>
 
@@ -42,7 +41,6 @@ export function SiteHeader({ tone = "dark", active, overlay = false }: SiteHeade
           <Link href="/assistant" aria-current={active === "assistant" ? "page" : undefined}>
             助手
           </Link>
-          <Link href="/#about">关于</Link>
         </nav>
 
         <Link href="/admin" className={styles.consoleLink}>
@@ -60,13 +58,10 @@ export function SiteFooter({ tone = "light" }: { tone?: "dark" | "light" }) {
         <div className={styles.footerBrand}>
           <SiteMark />
           <div>
-            <strong>EASTHER FIELD JOURNAL</strong>
-            <p>把短暂的念头，整理成可以回望的坐标。</p>
+            <strong>EASTHERPHIL</strong>
           </div>
         </div>
         <div className={styles.footerMeta}>
-          <span>ORIGINAL VISUAL SYSTEM / 2026</span>
-          <span>BUILT FOR QUIET READING</span>
           <a
             className={styles.filingLink}
             href={ICP_FILING_URL}
