@@ -226,10 +226,6 @@
 }
 
 .sectionHeading {
-  display: grid;
-  grid-template-columns: 1.4fr 0.6fr;
-  gap: 60px;
-  align-items: end;
   margin-bottom: 52px;
 }
 
@@ -266,7 +262,7 @@
 
 .notebookCard {
   position: relative;
-  min-height: 350px;
+  min-height: 220px;
   padding: 31px;
   overflow: hidden;
   border-right: 1px solid var(--line);
@@ -309,7 +305,7 @@
 }
 
 .notebookCard h3 {
-  margin: 86px 0 17px;
+  margin: 56px 0 17px;
   font-family: Georgia, "Noto Serif SC", serif;
   font-size: 1.65rem;
   font-weight: 500;
@@ -441,11 +437,11 @@
   }
 
   .notebookCard {
-    min-height: 280px;
+    min-height: 200px;
   }
 
   .notebookCard h3 {
-    margin-top: 54px;
+    margin-top: 48px;
   }
 
   .about {

@@ -7,7 +7,6 @@
 .mapCanvas { position: absolute; z-index: 2; inset: 0; opacity: 0; pointer-events: none; transition: opacity .3s ease; }
 .mapCanvasReady { opacity: 1; pointer-events: auto; }
 .fallbackPlot { position: relative; min-height: 460px; overflow: hidden; background-image: linear-gradient(rgba(255,255,255,.055) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.055) 1px, transparent 1px); background-size: 48px 48px; }
-.fallbackPlot::after { content: "SAFE COORDINATE PLANE / MAP FALLBACK"; position: absolute; right: 18px; bottom: 14px; color: rgba(255,255,255,.23); font: .55rem monospace; letter-spacing: .16em; }
 .fallbackNotice { position: absolute; z-index: 3; top: 16px; left: 50%; width: min(90%, 680px); margin: 0; padding: 10px 14px; transform: translateX(-50%); border: 1px solid rgba(233,185,73,.45); background: rgba(15,17,20,.9); color: #f2d98f; font-size: .72rem; line-height: 1.6; text-align: center; }
 .fallbackMarker { position: absolute; z-index: 2; display: flex; align-items: center; gap: 8px; transform: translate(-16px,-16px); color: #fff; font-size: .72rem; white-space: nowrap; }
 .fallbackMarker i { width: 32px; height: 32px; display: grid; place-items: center; color: #151719; background: var(--signal); border: 4px solid rgba(255,255,255,.22); border-radius: 50%; font-style: normal; font-weight: 800; box-shadow: 0 0 0 1px #111; }

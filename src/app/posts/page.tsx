@@ -108,13 +108,8 @@ export default async function PostsPage({ searchParams }: PageProps) {
         <SiteHeader active="posts" />
         <div className={styles.headerGrid} aria-hidden="true" />
         <div className={styles.headerInner}>
-          <div className={styles.headerCode}>
-            <span>ARCHIVE INDEX</span>
-            <b>EP / LOG</b>
-          </div>
           <div>
-            <p>ALL FIELD NOTES / 2026</p>
-            <h1>日志索引</h1>
+            <h1>日志</h1>
           </div>
           <div className={styles.headerCount}>
             <strong>{String(total).padStart(2, "0")}</strong>
@@ -126,7 +121,7 @@ export default async function PostsPage({ searchParams }: PageProps) {
       <main className={styles.archive}>
         <form action="/posts" method="get" className={styles.filters} aria-label="筛选文章">
           <label className={styles.searchField}>
-            <span>关键词 / KEYWORD</span>
+            <span>关键词</span>
             <div>
               <i aria-hidden="true" />
               <input
@@ -139,7 +134,7 @@ export default async function PostsPage({ searchParams }: PageProps) {
             </div>
           </label>
           <label>
-            <span>分类 / CATEGORY</span>
+            <span>分类</span>
             <select name="category" defaultValue={query.category}>
               <option value="">全部分类</option>
               {categories.map((category) => (
@@ -148,7 +143,7 @@ export default async function PostsPage({ searchParams }: PageProps) {
             </select>
           </label>
           <label>
-            <span>标签 / TAG</span>
+            <span>标签</span>
             <select name="tag" defaultValue={query.tag}>
               <option value="">全部标签</option>
               {tags.map((tag) => (
@@ -157,20 +152,14 @@ export default async function PostsPage({ searchParams }: PageProps) {
             </select>
           </label>
           <div className={styles.filterActions}>
-            <button type="submit">执行筛选 <span aria-hidden="true">→</span></button>
+            <button type="submit">筛选 <span aria-hidden="true">→</span></button>
             {isFiltered ? <Link href="/posts">清除条件</Link> : null}
           </div>
         </form>
 
-        <div className={styles.resultMeta}>
-          <span>RESULT / {String(total).padStart(2, "0")}</span>
-          <span>{isFiltered ? "当前显示筛选结果" : "按发布时间从新到旧排列"}</span>
-        </div>
-
         <section aria-label="文章列表">
           {posts.length === 0 ? (
             <div className={styles.emptyState}>
-              <span>NO SIGNAL / 00</span>
               <h2>没有找到符合条件的记录</h2>
               <p>可以换一个关键词，或清除分类与标签后重新查看。</p>
               {isFiltered ? <Link href="/posts">返回全部日志</Link> : null}
@@ -206,7 +195,7 @@ export default async function PostsPage({ searchParams }: PageProps) {
                         ) : null}
                       </div>
                       <Link className={styles.readLink} href={`/posts/${post.slug}`} aria-label={`阅读《${post.title}》`}>
-                        <span>READ</span>
+                        <span>阅读</span>
                         <i aria-hidden="true">↗</i>
                       </Link>
                     </article>

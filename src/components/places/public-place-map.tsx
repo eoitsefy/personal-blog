@@ -269,11 +269,7 @@ export function PublicPlaceMap({
       ? "高德地图尚未配置完成，当前使用本地坐标概览。"
       : undefined;
 
-  return <section className={styles.panel} aria-labelledby="public-map-heading">
-    <div className={styles.heading}>
-      <div><p>AMAP / PRIVACY-SAFE ADAPTER</p><h2 id="public-map-heading">公开地点地图</h2></div>
-      <span>仅把公开精度坐标发送给高德地图。隐藏地点、内部坐标、草稿和回收站内容不会进入浏览器地图。</span>
-    </div>
+  return <section className={styles.panel} aria-label="地点地图">
     <div className={styles.mapStage}>
       {state !== "ready" ? <CoordinateFallback points={points} message={fallbackMessage} /> : null}
       {config.enabled && points.length > 0 ? <>

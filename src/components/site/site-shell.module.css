@@ -160,7 +160,7 @@
 }
 
 .footerInner {
-  min-height: 180px;
+  min-height: 120px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -226,7 +226,7 @@
   }
 
   .footerInner {
-    min-height: 210px;
+    min-height: 150px;
     align-items: flex-start;
     flex-direction: column;
     justify-content: center;

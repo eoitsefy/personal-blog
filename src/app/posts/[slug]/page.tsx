@@ -159,23 +159,16 @@ export default async function PostDetailPage({ params }: PageProps) {
 
         <div className={styles.heroInner}>
           <Link href="/posts" className={styles.backLink}>← 返回日志索引</Link>
-          <div className={styles.kicker}>
-            <span>FIELD NOTE / PUBLIC</span>
-            <span>EP / {publishDate.getFullYear()}</span>
-          </div>
           <h1>{post.title}</h1>
           {post.excerpt ? <p>{post.excerpt}</p> : null}
           <div className={styles.heroMeta}>
             <div>
-              <small>PUBLISHED</small>
               <time dateTime={publishDate.toISOString()}>{formatDate(publishDate)}</time>
             </div>
             <div>
-              <small>READING TIME</small>
               <strong>约 {readingMinutes} 分钟</strong>
             </div>
             <div>
-              <small>WRITTEN BY</small>
               <strong>EastherPhil</strong>
             </div>
           </div>
@@ -184,8 +177,7 @@ export default async function PostDetailPage({ params }: PageProps) {
 
       <main className={styles.articleLayout}>
         <aside className={styles.articleAside} aria-label="文章信息">
-          <div className={styles.asideBlock}>
-            <span>CLASSIFICATION</span>
+          <div className={styles.asideBlock} aria-label="分类">
             {post.category ? (
               <Link href={`/posts?category=${encodeURIComponent(post.category.slug)}`}>
                 {post.category.name} ↗
@@ -193,8 +185,7 @@ export default async function PostDetailPage({ params }: PageProps) {
             ) : <b>未分类</b>}
           </div>
           {post.tags.length ? (
-            <div className={styles.asideBlock}>
-              <span>RELATED TAGS</span>
+            <div className={styles.asideBlock} aria-label="标签">
               <div className={styles.tagList}>
                 {post.tags.map(({ tag }) => (
                   <Link key={tag.slug} href={`/posts?tag=${encodeURIComponent(tag.slug)}`}>
@@ -204,16 +195,7 @@ export default async function PostDetailPage({ params }: PageProps) {
               </div>
             </div>
           ) : null}
-          {publicPlaces.length ? <div className={styles.asideBlock}><span>PLACES</span><div className={styles.tagList}>{publicPlaces.map((place) => <Link key={place.id} href={`/places#place-${place.slug}`}>{place.name} · {place.locationLabel}</Link>)}</div></div> : null}
-          <div className={styles.asideBlock}>
-            <span>LAST UPDATED</span>
-            <time dateTime={post.updatedAt.toISOString()}>{formatDate(post.updatedAt)}</time>
-          </div>
-          <div className={styles.asideMark} aria-hidden="true">
-            <i />
-            <b>EP</b>
-            <span>ARCHIVE</span>
-          </div>
+          {publicPlaces.length ? <div className={styles.asideBlock} aria-label="地点"><div className={styles.tagList}>{publicPlaces.map((place) => <Link key={place.id} href={`/places#place-${place.slug}`}>{place.name} · {place.locationLabel}</Link>)}</div></div> : null}
         </aside>
 
         <article className={styles.article}>
@@ -222,8 +204,6 @@ export default async function PostDetailPage({ params }: PageProps) {
           </section>
 
           <footer className={styles.articleEnd}>
-            <span>END OF FIELD NOTE</span>
-            <div className={styles.endRule}><i /></div>
             <Link href="/posts">继续浏览其他记录 →</Link>
           </footer>
           <CommentSection

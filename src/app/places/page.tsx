@@ -51,13 +51,13 @@ export default async function PlacesPage({ searchParams }: PageProps) {
   return <div className={styles.page}>
     <SiteHeader tone="light" active="places" />
     <main id="main-content">
-      <header className={styles.hero}><div><p>PLACE ARCHIVE / PRIVACY SAFE</p><h1>沿途坐标</h1><span>地图只使用地点的公开精度。隐藏地点、草稿与回收站文章不会进入此页面。</span></div><b>{String(places.length).padStart(2, "0")}</b></header>
+      <header className={styles.hero}><div><h1>地点</h1></div><b>{String(places.length).padStart(2, "0")}</b></header>
       <section className={styles.workspace}>
         <form action="/places" className={styles.search}><label><span>搜索地点或地区</span><input type="search" name="q" defaultValue={q} maxLength={80} placeholder="例如：杭州、展览、散步" /></label><button>检索</button>{q ? <Link href="/places">清除</Link> : null}</form>
 
         <PublicPlaceMap points={mapPoints} config={mapConfig} />
 
-        <section className={styles.listSection} aria-labelledby="place-list-heading"><div className={styles.listHeading}><p>ACCESSIBLE TEXT INDEX</p><h2 id="place-list-heading">地点与关联日志</h2></div>
+        <section className={styles.listSection} aria-labelledby="place-list-heading"><div className={styles.listHeading}><h2 id="place-list-heading">地点与日志</h2></div>
           {places.length === 0 ? <p className={styles.empty}>暂无符合条件的公开地点。</p> : <ol className={styles.placeList}>{places.map((place, index) => <li key={place.id} id={`place-${place.slug}`} className={styles.placeCard}>
             {place.cover ? <div className={styles.cover}><Image src={place.cover.url} alt={place.cover.alt} fill sizes="(max-width: 760px) 100vw, 32vw" className={styles.coverImage} unoptimized /></div> : <div className={styles.coverFallback} aria-hidden="true"><span>{String(index + 1).padStart(2, "0")}</span></div>}
             <div className={styles.placeBody}><div className={styles.placeMeta}><span>{place.locationLabel}</span><span>{place.privacy === "EXACT" ? "精确公开" : place.privacy === "APPROXIMATE" ? "模糊坐标" : "仅地区"}</span>{place.occurredAt ? <time dateTime={place.occurredAt.toISOString()}>{place.occurredAt.toLocaleDateString("zh-CN")}</time> : null}</div><h3>{place.name}</h3>{place.summary ? <p>{place.summary}</p> : null}<div className={styles.postLinks}>{place.posts.map((post) => <Link key={post.slug} href={`/posts/${post.slug}`}>{post.title} <span>↗</span></Link>)}</div></div>

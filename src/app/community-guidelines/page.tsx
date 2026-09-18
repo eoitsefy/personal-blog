@@ -11,9 +11,7 @@ export default function CommunityGuidelinesPage() {
   return <div className="min-h-screen bg-[var(--paper)]">
     <SiteHeader tone="light" />
     <main id="main-content" className="mx-auto w-full max-w-3xl px-5 py-16 sm:py-24">
-      <p className="text-xs font-bold tracking-[0.24em] text-neutral-500">COMMUNITY / PRIVACY</p>
-      <h1 className="mt-4 text-4xl font-bold tracking-tight">评论规则与隐私说明</h1>
-      <p className="mt-5 leading-8 text-neutral-600">这里是个人日常记录空间。评论用于围绕文章内容交流，不开放匿名投稿，也不会把评论资料用于广告。</p>
+      <h1 className="text-4xl font-bold tracking-tight">评论规则与隐私说明</h1>
 
       <div className="mt-12 grid gap-10 leading-8 text-neutral-700">
         <section><h2 className="text-2xl font-bold text-neutral-950">参与边界</h2><ul className="mt-4 list-disc space-y-2 pl-6"><li>只有受邀、已验证且未停用的账号可以评论或回复；游客可以阅读已发布评论。</li><li>请勿发布骚扰、仇恨、违法、冒用身份、恶意广告、脚本、跟踪链接或他人敏感个人信息。</li><li>每条评论最多 1000 字和 2 个链接，只按纯文本展示；暂不支持评论中的图片、HTML 或 Markdown。</li><li>回复只支持一级结构，避免讨论层级失控。</li></ul></section>

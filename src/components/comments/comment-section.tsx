@@ -117,7 +117,7 @@ export function CommentSection({
 
   const visibleCount = comments.reduce((count, comment) => count + 1 + comment.replies.length, 0);
   return <section className="mt-16 border-t border-black/15 pt-10" aria-labelledby="comments-title">
-    <div className="flex items-end justify-between gap-4"><div><p className="text-xs font-bold tracking-[0.2em] text-neutral-500">DISCUSSION LOG</p><h2 id="comments-title" className="mt-2 text-2xl font-bold">评论 · {visibleCount}</h2></div>{commentsLocked ? <span className="rounded-full bg-neutral-200 px-3 py-1 text-xs">评论区已锁定</span> : null}</div>
+    <div className="flex items-end justify-between gap-4"><h2 id="comments-title" className="text-2xl font-bold">评论 · {visibleCount}</h2>{commentsLocked ? <span className="rounded-full bg-neutral-200 px-3 py-1 text-xs">评论区已锁定</span> : null}</div>
     {message ? <p role="status" className="mt-5 rounded-xl bg-amber-50 p-4 text-sm text-amber-900">{message}</p> : null}
     {!commentsLocked && signedIn ? <form id="comment-form" onSubmit={submit} className="mt-6 grid gap-3 rounded-2xl border border-black/10 bg-white/70 p-5">
       {replyTo ? <div className="flex items-center justify-between text-sm"><span>回复 {replyTo.label}</span><button type="button" onClick={() => setReplyTo(null)} className="underline">取消回复</button></div> : null}
