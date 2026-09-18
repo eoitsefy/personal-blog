@@ -13,6 +13,7 @@ const base = {
   publicLatitude: 30.1,
   publicLongitude: 120.6,
   coordinateSystem: "GCJ02" as const,
+  isFeatured: true,
   occurredAt: null,
   coverAsset: null,
 };
@@ -37,4 +38,5 @@ test("city-only places expose a label without coordinates", () => {
 test("exact places expose their stored coordinates", () => {
   const place = serializePublicPlace({ ...base, privacy: "EXACT" });
   assert.deepEqual(place?.coordinates, { latitude: 30.123456, longitude: 120.654321 });
+  assert.equal(place?.isFeatured, true);
 });

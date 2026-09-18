@@ -149,7 +149,7 @@ function CoordinateFallback({ points, message }: { points: PublicMapPoint[]; mes
         className={styles.fallbackMarker}
         style={{ left: `${Math.min(96, Math.max(4, left))}%`, top: `${Math.min(92, Math.max(8, top))}%` }}
         aria-label={`${point.name}，${point.locationLabel}`}
-      ><i>{index + 1}</i><span>{point.name}</span></a>;
+      ><i className={point.isFeatured ? styles.featuredFallbackMarker : undefined}>{point.isFeatured ? "★" : index + 1}</i><span>{point.name}</span></a>;
     })}
   </div>;
 }
@@ -219,11 +219,11 @@ export function PublicPlaceMap({
             if (!point) return;
             const element = document.createElement("button");
             element.type = "button";
-            element.className = styles.mapMarker;
-            element.textContent = point.name.slice(0, 1);
+            element.className = `${styles.mapMarker} ${point.isFeatured ? styles.featuredMapMarker : ""}`;
+            element.textContent = point.isFeatured ? "★" : point.name.slice(0, 1);
             element.title = `${point.name} · ${point.locationLabel}`;
             marker.setContent(element);
-            marker.setOffset(new AMap.Pixel(-17, -17));
+            marker.setOffset(new AMap.Pixel(point.isFeatured ? -21 : -17, point.isFeatured ? -21 : -17));
             const navigateToCard = () => {
               document.getElementById(`place-${point.slug}`)?.scrollIntoView({ behavior: "smooth", block: "center" });
               window.history.replaceState(null, "", `#place-${point.slug}`);

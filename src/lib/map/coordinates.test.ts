@@ -27,6 +27,7 @@ test("non-cluster markers resolve their public point from the documented marker 
     locationLabel: "One",
     privacy: "EXACT",
     coordinateSystem: "GCJ02",
+    isFeatured: false,
     latitude: 30,
     longitude: 120,
   };

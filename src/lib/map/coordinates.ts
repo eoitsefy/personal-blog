@@ -9,6 +9,7 @@ export type PublicMapPoint = {
   locationLabel: string;
   privacy: "EXACT" | "APPROXIMATE";
   coordinateSystem: CoordinateSystem;
+  isFeatured: boolean;
   latitude: number;
   longitude: number;
 };

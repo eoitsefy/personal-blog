@@ -17,9 +17,17 @@ const base = {
 };
 
 test("private place accepts bounded internal coordinates", () => {
-  assert.equal(CreatePlaceInputSchema.safeParse(base).success, true);
+  const parsed = CreatePlaceInputSchema.safeParse(base);
+  assert.equal(parsed.success, true);
+  assert.equal(parsed.success ? parsed.data.isFeatured : undefined, false);
   assert.equal(CreatePlaceInputSchema.safeParse({ ...base, latitude: 91 }).success, false);
   assert.equal(CreatePlaceInputSchema.safeParse({ ...base, longitude: -181 }).success, false);
+});
+
+test("important places retain an explicit featured flag", () => {
+  const parsed = CreatePlaceInputSchema.safeParse({ ...base, isFeatured: true });
+  assert.equal(parsed.success, true);
+  assert.equal(parsed.success ? parsed.data.isFeatured : undefined, true);
 });
 
 test("approximate place requires different explicit public coordinates", () => {

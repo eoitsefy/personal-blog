@@ -26,7 +26,7 @@ export default async function PlacesPage({ searchParams }: PageProps) {
       ...publicPlaceWhere,
       ...(q ? { OR: [{ name: { contains: q, mode: "insensitive" } }, { locationLabel: { contains: q, mode: "insensitive" } }, { summary: { contains: q, mode: "insensitive" } }] } : {}),
     },
-    orderBy: [{ occurredAt: "desc" }, { createdAt: "desc" }],
+    orderBy: [{ isFeatured: "desc" }, { occurredAt: "desc" }, { createdAt: "desc" }],
     select: {
       ...publicPlaceSelect,
       posts: { where: { post: { status: "PUBLISHED", deletedAt: null } }, orderBy: { post: { publishedAt: "desc" } }, select: { post: { select: { slug: true, title: true, publishedAt: true } } } },
@@ -43,6 +43,7 @@ export default async function PlacesPage({ searchParams }: PageProps) {
     locationLabel: place.locationLabel,
     privacy: place.privacy as "EXACT" | "APPROXIMATE",
     coordinateSystem: place.coordinateSystem,
+    isFeatured: place.isFeatured,
     latitude: place.coordinates.latitude,
     longitude: place.coordinates.longitude,
   }] : []);
@@ -58,9 +59,9 @@ export default async function PlacesPage({ searchParams }: PageProps) {
         <PublicPlaceMap points={mapPoints} config={mapConfig} />
 
         <section className={styles.listSection} aria-labelledby="place-list-heading"><div className={styles.listHeading}><h2 id="place-list-heading">地点与日志</h2></div>
-          {places.length === 0 ? <p className={styles.empty}>暂无符合条件的公开地点。</p> : <ol className={styles.placeList}>{places.map((place, index) => <li key={place.id} id={`place-${place.slug}`} className={styles.placeCard}>
+          {places.length === 0 ? <p className={styles.empty}>暂无符合条件的公开地点。</p> : <ol className={styles.placeList}>{places.map((place, index) => <li key={place.id} id={`place-${place.slug}`} className={`${styles.placeCard} ${place.isFeatured ? styles.featuredCard : ""}`}>
             {place.cover ? <div className={styles.cover}><Image src={place.cover.url} alt={place.cover.alt} fill sizes="(max-width: 760px) 100vw, 32vw" className={styles.coverImage} unoptimized /></div> : <div className={styles.coverFallback} aria-hidden="true"><span>{String(index + 1).padStart(2, "0")}</span></div>}
-            <div className={styles.placeBody}><div className={styles.placeMeta}><span>{place.locationLabel}</span><span>{place.privacy === "EXACT" ? "精确公开" : place.privacy === "APPROXIMATE" ? "模糊坐标" : "仅地区"}</span>{place.occurredAt ? <time dateTime={place.occurredAt.toISOString()}>{place.occurredAt.toLocaleDateString("zh-CN")}</time> : null}</div><h3>{place.name}</h3>{place.summary ? <p>{place.summary}</p> : null}<div className={styles.postLinks}>{place.posts.map((post) => <Link key={post.slug} href={`/posts/${post.slug}`}>{post.title} <span>↗</span></Link>)}</div></div>
+            <div className={styles.placeBody}><div className={styles.placeMeta}>{place.isFeatured ? <strong className={styles.featuredBadge}>★ 重要地点</strong> : null}<span>{place.locationLabel}</span><span>{place.privacy === "EXACT" ? "精确公开" : place.privacy === "APPROXIMATE" ? "模糊坐标" : "仅地区"}</span>{place.occurredAt ? <time dateTime={place.occurredAt.toISOString()}>{place.occurredAt.toLocaleDateString("zh-CN")}</time> : null}</div><h3>{place.name}</h3>{place.summary ? <p>{place.summary}</p> : null}<div className={styles.postLinks}>{place.posts.map((post) => <Link key={post.slug} href={`/posts/${post.slug}`}>{post.title} <span>↗</span></Link>)}</div></div>
           </li>)}</ol>}
         </section>
       </section>

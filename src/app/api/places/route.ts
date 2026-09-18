@@ -18,7 +18,7 @@ export async function GET(req: Request) {
           { summary: { contains: query.q, mode: "insensitive" } },
         ] } : {}),
       },
-      orderBy: [{ occurredAt: "desc" }, { createdAt: "desc" }],
+      orderBy: [{ isFeatured: "desc" }, { occurredAt: "desc" }, { createdAt: "desc" }],
       select: {
         ...publicPlaceSelect,
         posts: {
