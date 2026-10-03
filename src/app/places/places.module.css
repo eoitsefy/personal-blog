@@ -6,7 +6,7 @@
 .hero > b { font: 400 clamp(5rem, 13vw, 10rem)/.7 "Arial Narrow", sans-serif; opacity: .08; }
 .workspace { width: min(100% - 48px, 1320px); margin: 0 auto; padding: 42px 0 100px; }
 .search { display: flex; align-items: end; gap: 12px; }
-.search label { display: grid; flex: 1; gap: 8px; font-size: .75rem; letter-spacing: .08em; }
+.search label { display: grid; flex: 1; min-width: 0; gap: 8px; font-size: .75rem; letter-spacing: .08em; }
 .search input { width: 100%; padding: 13px 15px; border: 1px solid var(--line); background: var(--paper-bright); }
 .search button, .search a { padding: 13px 18px; border: 1px solid var(--ink); background: transparent; cursor: pointer; }
 .search button { color: var(--paper-bright); background: var(--ink); }
@@ -31,4 +31,20 @@
 .postLinks a:hover { color: #82631f; }
 .empty { padding: 50px; border: 1px dashed var(--line); text-align: center; color: var(--ink-soft); }
 @media (max-width: 980px) { .placeList { grid-template-columns: 1fr; } }
-@media (max-width: 640px) { .hero, .workspace { width: min(100% - 30px, 1320px); } .hero { min-height: 260px; padding-top: 50px; } .hero > b { display:none; } .search { align-items: stretch; flex-wrap: wrap; } .search label { flex-basis: 100%; } .placeCard { grid-template-columns: 1fr; } .cover, .coverFallback { min-height: 220px; } }
+@media (max-width: 640px), (max-height: 500px) and (pointer: coarse) {
+  .hero, .workspace { width: min(100% - 24px, 1320px); }
+  .hero { min-height: 0; padding: 22px 0 18px; gap: 16px; }
+  .hero h1 { font-size: 2.25rem; line-height: 1.1; }
+  .hero > b { display: none; }
+  .workspace { padding: 18px 0 48px; }
+  .search { flex-wrap: wrap; align-items: end; gap: 8px; }
+  .search label { flex: 1 1 160px; gap: 6px; }
+  .search input { min-height: 44px; padding: 10px 12px; font-size: 16px; }
+  .search button, .search a { min-height: 44px; padding: 10px 14px; display: grid; place-items: center; }
+  .listSection { padding-top: 32px; }
+  .listHeading { margin-bottom: 18px; }
+  .placeCard { grid-template-columns: 1fr; scroll-margin-top: 128px; }
+  .cover { min-height: 180px; }
+  .coverFallback { min-height: 96px; }
+  .placeBody { padding: 20px; overflow-wrap: anywhere; }
+}

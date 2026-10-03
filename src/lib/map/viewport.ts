@@ -20,6 +20,7 @@ export function getNeighborhoodMapOptions(point: PositionedPublicPoint) {
     features: ["bg", "road", "building", "point"],
     showLabel: true,
     showBuildingBlock: true,
+    resizeEnable: true,
   };
 }
 
@@ -32,7 +33,15 @@ export function focusPublicPoint(map: ViewportMap, point: PositionedPublicPoint)
   map.setZoomAndCenter(getPlaceZoom(point), point.lnglat, true);
 }
 
-export function fitPublicPoints(map: ViewportMap, points: PositionedPublicPoint[], overlays: unknown[]) {
+export function getMapFitPadding(size?: { width: number; height: number }) {
+  // Keep enough usable area on phones instead of reserving 192px on each axis.
+  const horizontal = size ? Math.min(96, Math.max(24, Math.floor(size.width * 0.15))) : 96;
+  const vertical = size ? Math.min(96, Math.max(24, Math.floor(size.height * 0.2))) : 96;
+  // AMap's order is top, bottom, left, right.
+  return [vertical, vertical, horizontal, horizontal];
+}
+
+export function fitPublicPoints(map: ViewportMap, points: PositionedPublicPoint[], overlays: unknown[], size?: { width: number; height: number }) {
   if (points.length === 0) return;
   if (points.length === 1) {
     focusPublicPoint(map, points[0]);
@@ -40,5 +49,5 @@ export function fitPublicPoints(map: ViewportMap, points: PositionedPublicPoint[
   }
   // Cluster markers are asynchronous and are not a reliable source for setFitView().
   // Always pass explicit markers built from the already-sanitized, converted points.
-  map.setFitView(overlays, true, [96, 96, 96, 96], Math.min(...points.map(getPlaceZoom)));
+  map.setFitView(overlays, true, getMapFitPadding(size), Math.min(...points.map(getPlaceZoom)));
 }

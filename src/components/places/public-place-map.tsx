@@ -25,8 +25,8 @@ type AMapMap = {
   addControl(control: unknown): void;
   setFitView(overlays: unknown[], immediately: boolean, avoid: number[], maximumZoom: number): void;
   setZoomAndCenter(zoom: number, center: [number, number], immediately: boolean): void;
-  on(event: "complete", listener: () => void): void;
-  off(event: "complete", listener: () => void): void;
+  on(event: "complete" | "resize", listener: () => void): void;
+  off(event: "complete" | "resize", listener: () => void): void;
   destroy(): void;
 };
 type AMapCluster = { setMap(map: AMapMap | null): void; setData(points: AMapClusterPoint[]): void };
@@ -159,7 +159,7 @@ function CoordinateFallback({ points, message }: { points: PublicMapPoint[]; mes
         key={point.id}
         href={`#place-${point.slug}`}
         className={styles.fallbackMarker}
-        style={{ left: `${Math.min(96, Math.max(4, left))}%`, top: `${Math.min(92, Math.max(8, top))}%` }}
+        style={{ left: `${Math.min(82, Math.max(18, left))}%`, top: `${Math.min(78, Math.max(28, top))}%` }}
         aria-label={`${point.name}，${point.locationLabel}`}
       ><i className={point.isFeatured ? styles.featuredFallbackMarker : undefined}>{point.isFeatured ? "★" : index + 1}</i><span>{point.name}</span></a>;
     })}
@@ -191,6 +191,7 @@ export function PublicPlaceMap({
     let cluster: AMapCluster | null = null;
     let selectedMarker: AMapMarker | null = null;
     let detachReadyListener: (() => void) | undefined;
+    let detachResizeListener: (() => void) | undefined;
     let stage: MapClientEvent["stage"] = "sdk_load";
     const startedAt = performance.now();
 
@@ -265,11 +266,21 @@ export function PublicPlaceMap({
         });
         const activeMarker = selectedMarker;
         let activePointId = initialPoint.id;
+        let overview = false;
         const boundsMarkers = conversion.points.map((point) => new AMap.Marker({ position: point.lnglat }));
+        const fitPoints = () => {
+          const container = containerRef.current;
+          if (!container || cancelled) return;
+          fitPublicPoints(activeMap, conversion.points, boundsMarkers, { width: container.clientWidth, height: container.clientHeight });
+        };
+        const onResize = () => { if (overview) fitPoints(); };
+        activeMap.on("resize", onResize);
+        detachResizeListener = () => activeMap.off("resize", onResize);
         const focus = (id: string) => {
           const point = conversion.points.find((candidate) => candidate.id === id);
           if (!point) return;
           activePointId = id;
+          overview = false;
           activeMarker.setPosition(point.lnglat);
           activeMarker.setContent(createMarkerContent(point, true));
           cluster?.setData(conversion.points.filter((candidate) => candidate.id !== id));
@@ -279,7 +290,8 @@ export function PublicPlaceMap({
         runtimeRef.current = {
           focus,
           showAll() {
-            fitPublicPoints(activeMap, conversion.points, boundsMarkers);
+            overview = conversion.points.length > 1;
+            fitPoints();
             setSelection((current) => ({ ...current, overview: conversion.points.length > 1 }));
           },
         };
@@ -327,6 +339,8 @@ export function PublicPlaceMap({
         runtimeRef.current = null;
         detachReadyListener?.();
         detachReadyListener = undefined;
+        detachResizeListener?.();
+        detachResizeListener = undefined;
         cluster?.setMap(null);
         selectedMarker?.setMap(null);
         map?.destroy();
@@ -343,6 +357,7 @@ export function PublicPlaceMap({
       cancelled = true;
       runtimeRef.current = null;
       detachReadyListener?.();
+      detachResizeListener?.();
       cluster?.setMap(null);
       selectedMarker?.setMap(null);
       map?.destroy();
