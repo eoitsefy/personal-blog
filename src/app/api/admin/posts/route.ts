@@ -8,6 +8,7 @@ import { ADMIN_POST_PAGE_SIZE } from "@/lib/post-query";
 import { normalizeTags, normalizeTaxonomyTerm } from "@/lib/post-taxonomy";
 import { InvalidPlaceReferenceError, syncPostPlaces } from "@/lib/places";
 import { readJsonMutation } from "@/lib/request-security";
+import { clearWorkingCopy, EditorConflictError, recordPostRevision } from "@/lib/post-revisions";
 import { adminPostListQuerySchema, CreatePostInputSchema } from "@/lib/validators/post";
 
 const postSelect = {
@@ -98,6 +99,7 @@ export async function POST(req: Request) {
     const category = normalizeTaxonomyTerm(input.category);
     const tags = normalizeTags(input.tags);
     const post = await prisma.$transaction(async (tx) => {
+      await clearWorkingCopy(tx, auth.user.id, "new", input.workingCopyVersion);
       const created = await tx.post.create({
         data: {
           title: input.title,
@@ -128,6 +130,7 @@ export async function POST(req: Request) {
       await syncPostAssets(tx, created.id, input.assetIds, input.contentMd);
       await syncPostPlaces(tx, created.id, input.placeIds);
       await syncPostAssistantIndex(tx, created.id);
+      await recordPostRevision(tx, created.id);
       return tx.post.findUniqueOrThrow({ where: { id: created.id }, select: postSelect });
     });
 
@@ -141,6 +144,7 @@ export async function POST(req: Request) {
     });
     return ok({ post }, auth.requestId, 201);
   } catch (error) {
+    if (error instanceof EditorConflictError) return fail("CONFLICT", error.message, 409, auth.requestId);
     if (error instanceof InvalidAssetReferenceError || error instanceof InvalidPlaceReferenceError) {
       return fail("BAD_REQUEST", error.message, 400, auth.requestId);
     }

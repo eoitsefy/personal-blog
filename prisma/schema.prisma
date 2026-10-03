@@ -86,6 +86,7 @@ model User {
   createdTokens   UserToken[]     @relation("TokenCreator")
   comments        Comment[]
   commentReports  CommentReport[]
+  workingCopies   PostWorkingCopy[]
 }
 
 model UserSession {
@@ -141,11 +142,42 @@ model Post {
   places         PostPlace[]
   commentsLocked Boolean        @default(false)
   aiChunks        AiContentChunk[]
+  workingCopies   PostWorkingCopy[]
+  revisions       PostRevision[]
 
   @@index([status, publishedAt(sort: Desc)])
   @@index([authorId, createdAt(sort: Desc)])
   @@index([categoryId, status, publishedAt(sort: Desc)])
   @@index([deletedAt, updatedAt(sort: Desc)])
+}
+
+// Autosave never changes the published Post or its public search index.
+model PostWorkingCopy {
+  id            String   @id @default(cuid())
+  userId        String
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  key           String
+  postId        String?
+  post          Post?    @relation(fields: [postId], references: [id], onDelete: Cascade)
+  payload       Json
+  baseUpdatedAt DateTime?
+  version       Int      @default(1)
+  cleared       Boolean  @default(false)
+  updatedAt     DateTime @updatedAt
+
+  @@unique([userId, key])
+  @@index([postId])
+}
+
+// Bounded textual snapshots; restoring loads the editor, never publishes.
+model PostRevision {
+  id        String   @id @default(cuid())
+  postId    String
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  payload   Json
+  createdAt DateTime @default(now())
+
+  @@index([postId, createdAt(sort: Desc)])
 }
 
 model AiContentChunk {

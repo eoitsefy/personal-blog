@@ -7,6 +7,7 @@ import { requireAdmin } from "@/lib/require-admin";
 import { normalizeTags, normalizeTaxonomyTerm } from "@/lib/post-taxonomy";
 import { InvalidPlaceReferenceError, syncPostPlaces } from "@/lib/places";
 import { readJsonMutation, validateMutationOrigin } from "@/lib/request-security";
+import { clearWorkingCopy, EditorConflictError, lockPost, recordPostRevision } from "@/lib/post-revisions";
 import { UpdatePostInputSchema } from "@/lib/validators/post";
 
 type RouteParams = { params: Promise<{ id: string }> };
@@ -62,6 +63,7 @@ export async function PATCH(req: Request, { params }: RouteParams) {
         publishedAt: true,
         deletedAt: true,
         contentMd: true,
+        updatedAt: true,
         assets: { select: { assetId: true } },
         places: { select: { placeId: true } },
       },
@@ -102,6 +104,14 @@ export async function PATCH(req: Request, { params }: RouteParams) {
     }
 
     const post = await prisma.$transaction(async (tx) => {
+      await lockPost(tx, id);
+      const current = await tx.post.findUnique({ where: { id }, select: { updatedAt: true, deletedAt: true } });
+      if (!current || current.deletedAt || current.updatedAt.getTime() !== existing.updatedAt.getTime()
+        || (input.expectedUpdatedAt && current.updatedAt.toISOString() !== input.expectedUpdatedAt)) {
+        throw new EditorConflictError("文章已被其他操作修改，请保留当前内容并重新打开编辑器");
+      }
+      await clearWorkingCopy(tx, auth.user.id, id, input.workingCopyVersion);
+      await recordPostRevision(tx, id);
       await tx.post.update({ where: { id }, data });
       if (input.assetIds !== undefined || input.contentMd !== undefined) {
         await syncPostAssets(
@@ -115,6 +125,7 @@ export async function PATCH(req: Request, { params }: RouteParams) {
         await syncPostPlaces(tx, id, input.placeIds);
       }
       await syncPostAssistantIndex(tx, id);
+      await recordPostRevision(tx, id);
       return tx.post.findUniqueOrThrow({ where: { id }, select: postSelect });
     });
     logApi({
@@ -127,6 +138,7 @@ export async function PATCH(req: Request, { params }: RouteParams) {
     });
     return ok({ post }, auth.requestId);
   } catch (error) {
+    if (error instanceof EditorConflictError) return fail("CONFLICT", error.message, 409, auth.requestId);
     if (error instanceof InvalidAssetReferenceError || error instanceof InvalidPlaceReferenceError) {
       return fail("BAD_REQUEST", error.message, 400, auth.requestId);
     }

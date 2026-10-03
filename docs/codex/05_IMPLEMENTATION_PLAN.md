@@ -239,6 +239,16 @@ Current milestone: `[IN PROGRESS — Phase 7A]` production commit `9d73a20` now 
 
 ## Suggested first Codex milestone
 
+### Current delivery override — 2026-10-03
+
+The initial audit below is historical. The current next delivery is security and writing experience on `agent/security-writing-experience`, after the deployed PR #26 map improvements.
+
+- `[LOCAL COMPLETE]` Upgrade Next.js, Prisma, sharp and compatible dependencies; move Docker/CI to Node 24 and gate production dependency auditing in CI.
+- `[LOCAL COMPLETE]` Add isolated autosaved working copies, window recovery, conflict protection, 20 saved versions, inline image paste/upload and responsive live preview.
+- `[LOCAL VERIFIED]` Unit, disposable PostgreSQL, lint, typecheck, build and browser acceptance. Detailed evidence and limitations: `12_WRITING_EXPERIENCE.md`.
+- `[PENDING]` Review/CI, Linux container build, production backup, additive migration, deployment and regression acceptance. Do not report the new writing UI as live yet.
+- `[PENDING]` Track upstream development-only audit fixes; voice, private content, off-host backup and external notifications remain separate milestones.
+
 Start with Phase 0 and produce:
 
 1. repository map;

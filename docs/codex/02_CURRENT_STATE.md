@@ -2,6 +2,14 @@
 
 > This is a consolidated snapshot. Verify live systems before making decisions.
 
+## Latest local development — 2026-10-03
+
+- Most recent recorded deployment: PR #26 at `6eb4f4d`, including the public neighborhood map fix and mobile acceptance. No production changes were made during the writing-enhancement task.
+- Current development branch: `agent/security-writing-experience`; Node 24.19.0, Next.js 16.3.8, Prisma 6.19.3, sharp 0.35.5. Docker and CI now target Node 24; the system-installed Node 20 executable is not suitable for this branch.
+- Private per-admin working copies, optimistic concurrency, up to 20 saved revisions, image paste/upload, and live Markdown preview are implemented but not deployed. Migration: `20261003090000_post_working_copies`.
+- Local evidence: 104 unit tests, 8 PostgreSQL integration tests, lint, typecheck, production build, and real desktop/mobile browser acceptance. Production dependency audit: 0; development dependency audit: 5 high advisories from the same unpatched `braces` dependency chain.
+- See `12_WRITING_EXPERIENCE.md` for precise limits and deployment gates. Older sections below are dated historical evidence, not current runtime/version claims.
+
 ## Repository and Git
 
 - `[VERIFIED]` GitHub repository: `eoitsefy/personal-blog`.

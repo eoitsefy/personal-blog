@@ -28,6 +28,7 @@ test("invalid slugs are rejected", () => {
 test("article updates require at least one valid field", () => {
   assert.equal(UpdatePostInputSchema.safeParse({ status: "PUBLISHED" }).success, true);
   assert.equal(UpdatePostInputSchema.safeParse({}).success, false);
+  assert.equal(UpdatePostInputSchema.safeParse({ expectedUpdatedAt: "2026-10-03T00:00:00.000Z", workingCopyVersion: 1 }).success, false);
 });
 
 test("post input limits taxonomy values", () => {

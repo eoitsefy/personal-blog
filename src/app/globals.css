@@ -84,6 +84,21 @@ a {
   transform: translateY(0);
 }
 
+.editor-markdown { line-height: 1.8; overflow-wrap: anywhere; }
+.editor-markdown :is(p, ul, ol, pre, blockquote, table) { margin-block: 1em; }
+.editor-markdown :is(h1, h2, h3, h4) { margin-block: 1em .5em; font-weight: 700; }
+.editor-markdown h1 { font-size: 1.8em; }
+.editor-markdown h2 { font-size: 1.5em; }
+.editor-markdown h3 { font-size: 1.25em; }
+.editor-markdown ul { list-style: disc; padding-left: 1.5em; }
+.editor-markdown ol { list-style: decimal; padding-left: 1.5em; }
+.editor-markdown pre { padding: 1em; background: #17191c; color: #f8f7f2; overflow: auto; }
+.editor-markdown blockquote { border-left: 3px solid var(--signal); padding-left: 1em; }
+.editor-markdown a { text-decoration: underline; }
+.editor-markdown img { max-width: 100%; height: auto; }
+.editor-markdown table { display: block; max-width: 100%; overflow-x: auto; }
+.editor-markdown th, .editor-markdown td { border: 1px solid #9996; padding: .3em .6em; }
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
