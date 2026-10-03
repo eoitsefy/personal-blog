@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { ImagePreview } from "@/components/content/image-preview";
 import { useRouter } from "next/navigation";
 import { useDeferredValue, useRef, useState } from "react";
 import { RichMarkdown } from "@/components/content/rich-markdown";
@@ -399,7 +400,9 @@ export function PostForm({
                 <article key={asset.id} className={`overflow-hidden rounded-xl border ${selected ? "border-neutral-900 dark:border-white" : "border-neutral-200 dark:border-neutral-800"}`}>
                   <div className="relative grid aspect-video place-items-center bg-neutral-100 dark:bg-neutral-900">
                     {asset.kind === "IMAGE" ? (
-                      <Image src={asset.url} alt={asset.originalName ?? "媒体图片"} fill sizes="(max-width: 640px) 100vw, 33vw" className="object-cover" unoptimized />
+                      <ImagePreview src={asset.url} alt={asset.originalName ?? "媒体图片"} className="absolute inset-0 h-full w-full">
+                        <Image src={asset.url} alt={asset.originalName ?? "媒体图片"} fill sizes="(max-width: 640px) 100vw, 33vw" className="object-cover" unoptimized />
+                      </ImagePreview>
                     ) : asset.kind === "AUDIO" ? (
                       <audio controls preload="metadata" src={asset.url} className="w-[90%]">浏览器不支持音频播放。</audio>
                     ) : (

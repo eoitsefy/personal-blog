@@ -1,0 +1,47 @@
+.trigger {
+  display: block;
+  max-width: 100%;
+  margin-inline: auto;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: zoom-in;
+}
+
+.dialog {
+  width: calc(100vw - 24px);
+  max-width: 1600px;
+  height: calc(100vh - 24px);
+  height: calc(100dvh - 24px);
+  max-height: none;
+  margin: auto;
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid #565c66;
+  border-radius: 10px;
+  background: #14171c;
+  color: #f7f5ef;
+  box-shadow: 0 20px 80px #0008;
+}
+
+.dialog[open] { display: flex; flex-direction: column; }
+.dialog::backdrop { background: #000c; }
+.header { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 8px 12px; flex-shrink: 0; }
+.title { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 14px; }
+.toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; padding: 0 12px 8px; flex-shrink: 0; border-bottom: 1px solid #42464e; }
+.control { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; min-width: 44px; padding: 6px 12px; border: 1px solid #626874; border-radius: 5px; color: #f7f5ef; background: #242930; cursor: pointer; font-size: 14px; white-space: nowrap; }
+.control:disabled { opacity: .4; cursor: default; }
+.control:focus-visible, .stage:focus-visible { outline: 2px solid #f8cc4b; outline-offset: -3px; }
+.zoom { min-width: 3.5em; text-align: center; font-size: 13px; }
+.stage { flex: 1; min-height: 0; overflow: auto; overscroll-behavior: contain; touch-action: pan-x pan-y pinch-zoom; }
+.canvas { display: flex; align-items: center; justify-content: center; width: max-content; min-width: 100%; min-height: 100%; padding: 16px; box-sizing: border-box; }
+.image { display: block; max-width: none; flex-shrink: 0; object-fit: contain; }
+.message { padding: 24px; font-size: 14px; }
+
+@media (max-width: 480px) {
+  .dialog { width: 100vw; height: 100vh; height: 100dvh; max-width: none; border: 0; border-radius: 0; }
+  .header { padding-top: max(8px, env(safe-area-inset-top)); }
+  .stage { padding-bottom: env(safe-area-inset-bottom); }
+  .toolbar { gap: 4px; padding-inline: 8px; }
+  .control { padding-inline: 9px; }
+}

@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import type { MediaAsset } from "@/lib/media/types";
+import { ImagePreview } from "@/components/content/image-preview";
 
 type MediaManagerProps = {
   assets: MediaAsset[];
@@ -160,7 +161,9 @@ export function MediaManager({ assets, deletedView, storage }: MediaManagerProps
             <article key={asset.id} className="overflow-hidden rounded-2xl border border-neutral-200 bg-white dark:border-neutral-800 dark:bg-neutral-900">
               <div className="relative grid aspect-video place-items-center bg-neutral-100 dark:bg-neutral-950">
                 {asset.kind === "IMAGE" ? (
-                  <Image src={asset.url} alt={asset.originalName ?? "媒体图片"} fill sizes="(max-width: 640px) 100vw, 33vw" className="object-cover" unoptimized />
+                  <ImagePreview src={asset.url} alt={asset.originalName ?? "媒体图片"} className="absolute inset-0 h-full w-full">
+                    <Image src={asset.url} alt={asset.originalName ?? "媒体图片"} fill sizes="(max-width: 640px) 100vw, 33vw" className="object-cover" unoptimized />
+                  </ImagePreview>
                 ) : asset.kind === "AUDIO" ? (
                   <div className="grid w-full gap-3 px-4 text-center">
                     <span className="text-xs font-medium tracking-[0.18em] text-neutral-500">AUDIO / {humanDuration(asset.durationMs)}</span>
