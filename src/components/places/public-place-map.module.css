@@ -43,9 +43,9 @@
   .viewActions button, .viewActions a { padding: 9px 6px; text-align: center; }
   .status { padding: 10px 12px; font-size: .72rem; }
   .markerLabel { max-width: min(220px, 58vw); }
-  .fallbackMarker { max-width: 32vw; flex-direction: column; gap: 4px; transform: translate(-50%, -22px); }
+  .fallbackMarker { width: 144px; max-width: 32vw; flex-direction: column; gap: 4px; transform: translate(-50%, -22px); }
   .fallbackMarker i, .fallbackMarker i.featuredFallbackMarker { width: 44px; height: 44px; flex-shrink: 0; }
-  .fallbackMarker span { max-width: 100%; white-space: normal; overflow-wrap: anywhere; text-align: center; }
+  .fallbackMarker span { max-width: 100%; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; white-space: normal; overflow-wrap: anywhere; line-height: 1.4; text-align: center; }
 }
 @media (max-height: 500px) and (pointer: coarse) {
   .panel { --map-height: 72vh; --map-height: 72svh; }

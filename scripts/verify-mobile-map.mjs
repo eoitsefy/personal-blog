@@ -132,6 +132,7 @@ try {
   for (const marker of await fallback.locator("a").all()) {
     const rect = await marker.boundingBox();
     assert.ok(rect.x >= box.x - 1 && rect.x + rect.width <= box.x + box.width + 1, "Fallback marker clipping");
+    assert.ok(rect.y >= box.y && rect.y + rect.height <= box.y + box.height + 4, "Fallback label must not overflow vertically");
   }
   await page.screenshot({path:`.tool-tmp/mobile-map-${live ? "live" : "local"}-fallback.png`,fullPage:true});
   await context.close();
