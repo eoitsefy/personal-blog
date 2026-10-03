@@ -5,7 +5,7 @@ import { prisma } from "@/lib/prisma";
 export const metadata = { title: "新建文章", robots: { index: false, follow: false } };
 
 export default async function NewPostPage() {
-  await requireAdminPage();
+  const admin = await requireAdminPage();
   const [categories, tags, media, places] = await Promise.all([
     prisma.category.findMany({ orderBy: { name: "asc" }, select: { name: true } }),
     prisma.tag.findMany({ orderBy: { name: "asc" }, select: { name: true } }),
@@ -23,6 +23,7 @@ export default async function NewPostPage() {
       <p className="text-sm text-neutral-500">文章管理</p>
       <h1 className="mt-1 text-3xl font-bold">新建文章</h1>
       <PostForm
+        userId={admin.id}
         mode="create"
         categoryOptions={categories.map(({ name }) => name)}
         tagOptions={tags.map(({ name }) => name)}

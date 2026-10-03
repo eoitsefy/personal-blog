@@ -7,7 +7,7 @@ A personal publishing application built with Next.js 16, PostgreSQL, Prisma, and
 - Public home, searchable and paginated published-post list, and Markdown post pages.
 - Category and tag assignment with public filtering and taxonomy links.
 - Drafts remain private; published posts receive basic metadata and Open Graph fields.
-- Database-backed administrator login with a signed HttpOnly session cookie.
+- Database-backed administrator login with a revocable, hashed session and HttpOnly cookie.
 - Protected administration pages for creating, editing, previewing, publishing, unpublishing, soft-deleting, and restoring posts.
 - Authenticated JPEG, PNG, and WebP uploads with signature, size, dimension, and path validation.
 - A media library and recycle bin with article-reference tracking, deletion protection, restoration, and permanent deletion.
@@ -15,11 +15,13 @@ A personal publishing application built with Next.js 16, PostgreSQL, Prisma, and
 - PostgreSQL and Redis services through Docker Compose.
 - Database backup and restore-drill scripts.
 
-Sitemap/feed generation and the AI assistant are later milestones.
+Sitemap/RSS, moderated comments, invited users, AMap places and the bounded DeepSeek text assistant are implemented. Voice remains planned.
+
+The writing-experience branch adds administrator-only working-copy autosave, window recovery, up to 20 saved versions, image paste/upload and live Markdown preview. Autosave never publishes. Apply the additive `20261003090000_post_working_copies` migration before running this version; production acceptance is tracked in `docs/codex/09_COMPLETED_FEATURES.md`.
 
 ## Requirements
 
-- Node.js 20.19 or newer.
+- Node.js 22.13 or newer; Docker and CI use Node.js 24 LTS.
 - npm 10.5 or newer.
 - PostgreSQL 16, either local or through Docker Compose.
 
@@ -69,3 +71,5 @@ Unit tests run without external services. Integration tests require `TEST_DATABA
 - Validate the application with `/api/healthz` after deployment.
 
 See `docs/codex/06_DEPLOYMENT_RUNBOOK.md` for the deployment and rollback procedure.
+
+The pending security/writing release, including its additive database migration and production rollout gates, is documented in `docs/codex/12_WRITING_EXPERIENCE.md`. Run `npm audit --omit=dev --registry=https://registry.npmjs.org` when verifying production dependencies.

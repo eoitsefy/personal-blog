@@ -8,7 +8,7 @@ type PageProps = { params: Promise<{ id: string }> };
 export const metadata = { title: "编辑文章", robots: { index: false, follow: false } };
 
 export default async function EditPostPage({ params }: PageProps) {
-  await requireAdminPage();
+  const admin = await requireAdminPage();
   const { id } = await params;
   const [post, categories, tags, latestMedia, places] = await Promise.all([
     prisma.post.findFirst({
@@ -20,6 +20,7 @@ export default async function EditPostPage({ params }: PageProps) {
         excerpt: true,
         contentMd: true,
         status: true,
+        updatedAt: true,
         category: { select: { name: true } },
         tags: { select: { tag: { select: { name: true } } } },
         assets: { select: { assetId: true } },
@@ -54,6 +55,8 @@ export default async function EditPostPage({ params }: PageProps) {
       <p className="text-sm text-neutral-500">文章管理</p>
       <h1 className="mt-1 text-3xl font-bold">编辑文章</h1>
       <PostForm
+        userId={admin.id}
+        initialUpdatedAt={post.updatedAt.toISOString()}
         mode="edit"
         postId={post.id}
         initialValue={{

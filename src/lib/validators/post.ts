@@ -52,6 +52,7 @@ const PostInputFieldsSchema = z.object({
 });
 
 export const CreatePostInputSchema = PostInputFieldsSchema.extend({
+  workingCopyVersion: z.number().int().nonnegative().optional(),
   status: z.enum(["DRAFT", "PUBLISHED"]).default("DRAFT"),
   category: z.string().trim().max(50).default(""),
   tags: z.array(z.string().trim().min(1).max(40)).max(10).default([]),
@@ -61,8 +62,11 @@ export const CreatePostInputSchema = PostInputFieldsSchema.extend({
 
 export type CreatePostInput = z.infer<typeof CreatePostInputSchema>;
 
-export const UpdatePostInputSchema = PostInputFieldsSchema.partial().refine(
-  (value) => Object.keys(value).length > 0,
+export const UpdatePostInputSchema = PostInputFieldsSchema.partial().extend({
+  expectedUpdatedAt: z.string().datetime().optional(),
+  workingCopyVersion: z.number().int().nonnegative().optional(),
+}).refine(
+  (value) => Object.keys(value).some((key) => key !== "expectedUpdatedAt" && key !== "workingCopyVersion"),
   "至少需要修改一个字段",
 );
 

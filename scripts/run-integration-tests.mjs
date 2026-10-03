@@ -9,6 +9,11 @@ if (!testDatabaseUrl) {
   console.error("TEST_DATABASE_URL is required and must point to a disposable PostgreSQL database.");
   process.exit(1);
 }
+const testDatabase = new URL(testDatabaseUrl);
+if (!/^postgres(ql)?:$/.test(testDatabase.protocol) || !testDatabase.pathname.endsWith("_test")) {
+  console.error("Refusing to run migrations/tests: disposable database name must end in _test.");
+  process.exit(1);
+}
 
 const env = { ...process.env, DATABASE_URL: testDatabaseUrl, NODE_ENV: "test" };
 
@@ -18,4 +23,4 @@ function run(script, args) {
 }
 
 run(path.join(root, "node_modules", "prisma", "build", "index.js"), ["migrate", "deploy"]);
-run(path.join(root, "node_modules", "tsx", "dist", "cli.mjs"), ["--test", "src/integration/content-management.integration.test.ts"]);
+run(path.join(root, "node_modules", "tsx", "dist", "cli.mjs"), ["--test", "--test-concurrency=1", "src/integration/content-management.integration.test.ts", "src/integration/editor.integration.test.ts"]);
