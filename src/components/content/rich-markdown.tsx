@@ -2,6 +2,7 @@ import { Children } from "react";
 import ReactMarkdown, { type Components } from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { parseTrustedVideoUrl } from "@/lib/media/video";
+import { ImagePreview, ImagePreviewLink } from "./image-preview";
 
 export type RichMarkdownAsset = {
   url: string;
@@ -15,9 +16,15 @@ type RichMarkdownProps = {
   assets?: RichMarkdownAsset[];
 };
 
+// Stable component identity keeps an open viewer alive during editor autosave.
+const MarkdownImage: Components["img"] = ({ src, alt, title }) => (
+  <ImagePreview src={typeof src === "string" ? src : ""} alt={alt ?? ""} title={title} />
+);
+
 export function RichMarkdown({ markdown, assets = [] }: RichMarkdownProps) {
   const assetsByUrl = new Map(assets.map((asset) => [asset.url, asset]));
   const components: Components = {
+    img: MarkdownImage,
     a({ href, children }) {
       const label = Children.toArray(children).join("").trim();
       const asset = href ? assetsByUrl.get(href) : undefined;
@@ -34,7 +41,7 @@ export function RichMarkdown({ markdown, assets = [] }: RichMarkdownProps) {
         );
       }
       if (asset?.kind === "DOCUMENT") {
-        return <a href={href} download={asset.originalName ?? true}>{children}</a>;
+        return <ImagePreviewLink href={href} download={asset.originalName ?? true}>{children}</ImagePreviewLink>;
       }
       if (href && label.toLowerCase().startsWith("video:")) {
         const video = parseTrustedVideoUrl(href);
@@ -62,7 +69,7 @@ export function RichMarkdown({ markdown, assets = [] }: RichMarkdownProps) {
           );
         }
       }
-      return <a href={href}>{children}</a>;
+      return <ImagePreviewLink href={href}>{children}</ImagePreviewLink>;
     },
   };
 
