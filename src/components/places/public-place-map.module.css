@@ -1,8 +1,14 @@
 .panel { margin-top: 36px; border: 1px solid var(--line); background: #171a1d; color: #f5f3e9; }
-.heading { padding: 24px; display: flex; justify-content: space-between; gap: 30px; border-bottom: 1px solid rgba(255,255,255,.14); }
-.heading p { margin: 0 0 12px; font: .62rem/1.2 monospace; letter-spacing: .18em; color: #e9b949; }
-.heading h2 { margin: 0; font: 500 1.6rem Georgia, "Noto Serif SC", serif; }
-.heading > span { max-width: 470px; color: rgba(255,255,255,.62); font-size: .76rem; line-height: 1.7; }
+.toolbar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px; padding: 16px 18px; border-bottom: 1px solid rgba(255,255,255,.14); }
+.placeSelect { display: flex; align-items: center; gap: 12px; min-width: 0; max-width: 100%; font-size: .8rem; }
+.placeSelect > span { flex-shrink: 0; color: #e9b949; }
+.placeSelect select { min-width: 0; max-width: 360px; padding: 9px 30px 9px 12px; color: #f5f3e9; background: #252a2f; border: 1px solid #676a6d; border-radius: 4px; }
+.viewActions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-size: .76rem; }
+.viewActions button, .viewActions a { padding: 9px 12px; border: 1px solid #676a6d; border-radius: 4px; cursor: pointer; }
+.viewActions button { color: inherit; background: transparent; }
+.viewActions button[aria-pressed="true"] { color: #171a1d; background: #e9b949; border-color: #e9b949; }
+.viewActions a { color: #f2d98f; }
+.toolbar :is(button, a, select):focus-visible { outline: 3px solid #e9b949; outline-offset: 3px; }
 .mapStage { position: relative; min-height: 460px; overflow: hidden; }
 .mapCanvas { position: absolute; z-index: 2; inset: 0; opacity: 0; pointer-events: none; transition: opacity .3s ease; }
 .mapCanvasReady { opacity: 1; pointer-events: auto; }
@@ -15,9 +21,18 @@
 .fallbackMarker:hover span { color: var(--signal); }
 .emptyPlot { min-height: 240px; display: grid; place-items: center; padding: 30px; color: rgba(255,255,255,.55); text-align: center; }
 .status { min-height: 38px; margin: 0; padding: 11px 18px; border-top: 1px solid rgba(255,255,255,.12); color: rgba(255,255,255,.58); font: .62rem/1.5 monospace; letter-spacing: .06em; }
-.mapMarker { width: 34px; height: 34px; padding: 0; border: 3px solid rgba(255,255,255,.86); border-radius: 50%; color: #17191c; background: var(--signal-strong); box-shadow: 0 5px 18px rgba(0,0,0,.38); cursor: pointer; font-weight: 900; }
-.featuredMapMarker { width: 42px; height: 42px; color: #fff8d9; background: #9f341f; border-color: #e9b949; box-shadow: 0 0 0 3px rgba(255,255,255,.88), 0 8px 24px rgba(0,0,0,.45); }
+.mapMarker { position: relative; display: block; width: 36px; height: 36px; padding: 0; border: 0; border-radius: 50%; background: transparent; cursor: pointer; font: inherit; }
+.markerPin { display: grid; place-items: center; width: 36px; height: 36px; border: 3px solid #fff; border-radius: 50%; color: #17191c; background: #e9b949; box-shadow: 0 4px 14px rgba(0,0,0,.3); font-size: 18px; }
+.markerLabel { position: absolute; bottom: calc(100% + 9px); left: 50%; display: grid; gap: 4px; width: max-content; max-width: min(240px, 65vw); transform: translateX(-50%); padding: 8px 12px; border: 1px solid #c0bcb3; border-radius: 5px; background: #fff; color: #202326; box-shadow: 0 4px 14px rgba(0,0,0,.18); text-align: center; overflow-wrap: anywhere; }
+.markerLabel strong { font: 700 14px/1.5 sans-serif; }
+.markerLabel small { font: 11px/1.4 sans-serif; color: #654719; }
+.featuredMapMarker .markerPin { color: #fff8d9; background: #9f341f; border-color: #e9b949; }
+.featuredMapMarker .markerLabel { border-color: #9f341f; }
+.selectedMapMarker, .selectedMapMarker .markerPin { width: 44px; height: 44px; }
+.selectedMapMarker .markerPin { box-shadow: 0 0 0 7px rgba(233,185,73,.25), 0 5px 18px rgba(0,0,0,.35); }
+.selectedMapMarker .markerLabel { color: #fff8e6; background: #202326; border: 2px solid #e9b949; }
+.selectedMapMarker .markerLabel small { color: #f2d98f; }
 .mapMarker:focus-visible { outline: 3px solid #111; outline-offset: 3px; }
 .clusterMarker { width: 42px; height: 42px; display: grid; place-items: center; border: 3px solid rgba(255,255,255,.9); border-radius: 50%; color: #17191c; background: var(--signal-strong); box-shadow: 0 6px 22px rgba(0,0,0,.4); font: 800 .78rem/1 monospace; }
-@media (max-width: 640px) { .heading { display: grid; } .mapStage, .fallbackPlot { min-height: 360px; } }
+@media (max-width: 640px) { .placeSelect { width: 100%; } .placeSelect select { width: 100%; } .mapStage, .fallbackPlot { min-height: 400px; } }
 @media (prefers-reduced-motion: reduce) { .mapCanvas { transition: none; } }

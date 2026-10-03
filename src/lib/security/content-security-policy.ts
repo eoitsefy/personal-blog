@@ -3,7 +3,8 @@ export function buildContentSecurityPolicy(isDevelopment: boolean) {
     "default-src 'self'",
     // AMap JS API 2.0 evaluates generated code while bootstrapping. Keep the
     // exception inside script-src and retain an explicit script origin list.
-    "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://webapi.amap.com",
+    // The SDK also loads plugins and its redirect check from these exact CDN hosts.
+    "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://webapi.amap.com https://jsapi-service.amap.com https://mapplugin.amap.com",
     "style-src 'self' 'unsafe-inline'",
     "img-src 'self' data: blob: https:",
     "font-src 'self' data:",

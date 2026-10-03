@@ -10,6 +10,7 @@ import {
   type PublicMapPoint,
 } from "@/lib/map/coordinates";
 import type { MapClientEvent } from "@/lib/map/telemetry";
+import { fitPublicPoints, focusPublicPoint, getInitialMapPoint, getNeighborhoodMapOptions } from "@/lib/map/viewport";
 import styles from "./public-place-map.module.css";
 
 type AMapLngLat = { getLng(): number; getLat(): number };
@@ -17,24 +18,30 @@ type AMapMarker = {
   getPosition(): AMapLngLat;
   setContent(content: HTMLElement): void;
   setOffset(offset: unknown): void;
-  on(event: "click", listener: () => void): void;
+  setPosition(position: [number, number]): void;
+  setMap(map: AMapMap | null): void;
 };
 type AMapMap = {
   addControl(control: unknown): void;
-  setFitView(overlays?: unknown, immediately?: boolean, avoid?: number[], maximumZoom?: number): void;
+  setFitView(overlays: unknown[], immediately: boolean, avoid: number[], maximumZoom: number): void;
+  setZoomAndCenter(zoom: number, center: [number, number], immediately: boolean): void;
+  on(event: "complete", listener: () => void): void;
+  off(event: "complete", listener: () => void): void;
   destroy(): void;
 };
-type AMapCluster = { setMap(map: AMapMap | null): void };
+type AMapCluster = { setMap(map: AMapMap | null): void; setData(points: AMapClusterPoint[]): void };
 type AMapNamespace = {
   Map: new (container: HTMLElement, options: Record<string, unknown>) => AMapMap;
   Scale: new (options?: Record<string, unknown>) => unknown;
   ToolBar: new (options?: Record<string, unknown>) => unknown;
   Pixel: new (x: number, y: number) => unknown;
+  Marker: new (options: Record<string, unknown>) => AMapMarker;
   MarkerCluster: new (
     map: AMapMap,
     points: AMapClusterPoint[],
     options: {
       gridSize: number;
+      maxZoom: number;
       renderMarker(context: { marker: AMapMarker }): void;
       renderClusterMarker(context: { marker: AMapMarker; count: number }): void;
     },
@@ -69,13 +76,18 @@ function reportMapEvent(event: MapClientEvent) {
   }).catch(() => undefined);
 }
 
-function withTimeout<T>(promise: Promise<T>, timeoutMs: number) {
-  return Promise.race([
-    promise,
-    new Promise<never>((_, reject) => {
-      window.setTimeout(() => reject(new Error("AMap loader timed out")), timeoutMs);
-    }),
-  ]);
+async function withTimeout<T>(promise: Promise<T>, timeoutMs: number) {
+  let timer: ReturnType<typeof setTimeout> | undefined;
+  try {
+    return await Promise.race([
+      promise,
+      new Promise<never>((_, reject) => {
+        timer = setTimeout(() => reject(new Error("AMap operation timed out")), timeoutMs);
+      }),
+    ]);
+  } finally {
+    clearTimeout(timer);
+  }
 }
 
 function convertBatch(
@@ -113,7 +125,7 @@ async function convertPublicPoints(AMap: AMapNamespace, points: PublicMapPoint[]
     if (!source) continue;
     for (const batch of chunkForAmapConversion(candidates)) {
       try {
-        converted.push(...await convertBatch(AMap, batch, source));
+        converted.push(...await withTimeout(convertBatch(AMap, batch, source), LOAD_TIMEOUT_MS));
       } catch {
         omittedCount += batch.length;
       }
@@ -162,6 +174,9 @@ export function PublicPlaceMap({
   config: PublicMapRuntimeConfig;
 }) {
   const containerRef = useRef<HTMLDivElement>(null);
+  const runtimeRef = useRef<{ focus(id: string): void; showAll(): void } | null>(null);
+  const [selection, setSelection] = useState({ id: getInitialMapPoint(points)?.id ?? "", overview: false });
+  const [availableIds, setAvailableIds] = useState<string[]>([]);
   const [loaderReady, setLoaderReady] = useState(false);
   const [state, setState] = useState<"disabled" | "loading" | "ready" | "error">(
     config.enabled && points.length > 0 ? "loading" : "disabled",
@@ -174,11 +189,14 @@ export function PublicPlaceMap({
     let cancelled = false;
     let map: AMapMap | null = null;
     let cluster: AMapCluster | null = null;
+    let selectedMarker: AMapMarker | null = null;
+    let detachReadyListener: (() => void) | undefined;
     let stage: MapClientEvent["stage"] = "sdk_load";
     const startedAt = performance.now();
 
     async function initialize() {
       try {
+        setState("loading");
         if (!window.AMapLoader || !containerRef.current) throw new Error("AMap loader unavailable");
         window._AMapSecurityConfig = {
           serviceHost: `${window.location.origin}${activeConfig.serviceHostPath}`,
@@ -195,41 +213,94 @@ export function PublicPlaceMap({
         if (cancelled || !containerRef.current) return;
         setOmittedCount(conversion.omittedCount);
         if (conversion.points.length === 0) throw new Error("No coordinates could be plotted safely");
+        const initialId = getInitialMapPoint(points)?.id;
+        const initialPoint = conversion.points.find((point) => point.id === initialId)
+          ?? getInitialMapPoint(conversion.points)!;
+        setAvailableIds(conversion.points.map((point) => point.id));
 
         stage = "map_create";
-        map = new AMap.Map(containerRef.current, {
-          viewMode: "2D",
-          zoom: 5,
-          mapStyle: "amap://styles/whitesmoke",
-          showLabel: true,
+        map = new AMap.Map(containerRef.current, getNeighborhoodMapOptions(initialPoint));
+        const activeMap = map;
+        const mapReady = new Promise<void>((resolve) => {
+          const onComplete = () => resolve();
+          activeMap.on("complete", onComplete);
+          detachReadyListener = () => activeMap.off("complete", onComplete);
         });
+
+        const createMarkerContent = (point: AMapClusterPoint, selected = false) => {
+          const element = document.createElement("button");
+          element.type = "button";
+          element.className = `${styles.mapMarker} ${point.isFeatured ? styles.featuredMapMarker : ""} ${selected ? styles.selectedMapMarker : ""}`;
+          element.title = `${point.name} · ${point.locationLabel}`;
+          element.setAttribute("aria-label", `${selected ? "当前地点" : "查看周边"}：${point.name}${point.privacy === "APPROXIMATE" ? "（大致位置）" : ""}`);
+          const pin = document.createElement("span");
+          pin.className = styles.markerPin;
+          pin.textContent = point.isFeatured ? "★" : "●";
+          pin.setAttribute("aria-hidden", "true");
+          const label = document.createElement("span");
+          label.className = styles.markerLabel;
+          const name = document.createElement("strong");
+          name.textContent = point.name;
+          label.append(name);
+          if (selected || point.isFeatured || point.privacy === "APPROXIMATE") {
+            const detail = document.createElement("small");
+            detail.textContent = [selected ? "当前地点" : "", point.isFeatured ? "重要地点" : "", point.privacy === "APPROXIMATE" ? "大致位置" : ""].filter(Boolean).join(" · ");
+            label.append(detail);
+          }
+          element.append(pin, label);
+          element.addEventListener("click", (event) => {
+            event.stopPropagation();
+            runtimeRef.current?.focus(point.id);
+          });
+          return element;
+        };
+
+        // A separate selected marker stays visible even when other places cluster.
+        selectedMarker = new AMap.Marker({
+          map: activeMap,
+          position: initialPoint.lnglat,
+          content: createMarkerContent(initialPoint, true),
+          offset: new AMap.Pixel(-22, -22),
+          zIndex: 300,
+        });
+        const activeMarker = selectedMarker;
+        let activePointId = initialPoint.id;
+        const boundsMarkers = conversion.points.map((point) => new AMap.Marker({ position: point.lnglat }));
+        const focus = (id: string) => {
+          const point = conversion.points.find((candidate) => candidate.id === id);
+          if (!point) return;
+          activePointId = id;
+          activeMarker.setPosition(point.lnglat);
+          activeMarker.setContent(createMarkerContent(point, true));
+          cluster?.setData(conversion.points.filter((candidate) => candidate.id !== id));
+          focusPublicPoint(activeMap, point);
+          setSelection({ id, overview: false });
+        };
+        runtimeRef.current = {
+          focus,
+          showAll() {
+            fitPublicPoints(activeMap, conversion.points, boundsMarkers);
+            setSelection((current) => ({ ...current, overview: conversion.points.length > 1 }));
+          },
+        };
+        setSelection({ id: initialPoint.id, overview: false });
         stage = "controls";
         map.addControl(new AMap.Scale());
         map.addControl(new AMap.ToolBar({ position: { right: "18px", top: "18px" } }));
         stage = "marker_cluster";
-        cluster = new AMap.MarkerCluster(map, conversion.points, {
+        cluster = conversion.points.length > 1 ? new AMap.MarkerCluster(map, conversion.points.filter((point) => point.id !== initialPoint.id), {
           gridSize: 64,
+          maxZoom: 16,
           renderMarker({ marker }) {
             const position = marker.getPosition();
             const point = findNearestMapPoint(
-              conversion.points,
+              conversion.points.filter((candidate) => candidate.id !== activePointId),
               position.getLng(),
               position.getLat(),
             );
             if (!point) return;
-            const element = document.createElement("button");
-            element.type = "button";
-            element.className = `${styles.mapMarker} ${point.isFeatured ? styles.featuredMapMarker : ""}`;
-            element.textContent = point.isFeatured ? "★" : point.name.slice(0, 1);
-            element.title = `${point.name} · ${point.locationLabel}`;
-            marker.setContent(element);
-            marker.setOffset(new AMap.Pixel(point.isFeatured ? -21 : -17, point.isFeatured ? -21 : -17));
-            const navigateToCard = () => {
-              document.getElementById(`place-${point.slug}`)?.scrollIntoView({ behavior: "smooth", block: "center" });
-              window.history.replaceState(null, "", `#place-${point.slug}`);
-            };
-            element.addEventListener("click", navigateToCard);
-            marker.on("click", navigateToCard);
+            marker.setContent(createMarkerContent(point));
+            marker.setOffset(new AMap.Pixel(-18, -18));
           },
           renderClusterMarker({ marker, count }) {
             const element = document.createElement("span");
@@ -239,9 +310,12 @@ export function PublicPlaceMap({
             marker.setContent(element);
             marker.setOffset(new AMap.Pixel(-21, -21));
           },
-        });
-        stage = "fit_view";
-        map.setFitView(undefined, false, [72, 72, 72, 72], 13);
+        }) : null;
+        stage = "base_map";
+        await withTimeout(mapReady, LOAD_TIMEOUT_MS);
+        detachReadyListener?.();
+        detachReadyListener = undefined;
+        if (cancelled) return;
         setState("ready");
         const durationMs = Math.round(performance.now() - startedAt);
         reportMapEvent({ provider: "amap", kind: "map_ready", pointCount: conversion.points.length, omittedCount: conversion.omittedCount, durationMs });
@@ -250,6 +324,15 @@ export function PublicPlaceMap({
         }
       } catch {
         if (cancelled) return;
+        runtimeRef.current = null;
+        detachReadyListener?.();
+        detachReadyListener = undefined;
+        cluster?.setMap(null);
+        selectedMarker?.setMap(null);
+        map?.destroy();
+        map = null;
+        cluster = null;
+        selectedMarker = null;
         setState("error");
         reportMapEvent({ provider: "amap", kind: "map_runtime_error", stage, pointCount: points.length, omittedCount: points.length, durationMs: Math.round(performance.now() - startedAt) });
       }
@@ -258,7 +341,10 @@ export function PublicPlaceMap({
     void initialize();
     return () => {
       cancelled = true;
+      runtimeRef.current = null;
+      detachReadyListener?.();
       cluster?.setMap(null);
+      selectedMarker?.setMap(null);
       map?.destroy();
     };
   }, [config, loaderReady, points]);
@@ -268,8 +354,19 @@ export function PublicPlaceMap({
     : config.provider === "amap" && config.reason
       ? "高德地图尚未配置完成，当前使用本地坐标概览。"
       : undefined;
+  const selectedPoint = points.find((point) => point.id === selection.id);
 
   return <section className={styles.panel} aria-label="地点地图">
+    {state === "ready" ? <div className={styles.toolbar}>
+      <label className={styles.placeSelect}><span>地点</span><select value={selection.id} onChange={(event) => runtimeRef.current?.focus(event.target.value)}>
+        {points.filter((point) => availableIds.includes(point.id)).map((point) => <option key={point.id} value={point.id}>{point.isFeatured ? "★ " : ""}{point.name}{point.privacy === "APPROXIMATE" ? "（大致位置）" : ""}</option>)}
+      </select></label>
+      <div className={styles.viewActions}>
+        <button type="button" aria-pressed={!selection.overview} onClick={() => runtimeRef.current?.focus(selection.id)}>{selectedPoint?.privacy === "APPROXIMATE" ? "所在区域" : "查看周边"}</button>
+        {availableIds.length > 1 ? <button type="button" aria-pressed={selection.overview} onClick={() => runtimeRef.current?.showAll()}>全部地点</button> : null}
+        {selectedPoint ? <a href={`#place-${selectedPoint.slug}`}>相关日志 ↗</a> : null}
+      </div>
+    </div> : null}
     <div className={styles.mapStage}>
       {state !== "ready" ? <CoordinateFallback points={points} message={fallbackMessage} /> : null}
       {config.enabled && points.length > 0 ? <>
@@ -278,6 +375,8 @@ export function PublicPlaceMap({
           className={`${styles.mapCanvas} ${state === "ready" ? styles.mapCanvasReady : ""}`}
           role="region"
           aria-label={`高德地图，显示 ${points.length - omittedCount} 个公开地点`}
+          aria-busy={state === "loading"}
+          aria-hidden={state !== "ready"}
         />
         <Script
           id="amap-jsapi-loader"
@@ -295,7 +394,7 @@ export function PublicPlaceMap({
       </> : null}
     </div>
     <p className={styles.status} role="status" aria-live="polite">
-      {state === "ready" ? `高德地图已加载${omittedCount ? `；${omittedCount} 个坐标转换失败，已从地图省略` : ""}` : state === "loading" ? "正在加载高德地图；文字目录可立即使用" : state === "error" ? "高德地图加载失败，已启用本地概览" : "当前使用本地坐标概览"}
+      {state === "ready" ? `${selection.overview ? "全部地点" : selectedPoint?.name ?? "高德地图"}${!selection.overview && selectedPoint?.privacy === "APPROXIMATE" ? " · 大致位置" : ""}${omittedCount ? `；${omittedCount} 个坐标转换失败，已从地图省略` : ""}` : state === "loading" ? "正在加载高德地图；文字目录可立即使用" : state === "error" ? "高德地图加载失败，已启用本地概览" : "当前使用本地坐标概览"}
     </p>
   </section>;
 }
