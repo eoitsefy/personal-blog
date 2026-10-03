@@ -11,7 +11,7 @@ permissions:
 jobs:
   validate:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 30
     services:
       postgres:
         image: postgres:16
@@ -52,3 +52,7 @@ jobs:
       - run: npm run lint
       - run: npm run typecheck
       - run: npm run build
+      - name: Build production Linux container
+        run: docker build --tag personal-blog:ci .
+      - name: Verify production container runtime
+        run: bash scripts/verify-container-ci.sh

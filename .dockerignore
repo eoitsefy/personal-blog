@@ -2,6 +2,16 @@ node_modules
 .next
 .git
 .gitignore
+.tool-tmp
+.codex-tmp
+uploads
+*.log
+*.pem
+*.key
+admin.cookie
+*.bak*
+playwright-report
+test-results
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*

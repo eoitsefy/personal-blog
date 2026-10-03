@@ -2,7 +2,7 @@
 
 日期：2026-10-03。分支：`agent/security-writing-experience`。
 
-状态：本地已开发并验证；尚未推送、合并或部署。最近生产部署记录为 PR #26 的 `6eb4f4d`，不能将下述新功能与已上线能力混淆。
+状态：本地已开发并验证，分支已推送；进入 PR 与 CI 检查阶段，尚未合并或部署。最近生产部署记录为 PR #26 的 `6eb4f4d`，不能将下述新功能与已上线能力混淆。
 
 ## 1. 功能与数据边界
 
@@ -43,7 +43,8 @@
 - `npm run lint`、`npm run typecheck`、`npm run build` 通过。
 - `node scripts/verify-editor-browser.mjs`：真实本地生产构建 + Edge，通过图片粘贴上传、Markdown 预览、刷新恢复、断网重试、历史载入不改线上状态、正式保存、桌面与 390px 手机布局；无页面脚本异常、无横向溢出。
 - `npm audit --omit=dev --registry=https://registry.npmjs.org`：0；全量审计的开发告警见上一节。镜像 registry 不支持 audit 时不可将 404 解释为没有漏洞。
-- 本机没有 Docker，**未验证 Linux 容器镜像构建**；必须作为部署前门槛。
+- 本机没有 Docker，Linux 验证交由新增 CI 步骤：构建实际 Dockerfile，再用最终镜像执行迁移、Prisma 表查询、sharp 图片处理、非 root/Node 24 检查和 HTTP/鉴权检查。只有 GitHub 检查成功才算通过，不以配置存在代替执行证据。
+- 构建上下文明确排除 `.tool-tmp`、`.codex-tmp`、上传文件、日志、私钥与旧备份，防止本地测试数据库或无关文件进入构建阶段。
 
 可选浏览器验收依赖外部安装的 Playwright（或指定 `PLAYWRIGHT_MODULE`）及浏览器，不增加生产依赖。`TEST_DATABASE_URL` 必须指向名称以 `_test` 结尾的独立数据库，浏览器脚本还强制应用/数据库为回环地址；应用必须使用同一个测试数据库及独立临时上传目录。脚本自动创建并清理临时文章/账户，截图与上传文件位于被 Git 忽略的 `.tool-tmp/`，不提交真实用户数据。
 
