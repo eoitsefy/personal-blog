@@ -1,26 +1,26 @@
-.panel { margin-top: 36px; border: 1px solid var(--line); background: #171a1d; color: #f5f3e9; }
+.panel { --map-height: 460px; min-width: 0; margin-top: 36px; border: 1px solid var(--line); background: #171a1d; color: #f5f3e9; }
 .toolbar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px; padding: 16px 18px; border-bottom: 1px solid rgba(255,255,255,.14); }
 .placeSelect { display: flex; align-items: center; gap: 12px; min-width: 0; max-width: 100%; font-size: .8rem; }
 .placeSelect > span { flex-shrink: 0; color: #e9b949; }
-.placeSelect select { min-width: 0; max-width: 360px; padding: 9px 30px 9px 12px; color: #f5f3e9; background: #252a2f; border: 1px solid #676a6d; border-radius: 4px; }
+.placeSelect select { min-width: 0; min-height: 44px; max-width: 360px; padding: 9px 30px 9px 12px; color: #f5f3e9; background: #252a2f; border: 1px solid #676a6d; border-radius: 4px; }
 .viewActions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-size: .76rem; }
-.viewActions button, .viewActions a { padding: 9px 12px; border: 1px solid #676a6d; border-radius: 4px; cursor: pointer; }
+.viewActions button, .viewActions a { min-height: 44px; display: grid; place-items: center; padding: 9px 12px; border: 1px solid #676a6d; border-radius: 4px; cursor: pointer; }
 .viewActions button { color: inherit; background: transparent; }
 .viewActions button[aria-pressed="true"] { color: #171a1d; background: #e9b949; border-color: #e9b949; }
 .viewActions a { color: #f2d98f; }
 .toolbar :is(button, a, select):focus-visible { outline: 3px solid #e9b949; outline-offset: 3px; }
-.mapStage { position: relative; min-height: 460px; overflow: hidden; }
+.mapStage { position: relative; height: var(--map-height); min-width: 0; overflow: hidden; }
 .mapCanvas { position: absolute; z-index: 2; inset: 0; opacity: 0; pointer-events: none; transition: opacity .3s ease; }
 .mapCanvasReady { opacity: 1; pointer-events: auto; }
-.fallbackPlot { position: relative; min-height: 460px; overflow: hidden; background-image: linear-gradient(rgba(255,255,255,.055) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.055) 1px, transparent 1px); background-size: 48px 48px; }
+.fallbackPlot { position: relative; height: 100%; overflow: hidden; background-image: linear-gradient(rgba(255,255,255,.055) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.055) 1px, transparent 1px); background-size: 48px 48px; }
 .fallbackNotice { position: absolute; z-index: 3; top: 16px; left: 50%; width: min(90%, 680px); margin: 0; padding: 10px 14px; transform: translateX(-50%); border: 1px solid rgba(233,185,73,.45); background: rgba(15,17,20,.9); color: #f2d98f; font-size: .72rem; line-height: 1.6; text-align: center; }
 .fallbackMarker { position: absolute; z-index: 2; display: flex; align-items: center; gap: 8px; transform: translate(-16px,-16px); color: #fff; font-size: .72rem; white-space: nowrap; }
 .fallbackMarker i { width: 32px; height: 32px; display: grid; place-items: center; color: #151719; background: var(--signal); border: 4px solid rgba(255,255,255,.22); border-radius: 50%; font-style: normal; font-weight: 800; box-shadow: 0 0 0 1px #111; }
 .fallbackMarker i.featuredFallbackMarker { width: 40px; height: 40px; color: #fff8d9; background: #9f341f; box-shadow: 0 0 0 2px #e9b949, 0 7px 22px rgba(0,0,0,.5); }
 .fallbackMarker span { padding: 5px 7px; background: rgba(11,13,15,.82); }
 .fallbackMarker:hover span { color: var(--signal); }
-.emptyPlot { min-height: 240px; display: grid; place-items: center; padding: 30px; color: rgba(255,255,255,.55); text-align: center; }
-.status { min-height: 38px; margin: 0; padding: 11px 18px; border-top: 1px solid rgba(255,255,255,.12); color: rgba(255,255,255,.58); font: .62rem/1.5 monospace; letter-spacing: .06em; }
+.emptyPlot { height: 100%; display: grid; place-items: center; padding: 30px; color: rgba(255,255,255,.55); text-align: center; }
+.status { min-height: 38px; margin: 0; padding: 11px 18px; border-top: 1px solid rgba(255,255,255,.12); color: rgba(255,255,255,.58); font: .62rem/1.5 monospace; letter-spacing: .06em; overflow-wrap: anywhere; }
 .mapMarker { position: relative; display: block; width: 36px; height: 36px; padding: 0; border: 0; border-radius: 50%; background: transparent; cursor: pointer; font: inherit; }
 .markerPin { display: grid; place-items: center; width: 36px; height: 36px; border: 3px solid #fff; border-radius: 50%; color: #17191c; background: #e9b949; box-shadow: 0 4px 14px rgba(0,0,0,.3); font-size: 18px; }
 .markerLabel { position: absolute; bottom: calc(100% + 9px); left: 50%; display: grid; gap: 4px; width: max-content; max-width: min(240px, 65vw); transform: translateX(-50%); padding: 8px 12px; border: 1px solid #c0bcb3; border-radius: 5px; background: #fff; color: #202326; box-shadow: 0 4px 14px rgba(0,0,0,.18); text-align: center; overflow-wrap: anywhere; }
@@ -34,5 +34,23 @@
 .selectedMapMarker .markerLabel small { color: #f2d98f; }
 .mapMarker:focus-visible { outline: 3px solid #111; outline-offset: 3px; }
 .clusterMarker { width: 42px; height: 42px; display: grid; place-items: center; border: 3px solid rgba(255,255,255,.9); border-radius: 50%; color: #17191c; background: var(--signal-strong); box-shadow: 0 6px 22px rgba(0,0,0,.4); font: 800 .78rem/1 monospace; }
-@media (max-width: 640px) { .placeSelect { width: 100%; } .placeSelect select { width: 100%; } .mapStage, .fallbackPlot { min-height: 400px; } }
+@media (max-width: 640px), (max-height: 500px) and (pointer: coarse) {
+  .panel { --map-height: clamp(300px, 52vh, 480px); --map-height: clamp(300px, 52svh, 480px); margin-top: 18px; }
+  .toolbar { gap: 10px; padding: 12px; }
+  .placeSelect { width: 100%; gap: 8px; }
+  .placeSelect select { flex: 1; width: 0; max-width: none; font-size: 16px; }
+  .viewActions { width: 100%; display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); gap: 6px; font-size: .8rem; }
+  .viewActions button, .viewActions a { padding: 9px 6px; text-align: center; }
+  .status { padding: 10px 12px; font-size: .72rem; }
+  .markerLabel { max-width: min(220px, 58vw); }
+  .fallbackMarker { width: 144px; max-width: 32vw; flex-direction: column; gap: 4px; transform: translate(-50%, -22px); }
+  .fallbackMarker i, .fallbackMarker i.featuredFallbackMarker { width: 44px; height: 44px; flex-shrink: 0; }
+  .fallbackMarker span { max-width: 100%; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; white-space: normal; overflow-wrap: anywhere; line-height: 1.4; text-align: center; }
+}
+@media (max-height: 500px) and (pointer: coarse) {
+  .panel { --map-height: 72vh; --map-height: 72svh; }
+  .toolbar { flex-wrap: nowrap; }
+  .placeSelect { flex: 1; width: auto; }
+  .viewActions { width: auto; }
+}
 @media (prefers-reduced-motion: reduce) { .mapCanvas { transition: none; } }
