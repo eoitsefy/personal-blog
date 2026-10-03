@@ -207,22 +207,65 @@
   }
 
   .headerInner {
-    min-height: 68px;
-    grid-template-columns: 1fr auto;
-    gap: 18px;
+    min-height: 0;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 8px 12px;
+    padding-top: 12px;
   }
 
-  .brandCopy small,
-  .consoleLink {
+  .brand,
+  .brandCopy {
+    min-width: 0;
+  }
+
+  .brandCopy strong {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .brandCopy small {
     display: none;
   }
 
+  .consoleLink {
+    grid-column: 2;
+    grid-row: 1;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap;
+  }
+
   .nav {
-    gap: 18px;
+    grid-column: 1 / -1;
+    grid-row: 2;
+    min-width: 0;
+    width: 100%;
+    gap: 8px;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scrollbar-width: thin;
   }
 
   .nav a {
-    padding: 25px 0 22px;
+    display: flex;
+    flex: 1 0 auto;
+    align-items: center;
+    justify-content: center;
+    min-width: 3.5rem;
+    min-height: 48px;
+    padding: 12px 4px;
+    white-space: nowrap;
+  }
+
+  .nav a[aria-current="page"]::after {
+    bottom: 0;
+  }
+
+  .nav a:focus-visible {
+    outline-offset: -2px;
   }
 
   .footerInner {
@@ -239,21 +282,5 @@
 
   .filingLink {
     justify-self: start;
-  }
-}
-
-@media (max-width: 430px) {
-  .brandCopy strong {
-    max-width: 90px;
-    line-height: 1.2;
-  }
-
-  .nav {
-    gap: 13px;
-    font-size: 0.74rem;
-  }
-
-  .nav a:nth-last-child(-n + 2) {
-    display: none;
   }
 }
