@@ -241,12 +241,13 @@ Current milestone: `[IN PROGRESS — Phase 7A]` production commit `9d73a20` now 
 
 ### Current delivery override — 2026-10-03
 
-The initial audit below is historical. The current next delivery is security and writing experience on `agent/security-writing-experience`, after the deployed PR #26 map improvements.
+The initial audit below is historical. Security, writing experience and mobile navigation shipped in PR #27 at `b2f150c` on 2026-10-03.
 
-- `[LOCAL COMPLETE]` Upgrade Next.js, Prisma, sharp and compatible dependencies; move Docker/CI to Node 24 and gate production dependency auditing in CI.
-- `[LOCAL COMPLETE]` Add isolated autosaved working copies, window recovery, conflict protection, 20 saved versions, inline image paste/upload and responsive live preview.
+- `[DEPLOYED]` Upgrade Next.js, Prisma, sharp and compatible dependencies; move Docker/CI to Node 24 and gate production dependency auditing in CI.
+- `[DEPLOYED]` Add isolated autosaved working copies, window recovery, conflict protection, 20 saved versions, inline image paste/upload and responsive live preview; keep all public mobile navigation links visible.
 - `[LOCAL VERIFIED]` Unit, disposable PostgreSQL, lint, typecheck, build and browser acceptance. Detailed evidence and limitations: `12_WRITING_EXPERIENCE.md`.
-- `[PENDING]` Review/CI, Linux container build, production backup, additive migration, deployment and regression acceptance. Do not report the new writing UI as live yet.
+- `[VERIFIED]` Review/CI, Linux container build, production backup, additive migration, deployment, HTTPS API smoke, mobile navigation emulation and map regression passed. Physical-phone editorial acceptance remains pending.
+- `[PENDING P0]` Rotate AMap security code exposed by a legacy proxy diagnostic log and improve log redaction; do not commit credentials.
 - `[PENDING]` Track upstream development-only audit fixes; voice, private content, off-host backup and external notifications remain separate milestones.
 
 Start with Phase 0 and produce:

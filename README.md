@@ -17,7 +17,7 @@ A personal publishing application built with Next.js 16, PostgreSQL, Prisma, and
 
 Sitemap/RSS, moderated comments, invited users, AMap places and the bounded DeepSeek text assistant are implemented. Voice remains planned.
 
-The writing-experience branch adds administrator-only working-copy autosave, window recovery, up to 20 saved versions, image paste/upload and live Markdown preview. Autosave never publishes. Apply the additive `20261003090000_post_working_copies` migration before running this version; production acceptance is tracked in `docs/codex/09_COMPLETED_FEATURES.md`.
+PR #27 adds administrator-only working-copy autosave, window recovery, up to 20 saved versions, image paste/upload, live Markdown preview and complete mobile navigation. Autosave never publishes. It was deployed on 2026-10-03 with the additive `20261003090000_post_working_copies` migration; new installations must also apply migrations. Production evidence and remaining acceptance limits are tracked in `docs/codex/09_COMPLETED_FEATURES.md` and `12_WRITING_EXPERIENCE.md`.
 
 ## Requirements
 
