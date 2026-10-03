@@ -166,7 +166,7 @@ Phase 5B has no database migration. Before deployment:
 - configure usage/remaining-quota alerts in the AMap console;
 - set `MAP_PROVIDER=amap` and `AMAP_JS_API_KEY=<domain-restricted-browser-key>` in the production `.env`;
 - create `/etc/nginx/snippets/personal-blog-amap-secret.conf` as root with `set $amap_security_jscode "...";`, owner `root:root`, and mode `600`;
-- add the two locations from `deploy/nginx/amap-service.conf.example` to the HTTPS server block, keeping the styles location first;
+- install `deploy/nginx/amap-log-format.conf.example` in the `http` context and the logging snippet from `amap-log-policy.conf.example`, then add both locations from `amap-service.conf.example` to the HTTPS server, keeping styles first;
 - run `nginx -t` and reload Nginx without printing the secret-bearing full configuration to deployment logs;
 - build the image after the CSP change and recreate only the application container.
 
@@ -182,6 +182,82 @@ Production acceptance must verify:
 - CSP has no unexpected violations and Nginx access/error logs do not expose `jscode`.
 
 Rollback removes or disables `MAP_PROVIDER=amap`, restores the previous application image, and may leave the inert Nginx proxy locations in place. Remove the proxy and secret snippet if the provider is abandoned. Rotate the Web JS API key and `securityJsCode` immediately if either was exposed.
+
+### AMap log-hardening gate (2026-10-03, implementation not yet deployed)
+
+Nginx upstream error text can contain the URL after the server injects `jscode`.
+An access-log regex alone does not protect error logs. Stock Nginx provides
+custom [access log formats](https://nginx.org/en/docs/http/ngx_http_log_module.html),
+but its [error log](https://nginx.org/en/docs/ngx_core_module.html#error_log) has no
+equivalent format/redaction directive. This patch makes the following deliberate tradeoff:
+
+- AMap-only access logs retain timestamp, a constant route label, HTTP/upstream
+  status, timings and byte count. No URL/path/query, headers, body, client IP or
+  upstream address is recorded. JSON escaping is enabled.
+- Only the two secret-injecting locations discard raw Nginx errors. Safe access
+  logs still record their 4xx/5xx results. Ordinary site errors and Nginx startup
+  diagnostics are unchanged. Detailed provider error bodies require a separate
+  allowlisted diagnostic; never re-enable raw proxy error logging to debug.
+- `proxy_intercept_errors off` prevents upstream errors from being internally
+  redirected into ordinary request logging. Do not add conflicting logs,
+  internal redirects, or extra secret-injecting locations without new tests.
+
+Deployment requires a separate explicit production request:
+
+1. Save root-only copies of the active site config and any replaced logging
+   files; record checksums/paths only. Do not dump full config or raw logs.
+2. Install `amap-log-format.conf.example` as
+   `/etc/nginx/conf.d/personal-blog-amap-log-format.conf` (0644) and
+   `amap-log-policy.conf.example` as
+   `/etc/nginx/snippets/personal-blog-amap-logging.conf` (0644), root-owned.
+   Confirm `conf.d/*.conf` is included exactly once in the existing `http` block.
+3. Add the logging-snippet include to BOTH existing AMap locations. Preserve
+   their secret snippet, proxy paths, server settings, uploads ACLs and app
+   container. No app rebuild, environment change or database migration is needed.
+4. Pre-create `/var/log/nginx/personal-blog-amap-access.log` as root:adm 0640.
+   Verify the installed Nginx logrotate policy covers this `*.log`, creates 0640
+   files and reopens logs. Do not install a duplicate rotation rule.
+5. Capture `nginx -t` output privately; report only pass/fail. Reload only on
+   success, then check HTTPS/health and real desktop/mobile AMap traffic. Confirm
+   new safe JSON records exist, and only expected fields occur. Review request
+   locations/overrides locally without copying credentials out of the server.
+6. On failure restore the saved files, test and reload. This rollback also
+   restores the old logging risk; keep AMap disabled or reapply safe logging
+   promptly before entering a replacement credential. Do not restore old
+   credentials after a successful provider rotation.
+
+Offline regression (CI installs Nginx; no production/provider access):
+
+```bash
+python3 scripts/test-nginx-log-summary.py
+python3 scripts/verify-amap-logging.py
+```
+
+The integration test uses its own loopback-only Nginx prefix and a mock HTTP
+upstream, injecting synthetic credentials. Both map routes must preserve secret
+injection and return 200/403/502 without logging any canary from query or headers;
+the ordinary-site error/access logs must still work. No real Key is used.
+
+For existing error logs, run the summary ON the server before returning output:
+
+```bash
+sudo python3 scripts/summarize-nginx-errors.py --lines 200
+```
+
+It emits only timestamps, fixed severity/category labels and counts. Unknown
+messages become `other`; this intentionally loses detail rather than claiming
+regex replacement can sanitize every credential format. It neither edits logs
+nor authorizes their upload. Historical logs, backups and previous diagnostic
+copies can still contain the old code and must be treated as sensitive evidence.
+
+Credential rotation remains a separate owner action: use the AMap console's
+supported reset/replacement flow for a Web JS API key and its matching security
+code, keep domain restrictions, then update the root-only snippet in a private
+interactive server session with terminal echo disabled. Do not put the code in
+chat, shell arguments/history, an environment dump, or an issue/PR. If a new
+browser key is required, update `AMAP_JS_API_KEY` as a separate application
+configuration change. Verify real map initialization/tiles before declaring
+rotation complete; logging fixes do not revoke the old credential.
 
 Before each release, record:
 

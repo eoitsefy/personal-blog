@@ -4,12 +4,14 @@
 
 ## Latest deployment — 2026-10-03
 
-- Most recent deployment: PR #27 at `b2f150c`, including security/runtime upgrades, writing improvements and all four mobile navigation links. Database/uploads backups and the prior `6eb4f4d` application image are retained.
-- Current development branch: `agent/security-writing-experience`; Node 24.19.0, Next.js 16.3.8, Prisma 6.19.3, sharp 0.35.5. Docker and CI now target Node 24; the system-installed Node 20 executable is not suitable for this branch.
+- Most recent application deployment: PR #29 at `52e72d8`, including mobile map sizing/orientation support on top of PR #27 writing, security and navigation improvements. Read-only server audit reconfirmed this commit on 2026-10-03. Rollback image: `personal-blog-web-app:rollback-mobile-map-20261003-200610`; backup: `/root/backups/mobile-map-20261003-200610`.
+- Current security follow-up branch: `agent/amap-log-hardening`; deployed runtime remains Node 24, Next.js 16.3.8, Prisma 6.19.3 and sharp 0.35.5. The system-installed Node 20 executable is not suitable.
 - Private per-admin working copies, optimistic concurrency, up to 20 saved revisions, image paste/upload, and live Markdown preview are deployed. Migration `20261003090000_post_working_copies` applied. Production HTTPS API smoke, public mobile navigation emulation and AMap regression passed; physical-phone acceptance remains pending.
-- Local evidence: 104 unit tests, 8 PostgreSQL integration tests, lint, typecheck, production build, and real desktop/mobile browser acceptance. Production dependency audit: 0; development dependency audit: 5 high advisories from the same unpatched `braces` dependency chain.
+- PR #29 evidence: 105 unit tests, 8 PostgreSQL integration tests, lint, typecheck, production build and desktop/mobile browser emulation; real production AMap tiles loaded. PR #27 dependency audit snapshot: production 0, development 5 high advisories from the same unpatched `braces` chain; not a current re-audit.
 - See `12_WRITING_EXPERIENCE.md` for precise limits and deployment gates. Older sections below are dated historical evidence, not current runtime/version claims.
 - Production upload-read permissions repaired with read-only/default ACLs for Nginx, without granting access to the operator group. Security follow-up remains: rotate the AMap security code exposed in a legacy proxy diagnostic log and improve log redaction; no secret value is recorded here.
+- Logging follow-up implements an allowlisted AMap status/timing log, location-scoped suppression of secret-bearing raw upstream errors, and a safe legacy-error summary. Not deployed; provider-console credential rotation remains pending. See `06_DEPLOYMENT_RUNBOOK.md`.
+- 2026-10-03 read-only operations check: two AMap locations lack logging overrides; secret snippet is root-owned 0600. Certificate expires 2026-12-17; 14.9 GiB disk free; newest local database/upload backups are 17.5/17.2 hours old (freshness only, no new restore test). Offsite configuration and rclone are absent. Owner deferred offsite work; external notification setup remains undecided.
 
 ## Repository and Git
 
