@@ -16,6 +16,7 @@ export const MapClientEventSchema = z.object({
     "controls",
     "marker_cluster",
     "fit_view",
+    "base_map",
   ]).optional(),
   pointCount: z.number().int().min(0).max(100_000),
   omittedCount: z.number().int().min(0).max(100_000).default(0),
