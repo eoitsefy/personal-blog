@@ -358,7 +358,7 @@ export function PostForm({
       </label>
       {preview ? <section aria-label="实时预览" className="min-w-0 rounded-xl border border-neutral-300 bg-white p-4 text-neutral-900 dark:border-neutral-700 dark:bg-neutral-950 dark:text-neutral-100">
         <h2 className="mb-3 text-sm font-medium">实时预览</h2>
-        <div className="editor-markdown max-h-[650px] overflow-auto break-words"><RichMarkdown markdown={previewMarkdown || "*暂无内容*"} assets={availableMedia} /></div>
+        <div className="editor-markdown max-h-[650px] overflow-auto break-words"><RichMarkdown markdown={previewMarkdown || "*暂无内容*"} assets={availableMedia} attachedImages={availableMedia.filter(asset => form.assetIds.includes(asset.id))} /></div>
       </section> : null}
       </div>
 
@@ -416,7 +416,7 @@ export function PostForm({
                     <p className="truncate text-sm" title={asset.originalName ?? asset.url}>{asset.originalName ?? "未命名图片"}</p>
                     <div className="flex flex-wrap gap-3 text-sm">
                       <button type="button" onClick={() => insertAsset(asset)} className="font-medium underline-offset-4 hover:underline">
-                        插入 Markdown
+                        插入正文
                       </button>
                       <label className="flex items-center gap-2">
                         <input
@@ -425,7 +425,7 @@ export function PostForm({
                           disabled={usedInContent}
                           onChange={() => toggleAsset(asset.id)}
                         />
-                        保持引用
+                        {usedInContent ? "已插入正文" : asset.kind === "IMAGE" ? "显示在文末" : "保持引用"}
                       </label>
                     </div>
                   </div>

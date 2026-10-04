@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import { SiteFooter, SiteHeader } from "@/components/site/site-shell";
 import { buildPublicPostWhere, listHref, PUBLIC_POST_PAGE_SIZE } from "@/lib/post-query";
 import { prisma } from "@/lib/prisma";
@@ -86,6 +87,11 @@ export default async function PostsPage({ searchParams }: PageProps) {
             createdAt: true,
             category: { select: { name: true, slug: true } },
             tags: { select: { tag: { select: { name: true, slug: true } } } },
+            assets: {
+              where: { asset: { kind: "IMAGE", deletedAt: null, isPublic: true } },
+              orderBy: { assetId: "asc" }, take: 1,
+              select: { asset: { select: { url: true, originalName: true } } },
+            },
           },
         }),
         prisma.category.findMany({
@@ -174,6 +180,7 @@ export default async function PostsPage({ searchParams }: PageProps) {
                     <article>
                       <span className={styles.itemIndex}>{String(displayIndex).padStart(2, "0")}</span>
                       <div className={styles.itemBody}>
+                        <div>
                         <div className={styles.itemMeta}>
                           <time dateTime={publishDate.toISOString()}>{formatDate(publishDate)}</time>
                           {post.category ? (
@@ -193,6 +200,8 @@ export default async function PostsPage({ searchParams }: PageProps) {
                             ))}
                           </div>
                         ) : null}
+                        </div>
+                        {post.assets[0] ? <Image src={post.assets[0].asset.url} alt="" width={480} height={320} unoptimized className={styles.thumbnail} /> : null}
                       </div>
                       <Link className={styles.readLink} href={`/posts/${post.slug}`} aria-label={`阅读《${post.title}》`}>
                         <span>阅读</span>

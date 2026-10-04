@@ -21,7 +21,7 @@ export default async function PreviewPostPage({ params }: PageProps) {
       contentMd: true,
       status: true,
       updatedAt: true,
-      assets: { select: { asset: { select: { url: true, kind: true, originalName: true, mime: true } } } },
+      assets: { where: { asset: { deletedAt: null, isPublic: true } }, select: { asset: { select: { url: true, kind: true, originalName: true, mime: true } } } },
     },
   });
   if (!post) notFound();
@@ -39,7 +39,7 @@ export default async function PreviewPostPage({ params }: PageProps) {
           <p className="mt-4 text-sm text-neutral-500">最后更新：{post.updatedAt.toLocaleString("zh-CN")}</p>
         </header>
         <section className="prose prose-neutral max-w-none dark:prose-invert" aria-label="文章预览正文">
-          <RichMarkdown markdown={post.contentMd} assets={post.assets.map(({ asset }) => asset)} />
+          <RichMarkdown markdown={post.contentMd} assets={post.assets.map(({ asset }) => asset)} attachedImages={post.assets.map(({ asset }) => asset)} />
         </section>
       </article>
     </main>
