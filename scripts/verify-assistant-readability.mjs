@@ -53,6 +53,7 @@ try {
     if(await sheet.isVisible()) {
     assert.equal(await character.getAttribute('data-action'),'idle');
     await dialog.getByRole('button',{name:'播放挥手动作'}).click();
+    await page.waitForSelector('dialog canvas[data-ready=true]');
     for(const time of [0,300,600]) {
       positions.push(await sheet.evaluate(async(el,time)=>{const a=el.getAnimations()[0];a.pause();a.currentTime=time;await new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)));return {left:el.dataset.pose,top:'0px'};},time));
       assert.deepEqual(await character.boundingBox(),before);
@@ -64,12 +65,12 @@ try {
       await dialog.getByRole('button',{name:`播放${label}动作`}).click();
       assert.equal(await character.getAttribute('data-action'),action);
       const frames=[];
-      for(const offset of [.01,.15,.3,.46,.64,.82]) {
+      for(const offset of Array.from({length:12},(_,i)=>(i+.55)/12)) {
         await page.waitForSelector('dialog canvas[data-ready=true]');
         frames.push(await sheet.evaluate(async(el,time)=>{const a=el.getAnimations()[0];a.pause();a.currentTime=time;await new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)));return {left:el.dataset.pose,top:'0px'};},duration*offset));
         assert.deepEqual(await character.boundingBox(),before);
       }
-      assert.equal(new Set(frames.map(frame=>frame.left)).size,6,`${action}: six distinct intermediate poses`);
+      assert.equal(new Set(frames.map(frame=>frame.left)).size,12,`${action}: twelve distinct intermediate poses`);
       assert.equal(new Set(frames.map(frame=>frame.top)).size,1);
       if(action!=='thinking') {
         await sheet.evaluate(el=>el.getAnimations()[0].finish());
@@ -90,7 +91,7 @@ try {
     await context.close();
   }
   const context=await browser.newContext({viewport:{width:390,height:844}});
-  await context.route('**/assistant/chibi-actions-v3.png',r=>r.abort());
+  await context.route('**/assistant/chibi-idle-v4.png',r=>r.abort());
   const page=await context.newPage();await page.goto(base+'/assistant');
   await page.waitForFunction(()=>document.querySelector('[data-action] img')?.getAttribute('src')?.includes('chibi-idle-v3'));
   await context.close();

@@ -7,7 +7,7 @@ import { createPortal } from "react-dom";
 import { FormEvent, useEffect, useId, useRef, useState } from "react";
 import { ASSISTANT_GREETINGS, parseAssistantAnswer, pickAssistantGreeting, type AssistantAnswer } from "@/lib/assistant/ui";
 import styles from "./assistant-panel.module.css";
-import { CHARACTER_ACTIONS, CHARACTER_ATLAS, CHARACTER_STAGE, PLAYFUL_ACTIONS, characterPose, characterSample, type CharacterAction } from "@/lib/assistant/character";
+import { CHARACTER_ACTIONS, CHARACTER_SHEETS, CHARACTER_FRAME_COUNT, CHARACTER_STAGE, PLAYFUL_ACTIONS, characterPose, characterSample, type CharacterAction } from "@/lib/assistant/character";
 
 type Settings = { enabled: boolean; maxQuestionChars: number };
 type Turn = { question: string; result: AssistantAnswer };
@@ -21,7 +21,7 @@ function Character({ action = "idle", small = false, animate = true, active = tr
     const context = element.getContext("2d");
     if (!context) return;
     let disposed = false, tick = 0;
-    const image = new window.Image();
+    const images: HTMLImageElement[] = [];
     const reduced = matchMedia("(prefers-reduced-motion: reduce)");
     let animation: Animation | undefined;
     let playing: CharacterAction = action;
@@ -60,22 +60,31 @@ function Character({ action = "idle", small = false, animate = true, active = tr
       const visible = element!.getClientRects().length > 0;
       if (animate && active && visible && !reduced.matches && !document.hidden && typeof element!.animate === "function") { play(action); tick = requestAnimationFrame(paint); }
     }
-    image.onload = () => {
+    // Load only neutral + the requested action, never all six sheets on entry.
+    const needed: CharacterAction[] = action === "idle" ? ["idle"] : ["idle", action];
+    Promise.all(needed.map(next => new Promise<void>((resolve, reject) => {
+      const image = new window.Image(); images.push(image);
+      image.onload = () => {
+        if (disposed) return;
+        for (let frameIndex = 0; frameIndex < CHARACTER_FRAME_COUNT; frameIndex++) {
+          const index = CHARACTER_ACTIONS[next].row * CHARACTER_FRAME_COUNT + frameIndex;
+          const pose = characterPose(index), frame = document.createElement("canvas");
+          frame.width = frame.height = CHARACTER_STAGE.size;
+          frame.getContext("2d")!.drawImage(image, pose.x, pose.y, pose.width, pose.height, pose.left, pose.top, pose.drawWidth, pose.drawHeight);
+          poses[index] = frame;
+        }
+        resolve();
+      };
+      image.onerror = () => reject(new Error("Character artwork unavailable"));
+      image.src = CHARACTER_SHEETS[next].src;
+    }))).then(() => {
       if (disposed) return;
-      for (let index = 0; index < 36; index++) {
-        const pose = characterPose(index), frame = document.createElement("canvas");
-        frame.width = frame.height = CHARACTER_STAGE.size;
-        frame.getContext("2d")!.drawImage(image, pose.x, pose.y, pose.width, pose.height, pose.left, pose.top, pose.width, pose.height);
-        poses.push(frame);
-      }
       element.dataset.ready = "true";
       refresh();
       reduced.addEventListener("change", refresh); document.addEventListener("visibilitychange", refresh);
       window.addEventListener("resize", refresh);
-    };
-    image.onerror = () => { if (!disposed) setFailed(true); };
-    image.src = CHARACTER_ATLAS.src;
-    return () => { disposed = true; image.onload = null; image.onerror = null; cancelAnimationFrame(tick); if (animation) { animation.onfinish = null; animation.cancel(); } reduced.removeEventListener("change", refresh); document.removeEventListener("visibilitychange", refresh); window.removeEventListener("resize", refresh); };
+    }).catch(() => { if (!disposed) setFailed(true); });
+    return () => { disposed = true; for (const image of images) { image.onload = null; image.onerror = null; } cancelAnimationFrame(tick); if (animation) { animation.onfinish = null; animation.cancel(); } reduced.removeEventListener("change", refresh); document.removeEventListener("visibilitychange", refresh); window.removeEventListener("resize", refresh); };
   }, [action, active, animate, failed]);
   // Draw registered pose rectangles, never translate the character viewport.
   return <span className={styles.character} data-action={action} aria-hidden="true">

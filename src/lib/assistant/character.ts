@@ -1,5 +1,4 @@
-// Versioned artwork and timelines are the only character-specific configuration.
-export const CHARACTER_ATLAS = { src: "/assistant/chibi-actions-v3.png", width: 1254, height: 1254, columns: 6, rows: 6 } as const;
+// Twelve real intermediate drawings per action; versioned 4 × 3 sheets.
 export const CHARACTER_ACTIONS = {
   idle: { label: "待机", row: 0, duration: 6000, loop: true },
   wave: { label: "挥手", row: 1, duration: 1800, loop: false },
@@ -10,34 +9,51 @@ export const CHARACTER_ACTIONS = {
 } as const;
 export type CharacterAction = keyof typeof CHARACTER_ACTIONS;
 export const PLAYFUL_ACTIONS: CharacterAction[] = ["wave", "nod", "thinking", "bow", "cheer"];
-
-// Generated figures are not registered to an exact grid. Measured rectangles
-// isolate each pose; boot-centre anchors correct drift inside a fixed viewport.
-export const CHARACTER_STAGE = { size: 224, centre: 112, baseline: 216, blendMs: 110 } as const;
+export const CHARACTER_FRAME_COUNT = 12;
+export const CHARACTER_STAGE = { size: 224, centre: 112, baseline: 216, blendMs: 45 } as const;
+// Measured alpha bounds; constant action scale and fixed boot-centre anchors.
+export const CHARACTER_SHEETS = {
+  idle: { src: "/assistant/chibi-idle-v4.png", width: 1254, height: 1254, scale: 0.553763440860215 },
+  wave: { src: "/assistant/chibi-wave-v4.png", width: 1448, height: 1086, scale: 0.6023391812865497 },
+  nod: { src: "/assistant/chibi-nod-v4.png", width: 1448, height: 1086, scale: 0.5971014492753624 },
+  thinking: { src: "/assistant/chibi-thinking-v4.png", width: 1254, height: 1254, scale: 0.5643835616438356 },
+  bow: { src: "/assistant/chibi-bow-v4.png", width: 1254, height: 1254, scale: 0.5868945868945868 },
+  cheer: { src: "/assistant/chibi-cheer-v4.png", width: 1254, height: 1254, scale: 0.569060773480663 },
+} as const;
 export const CHARACTER_POSES = [
-  [[63,7,186,211,125.8],[268,7,392,212,331.1],[469,7,594,212,533.1],[669,7,792,212,731.8],[872,7,995,212,935.3],[1074,7,1198,212,1136.4]],
-  [[62,216,186,421,125.5],[268,216,392,421,331.5],[469,216,594,421,534.4],[670,216,794,421,734.3],[871,216,996,421,937.2],[1074,216,1198,421,1136.7]],
-  [[63,425,186,629,125.4],[270,430,392,629,331.1],[470,430,594,629,533],[671,430,795,629,732.6],[872,426,996,629,935.4],[1075,425,1198,629,1136.8]],
-  [[63,634,186,838,125.3],[268,633,393,837,332.9],[469,634,593,838,537.2],[667,634,792,838,738.8],[875,634,1000,838,942],[1075,634,1198,838,1137.3]],
-  [[63,843,186,1046,125.5],[269,839,391,1046,333.9],[471,846,595,1046,537.3],[668,848,794,1046,739.6],[873,841,996,1046,940.8],[1075,843,1198,1046,1136.3]],
-  [[63,1049,186,1251,125],[268,1050,392,1251,331.4],[470,1049,594,1251,534],[670,1049,798,1251,733.9],[872,1049,995,1251,934.8],[1074,1050,1198,1252,1135.8]],
+  [[48,27,278,398,167.49],[362,27,592,398,481.58],[676,27,905,398,794.58],[989,27,1218,398,1107.87],[49,446,278,816,167.41],[363,446,592,816,481.43],[676,446,905,816,794.59],[990,446,1219,816,1108.1],[48,864,278,1234,167.46],[363,864,592,1234,481.41],[676,864,905,1234,794.54],[990,864,1219,1234,1107.98]],
+  [[106,15,312,353,212.99],[455,15,661,353,562.42],[805,15,1010,353,911.31],[1158,15,1364,353,1265.9],[106,370,313,706,213.16],[455,370,661,707,562.42],[805,370,1011,707,912.19],[1159,370,1364,707,1266.06],[105,721,312,1062,212.64],[454,723,661,1062,562.3],[805,723,1011,1062,911.59],[1159,722,1365,1062,1265.99]],
+  [[117,21,325,365,224.97],[452,26,658,365,558.6],[788,27,993,365,892.79],[1122,31,1328,365,1227.6],[120,391,325,725,224.88],[454,399,657,725,558.58],[788,398,992,725,892.88],[1123,394,1327,725,1227.57],[119,737,325,1066,224.95],[453,737,658,1066,558.86],[787,737,992,1066,892.64],[1122,737,1327,1066,1227.19]],
+  [[56,40,278,404,173.45],[370,41,590,404,486.39],[681,40,903,404,798.75],[994,40,1215,404,1111.44],[56,442,278,806,173.55],[370,442,590,806,486.53],[681,442,903,806,798.83],[994,442,1215,806,1111.61],[56,843,278,1207,173.48],[370,843,590,1207,486.42],[681,843,903,1207,798.86],[994,843,1215,1207,1111.66]],
+  [[51,49,263,399,161.03],[363,57,572,399,472.25],[673,60,881,399,783.03],[983,72,1192,399,1094.12],[51,481,263,805,160.55],[362,491,576,805,472.44],[672,507,886,805,783.24],[983,493,1195,805,1095.55],[49,882,263,1205,160.77],[361,878,576,1205,472.68],[673,875,884,1205,783.41],[983,863,1194,1205,1094.64]],
+  [[67,39,280,398,176.23],[368,38,580,398,477.63],[664,38,878,398,776.12],[967,38,1182,398,1078.57],[66,439,283,798,177.32],[367,438,582,798,477.46],[661,438,880,798,776.63],[967,438,1182,798,1079],[66,839,283,1200,177.64],[368,840,583,1200,479.56],[664,841,879,1200,776.49],[966,841,1182,1200,1078.37]],
 ] as const;
 
 export function characterPose(index: number) {
-  const [x, y, right, bottom, anchor] = CHARACTER_POSES[Math.floor(index / 6)][index % 6];
-  return { x, y, width: right - x + 1, height: bottom - y + 1,
-    left: CHARACTER_STAGE.centre - (anchor - x), top: CHARACTER_STAGE.baseline - (bottom - y + 1) };
+  const row = Math.floor(index / CHARACTER_FRAME_COUNT);
+  const [x, y, right, bottom, anchor] = CHARACTER_POSES[row][index % CHARACTER_FRAME_COUNT];
+  const action = (Object.keys(CHARACTER_ACTIONS) as CharacterAction[])[row];
+  const scale = CHARACTER_SHEETS[action].scale;
+  const width = right - x + 1, height = bottom - y + 1;
+  return { x, y, width, height, drawWidth: width * scale, drawHeight: height * scale,
+    left: CHARACTER_STAGE.centre - (anchor - x) * scale, top: CHARACTER_STAGE.baseline - height * scale };
+}
+
+export function characterOffsets(action: CharacterAction) {
+  // Hold neutral, then close/reopen the eyelids through twelve actual poses.
+  return action === "idle" ? [0, .8, .816, .832, .848, .864, .88, .896, .912, .928, .944, .96, .985] :
+    [...Array.from({ length: CHARACTER_FRAME_COUNT }, (_, frame) => frame / CHARACTER_FRAME_COUNT), .975];
 }
 
 export function characterSample(action: CharacterAction, elapsed: number) {
   const config = CHARACTER_ACTIONS[action];
   const time = config.loop ? Math.max(0, elapsed) % config.duration : Math.min(config.duration, Math.max(0, elapsed));
-  const offsets = action === "idle" ? [0, .86, .9, .93, .96, .98, 1 - CHARACTER_STAGE.blendMs / config.duration] : [0, .14, .28, .44, .62, .8, 1 - CHARACTER_STAGE.blendMs / config.duration];
+  const offsets = characterOffsets(action);
   if (!config.loop && time === config.duration) return { from: 0, to: 0, mix: 1 };
-  const sequence = offsets.map((_, column) => column === 6 ? 0 : config.row * 6 + column);
+  const sequence = offsets.map((_, frame) => frame === CHARACTER_FRAME_COUNT ? 0 : config.row * CHARACTER_FRAME_COUNT + frame);
   const step = Math.max(0, offsets.findLastIndex(offset => time >= offset * config.duration));
   if (step === 0) return { from: sequence[0], to: sequence[0], mix: 1 };
-  const transition = Math.min(CHARACTER_STAGE.blendMs, (offsets[step] - offsets[step - 1]) * config.duration);
+  const transition = Math.min(CHARACTER_STAGE.blendMs, ((offsets[step + 1] ?? 1) - offsets[step]) * config.duration);
   const progress = Math.min(1, (time - offsets[step] * config.duration) / transition);
   return { from: sequence[step - 1], to: sequence[step], mix: progress * progress * (3 - 2 * progress) };
 }
