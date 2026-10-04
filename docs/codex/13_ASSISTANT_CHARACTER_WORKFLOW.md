@@ -22,7 +22,11 @@
 
 这些是将来补画的预算，**本轮没有声称已交付 15 张真实姿态/秒**。当前优先保留原形象，原每动作十二姿态与最多 45ms 短渐变保持不变；浏览器仍按刷新节奏绘制短过渡，不将显示刷新率等同于真实素材帧率。增加显示帧率或重复图片不能补充缺失的解剖姿态；后续补图需锁定原角色并逐帧复核，不恢复不协调的分层拼装。帧率与逐帧绘制的区别参见 [Adobe 动画基础](https://helpx.adobe.com/animate/desktop/animation/animation-basics.html)，浏览器绘制时钟参见 [MDN requestAnimationFrame](https://developer.mozilla.org/en-US/docs/Web/API/Window/requestAnimationFrame)。
 
-本轮验证 `verify-character-frames.mjs` 同时检查原版为默认、没有分层模型请求/选择入口、全部 84 姿态、完整头脚、固定脚底、原短渐变、暂停、减少动态效果与静态回退。公开页面不使用历史 `verify-rig-assistant.mjs` / `verify-rig-identity.mjs` 作为当前验收，旧脚本仅对应保留的分层实验。128 项单元测试、lint、类型检查和生产构建已通过；正式构建预览的四宽度逐帧、聊天/焦点/错误恢复，以及 100%/90%/80%/200% 字体缩放模拟通过。预览空数据库的既有后台预渲染诊断不影响构建退出为 0；生产復验与部署结果后续补记。
+本轮验证 `verify-character-frames.mjs` 同时检查原版为默认、没有分层模型请求/选择入口、全部 84 姿态、完整头脚、固定脚底、原短渐变、暂停、减少动态效果与静态回退。公开页面不使用历史 `verify-rig-assistant.mjs` / `verify-rig-identity.mjs` 作为当前验收，旧脚本仅对应保留的分层实验。128 项单元测试、lint、类型检查和生产构建已通过；正式构建预览的四宽度逐帧、聊天/焦点/错误恢复，以及 100%/90%/80%/200% 字体缩放模拟通过。预览空数据库的既有后台预渲染诊断不影响构建退出为 0。
+
+2026-10-05 02:56（中国时间）应用已部署到 `1b08057adb1e11056bc280b385fafbe6a79e3748`，完整 CI `37225762202` 通过。镜像为 `sha256:a9c6330b22b87c958b1d74b488cab04b4115ff67a54c5369c625921840f2dda2`；回滚基线为 `0780c27f488633c076bacc198d1cc78c2e5e3310` / `personal-blog-web-app:rollback-chibi-assistant-20261005-025456`。私密备份位于 `/root/backups/chibi-assistant-20261005-025456`，部署日志位于 `/root/server-ops/logs/deploy-chibi-assistant-20261005-025456.log`。部署只替换应用容器，未改数据库、上传内容/ACL、Nginx、环境凭据或地图/模型供应商；主要 HTTPS 路由与原 PNG 字节一致性检查通过。
+
+03:01（中国时间）真实 HTTPS 浏览器复验通过：1280/768/390/320px 下均默认原版、无分层素材请求、全部 84 姿态完整、脚底固定、短过渡/暂停/减少动态效果/静态回退正常；六动作按钮、对话开关、焦点与 Escape 正常，暂停后画布存在完整中立人物。一次真实本地问候为 conversation 模式且 input/output token 均为 0；无麦克风请求或页面脚本错误。文章图片/放大/整卡点击在 1280/390/320px 回归通过，高德地图桌面/手机尺寸、周边聚焦、完整地点名与 8 个成功瓦片响应通过。100%/90%/80%/200% 字体缩放模拟无溢出且导航/聊天可读，缩放模拟不等于实体手机或真实浏览器缩放操作。报告在工作区 `work/server-access/reports/chibi-original-restored-production-20261005.json` 和 `readability-chibi-original-restored-production-20261005.json`；全部 84 帧裁切图保存在仓库忽略的 `.tool-tmp/chibi-previews/`。本轮人工查看生产桌面/手机中立及哈欠画布，确认恢复原完整人物而非分层拼装；未来新素材仍需整段动作美术复核。
 
 ## 原形象一致性修复 v2（历史实验，已被所有者要求撤回）
 
