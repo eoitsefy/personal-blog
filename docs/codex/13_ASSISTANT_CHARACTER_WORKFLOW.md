@@ -148,11 +148,13 @@ v2 使用 `chibi-idle-v4.png` 第一帧作为身份基准，内置 imagegen 重�
 5. 将选定 PNG 复制到仓库 `public/assistant/`，使用新的版本文件名，例如 `chibi-wave-v4.png`，保留之前版本便于回滚。生成器默认目录不是生产文件来源。
 6. 同步保存最终提示词、原始尺寸、行列数、动作顺序和验收结果，不记录密钥或服务器私有数据。
 
-## 更换形象和接入
+## 更换形象和接入（当前完整人物播放器）
 
-`src/lib/assistant/character.ts` 是形象配置入口，集中记录七组图集路径、原始尺寸、固定缩放、动作索引、时长、循环和时间节点。用只读 `scripts/inspect-character-sheet.mjs` 测量真实 alpha 边界；在行分隔附近寻找透明间隙，不机械等分。`CHARACTER_POSES` 每条记录为来源左、上、右、下像素与脚底中心 X；右下坐标包含末尾像素。`CHARACTER_STAGE` 定义固定画布、中心、脚底基准线和过渡时长。更换素材后必须逐帧重新测量，不能只换图片路径或照抄旧矩形。更新这里而不是分散修改所有页面。动作名称保持 `idle`、`wave`、`nod`、`thinking`、`bow`、`cheer`、`yawn` 可以直接复用交互。
+当前入口为 `src/lib/assistant/registered-sheets.ts`（来源与锚点）、`frame-timeline.ts`（实际动作编排）和 `motion.ts`（可复用过程描述/总时长）。`character.ts` 保留原 84 帧来源和逻辑舞台，不再是所有新图的登记入口。先用只读 `scripts/inspect-character-sheet.mjs` 确认真正透明的行列间隙，再用 `node --import tsx scripts/register-character-runtime.mjs` 测量裁切与两靴/鞋底基准；更换布局时更新测量输入，禁止机械等分。运行时登记为 `[left, top, right, bottom, anchorX, anchorY]`，右下包含末尾像素，柔边裁切与人物根锚点独立。每图集固定缩放；逐帧不得按头部高度重新伸缩。重新绘制角色后必须测量自己的锚点、统一中立图并筛选过程图，不能只换路径或照抄旧矩形。
 
-`src/components/assistant/chibi-assistant.tsx` 中的 `Character` 使用 Canvas 显示独立裁切和对齐的姿态。浏览器动画 API 仅提供可暂停的时间钟，恒定 opacity=1，不移动整个画布；绘制时对相邻姿态采用预乘颜色叠加，避免共同身体像素在过渡中半透明。首次页面和首次对话默认待机。按需加载待机及当前动作两组素材，不在页面打开时下载全部七组。点击角色点头，也可以点击动作按钮；非循环动作完成后恢复待机。暂停、减少动态效果、隐藏页面、短视口隐藏角色或关闭对话时取消动画及绘制循环，显示双臂下垂首帧。不支持动画 API 时保留静态首帧。卸载时释放监听器和绘制任务。更换静态回退时也要同步路径与尺寸。
+在 `frame-timeline.ts` 中按真实动作阶段选择来源图，检查抬手/收手单调、眨眼闭合/重开、衣服和比例衔接，明确停顿与重复中立不算新姿态。动作名称保持 `idle`、`wave`、`nod`、`thinking`、`bow`、`cheer`、`yawn` 可复用现有交互；显示节奏与独立动作规范分开，不需要改问答接口。保留旧图、生成提示词及候选来源证据，当前播放器配置和未来制作预算分别记录。
+
+`src/components/assistant/chibi-assistant.tsx` 中的 `Character` 使用持续 Canvas 显示独立裁切和对齐的姿态。浏览器动画 API 仅提供可暂停的时间钟，恒定 opacity=1，不移动整个画布；绘制时对相邻姿态采用预乘颜色叠加，避免共同身体像素在过渡中半透明。首次页面和首次对话默认待机。仅加载待机及当前动作需要的图集（待机两张，思考/哈欠包含收手图），不入站下载全部素材。点击角色点头，也可以点击动作按钮；非循环动作完成后恢复待机。暂停、减少动态效果、隐藏页面、短视口隐藏角色或关闭对话时取消动画及绘制循环，显示同一张原版双臂下垂图。不支持动画 API 时保留静态首帧。卸载时释放监听器和绘制任务。更换静态回退时也要同步路径与尺寸。
 
 组件样式在 `assistant-panel.module.css`。裁切和显示大小由实测矩形及固定缩放计算，不需要为每个新角色重复写关键帧。保留移动布局、对话滚动、键盘焦点和动作暂停控制；不要为了增大角色挤掉发送框。浏览器高度不足时隐藏装饰角色，聊天继续可用。
 
@@ -162,7 +164,7 @@ v2 使用 `chibi-idle-v4.png` 第一帧作为身份基准，内置 imagegen 重�
 
 运行 `npm test`、`npm run lint`、`npm run typecheck`、`npm run build`。本地数据库无配置时，用既有 `UI_PREVIEW_MODE=true` 预览，不能把预览模式带进生产。
 
-启动本地生产预览后运行 `scripts/verify-character-frames.mjs`、`scripts/verify-chibi-assistant.mjs` 与 `scripts/verify-assistant-readability.mjs`。逐帧脚本检查浏览器实际画布像素：84 个姿态的头脚留白、完整脚底、脚中心误差不超过 2 个画布像素、固定视口和渐变过程；可用 `TEST_BASE_URL=https://eastherphil.cn` 做生产只读检查，不发送 AI 提问。另两个脚本模拟回复，验证聊天、引用、错误恢复、焦点和缩放模拟。100%/90%/80%/200% 是 CSS 视口和像素密度模拟，不能当成实体手机或浏览器工具栏验收。
+启动本地生产预览后运行 `node --import tsx scripts/verify-character-integration.mjs`、`node scripts/verify-chibi-assistant.mjs` 与 `node --import tsx scripts/verify-assistant-readability.mjs`。当前逐帧脚本检查实际画布像素、所有 149 个编排节点、完整头脚/柔边、两靴中点误差不超过 1.25 逻辑像素、共享中立 alpha、持续画布及快速切换；可用 `TEST_BASE_URL=https://eastherphil.cn` 做只读生产检查，不发送 AI 提问。另两个本地脚本模拟回复，验证聊天、引用、错误恢复、焦点和缩放模拟。旧 `verify-character-frames.mjs` 仅保留原 84 帧播放器的历史门禁。100%/90%/80%/200% 是 CSS 视口和像素密度模拟，不能当成实体手机或浏览器工具栏验收。
 
 按所有者 2026-10-04 指示，后续在自动检查通过后直接提交、合并和部署，不再等待人工审查确认。仍保留 Git 历史、CI、磁盘/健康检查、备份和回滚保护；“不留存审查过程”不意味着删除这些安全记录。部署前确认服务器版本、工作区清洁、镜像可回滚和持久上传目录。此切片只替换应用，不改 Nginx、环境、数据库或上传 ACL。
 
