@@ -2,7 +2,16 @@
 
 ## Status
 
-`[IN PROGRESS]` Production commit `9d73a20` has passed certificate, named-operator, SSH, firewall, limited-container, local-backup, restore-drill, and local-alert acceptance. Off-host backup, external alert delivery, first Docker-retention acceptance, and final temporary-access cleanup remain.
+`[IN PROGRESS]` The July baseline at `9d73a20` passed certificate, named-operator, SSH, firewall, limited-container, local-backup, restore-drill and local-alert acceptance. ICP footer acceptance at `e86be4e` followed in August. Current production was reconfirmed as `52e72d8` on 2026-10-03. Off-host backup, external alert delivery, first Docker-retention acceptance, final temporary-access cleanup and AMap credential/log hardening remain.
+
+## 2026-10-03 read-only refresh and current security slice
+
+- Certificate installed at the managed Nginx path expires 2026-12-17 11:02:11 UTC; older expiry dates below are historical migration evidence.
+- Disk free: 14.9 GiB. Latest top-level database/upload archives: 17.5/17.2 hours old. This checks freshness, not restore integrity.
+- Both AMap proxy locations currently inherit general logging without overrides. The server-only secret snippet remains root-owned mode 0600; existing Nginx access/error logs are 0640. Do not paste raw logs or full `nginx -T` output.
+- This slice adds request-free status/timing logs, suppression of raw upstream errors scoped only to AMap, an allowlisted legacy-error summary and real-Nginx canary tests. No production files were changed during development; deployment/rotation gates are in `06_DEPLOYMENT_RUNBOOK.md`.
+- The existing ops cron file is present. Offsite configuration and `rclone` are absent; the owner explicitly deferred offsite backup. External notifications remain unconfigured/unaccepted; no new service or paid resource is created.
+- Do not delete old diagnostic evidence or credentials/backups as an incidental cleanup. Restrict sharing, rotate the exposed credential, and review archival/access policy separately.
 
 ## Verified production baseline
 
@@ -68,7 +77,7 @@
 - ICP filing `滇ICP备2026015046号` was confirmed approved on 2026-08-18.
 - The authoritative HiChina nameservers and AliDNS public resolver returned `47.120.39.130` for both `eastherphil.cn` and `www.eastherphil.cn`.
 - Public HTTP returned the expected permanent HTTPS redirect; the HTTPS homepage returned 200 and `/api/healthz` reported AMap and the DeepSeek assistant enabled.
-- The shared public footer now includes the exact ICP filing number and links to `https://beian.miit.gov.cn/`. Production footer rendering remains a deployment acceptance item.
+- Historical production commit `e86be4e6adce3baffd310badff229d2b6ea694c9` served the exact ICP number and `https://beian.miit.gov.cn/` link; homepage, archive, places, assistant and community-guidelines pages passed acceptance. This reconciles the evidence in old PR #23 without reverting newer documentation.
 
 ## Staged production rollout
 

@@ -1,0 +1,13 @@
+# Install as /etc/nginx/conf.d/personal-blog-amap-log-format.conf (http context).
+# Deliberately exclude request/URI/args, upstream address, headers, IP and body.
+# Route values are constants, never untrusted path fragments.
+map $uri $amap_log_route {
+    default service;
+    /_AMapService/v4/map/styles styles;
+}
+
+log_format amap_safe escape=json
+    '{"time":"$time_iso8601","proxy":"amap","route":"$amap_log_route",'
+    '"status":$status,"upstream_status":"$upstream_status",'
+    '"request_seconds":"$request_time",'
+    '"upstream_seconds":"$upstream_response_time","bytes":$body_bytes_sent}';

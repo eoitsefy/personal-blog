@@ -1,0 +1,12 @@
+# Install as /etc/nginx/snippets/personal-blog-amap-logging.conf.
+# Include ONLY inside BOTH AMap proxy locations, not at server/http scope.
+access_log /var/log/nginx/personal-blog-amap-access.log amap_safe;
+
+# Stock Nginx error logs cannot use log_format. Upstream failure messages can
+# expose the injected jscode, so discard raw errors ONLY for these locations.
+# The safe access log retains all status codes (including 4xx/5xx) and timings.
+# Generic website/startup errors continue to use the existing error log.
+error_log /dev/null;
+
+# Do not redirect upstream errors into a location with ordinary request logs.
+proxy_intercept_errors off;

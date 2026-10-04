@@ -235,7 +235,7 @@ Acceptance:
 - Only intended public ports are exposed.
 - Alerts are tested, not only configured.
 
-Current milestone: `[IN PROGRESS — Phase 7A]` production commit `9d73a20` now runs healthy limited containers and the scheduled local operations baseline. Backups, isolated restore, forced-alert recovery, and an automatic application rollback all produced evidence. Next, verify bounded Docker retention, choose and configure off-host storage, add external alert delivery, and perform final temporary-access cleanup before expanding to Phase 6B voice features.
+Current milestone: `[IN PROGRESS — Phase 7A]` local operations acceptance was recorded at `9d73a20` and ICP footer acceptance at `e86be4e`. Current production is `52e72d8` (2026-10-03, PR #29 mobile maps). Next: ship AMap log hardening and rotate exposed provider credentials. Off-host backup is deferred at the owner's request; external alert delivery, bounded Docker-retention acceptance and final access cleanup remain before Phase 6B voice expansion.
 
 ## Suggested first Codex milestone
 
@@ -247,7 +247,8 @@ The initial audit below is historical. Security, writing experience and mobile n
 - `[DEPLOYED]` Add isolated autosaved working copies, window recovery, conflict protection, 20 saved versions, inline image paste/upload and responsive live preview; keep all public mobile navigation links visible.
 - `[LOCAL VERIFIED]` Unit, disposable PostgreSQL, lint, typecheck, build and browser acceptance. Detailed evidence and limitations: `12_WRITING_EXPERIENCE.md`.
 - `[VERIFIED]` Review/CI, Linux container build, production backup, additive migration, deployment, HTTPS API smoke, mobile navigation emulation and map regression passed. Physical-phone editorial acceptance remains pending.
-- `[PENDING P0]` Rotate AMap security code exposed by a legacy proxy diagnostic log and improve log redaction; do not commit credentials.
+- `[DEPLOYED]` PR #29 mobile map sizing, long labels and orientation handling; production real-map emulation passed. Physical-device acceptance remains separate.
+- `[PENDING P0]` Review/deploy the AMap safe-log templates and legacy-log summary; rotate the security code in the provider console and server. The log patch does not invalidate an exposed credential or sanitize historical files.
 - `[PENDING]` Track upstream development-only audit fixes; voice, private content, off-host backup and external notifications remain separate milestones.
 
 Start with Phase 0 and produce:
