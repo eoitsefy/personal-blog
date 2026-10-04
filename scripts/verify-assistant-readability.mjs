@@ -49,6 +49,8 @@ try {
     const before=await character.boundingBox();
     const positions=[];
     if(await sheet.isVisible()) {
+    assert.equal(await character.getAttribute('data-action'),'idle');
+    await dialog.getByRole('button',{name:'播放挥手动作'}).click();
     for(const time of [0,300,600]) {
       positions.push(await sheet.evaluate((el,time)=>{const a=el.getAnimations()[0];a.pause();a.currentTime=time;const s=getComputedStyle(el);return {left:s.left,top:s.top};},time));
       assert.deepEqual(await character.boundingBox(),before);
@@ -56,9 +58,27 @@ try {
     assert.ok(new Set(positions.map(p=>p.left)).size>=2,'wave must use distinct hand frames');
     await dialog.getByRole('button',{name:'让小助手点头'}).click();
     assert.equal(await character.getAttribute('data-action'),'nod');
+    for(const [label,action,duration] of [['挥手','wave',1800],['点头','nod',1500],['思考','thinking',2400],['鞠躬','bow',2000],['开心','cheer',1800]]) {
+      await dialog.getByRole('button',{name:`播放${label}动作`}).click();
+      assert.equal(await character.getAttribute('data-action'),action);
+      const frames=[];
+      for(const offset of [.01,.15,.3,.46,.64,.82]) {
+        frames.push(await sheet.evaluate((el,time)=>{const a=el.getAnimations()[0];a.pause();a.currentTime=time;return {left:getComputedStyle(el).left,top:getComputedStyle(el).top};},duration*offset));
+        assert.deepEqual(await character.boundingBox(),before);
+      }
+      assert.equal(new Set(frames.map(frame=>frame.left)).size,6,`${action}: six distinct intermediate poses`);
+      assert.equal(new Set(frames.map(frame=>frame.top)).size,1);
+      if(action!=='thinking') {
+        await sheet.evaluate(el=>el.getAnimations()[0].finish());
+        await page.waitForFunction(()=>{const img=document.querySelector('dialog [data-action] img');return img?.getAnimations()[0]?.effect?.getTiming().duration===6000;});
+        assert.equal(await sheet.evaluate(el=>getComputedStyle(el).top),'0px');
+      }
+    }
     } else { assert.ok(cssHeight<=500,'Only compact-height dialogs may hide the companion'); }
     await dialog.getByRole('button',{name:'暂停动作'}).click();
-    assert.equal(await sheet.evaluate(el=>getComputedStyle(el).animationName),'none');
+    assert.equal(await sheet.evaluate(el=>el.getAnimations().length),0);
+    assert.equal(await sheet.evaluate(el=>getComputedStyle(el).top),'0px');
+    assert.equal(await sheet.evaluate(el=>getComputedStyle(el).left),'0px');
     await page.screenshot({path:`${folder}/actions-${width}-zoom-${scale}.png`});
     await dialog.getByRole('button',{name:'关闭小助手对话'}).click();
     await page.goto(base+'/assistant');
@@ -67,9 +87,9 @@ try {
     await context.close();
   }
   const context=await browser.newContext({viewport:{width:390,height:844}});
-  await context.route('**/assistant/chibi-actions-v2.png',r=>r.abort());
+  await context.route('**/assistant/chibi-actions-v3.png',r=>r.abort());
   const page=await context.newPage();await page.goto(base+'/assistant');
-  await page.waitForFunction(()=>document.querySelector('[data-action] img')?.getAttribute('src')?.includes('chibi-v1'));
+  await page.waitForFunction(()=>document.querySelector('[data-action] img')?.getAttribute('src')?.includes('chibi-idle-v3'));
   await context.close();
   assert.deepEqual(errors,[]);console.log(JSON.stringify({accepted:true,mockedProvider:true,staticFallback:true,results},null,2));
 } finally {await browser.close();}

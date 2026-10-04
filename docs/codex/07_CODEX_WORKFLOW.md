@@ -10,6 +10,8 @@ Read AGENTS.md, CODEX_CONTEXT.md, and docs/codex/README.md. Inspect package.json
 
 ## Rules for Codex
 
+Owner workflow update (2026-10-04): after implementation and automated checks pass, submit, merge and deploy directly without a separate human-review waiting step. This standing instruction is limited to the requested blog changes; retain CI, backups, immutable rollback images, secret protection and production acceptance. New paid resources, destructive data operations and scope expansion still require separate authority.
+
 - Do not overwrite `AGENTS.md`.
 - Do not invent scripts that are absent from `package.json`.
 - Do not assume the historical server audit equals the current live state.

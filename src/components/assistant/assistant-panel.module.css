@@ -4,12 +4,8 @@
 .launcher { border: 0; padding: 0; background: transparent; cursor: pointer; color: inherit; display: inline-flex; align-items: center; flex-direction: column; }
 .panel .launcher { width: min(400px, 85vw); border-radius: 50%; background: radial-gradient(ellipse, rgba(245,194,63,.16), transparent 70%); }
 .character { position: relative; display: block; width: 100%; aspect-ratio: 1; overflow: hidden; }
-.spriteSheet { position: absolute; left: 0; top: 0; display: block; width: 400%; height: 200%; max-width: none; }
+.spriteSheet { position: absolute; left: 0; top: 0; display: block; max-width: none; }
 .fallbackCharacter { display: block; width: 100%; height: 100%; object-fit: contain; }
-.idle { animation: blink 5s steps(1, end) infinite; }
-.wave { animation: greet 1.4s steps(1, end) 2; }
-.nod { animation: headNod 1s steps(1, end) 2; }
-.thinking { animation: blink 2.4s steps(1, end) infinite; }
 .launcherLabel { display: block; border: 1px solid #d7bb66; border-radius: 999px; background: #ffedb4; color: #342a15; padding: 9px 16px; font-size: .875rem; font-weight: 700; box-shadow: 0 3px 12px #0000000a; }
 .introduction { max-width: 480px; margin: 28px auto 18px; line-height: 1.9; font-size: .94rem; color: var(--ink-soft); }
 .explore { display: flex; justify-content: center; flex-wrap: wrap; gap: 8px; margin: 12px 0; }
@@ -31,6 +27,10 @@
 .companion { display: flex; align-items: center; gap: 12px; padding: 12px 18px 4px; flex-shrink: 0; }
 .companion > button:first-child { width: 160px; flex-shrink: 0; border: 0; padding: 0; background: transparent; cursor: pointer; }
 .companion p { font-size: .875rem; line-height: 1.5; flex: 1; }
+.companionControls { min-width: 0; flex: 1; }
+.actions { display: flex; flex-wrap: wrap; gap: 4px; }
+.actions button { min-height: 36px; padding: 5px 7px; border: 1px solid #ddd1b3; border-radius: 8px; background: #fff8df; color: #554422; font-size: .875rem; cursor: pointer; }
+.actions button:disabled { opacity: .5; cursor: not-allowed; }
 .motion { font-size: .875rem; color: #5b513e; border: 0; background: transparent; padding: 10px 3px; min-height: 44px; cursor: pointer; }
 .messages { overflow: auto; overscroll-behavior: contain; flex: 1; min-height: 0; padding: 10px 18px 16px; scrollbar-gutter: stable; }
 .bubble { width: fit-content; max-width: 95%; background: #fff; border: 1px solid #e8e3d7; border-radius: 4px 18px 18px; padding: 12px 14px; margin: 0 0 12px; font-size: 1rem; line-height: 1.85; white-space: pre-wrap; overflow-wrap: anywhere; }
@@ -57,9 +57,6 @@
 .dots { animation: pulse 1.2s ease-in-out infinite; }
 .still .spriteSheet, .still .dots { animation: none; left: 0; top: 0; }
 /* Cell changes are discrete: there is no transform on the character or atlas. */
-@keyframes blink { 0%, 94%, 100% { left: 0; top: 0; } 96% { left: -100%; top: 0; } }
-@keyframes greet { 0%, 100% { left: 0; top: 0; } 20%, 60% { left: -200%; top: 0; } 40%, 80% { left: -300%; top: 0; } }
-@keyframes headNod { 0%, 100% { left: 0; top: -100%; } 30% { left: -100%; top: -100%; } 65% { left: -200%; top: -100%; } }
 @keyframes pulse { 50% { opacity: .35; } }
 @media (max-width: 600px) { .panel { padding: 36px 0 60px; } .panel .launcher { width: min(300px, 100%); } .floating { width: 128px; right: 12px; bottom: max(12px, env(safe-area-inset-bottom)); } .dialog { inset: auto 12px max(12px, env(safe-area-inset-bottom)) auto; height: min(680px, calc(100dvh - 24px)); border-radius: 18px; } .companion { padding: 8px 14px 0; gap: 8px; } .companion > button:first-child { width: 120px; } .messages, .form { padding-left: 14px; padding-right: 14px; } }
 @media (max-height: 500px) { .companion { display: none; } .header { padding: 8px 14px; } .form textarea { max-height: 64px; } }
