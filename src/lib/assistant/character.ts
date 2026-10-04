@@ -1,12 +1,13 @@
 // Twelve real intermediate drawings per action; versioned 4 × 3 sheets.
+import { CHARACTER_MOTION_TEMPLATES } from "./motion";
 export const CHARACTER_ACTIONS = {
-  idle: { label: "待机", row: 0, duration: 6000, loop: true },
-  wave: { label: "挥手", row: 1, duration: 1800, loop: false },
-  nod: { label: "点头", row: 2, duration: 1500, loop: false },
-  thinking: { label: "思考", row: 3, duration: 2400, loop: true },
-  bow: { label: "鞠躬", row: 4, duration: 2000, loop: false },
-  cheer: { label: "开心", row: 5, duration: 1800, loop: false },
-  yawn: { label: "打哈欠", row: 6, duration: 2600, loop: false },
+  idle: { ...CHARACTER_MOTION_TEMPLATES.idle, row: 0 },
+  wave: { ...CHARACTER_MOTION_TEMPLATES.wave, row: 1 },
+  nod: { ...CHARACTER_MOTION_TEMPLATES.nod, row: 2 },
+  thinking: { ...CHARACTER_MOTION_TEMPLATES.thinking, row: 3 },
+  bow: { ...CHARACTER_MOTION_TEMPLATES.bow, row: 4 },
+  cheer: { ...CHARACTER_MOTION_TEMPLATES.cheer, row: 5 },
+  yawn: { ...CHARACTER_MOTION_TEMPLATES.yawn, row: 6 },
 } as const;
 export type CharacterAction = keyof typeof CHARACTER_ACTIONS;
 export const PLAYFUL_ACTIONS: CharacterAction[] = ["wave", "nod", "thinking", "bow", "cheer", "yawn"];
@@ -43,9 +44,7 @@ export function characterPose(index: number) {
 }
 
 export function characterOffsets(action: CharacterAction) {
-  // Hold neutral, then close/reopen the eyelids through twelve actual poses.
-  return action === "idle" ? [0, .8, .816, .832, .848, .864, .88, .896, .912, .928, .944, .96, .985] :
-    [...Array.from({ length: CHARACTER_FRAME_COUNT }, (_, frame) => frame / CHARACTER_FRAME_COUNT), .975];
+  return CHARACTER_MOTION_TEMPLATES[action].offsets;
 }
 
 export function characterSample(action: CharacterAction, elapsed: number) {

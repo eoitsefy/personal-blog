@@ -7,20 +7,13 @@ import { createPortal } from "react-dom";
 import { FormEvent, useEffect, useId, useRef, useState } from "react";
 import { ASSISTANT_GREETINGS, parseAssistantAnswer, pickAssistantGreeting, type AssistantAnswer } from "@/lib/assistant/ui";
 import styles from "./assistant-panel.module.css";
-import { RigCharacter } from "./rig-character";
-import { RIG_SKINS, type RigSkinId } from "@/lib/assistant/rig";
 import { CHARACTER_ACTIONS, CHARACTER_SHEETS, CHARACTER_FRAME_COUNT, CHARACTER_STAGE, PLAYFUL_ACTIONS, characterPose, characterSample, type CharacterAction } from "@/lib/assistant/character";
 
 type Settings = { enabled: boolean; maxQuestionChars: number };
 type Turn = { question: string; result: AssistantAnswer };
 
-type Avatar = RigSkinId | "classic";
-type CharacterProps = { action?: CharacterAction; small?: boolean; animate?: boolean; active?: boolean; avatar?: Avatar };
-function Character({avatar="gold",...props}:CharacterProps) {
-  const fallback=<LegacyCharacter {...props}/>;
-  return avatar==="classic"?fallback:<RigCharacter key={avatar} {...props} skin={avatar} fallback={fallback}/>;
-}
-function LegacyCharacter({ action = "idle", small = false, animate = true, active = true }: CharacterProps) {
+type CharacterProps = { action?: CharacterAction; small?: boolean; animate?: boolean; active?: boolean };
+function Character({ action = "idle", small = false, animate = true, active = true }: CharacterProps) {
   const [failed, setFailed] = useState(false);
   const sheet = useRef<HTMLCanvasElement>(null);
   useEffect(() => {
@@ -95,7 +88,7 @@ function LegacyCharacter({ action = "idle", small = false, animate = true, activ
     return () => { disposed = true; for (const image of images) { image.onload = null; image.onerror = null; } cancelAnimationFrame(tick); if (animation) { animation.onfinish = null; animation.cancel(); } reduced.removeEventListener("change", refresh); document.removeEventListener("visibilitychange", refresh); window.removeEventListener("resize", refresh); };
   }, [action, active, animate, failed]);
   // Draw registered pose rectangles, never translate the character viewport.
-  return <span className={styles.character} data-action={action} aria-hidden="true">
+  return <span className={styles.character} data-action={action} data-engine="frames" data-character-version="original-v4" aria-hidden="true">
     {failed ? <Image className={styles.fallbackCharacter} src="/assistant/chibi-idle-v3.png" alt="" width={1024} height={1536} sizes={small ? "180px" : "400px"} /> :
       <canvas ref={sheet} className={styles.spriteSheet} width={CHARACTER_STAGE.size} height={CHARACTER_STAGE.size} />}
   </span>;
@@ -111,7 +104,6 @@ export function ChibiAssistant({ floating = false, settings }: { floating?: bool
   const [open, setOpen] = useState(false), [started, setStarted] = useState(false);
   const [greeting, setGreeting] = useState<string>(ASSISTANT_GREETINGS[0]);
   const [animate, setAnimate] = useState(true), [wave, setWave] = useState(0);
-  const [avatar,setAvatar]=useState<Avatar>("gold");
   const trigger = useRef<HTMLButtonElement>(null);
   function show() {
     if (!started) { setGreeting(pickAssistantGreeting(Math.random())); setStarted(true); }
@@ -120,15 +112,14 @@ export function ChibiAssistant({ floating = false, settings }: { floating?: bool
   return <div className={`${floating ? styles.floating : styles.panel} ${animate ? "" : styles.still}`}>
     {!floating ? <><h1>小助手</h1><p className={styles.invitation}>有想找的记录吗？</p></> : null}
     <button ref={trigger} type="button" className={styles.launcher} onClick={show} aria-label="打开小助手对话" aria-haspopup="dialog" aria-expanded={open}>
-      <span key={wave}><Character avatar={avatar} action="idle" small={floating} animate={animate} active={!open} /></span><span className={styles.launcherLabel}>{floating ? "聊聊" : "点击和我聊聊"}</span>
+      <span key={wave}><Character action="idle" small={floating} animate={animate} active={!open} /></span><span className={styles.launcherLabel}>{floating ? "聊聊" : "点击和我聊聊"}</span>
     </button>
     {!floating ? <><div className={styles.introduction}>{ASSISTANT_GREETINGS[0]}</div><nav className={styles.explore} aria-label="浏览网站"><Link href="/posts">浏览日志 ↗</Link><Link href="/places">看看地点 ↗</Link></nav></> : null}
-    {started ? createPortal(<AssistantDialog avatar={avatar} onAvatar={setAvatar} open={open} greeting={greeting} initialSettings={settings} animate={animate} onAnimate={() => setAnimate(value => !value)} onClose={() => setOpen(false)} returnFocus={() => trigger.current?.focus({ preventScroll: true })} />, document.body) : null}
+    {started ? createPortal(<AssistantDialog open={open} greeting={greeting} initialSettings={settings} animate={animate} onAnimate={() => setAnimate(value => !value)} onClose={() => setOpen(false)} returnFocus={() => trigger.current?.focus({ preventScroll: true })} />, document.body) : null}
   </div>;
 }
 
-function AssistantDialog({ avatar,onAvatar,open, greeting, initialSettings, animate, onAnimate, onClose, returnFocus }: {
-  avatar:Avatar;onAvatar:(next:Avatar)=>void;
+function AssistantDialog({ open, greeting, initialSettings, animate, onAnimate, onClose, returnFocus }: {
   open: boolean; greeting: string; initialSettings?: Settings; animate: boolean; onAnimate: () => void; onClose: () => void; returnFocus: () => void;
 }) {
   const dialog = useRef<HTMLDialogElement>(null), closeButton = useRef<HTMLButtonElement>(null);
@@ -193,7 +184,7 @@ function AssistantDialog({ avatar,onAvatar,open, greeting, initialSettings, anim
     else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first?.focus(); }
   }}>
     <header className={styles.header}><div><strong id={`${id}-title`}>小助手</strong><small>AI 回答仅供参考 · 公开文章检索</small></div><div className={styles.headerControls}><button className={styles.motion} type="button" onClick={onAnimate} aria-pressed={!animate}>{animate ? "暂停动作" : "开启动作"}</button><button ref={closeButton} type="button" onClick={close} aria-label="关闭小助手对话">×</button></div></header>
-    <div className={styles.companion}><button type="button" aria-label="让小助手点头" onClick={() => perform("nod")}><span key={touch}><Character avatar={avatar} action={pending ? "thinking" : action} small animate={animate} active={open} /></span></button><div className={styles.companionControls}><p>{pending ? "让我找找相关记录…" : turns.length ? "还想了解什么？" : "你好，很高兴见到你！"}</p><label className={styles.skinChoice}>形象<select aria-label="助手形象" value={avatar} onChange={event=>{const next=event.target.value;if(next==="classic"||Object.hasOwn(RIG_SKINS,next))onAvatar(next as Avatar);}}><option value="gold">黑金 · 连续动画</option><option value="mist">雾蓝 · 连续动画</option><option value="classic">原版 · 逐帧动画</option></select></label><div className={styles.actions} aria-label="助手动作">{PLAYFUL_ACTIONS.map(next => <button type="button" key={next} onClick={() => perform(next)} disabled={pending || !animate} aria-label={`播放${CHARACTER_ACTIONS[next].label}动作`}>{CHARACTER_ACTIONS[next].label}</button>)}</div></div></div>
+    <div className={styles.companion}><button type="button" aria-label="让小助手点头" onClick={() => perform("nod")}><span key={touch}><Character action={pending ? "thinking" : action} small animate={animate} active={open} /></span></button><div className={styles.companionControls}><p>{pending ? "让我找找相关记录…" : turns.length ? "还想了解什么？" : "你好，很高兴见到你！"}</p><div className={styles.actions} aria-label="助手动作">{PLAYFUL_ACTIONS.map(next => <button type="button" key={next} onClick={() => perform(next)} disabled={pending || !animate} aria-label={`播放${CHARACTER_ACTIONS[next].label}动作`}>{CHARACTER_ACTIONS[next].label}</button>)}</div></div></div>
     <div ref={messages} className={styles.messages} aria-label="对话记录" tabIndex={0}>
       <p className={styles.bubble}>{greeting}</p>
       {!turns.length ? <nav className={styles.explore} aria-label="助手推荐入口"><Link href="/posts" onClick={close}>浏览日志 ↗</Link><Link href="/places" onClick={close}>看看地点 ↗</Link></nav> : null}

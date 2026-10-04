@@ -42,7 +42,8 @@ try {
     assert.ok((await bodyText.evaluate(el=>parseFloat(getComputedStyle(el).fontSize)))*scale>=14.4-0.01);
     await page.getByRole('button',{name:'打开小助手对话',exact:true}).click();
     const dialog=page.getByRole('dialog',{name:'小助手',exact:true});await dialog.waitFor();
-    await dialog.locator('select[aria-label="助手形象"]').selectOption('classic',{force:true});
+    assert.equal(await dialog.locator('select[aria-label="助手形象"]').count(),0);
+    assert.equal(await dialog.locator('[data-engine=frames]').count(),1);
     await page.waitForSelector('dialog canvas[data-ready=true]',{state:'attached'});
     const bubble=dialog.getByLabel('对话记录',{exact:true}).locator('p').first();
     assert.ok((await bubble.evaluate(el=>parseFloat(getComputedStyle(el).fontSize)))*scale>=14.4-0.01);

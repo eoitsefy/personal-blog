@@ -25,17 +25,18 @@ try {
  for(const width of [1280,768,390,320]) {
   const context=await browser.newContext({viewport:{width,height:844}});
   const page=await context.newPage();page.on('pageerror',e=>errors.push(e.message));
-  const requestedSheets=new Set();
-  page.on('request',request=>{const path=new URL(request.url()).pathname;if(/chibi-.*-v4\.png$/.test(path))requestedSheets.add(path);});
+  const requestedSheets=new Set(),rigRequests=[];let queries=0;
+  page.on('request',request=>{const path=new URL(request.url()).pathname;if(/chibi-.*-v4\.png$/.test(path))requestedSheets.add(path);if(/rig-.*\.png$/.test(path))rigRequests.push(path);if(path==='/api/assistant/query')queries++;});
   await page.goto(base);await page.waitForSelector('[data-action] canvas[data-ready=true]');
   const floating=page.locator('[data-action]').first();
   assert.equal(await floating.evaluate(el=>getComputedStyle(el).transform),'none');
   assert.equal(await floating.evaluate(el=>{const b=el.getBoundingClientRect();return el.closest('button').contains(document.elementFromPoint(b.left+5,b.top+b.height/2));}),false);
   await page.getByRole('button',{name:'打开小助手对话',exact:true}).click();
   const dialog=page.getByRole('dialog',{name:'小助手',exact:true});
-  await dialog.getByRole('combobox',{name:'助手形象'}).selectOption('classic');
   await page.waitForSelector('dialog canvas[data-ready=true]');
-  assert.deepEqual([...requestedSheets],['/assistant/chibi-idle-v4.png'],'Legacy selection must not download every action');
+  assert.equal(await dialog.getByRole('combobox',{name:'助手形象'}).count(),0,'Layered skins must not be offered');
+  assert.equal(await floating.getAttribute('data-engine'),'frames');
+  assert.deepEqual([...requestedSheets],['/assistant/chibi-idle-v4.png'],'The original is default and must not download every action');
   const character=dialog.locator('[data-action]'),canvas=character.locator('canvas');
   await page.waitForSelector('dialog canvas[data-ready=true]');
   const box=await character.boundingBox(), pixels=[];
@@ -72,7 +73,9 @@ try {
   await page.keyboard.press('Escape');assert.equal(await dialog.isVisible(),false);
   await page.goto(base+'/assistant');await page.waitForSelector('canvas[data-ready=true]');
   assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
-  results.push({width,poses:pixels.length,fixedFeet:true,clearMargins:true,smoothTransitions:true});
+  assert.deepEqual(rigRequests,[],'Layered assets must not be downloaded');assert.equal(queries,0);
+  assert.equal(await page.locator('[data-engine=rig]').count(),0);
+  results.push({width,originalDefault:true,noLayeredAssets:true,poses:pixels.length,fixedFeet:true,clearMargins:true,smoothTransitions:true});
   await context.close();
  }
  const reduced=await browser.newContext({viewport:{width:390,height:844},reducedMotion:'reduce'});
