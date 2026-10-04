@@ -19,7 +19,7 @@ try {
     const trigger=page.getByRole('button',{name:'打开小助手对话',exact:true});
     await trigger.scrollIntoViewIfNeeded();
     const frame=trigger.locator('[data-action]');
-    await page.waitForFunction(()=>document.querySelector('[data-action] img')?.complete);
+    await page.waitForSelector('[data-action] canvas[data-ready=true]');
     assert.ok((await frame.boundingBox()).width>=(cssWidth>600?180:128));
     assert.equal(await frame.evaluate(el=>getComputedStyle(el).transform),'none');
     assert.equal(await frame.evaluate(el=>{const b=el.getBoundingClientRect(),hit=document.elementFromPoint(b.left+5,b.top+b.height/2);return el.closest('button').contains(hit);}),false,'Transparent mascot gutter must pass taps through');
@@ -45,8 +45,8 @@ try {
     const bubble=dialog.getByLabel('对话记录',{exact:true}).locator('p').first();
     assert.ok((await bubble.evaluate(el=>parseFloat(getComputedStyle(el).fontSize)))*scale>=14.4-0.01);
     assert.ok(await dialog.evaluate(el=>el.scrollWidth<=el.clientWidth),'dialog internal overflow');
-    const character=dialog.locator('[data-action]'),sheet=character.locator('img');
-    await page.waitForFunction(()=>document.querySelector('dialog [data-action] img')?.complete);
+    const character=dialog.locator('[data-action]'),sheet=character.locator('canvas');
+    await page.waitForSelector('dialog [data-action] canvas[data-ready=true]',{state:'attached'});
     assert.equal(await sheet.evaluate(el=>getComputedStyle(el).transform),'none');
     const before=await character.boundingBox();
     const positions=[];
@@ -54,7 +54,7 @@ try {
     assert.equal(await character.getAttribute('data-action'),'idle');
     await dialog.getByRole('button',{name:'播放挥手动作'}).click();
     for(const time of [0,300,600]) {
-      positions.push(await sheet.evaluate((el,time)=>{const a=el.getAnimations()[0];a.pause();a.currentTime=time;const s=getComputedStyle(el);return {left:s.left,top:s.top};},time));
+      positions.push(await sheet.evaluate(async(el,time)=>{const a=el.getAnimations()[0];a.pause();a.currentTime=time;await new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)));return {left:el.dataset.pose,top:'0px'};},time));
       assert.deepEqual(await character.boundingBox(),before);
     }
     assert.ok(new Set(positions.map(p=>p.left)).size>=2,'wave must use distinct hand frames');
@@ -65,14 +65,15 @@ try {
       assert.equal(await character.getAttribute('data-action'),action);
       const frames=[];
       for(const offset of [.01,.15,.3,.46,.64,.82]) {
-        frames.push(await sheet.evaluate((el,time)=>{const a=el.getAnimations()[0];a.pause();a.currentTime=time;return {left:getComputedStyle(el).left,top:getComputedStyle(el).top};},duration*offset));
+        await page.waitForSelector('dialog canvas[data-ready=true]');
+        frames.push(await sheet.evaluate(async(el,time)=>{const a=el.getAnimations()[0];a.pause();a.currentTime=time;await new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)));return {left:el.dataset.pose,top:'0px'};},duration*offset));
         assert.deepEqual(await character.boundingBox(),before);
       }
       assert.equal(new Set(frames.map(frame=>frame.left)).size,6,`${action}: six distinct intermediate poses`);
       assert.equal(new Set(frames.map(frame=>frame.top)).size,1);
       if(action!=='thinking') {
         await sheet.evaluate(el=>el.getAnimations()[0].finish());
-        await page.waitForFunction(()=>{const img=document.querySelector('dialog [data-action] img');return img?.getAnimations()[0]?.effect?.getTiming().duration===6000;});
+        await page.waitForFunction(()=>{const canvas=document.querySelector('dialog [data-action] canvas');return canvas?.getAnimations()[0]?.effect?.getTiming().duration===6000;});
         assert.equal(await sheet.evaluate(el=>getComputedStyle(el).top),'0px');
       }
     }

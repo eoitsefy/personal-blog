@@ -7,35 +7,80 @@ import { createPortal } from "react-dom";
 import { FormEvent, useEffect, useId, useRef, useState } from "react";
 import { ASSISTANT_GREETINGS, parseAssistantAnswer, pickAssistantGreeting, type AssistantAnswer } from "@/lib/assistant/ui";
 import styles from "./assistant-panel.module.css";
-import { CHARACTER_ACTIONS, CHARACTER_ATLAS, PLAYFUL_ACTIONS, characterKeyframes, type CharacterAction } from "@/lib/assistant/character";
+import { CHARACTER_ACTIONS, CHARACTER_ATLAS, CHARACTER_STAGE, PLAYFUL_ACTIONS, characterPose, characterSample, type CharacterAction } from "@/lib/assistant/character";
 
 type Settings = { enabled: boolean; maxQuestionChars: number };
 type Turn = { question: string; result: AssistantAnswer };
 
 function Character({ action = "idle", small = false, animate = true, active = true }: { action?: CharacterAction; small?: boolean; animate?: boolean; active?: boolean }) {
   const [failed, setFailed] = useState(false);
-  const sheet = useRef<HTMLImageElement>(null);
+  const sheet = useRef<HTMLCanvasElement>(null);
   useEffect(() => {
     const element = sheet.current;
-    if (!element || failed || typeof element.animate !== "function") return;
+    if (!element || failed) return;
+    const context = element.getContext("2d");
+    if (!context) return;
+    let disposed = false, tick = 0;
+    const image = new window.Image();
     const reduced = matchMedia("(prefers-reduced-motion: reduce)");
     let animation: Animation | undefined;
+    let playing: CharacterAction = action;
+    const poses: HTMLCanvasElement[] = [];
+    function draw(next: CharacterAction, time: number) {
+      const sample = characterSample(next, time);
+      context!.clearRect(0, 0, element!.width, element!.height);
+      // Add premultiplied colours: shared body pixels stay opaque during blends.
+      context!.globalCompositeOperation = "lighter";
+      context!.globalAlpha = 1 - sample.mix;
+      context!.drawImage(poses[sample.from], 0, 0);
+      context!.globalAlpha = sample.mix;
+      context!.drawImage(poses[sample.to], 0, 0);
+      context!.globalAlpha = 1;
+      context!.globalCompositeOperation = "source-over";
+      element!.dataset.pose = String(sample.to);
+      element!.dataset.blend = sample.mix.toFixed(3);
+    }
     function play(next: CharacterAction) {
+      playing = next;
       const config = CHARACTER_ACTIONS[next];
-      animation = element!.animate(characterKeyframes(next), { duration: config.duration, iterations: config.loop ? Infinity : 1, fill: "none" });
+      // Constant opacity is a seekable clock, never a whole-character movement.
+      animation = element!.animate([{ opacity: 1 }, { opacity: 1 }], { duration: config.duration, iterations: config.loop ? Infinity : 1, fill: "none" });
       if (!config.loop) animation.onfinish = () => play("idle");
+      draw(next, 0);
+    }
+    function paint() {
+      if (animation) draw(playing, Number(animation.currentTime ?? 0));
+      tick = requestAnimationFrame(paint);
     }
     function refresh() {
+      cancelAnimationFrame(tick);
       if (animation) { animation.onfinish = null; animation.cancel(); }
-      if (animate && active && !reduced.matches && !document.hidden) play(action);
+      animation = undefined;
+      draw("idle", 0);
+      const visible = element!.getClientRects().length > 0;
+      if (animate && active && visible && !reduced.matches && !document.hidden && typeof element!.animate === "function") { play(action); tick = requestAnimationFrame(paint); }
     }
-    refresh(); reduced.addEventListener("change", refresh); document.addEventListener("visibilitychange", refresh);
-    return () => { if (animation) { animation.onfinish = null; animation.cancel(); } reduced.removeEventListener("change", refresh); document.removeEventListener("visibilitychange", refresh); };
+    image.onload = () => {
+      if (disposed) return;
+      for (let index = 0; index < 36; index++) {
+        const pose = characterPose(index), frame = document.createElement("canvas");
+        frame.width = frame.height = CHARACTER_STAGE.size;
+        frame.getContext("2d")!.drawImage(image, pose.x, pose.y, pose.width, pose.height, pose.left, pose.top, pose.width, pose.height);
+        poses.push(frame);
+      }
+      element.dataset.ready = "true";
+      refresh();
+      reduced.addEventListener("change", refresh); document.addEventListener("visibilitychange", refresh);
+      window.addEventListener("resize", refresh);
+    };
+    image.onerror = () => { if (!disposed) setFailed(true); };
+    image.src = CHARACTER_ATLAS.src;
+    return () => { disposed = true; image.onload = null; image.onerror = null; cancelAnimationFrame(tick); if (animation) { animation.onfinish = null; animation.cancel(); } reduced.removeEventListener("change", refresh); document.removeEventListener("visibilitychange", refresh); window.removeEventListener("resize", refresh); };
   }, [action, active, animate, failed]);
-  // Only the visible atlas cell changes, never the character viewport's transform.
+  // Draw registered pose rectangles, never translate the character viewport.
   return <span className={styles.character} data-action={action} aria-hidden="true">
     {failed ? <Image className={styles.fallbackCharacter} src="/assistant/chibi-idle-v3.png" alt="" width={1024} height={1536} sizes={small ? "180px" : "400px"} /> :
-      <Image ref={sheet} className={styles.spriteSheet} style={{ width: `${CHARACTER_ATLAS.columns * 100}%`, height: `${CHARACTER_ATLAS.rows * 100}%` }} src={CHARACTER_ATLAS.src} alt="" width={CHARACTER_ATLAS.width} height={CHARACTER_ATLAS.height} loading={small ? "lazy" : "eager"} unoptimized onError={() => setFailed(true)} />}
+      <canvas ref={sheet} className={styles.spriteSheet} width={CHARACTER_STAGE.size} height={CHARACTER_STAGE.size} />}
   </span>;
 }
 

@@ -4,7 +4,7 @@
 .launcher { border: 0; padding: 0; background: transparent; cursor: pointer; color: inherit; display: inline-flex; align-items: center; flex-direction: column; }
 .panel .launcher { width: min(400px, 85vw); border-radius: 50%; background: radial-gradient(ellipse, rgba(245,194,63,.16), transparent 70%); }
 .character { position: relative; display: block; width: 100%; aspect-ratio: 1; overflow: hidden; }
-.spriteSheet { position: absolute; left: 0; top: 0; display: block; max-width: none; }
+.spriteSheet { position: absolute; left: 0; top: 0; display: block; width: 100%; height: 100%; }
 .fallbackCharacter { display: block; width: 100%; height: 100%; object-fit: contain; }
 .launcherLabel { display: block; border: 1px solid #d7bb66; border-radius: 999px; background: #ffedb4; color: #342a15; padding: 9px 16px; font-size: .875rem; font-weight: 700; box-shadow: 0 3px 12px #0000000a; }
 .introduction { max-width: 480px; margin: 28px auto 18px; line-height: 1.9; font-size: .94rem; color: var(--ink-soft); }
@@ -60,7 +60,7 @@
 .screenReader { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
 .dots { animation: pulse 1.2s ease-in-out infinite; }
 .still .spriteSheet, .still .dots { animation: none; left: 0; top: 0; }
-/* Cell changes are discrete: there is no transform on the character or atlas. */
+/* Registered pose blending changes artwork only, never viewport position. */
 @keyframes pulse { 50% { opacity: .35; } }
 @media (max-width: 600px) { .panel { padding: 36px 0 60px; } .panel .launcher { width: min(300px, 100%); } .floating { width: 128px; right: 12px; bottom: max(12px, env(safe-area-inset-bottom)); } .dialog { inset: auto 12px max(12px, env(safe-area-inset-bottom)) auto; height: min(680px, calc(100dvh - 24px)); border-radius: 18px; } .companion { padding: 8px 14px 0; gap: 8px; } .companion > button:first-child { width: 120px; } .messages, .form { padding-left: 14px; padding-right: 14px; } }
 @media (max-height: 500px) { .companion { display: none; } .header { padding: 8px 14px; } .form textarea { max-height: 64px; } }
