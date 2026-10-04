@@ -425,7 +425,7 @@ export function PostForm({
                           disabled={usedInContent}
                           onChange={() => toggleAsset(asset.id)}
                         />
-                        {asset.kind === "IMAGE" ? "显示在文末" : "保持引用"}
+                        {usedInContent ? "已插入正文" : asset.kind === "IMAGE" ? "显示在文末" : "保持引用"}
                       </label>
                     </div>
                   </div>
