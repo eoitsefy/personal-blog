@@ -1,4 +1,10 @@
+import { fixedCategory } from "./post-categories";
 export type TaxonomyTerm = { name: string; slug: string };
+
+export function normalizePostCategory(name: string): TaxonomyTerm | null {
+  const fixed = fixedCategory(name);
+  return fixed ? { name: fixed.name, slug: fixed.slug } : normalizeTaxonomyTerm(name);
+}
 
 export function taxonomySlug(name: string): string {
   return name

@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { extractVideoDirectives, parseTrustedVideoUrl } from "@/lib/media/video";
+import { extractVideoDirectives, isLocalVideoUrl, parseTrustedVideoUrl } from "@/lib/media/video";
 
 export const postListQuerySchema = z.object({
   page: z.coerce.number().int().min(1).default(1),
@@ -36,10 +36,10 @@ const PostInputFieldsSchema = z.object({
     .or(z.literal("")),
   contentMd: z.string().min(1, "内容不能为空").superRefine((markdown, context) => {
     for (const directive of extractVideoDirectives(markdown)) {
-      if (!parseTrustedVideoUrl(directive.url)) {
+      if (!isLocalVideoUrl(directive.url) && !parseTrustedVideoUrl(directive.url)) {
         context.addIssue({
           code: "custom",
-          message: "视频仅支持哔哩哔哩或 YouTube 的 HTTPS 正式链接",
+          message: "视频需来自媒体库，或使用哔哩哔哩/YouTube 的 HTTPS 正式链接",
         });
       }
     }

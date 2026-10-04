@@ -5,6 +5,8 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import type { MediaAsset } from "@/lib/media/types";
 import { ImagePreview } from "@/components/content/image-preview";
+import { LocalVideo } from "@/components/content/local-video";
+import { readUploadResponse } from "@/lib/media/upload-response";
 
 type MediaManagerProps = {
   assets: MediaAsset[];
@@ -52,20 +54,16 @@ export function MediaManager({ assets, deletedView, storage }: MediaManagerProps
         credentials: "include",
         body: formData,
       });
-      const body = (await response.json()) as ApiBody;
       if (response.status === 401) {
         router.replace("/admin/login");
         return;
       }
-      if (!response.ok) {
-        setMessage(body.error?.message ?? "上传失败");
-        return;
-      }
+      await readUploadResponse(response);
       form.reset();
       setMessage("媒体上传成功");
       router.refresh();
-    } catch {
-      setMessage("无法连接服务器，请稍后重试");
+    } catch (error) {
+      setMessage(error instanceof TypeError ? "网络连接失败，请检查网络后重试" : error instanceof Error ? error.message : "上传失败，请重试");
     } finally {
       setUploading(false);
     }
@@ -104,9 +102,9 @@ export function MediaManager({ assets, deletedView, storage }: MediaManagerProps
   }
 
   async function copyMarkdown(asset: MediaAsset) {
-    const fallback = asset.kind === "AUDIO" ? "音频" : asset.kind === "DOCUMENT" ? "文档" : "图片";
+    const fallback = asset.kind === "VIDEO" ? "视频" : asset.kind === "AUDIO" ? "音频" : asset.kind === "DOCUMENT" ? "文档" : "图片";
     const title = (asset.originalName ?? fallback).replace(/[\[\]]/g, "");
-    const markdown = asset.kind === "AUDIO"
+    const markdown = asset.kind === "VIDEO" ? `[video:${title}](${asset.url})` : asset.kind === "AUDIO"
       ? `[audio:${title}](${asset.url})`
       : asset.kind === "DOCUMENT"
         ? `[${title}](${asset.url})`
@@ -139,9 +137,9 @@ export function MediaManager({ assets, deletedView, storage }: MediaManagerProps
       {!deletedView ? (
         <form onSubmit={upload} className="flex flex-wrap items-end gap-3 rounded-2xl border border-neutral-200 bg-white p-5 dark:border-neutral-800 dark:bg-neutral-900">
           <label className="grid min-w-64 flex-1 gap-2">
-            <span className="font-medium">上传图片、音频或文档</span>
-            <input name="file" type="file" accept="image/jpeg,image/png,image/webp,audio/mpeg,audio/wav,audio/ogg,audio/opus,application/pdf,text/plain,text/markdown,.md,.markdown" required className="rounded-xl border border-neutral-300 p-3 text-sm dark:border-neutral-700" />
-            <span className="text-xs text-neutral-500">支持 JPEG、PNG、WebP、MP3、WAV、OGG、Opus、PDF、UTF-8 TXT/Markdown。服务端会验证真实内容、扩展名与安全边界。</span>
+            <span className="font-medium">上传图片、音频、视频或文档</span>
+            <input name="file" type="file" accept="image/jpeg,image/png,image/webp,audio/mpeg,audio/wav,audio/ogg,audio/opus,video/mp4,video/quicktime,video/webm,.mp4,.mov,.webm,application/pdf,text/plain,text/markdown,.md,.markdown" required className="rounded-xl border border-neutral-300 p-3 text-sm dark:border-neutral-700" />
+            <span className="text-xs text-neutral-500">视频支持 MP4、MOV、WebM，最多 64 MiB；推荐 MP4（H.264/AAC），不做自动转码。其他文件沿用原大小限制。</span>
           </label>
           <button type="submit" disabled={uploading} className="rounded-xl bg-neutral-900 px-5 py-3 font-medium text-white disabled:opacity-60 dark:bg-white dark:text-neutral-900">
             {uploading ? "上传中…" : "上传"}
@@ -164,6 +162,8 @@ export function MediaManager({ assets, deletedView, storage }: MediaManagerProps
                   <ImagePreview src={asset.url} alt={asset.originalName ?? "媒体图片"} className="absolute inset-0 h-full w-full">
                     <Image src={asset.url} alt={asset.originalName ?? "媒体图片"} fill sizes="(max-width: 640px) 100vw, 33vw" className="object-cover" unoptimized />
                   </ImagePreview>
+                ) : asset.kind === "VIDEO" ? (
+                  <LocalVideo url={asset.url} mime={asset.mime} title={asset.originalName || "视频"} />
                 ) : asset.kind === "AUDIO" ? (
                   <div className="grid w-full gap-3 px-4 text-center">
                     <span className="text-xs font-medium tracking-[0.18em] text-neutral-500">AUDIO / {humanDuration(asset.durationMs)}</span>

@@ -5,6 +5,8 @@ import { parseTrustedVideoUrl } from "@/lib/media/video";
 import { ImagePreview, ImagePreviewLink } from "./image-preview";
 import { unplacedPostImages } from "@/lib/media/post-images";
 import styles from "./post-images.module.css";
+import { LocalVideo } from "./local-video";
+import { isLocalVideoUrl } from "@/lib/media/video";
 
 export type RichMarkdownAsset = {
   url: string;
@@ -31,6 +33,9 @@ export function RichMarkdown({ markdown, assets = [], attachedImages = [] }: Ric
     a({ href, children }) {
       const label = Children.toArray(children).join("").trim();
       const asset = href ? assetsByUrl.get(href) : undefined;
+      if (asset?.kind === "VIDEO" && isLocalVideoUrl(asset.url) && label.toLowerCase().startsWith("video:")) {
+        return <LocalVideo url={asset.url} mime={asset.mime} title={label.slice(6).trim() || asset.originalName || "视频"} />;
+      }
       if (asset?.kind === "AUDIO" && label.toLowerCase().startsWith("audio:")) {
         const title = label.slice("audio:".length).trim() || asset.originalName || "音频";
         return (
@@ -77,10 +82,14 @@ export function RichMarkdown({ markdown, assets = [], attachedImages = [] }: Ric
   };
 
   const images = unplacedPostImages(markdown, attachedImages);
+  const videos = attachedImages.filter(asset => asset.kind === "VIDEO" && isLocalVideoUrl(asset.url) && !markdown.includes(asset.url));
   return <>
     <ReactMarkdown remarkPlugins={[remarkGfm]} components={components}>{markdown}</ReactMarkdown>
     {images.length ? <section className={styles.gallery} aria-label="文章图片">
       {images.map(image => <ImagePreview key={image.url} src={image.url} alt={image.originalName ?? "文章图片"} className={styles.image} />)}
     </section> : null}
+    {videos.length ? <section aria-label="文章视频">{Array.from(new Map(videos.map(v => [v.url, v])).values()).map(video =>
+      <LocalVideo key={video.url} url={video.url} mime={video.mime} title={video.originalName || "文章视频"} />
+    )}</section> : null}
   </>;
 }
