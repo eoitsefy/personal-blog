@@ -3,7 +3,14 @@ import test from "node:test";
 import sharp from "sharp";
 import { CHARACTER_ACTIONS, CHARACTER_SHEETS, CHARACTER_STAGE, CHARACTER_POSES, CHARACTER_FRAME_COUNT, characterOffsets, characterPose, characterSample, type CharacterAction } from "./character";
 
-test("all six actions use twelve actual registered poses and short eased transitions", () => {
+test("yawn is an explicit twelve-pose one-shot action returning to neutral", () => {
+  assert.equal(CHARACTER_ACTIONS.yawn.loop, false);
+  assert.equal(CHARACTER_ACTIONS.yawn.label, "打哈欠");
+  assert.equal(CHARACTER_POSES[CHARACTER_ACTIONS.yawn.row].length, 12);
+  assert.deepEqual(characterSample("yawn", CHARACTER_ACTIONS.yawn.duration + 100), { from: 0, to: 0, mix: 1 });
+});
+
+test("all seven actions use twelve actual registered poses and short eased transitions", () => {
   for (const action of Object.keys(CHARACTER_ACTIONS) as CharacterAction[]) {
     const config = CHARACTER_ACTIONS[action], offsets = characterOffsets(action);
     assert.equal(new Set(offsets.slice(0, 12).map(offset => characterSample(action, offset * config.duration + 1).to)).size, 12);
@@ -19,7 +26,7 @@ test("all six actions use twelve actual registered poses and short eased transit
   }
 });
 
-test("72 genuine-alpha source crops exclude adjacent rows and keep full boot/hat margins", async () => {
+test("84 genuine-alpha source crops exclude adjacent rows and keep full boot/hat margins", async () => {
   for (const action of Object.keys(CHARACTER_ACTIONS) as CharacterAction[]) {
     const sheet = CHARACTER_SHEETS[action], row = CHARACTER_ACTIONS[action].row;
     const metadata = await sharp(`public${sheet.src}`).metadata();

@@ -60,7 +60,7 @@ function Character({ action = "idle", small = false, animate = true, active = tr
       const visible = element!.getClientRects().length > 0;
       if (animate && active && visible && !reduced.matches && !document.hidden && typeof element!.animate === "function") { play(action); tick = requestAnimationFrame(paint); }
     }
-    // Load only neutral + the requested action, never all six sheets on entry.
+    // Load only neutral + the requested action, never every sheet on entry.
     const needed: CharacterAction[] = action === "idle" ? ["idle"] : ["idle", action];
     Promise.all(needed.map(next => new Promise<void>((resolve, reject) => {
       const image = new window.Image(); images.push(image);

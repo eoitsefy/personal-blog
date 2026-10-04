@@ -61,7 +61,7 @@ try {
     assert.ok(new Set(positions.map(p=>p.left)).size>=2,'wave must use distinct hand frames');
     await dialog.getByRole('button',{name:'让小助手点头'}).click();
     assert.equal(await character.getAttribute('data-action'),'nod');
-    for(const [label,action,duration] of [['挥手','wave',1800],['点头','nod',1500],['思考','thinking',2400],['鞠躬','bow',2000],['开心','cheer',1800]]) {
+    for(const [label,action,duration] of [['挥手','wave',1800],['点头','nod',1500],['思考','thinking',2400],['鞠躬','bow',2000],['开心','cheer',1800],['打哈欠','yawn',2600]]) {
       await dialog.getByRole('button',{name:`播放${label}动作`}).click();
       assert.equal(await character.getAttribute('data-action'),action);
       const frames=[];

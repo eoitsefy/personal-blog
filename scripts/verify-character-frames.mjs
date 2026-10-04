@@ -7,7 +7,7 @@ if(!['localhost','127.0.0.1','eastherphil.cn'].includes(new URL(base).hostname))
 const {chromium}=createRequire(import.meta.url)(process.env.PLAYWRIGHT_MODULE || 'C:/Users/Administrator/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright');
 const browser=await chromium.launch({headless:true,channel:'msedge'}), results=[],errors=[];
 await mkdir('.tool-tmp/chibi-previews',{recursive:true});
-const actions=[['挥手','wave',1800,1],['点头','nod',1500,2],['思考','thinking',2400,3],['鞠躬','bow',2000,4],['开心','cheer',1800,5]];
+const actions=[['挥手','wave',1800,1],['点头','nod',1500,2],['思考','thinking',2400,3],['鞠躬','bow',2000,4],['开心','cheer',1800,5],['打哈欠','yawn',2600,6]];
 async function seek(canvas,time) {
   await canvas.evaluate((el,t)=>{const a=el.getAnimations()[0];a.pause();a.currentTime=t;},time);
   await canvas.evaluate(()=>new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r))));

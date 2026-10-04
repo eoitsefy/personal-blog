@@ -1,0 +1,12 @@
+Built-in imagegen, transparent PNG; identity reference: chibi-idle-v4.png.
+Saved asset: public/assistant/chibi-yawn-v4.png; twelve chronological poses, 4 columns by 3 rows.
+
+Use case: identity-preserve.
+Asset type: transparent website chibi mascot sequential animation sprite sheet.
+Input image 1: current idle sheet, identity and clothing reference, not a target to overwrite.
+Primary request: create exactly TWELVE chronological full-body poses for ONE gentle yawning action, arranged 4 columns × 3 rows left-to-right then top-to-bottom.
+Preserve this exact original boy-like chibi mascot: large head/body ratio, dark short hair with gold streak, amber eyes, headset, black/gold jacket, white shirt, shorts, same boots, original shading and crisp outlines.
+Frame sequence: 1 neutral with both arms hanging naturally down; 2 sleepy eyelids, mouth slightly opens; 3 one forearm begins raising; 4 hand approaches mouth; 5 palm loosely covers mouth, eyes narrow; 6 yawn starts with rounded open mouth partly visible beside hand; 7 fullest gentle yawn, eyes closed and mouth opens wider behind covering hand; 8 yawn relaxes; 9 mouth closes, eyes half-open, hand moves away slightly; 10 forearm lowers halfway; 11 arm almost down, eyes reopen; 12 original neutral arms down.
+Small genuinely progressive changes between adjacent frames. Other arm remains naturally down throughout. Only jaw, eyelids, head and covering arm move; torso stays upright, boots remain planted at identical relative positions in every cell, no sideways movement, stepping, jumping or body translation.
+Same full-body size and front camera per cell, ample TRANSPARENT padding above complete hair and below complete boots. Every figure isolated within its own cell, no crossing row boundaries or touching neighbours.
+Output actual transparent PNG alpha, no painted checkerboard, background, ground shadow, glow, grid, frame numbers, speech bubbles, text, props or watermark. Never redesign character or add fingers/arms. The yawn must be recognizable rather than a smiling cheer or chin-thinking pose.
