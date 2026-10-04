@@ -4,7 +4,7 @@ import { SiteFooter, SiteHeader } from "@/components/site/site-shell";
 import { getAssistantConfig } from "@/lib/assistant/config";
 
 export const metadata: Metadata = {
-  title: "文本检索助手",
+  title: "小助手",
   description: "只根据 EastherPhil 已发布文章检索并生成带来源的回答。",
   alternates: { canonical: "/assistant" },
   robots: { index: false, follow: true },

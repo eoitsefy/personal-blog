@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { FloatingAssistant } from "@/components/assistant/chibi-assistant";
 import { ICP_FILING_NUMBER, ICP_FILING_URL } from "@/lib/site";
 import styles from "./site-shell.module.css";
 
@@ -53,7 +54,7 @@ export function SiteHeader({ tone = "dark", active, overlay = false }: SiteHeade
 
 export function SiteFooter({ tone = "light" }: { tone?: "dark" | "light" }) {
   return (
-    <footer className={`${styles.footer} ${styles[tone]}`}>
+    <><FloatingAssistant /><footer className={`${styles.footer} ${styles[tone]}`}>
       <div className={styles.footerInner}>
         <div className={styles.footerBrand}>
           <SiteMark />
@@ -71,6 +72,6 @@ export function SiteFooter({ tone = "light" }: { tone?: "dark" | "light" }) {
           </a>
         </div>
       </div>
-    </footer>
+    </footer></>
   );
 }

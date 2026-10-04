@@ -1,5 +1,6 @@
-import { getAssistantHealthSummary } from "@/lib/assistant/config";
+import { getAssistantConfig, getAssistantHealthSummary } from "@/lib/assistant/config";
 
 export async function GET() {
-  return Response.json({ ok: true, feature: getAssistantHealthSummary() }, { headers: { "Cache-Control": "no-store" } });
+  const config = getAssistantConfig();
+  return Response.json({ ok: true, feature: getAssistantHealthSummary(), limits: { maxQuestionChars: config.enabled ? config.maxQuestionChars : 500 } }, { headers: { "Cache-Control": "no-store" } });
 }
