@@ -25,7 +25,10 @@ try {
  for(const width of [1280,768,390,320]) {
   const context=await browser.newContext({viewport:{width,height:844}});
   const page=await context.newPage();page.on('pageerror',e=>errors.push(e.message));
+  const requestedSheets=new Set();
+  page.on('request',request=>{const path=new URL(request.url()).pathname;if(/chibi-.*-v4\.png$/.test(path))requestedSheets.add(path);});
   await page.goto(base);await page.waitForSelector('[data-action] canvas[data-ready=true]');
+  assert.deepEqual([...requestedSheets],['/assistant/chibi-idle-v4.png'],'Page entry must not download every action');
   const floating=page.locator('[data-action]').first();
   assert.equal(await floating.evaluate(el=>getComputedStyle(el).transform),'none');
   assert.equal(await floating.evaluate(el=>{const b=el.getBoundingClientRect();return el.closest('button').contains(document.elementFromPoint(b.left+5,b.top+b.height/2));}),false);
@@ -51,6 +54,7 @@ try {
     assert.deepEqual(await character.boundingBox(),box);
    }
    assert.deepEqual(seen,Array.from({length:12},(_,i)=>row*12+i));
+   if(width===1280){await seek(canvas,duration*.55);await canvas.screenshot({path:`.tool-tmp/chibi-previews/v4-${action}.png`});}
    const a=await seek(canvas,duration/12+10), b=await seek(canvas,duration/12+22.5),c=await seek(canvas,duration/12+35);
    assert.ok(a.blend>0 && a.blend<b.blend && b.blend<c.blend && c.blend<1,'Eased intermediate blends required');
    if(action!=='thinking') {
