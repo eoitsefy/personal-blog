@@ -3,6 +3,8 @@ import ReactMarkdown, { type Components } from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { parseTrustedVideoUrl } from "@/lib/media/video";
 import { ImagePreview, ImagePreviewLink } from "./image-preview";
+import { unplacedPostImages } from "@/lib/media/post-images";
+import styles from "./post-images.module.css";
 
 export type RichMarkdownAsset = {
   url: string;
@@ -14,6 +16,7 @@ export type RichMarkdownAsset = {
 type RichMarkdownProps = {
   markdown: string;
   assets?: RichMarkdownAsset[];
+  attachedImages?: RichMarkdownAsset[];
 };
 
 // Stable component identity keeps an open viewer alive during editor autosave.
@@ -21,7 +24,7 @@ const MarkdownImage: Components["img"] = ({ src, alt, title }) => (
   <ImagePreview src={typeof src === "string" ? src : ""} alt={alt ?? ""} title={title} />
 );
 
-export function RichMarkdown({ markdown, assets = [] }: RichMarkdownProps) {
+export function RichMarkdown({ markdown, assets = [], attachedImages = [] }: RichMarkdownProps) {
   const assetsByUrl = new Map(assets.map((asset) => [asset.url, asset]));
   const components: Components = {
     img: MarkdownImage,
@@ -73,5 +76,11 @@ export function RichMarkdown({ markdown, assets = [] }: RichMarkdownProps) {
     },
   };
 
-  return <ReactMarkdown remarkPlugins={[remarkGfm]} components={components}>{markdown}</ReactMarkdown>;
+  const images = unplacedPostImages(markdown, attachedImages);
+  return <>
+    <ReactMarkdown remarkPlugins={[remarkGfm]} components={components}>{markdown}</ReactMarkdown>
+    {images.length ? <section className={styles.gallery} aria-label="文章图片">
+      {images.map(image => <ImagePreview key={image.url} src={image.url} alt={image.originalName ?? "文章图片"} className={styles.image} />)}
+    </section> : null}
+  </>;
 }

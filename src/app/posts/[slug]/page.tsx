@@ -43,7 +43,7 @@ const getPublishedPostBySlug = cache(async (slug: string) => {
       author: { select: { id: true } },
       category: { select: { name: true, slug: true } },
       tags: { select: { tag: { select: { name: true, slug: true } } } },
-      assets: { select: { asset: { select: { url: true, kind: true, originalName: true, mime: true } } } },
+      assets: { where: { asset: { deletedAt: null, isPublic: true } }, select: { asset: { select: { url: true, kind: true, originalName: true, mime: true } } } },
       places: { where: { place: { deletedAt: null } }, select: { place: { select: publicPlaceSelect } } },
     },
   });
@@ -200,7 +200,7 @@ export default async function PostDetailPage({ params }: PageProps) {
 
         <article className={styles.article}>
           <section className={styles.prose} aria-label="文章正文">
-            <RichMarkdown markdown={post.contentMd} assets={post.assets.map(({ asset }) => asset)} />
+            <RichMarkdown markdown={post.contentMd} assets={post.assets.map(({ asset }) => asset)} attachedImages={post.assets.map(({ asset }) => asset)} />
           </section>
 
           <footer className={styles.articleEnd}>

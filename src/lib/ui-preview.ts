@@ -225,7 +225,9 @@ export function getUiPreviewPostList(query: PostListQuery, pageSize: number) {
 
   return {
     total: filtered.length,
-    posts: filtered.slice((query.page - 1) * pageSize, query.page * pageSize),
+    posts: filtered.slice((query.page - 1) * pageSize, query.page * pageSize).map(post => ({
+      ...post, assets: [] as { asset: { url: string; originalName: string | null } }[],
+    })),
     categories,
     tags,
   };
