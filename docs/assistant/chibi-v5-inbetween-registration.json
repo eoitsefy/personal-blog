@@ -1,0 +1,2618 @@
+{
+  "schemaVersion": 1,
+  "status": "candidate-materials-not-runtime",
+  "authoringFps": 15,
+  "alphaThreshold": 100,
+  "stage": {
+    "size": 224,
+    "centre": 112,
+    "baseline": 216,
+    "maxHeight": 206
+  },
+  "original": {
+    "version": "v4",
+    "frames": 84,
+    "sourceCommit": "1b08057adb1e11056bc280b385fafbe6a79e3748",
+    "files": {
+      "chibi-bow-v4.png": {
+        "sha256": "9e03ed43552dd7ca23ea5b9fd8a8c54859ae3dd58e6b396608dc23862359340f",
+        "bytes": 1304893
+      },
+      "chibi-cheer-v4.png": {
+        "sha256": "065f73980dc3a5da424dc94ace60e8f662849b36c0b8e8f5963b4947bef357e2",
+        "bytes": 1455178
+      },
+      "chibi-idle-v4.png": {
+        "sha256": "586873ef3390d5b4df1b698cb185088508cd03292a24c4915e16993b186266d5",
+        "bytes": 1503555
+      },
+      "chibi-nod-v4.png": {
+        "sha256": "2c5b62f2c702974d0e636361e1c24d9f23c9102ac9cad4b3b7a6e68c2564ba43",
+        "bytes": 1300630
+      },
+      "chibi-thinking-v4.png": {
+        "sha256": "0bd8c6b1361a78def290f47a98492a4296bea756d3282c1ed5505b179c80b042",
+        "bytes": 1449658
+      },
+      "chibi-wave-v4.png": {
+        "sha256": "4475626c751b184bc67ce01d6b0714b6debe1896eeec2b21cb26605bad4f84cf",
+        "bytes": 1368039
+      },
+      "chibi-yawn-v4.png": {
+        "sha256": "5bcc3d38e0dc3c004420491309c9901a695b5c8417a2f69d0d8f4d8aa1111091",
+        "bytes": 1498866
+      }
+    }
+  },
+  "sheets": {
+    "nod": {
+      "action": "nod",
+      "src": "/assistant/chibi-nod-inbetweens-v5.png",
+      "generatedFile": "exec-35f2d337-fe6c-409a-87f2-b85e2a85a357.png",
+      "sha256": "f44fceceb5362ac61cd24ac6d2c8e848150f20821de0f7738bd174aab5a83136",
+      "bytes": 1288610,
+      "requestedFrames": 12,
+      "actualFrames": 12,
+      "role": "supplementary-full-body-drawings",
+      "review": "static-crops-reviewed-motion-pending",
+      "width": 1448,
+      "height": 1086,
+      "columns": 4,
+      "rows": 3,
+      "alpha": true,
+      "transparentFraction": 0.6249154228096415,
+      "scale": 0.5902578796561605,
+      "poses": [
+        {
+          "rect": [
+            115,
+            19,
+            325,
+            367,
+            223.21
+          ],
+          "padding": [
+            115,
+            19,
+            36,
+            0
+          ],
+          "height": 349,
+          "pixels": 45078
+        },
+        {
+          "rect": [
+            451,
+            24,
+            658,
+            367,
+            558.64
+          ],
+          "padding": [
+            89,
+            24,
+            65,
+            0
+          ],
+          "height": 344,
+          "pixels": 44437
+        },
+        {
+          "rect": [
+            786,
+            26,
+            993,
+            367,
+            892.12
+          ],
+          "padding": [
+            62,
+            26,
+            92,
+            0
+          ],
+          "height": 342,
+          "pixels": 44174
+        },
+        {
+          "rect": [
+            1120,
+            29,
+            1328,
+            367,
+            1227.22
+          ],
+          "padding": [
+            34,
+            29,
+            119,
+            0
+          ],
+          "height": 339,
+          "pixels": 44005
+        },
+        {
+          "rect": [
+            118,
+            390,
+            325,
+            728,
+            224.1
+          ],
+          "padding": [
+            118,
+            22,
+            36,
+            0
+          ],
+          "height": 339,
+          "pixels": 44182
+        },
+        {
+          "rect": [
+            451,
+            395,
+            659,
+            727,
+            558.53
+          ],
+          "padding": [
+            89,
+            27,
+            64,
+            1
+          ],
+          "height": 333,
+          "pixels": 43372
+        },
+        {
+          "rect": [
+            785,
+            397,
+            993,
+            726,
+            892.13
+          ],
+          "padding": [
+            61,
+            29,
+            92,
+            2
+          ],
+          "height": 330,
+          "pixels": 43540
+        },
+        {
+          "rect": [
+            1120,
+            392,
+            1328,
+            727,
+            1227.33
+          ],
+          "padding": [
+            34,
+            24,
+            119,
+            1
+          ],
+          "height": 336,
+          "pixels": 43917
+        },
+        {
+          "rect": [
+            118,
+            736,
+            327,
+            1068,
+            222.7
+          ],
+          "padding": [
+            118,
+            7,
+            34,
+            17
+          ],
+          "height": 333,
+          "pixels": 43402
+        },
+        {
+          "rect": [
+            451,
+            737,
+            659,
+            1068,
+            558.32
+          ],
+          "padding": [
+            89,
+            8,
+            64,
+            17
+          ],
+          "height": 332,
+          "pixels": 43050
+        },
+        {
+          "rect": [
+            785,
+            737,
+            994,
+            1068,
+            892.06
+          ],
+          "padding": [
+            61,
+            8,
+            91,
+            17
+          ],
+          "height": 332,
+          "pixels": 43224
+        },
+        {
+          "rect": [
+            1120,
+            737,
+            1328,
+            1068,
+            1226.51
+          ],
+          "padding": [
+            34,
+            8,
+            119,
+            17
+          ],
+          "height": 332,
+          "pixels": 43115
+        }
+      ]
+    },
+    "idle": {
+      "action": "idle",
+      "src": "/assistant/chibi-idle-inbetweens-v5.png",
+      "generatedFile": "exec-5f69267d-5d28-4ef3-89df-53cb48c726e1.png",
+      "sha256": "0796819be3d0a419cac5cdf5735d3823d3bebe7479aa0101ba770cdb6103f0b4",
+      "bytes": 1867433,
+      "requestedFrames": 6,
+      "actualFrames": 6,
+      "role": "supplementary-full-body-drawings",
+      "review": "static-crops-reviewed-motion-pending",
+      "width": 1536,
+      "height": 1024,
+      "columns": 3,
+      "rows": 2,
+      "alpha": true,
+      "transparentFraction": 0.6280562082926432,
+      "scale": 0.42299794661190965,
+      "poses": [
+        {
+          "rect": [
+            153,
+            9,
+            460,
+            494,
+            310.23
+          ],
+          "padding": [
+            153,
+            9,
+            51,
+            17
+          ],
+          "height": 486,
+          "pixels": 90434
+        },
+        {
+          "rect": [
+            609,
+            9,
+            916,
+            494,
+            767.5
+          ],
+          "padding": [
+            97,
+            9,
+            107,
+            17
+          ],
+          "height": 486,
+          "pixels": 90403
+        },
+        {
+          "rect": [
+            1065,
+            9,
+            1374,
+            494,
+            1224.44
+          ],
+          "padding": [
+            41,
+            9,
+            161,
+            17
+          ],
+          "height": 486,
+          "pixels": 90577
+        },
+        {
+          "rect": [
+            151,
+            521,
+            461,
+            1007,
+            310.05
+          ],
+          "padding": [
+            151,
+            9,
+            50,
+            16
+          ],
+          "height": 487,
+          "pixels": 90917
+        },
+        {
+          "rect": [
+            608,
+            521,
+            917,
+            1007,
+            767.27
+          ],
+          "padding": [
+            96,
+            9,
+            106,
+            16
+          ],
+          "height": 487,
+          "pixels": 90758
+        },
+        {
+          "rect": [
+            1065,
+            521,
+            1374,
+            1007,
+            1224.29
+          ],
+          "padding": [
+            41,
+            9,
+            161,
+            16
+          ],
+          "height": 487,
+          "pixels": 90854
+        }
+      ]
+    },
+    "bow": {
+      "action": "bow",
+      "src": "/assistant/chibi-bow-inbetweens-v5.png",
+      "generatedFile": "exec-058d497f-24b7-4c52-982a-bd23e829e678.png",
+      "sha256": "4b28d3944567a8628e3f6a17bebfe5d5ba678da143b6b0fbf1a972719b3153a1",
+      "bytes": 1438171,
+      "requestedFrames": 18,
+      "actualFrames": 18,
+      "role": "supplementary-full-body-drawings",
+      "review": "static-crops-reviewed-motion-pending",
+      "width": 1774,
+      "height": 887,
+      "columns": 6,
+      "rows": 3,
+      "alpha": true,
+      "transparentFraction": 0.5867573582589044,
+      "scale": 0.71280276816609,
+      "poses": [
+        {
+          "rect": [
+            71,
+            15,
+            260,
+            303,
+            169.83
+          ],
+          "padding": [
+            71,
+            15,
+            35,
+            0
+          ],
+          "height": 289,
+          "pixels": 32927
+        },
+        {
+          "rect": [
+            367,
+            20,
+            556,
+            303,
+            465.75
+          ],
+          "padding": [
+            71,
+            20,
+            34,
+            0
+          ],
+          "height": 284,
+          "pixels": 32175
+        },
+        {
+          "rect": [
+            658,
+            27,
+            848,
+            303,
+            759.34
+          ],
+          "padding": [
+            67,
+            27,
+            38,
+            0
+          ],
+          "height": 277,
+          "pixels": 31988
+        },
+        {
+          "rect": [
+            940,
+            27,
+            1133,
+            303,
+            1043.76
+          ],
+          "padding": [
+            53,
+            27,
+            49,
+            0
+          ],
+          "height": 277,
+          "pixels": 32135
+        },
+        {
+          "rect": [
+            1229,
+            29,
+            1421,
+            303,
+            1332.65
+          ],
+          "padding": [
+            46,
+            29,
+            56,
+            0
+          ],
+          "height": 275,
+          "pixels": 32004
+        },
+        {
+          "rect": [
+            1517,
+            35,
+            1705,
+            303,
+            1618.93
+          ],
+          "padding": [
+            39,
+            35,
+            68,
+            0
+          ],
+          "height": 269,
+          "pixels": 30997
+        },
+        {
+          "rect": [
+            70,
+            328,
+            261,
+            596,
+            170.82
+          ],
+          "padding": [
+            70,
+            24,
+            34,
+            1
+          ],
+          "height": 269,
+          "pixels": 31471
+        },
+        {
+          "rect": [
+            366,
+            332,
+            558,
+            597,
+            466.23
+          ],
+          "padding": [
+            70,
+            28,
+            32,
+            0
+          ],
+          "height": 266,
+          "pixels": 31346
+        },
+        {
+          "rect": [
+            656,
+            342,
+            850,
+            597,
+            759.29
+          ],
+          "padding": [
+            65,
+            38,
+            36,
+            0
+          ],
+          "height": 256,
+          "pixels": 30484
+        },
+        {
+          "rect": [
+            944,
+            345,
+            1137,
+            597,
+            1045.09
+          ],
+          "padding": [
+            57,
+            41,
+            45,
+            0
+          ],
+          "height": 253,
+          "pixels": 30259
+        },
+        {
+          "rect": [
+            1233,
+            338,
+            1425,
+            597,
+            1335.7
+          ],
+          "padding": [
+            50,
+            34,
+            52,
+            0
+          ],
+          "height": 260,
+          "pixels": 30779
+        },
+        {
+          "rect": [
+            1519,
+            328,
+            1707,
+            597,
+            1618.78
+          ],
+          "padding": [
+            41,
+            24,
+            66,
+            0
+          ],
+          "height": 270,
+          "pixels": 30918
+        },
+        {
+          "rect": [
+            73,
+            610,
+            260,
+            879,
+            171.69
+          ],
+          "padding": [
+            73,
+            12,
+            35,
+            7
+          ],
+          "height": 270,
+          "pixels": 30914
+        },
+        {
+          "rect": [
+            370,
+            611,
+            556,
+            879,
+            466.77
+          ],
+          "padding": [
+            74,
+            13,
+            34,
+            7
+          ],
+          "height": 269,
+          "pixels": 30742
+        },
+        {
+          "rect": [
+            661,
+            611,
+            849,
+            879,
+            759.52
+          ],
+          "padding": [
+            70,
+            13,
+            37,
+            7
+          ],
+          "height": 269,
+          "pixels": 30830
+        },
+        {
+          "rect": [
+            949,
+            612,
+            1136,
+            879,
+            1046.86
+          ],
+          "padding": [
+            62,
+            14,
+            46,
+            7
+          ],
+          "height": 268,
+          "pixels": 30755
+        },
+        {
+          "rect": [
+            1234,
+            611,
+            1422,
+            879,
+            1333.71
+          ],
+          "padding": [
+            51,
+            13,
+            55,
+            7
+          ],
+          "height": 269,
+          "pixels": 31006
+        },
+        {
+          "rect": [
+            1520,
+            608,
+            1708,
+            879,
+            1618.39
+          ],
+          "padding": [
+            42,
+            10,
+            65,
+            7
+          ],
+          "height": 272,
+          "pixels": 30877
+        }
+      ]
+    },
+    "cheer": {
+      "action": "cheer",
+      "src": "/assistant/chibi-cheer-inbetweens-v5.png",
+      "generatedFile": "exec-1cd88527-47a6-4bf0-924d-d868ebcac3e4.png",
+      "sha256": "276419aed2f97762b113264143965a384b237ecef76fb724ea6f7f66e289ea8f",
+      "bytes": 1808829,
+      "requestedFrames": 15,
+      "actualFrames": 15,
+      "role": "supplementary-full-body-drawings",
+      "review": "static-crops-reviewed-motion-pending",
+      "width": 1254,
+      "height": 1254,
+      "columns": 5,
+      "rows": 3,
+      "alpha": true,
+      "transparentFraction": 0.4788421866613758,
+      "scale": 0.555256064690027,
+      "poses": [
+        {
+          "rect": [
+            44,
+            36,
+            266,
+            401,
+            155.55
+          ],
+          "padding": [
+            44,
+            36,
+            0,
+            16
+          ],
+          "height": 366,
+          "pixels": 49981
+        },
+        {
+          "rect": [
+            281,
+            31,
+            499,
+            401,
+            392.27
+          ],
+          "padding": [
+            14,
+            31,
+            5,
+            16
+          ],
+          "height": 371,
+          "pixels": 48000
+        },
+        {
+          "rect": [
+            520,
+            35,
+            740,
+            401,
+            633.8
+          ],
+          "padding": [
+            15,
+            35,
+            11,
+            16
+          ],
+          "height": 367,
+          "pixels": 48125
+        },
+        {
+          "rect": [
+            764,
+            32,
+            986,
+            401,
+            879.86
+          ],
+          "padding": [
+            12,
+            32,
+            16,
+            16
+          ],
+          "height": 370,
+          "pixels": 48322
+        },
+        {
+          "rect": [
+            1014,
+            32,
+            1235,
+            401,
+            1130.28
+          ],
+          "padding": [
+            11,
+            32,
+            18,
+            16
+          ],
+          "height": 370,
+          "pixels": 47932
+        },
+        {
+          "rect": [
+            34,
+            435,
+            260,
+            803,
+            153.61
+          ],
+          "padding": [
+            34,
+            17,
+            6,
+            31
+          ],
+          "height": 369,
+          "pixels": 48961
+        },
+        {
+          "rect": [
+            282,
+            436,
+            504,
+            803,
+            396.62
+          ],
+          "padding": [
+            15,
+            18,
+            0,
+            31
+          ],
+          "height": 368,
+          "pixels": 48228
+        },
+        {
+          "rect": [
+            519,
+            437,
+            743,
+            803,
+            634.69
+          ],
+          "padding": [
+            14,
+            19,
+            8,
+            31
+          ],
+          "height": 367,
+          "pixels": 48609
+        },
+        {
+          "rect": [
+            765,
+            437,
+            988,
+            803,
+            880.67
+          ],
+          "padding": [
+            13,
+            19,
+            14,
+            31
+          ],
+          "height": 367,
+          "pixels": 48347
+        },
+        {
+          "rect": [
+            1012,
+            434,
+            1235,
+            803,
+            1129.8
+          ],
+          "padding": [
+            9,
+            16,
+            18,
+            31
+          ],
+          "height": 370,
+          "pixels": 48571
+        },
+        {
+          "rect": [
+            40,
+            837,
+            263,
+            1204,
+            154.53
+          ],
+          "padding": [
+            40,
+            2,
+            3,
+            49
+          ],
+          "height": 368,
+          "pixels": 48399
+        },
+        {
+          "rect": [
+            280,
+            837,
+            501,
+            1204,
+            395.25
+          ],
+          "padding": [
+            13,
+            2,
+            3,
+            49
+          ],
+          "height": 368,
+          "pixels": 48299
+        },
+        {
+          "rect": [
+            518,
+            836,
+            739,
+            1204,
+            633.28
+          ],
+          "padding": [
+            13,
+            1,
+            12,
+            49
+          ],
+          "height": 369,
+          "pixels": 49383
+        },
+        {
+          "rect": [
+            765,
+            837,
+            987,
+            1204,
+            880.89
+          ],
+          "padding": [
+            13,
+            2,
+            15,
+            49
+          ],
+          "height": 368,
+          "pixels": 49631
+        },
+        {
+          "rect": [
+            1013,
+            837,
+            1236,
+            1204,
+            1129.28
+          ],
+          "padding": [
+            10,
+            2,
+            17,
+            49
+          ],
+          "height": 368,
+          "pixels": 49772
+        }
+      ]
+    },
+    "wave": {
+      "action": "wave",
+      "src": "/assistant/chibi-wave-inbetweens-v5.png",
+      "generatedFile": "exec-c851e7f4-294e-44e2-bbbd-10184dffa908.png",
+      "sha256": "f43a9632711ebc6986b1af6ddcf38cb6e5de68af48148c02d4201190f8d8619e",
+      "bytes": 1451953,
+      "requestedFrames": 15,
+      "actualFrames": 15,
+      "role": "supplementary-full-body-drawings",
+      "review": "static-crops-reviewed-motion-pending",
+      "width": 1619,
+      "height": 972,
+      "columns": 5,
+      "rows": 3,
+      "alpha": true,
+      "transparentFraction": 0.5953079048439697,
+      "scale": 0.6645161290322581,
+      "poses": [
+        {
+          "rect": [
+            143,
+            9,
+            335,
+            317,
+            242.5
+          ],
+          "padding": [
+            143,
+            9,
+            0,
+            6
+          ],
+          "height": 309,
+          "pixels": 37380
+        },
+        {
+          "rect": [
+            435,
+            9,
+            626,
+            317,
+            534.19
+          ],
+          "padding": [
+            99,
+            9,
+            21,
+            6
+          ],
+          "height": 309,
+          "pixels": 36896
+        },
+        {
+          "rect": [
+            717,
+            9,
+            909,
+            317,
+            817.18
+          ],
+          "padding": [
+            69,
+            9,
+            61,
+            6
+          ],
+          "height": 309,
+          "pixels": 36477
+        },
+        {
+          "rect": [
+            994,
+            9,
+            1183,
+            317,
+            1093.3
+          ],
+          "padding": [
+            23,
+            9,
+            93,
+            6
+          ],
+          "height": 309,
+          "pixels": 36222
+        },
+        {
+          "rect": [
+            1278,
+            9,
+            1469,
+            317,
+            1376.94
+          ],
+          "padding": [
+            1,
+            9,
+            149,
+            6
+          ],
+          "height": 309,
+          "pixels": 36866
+        },
+        {
+          "rect": [
+            140,
+            330,
+            333,
+            636,
+            241.31
+          ],
+          "padding": [
+            140,
+            6,
+            2,
+            6
+          ],
+          "height": 307,
+          "pixels": 36891
+        },
+        {
+          "rect": [
+            435,
+            329,
+            627,
+            636,
+            534.23
+          ],
+          "padding": [
+            99,
+            5,
+            20,
+            6
+          ],
+          "height": 308,
+          "pixels": 36894
+        },
+        {
+          "rect": [
+            716,
+            329,
+            909,
+            636,
+            816.49
+          ],
+          "padding": [
+            68,
+            5,
+            61,
+            6
+          ],
+          "height": 308,
+          "pixels": 37265
+        },
+        {
+          "rect": [
+            994,
+            330,
+            1186,
+            636,
+            1093.42
+          ],
+          "padding": [
+            23,
+            6,
+            90,
+            6
+          ],
+          "height": 307,
+          "pixels": 36925
+        },
+        {
+          "rect": [
+            1279,
+            329,
+            1471,
+            636,
+            1378.03
+          ],
+          "padding": [
+            2,
+            5,
+            147,
+            6
+          ],
+          "height": 308,
+          "pixels": 36782
+        },
+        {
+          "rect": [
+            142,
+            644,
+            334,
+            953,
+            242.11
+          ],
+          "padding": [
+            142,
+            1,
+            1,
+            18
+          ],
+          "height": 310,
+          "pixels": 37410
+        },
+        {
+          "rect": [
+            435,
+            644,
+            627,
+            953,
+            534.48
+          ],
+          "padding": [
+            99,
+            1,
+            20,
+            18
+          ],
+          "height": 310,
+          "pixels": 36290
+        },
+        {
+          "rect": [
+            717,
+            644,
+            908,
+            953,
+            816.51
+          ],
+          "padding": [
+            69,
+            1,
+            62,
+            18
+          ],
+          "height": 310,
+          "pixels": 37139
+        },
+        {
+          "rect": [
+            993,
+            644,
+            1184,
+            953,
+            1093.15
+          ],
+          "padding": [
+            22,
+            1,
+            92,
+            18
+          ],
+          "height": 310,
+          "pixels": 36958
+        },
+        {
+          "rect": [
+            1279,
+            644,
+            1471,
+            953,
+            1376.56
+          ],
+          "padding": [
+            2,
+            1,
+            147,
+            18
+          ],
+          "height": 310,
+          "pixels": 36878
+        }
+      ]
+    },
+    "thinking": {
+      "action": "thinking",
+      "src": "/assistant/chibi-thinking-inbetweens-v5.png",
+      "generatedFile": "exec-0b1bae0c-6899-4909-8e41-dc38edc86b4f.png",
+      "sha256": "d6da7c84afb14f1f95bcb66e7b1ec729073a7aa36d91841b864c521d515de4e2",
+      "bytes": 2075067,
+      "requestedFrames": 24,
+      "actualFrames": 24,
+      "role": "supplementary-full-body-drawings",
+      "review": "static-crops-reviewed-motion-pending",
+      "width": 1254,
+      "height": 1254,
+      "columns": 6,
+      "rows": 4,
+      "alpha": true,
+      "transparentFraction": 0.41786220299189325,
+      "scale": 0.6776315789473685,
+      "poses": [
+        {
+          "rect": [
+            17,
+            20,
+            203,
+            323,
+            113.27
+          ],
+          "padding": [
+            17,
+            20,
+            5,
+            0
+          ],
+          "height": 304,
+          "pixels": 34452
+        },
+        {
+          "rect": [
+            224,
+            20,
+            408,
+            323,
+            318.6
+          ],
+          "padding": [
+            15,
+            20,
+            9,
+            0
+          ],
+          "height": 304,
+          "pixels": 34016
+        },
+        {
+          "rect": [
+            429,
+            20,
+            612,
+            323,
+            522.68
+          ],
+          "padding": [
+            11,
+            20,
+            14,
+            0
+          ],
+          "height": 304,
+          "pixels": 33655
+        },
+        {
+          "rect": [
+            634,
+            20,
+            819,
+            323,
+            729.21
+          ],
+          "padding": [
+            7,
+            20,
+            16,
+            0
+          ],
+          "height": 304,
+          "pixels": 33810
+        },
+        {
+          "rect": [
+            843,
+            20,
+            1027,
+            323,
+            938.03
+          ],
+          "padding": [
+            7,
+            20,
+            17,
+            0
+          ],
+          "height": 304,
+          "pixels": 33730
+        },
+        {
+          "rect": [
+            1050,
+            20,
+            1236,
+            323,
+            1146.53
+          ],
+          "padding": [
+            5,
+            20,
+            17,
+            0
+          ],
+          "height": 304,
+          "pixels": 33727
+        },
+        {
+          "rect": [
+            17,
+            338,
+            204,
+            640,
+            113.33
+          ],
+          "padding": [
+            17,
+            14,
+            4,
+            0
+          ],
+          "height": 303,
+          "pixels": 33960
+        },
+        {
+          "rect": [
+            224,
+            339,
+            409,
+            640,
+            318.26
+          ],
+          "padding": [
+            15,
+            15,
+            8,
+            0
+          ],
+          "height": 302,
+          "pixels": 33907
+        },
+        {
+          "rect": [
+            428,
+            339,
+            614,
+            640,
+            522.71
+          ],
+          "padding": [
+            10,
+            15,
+            12,
+            0
+          ],
+          "height": 302,
+          "pixels": 33752
+        },
+        {
+          "rect": [
+            633,
+            340,
+            820,
+            640,
+            729.39
+          ],
+          "padding": [
+            6,
+            16,
+            15,
+            0
+          ],
+          "height": 301,
+          "pixels": 33827
+        },
+        {
+          "rect": [
+            840,
+            340,
+            1026,
+            640,
+            937
+          ],
+          "padding": [
+            4,
+            16,
+            18,
+            0
+          ],
+          "height": 301,
+          "pixels": 33795
+        },
+        {
+          "rect": [
+            1047,
+            339,
+            1234,
+            640,
+            1145.54
+          ],
+          "padding": [
+            2,
+            15,
+            19,
+            0
+          ],
+          "height": 302,
+          "pixels": 33808
+        },
+        {
+          "rect": [
+            15,
+            657,
+            203,
+            956,
+            113.95
+          ],
+          "padding": [
+            15,
+            16,
+            5,
+            0
+          ],
+          "height": 300,
+          "pixels": 33925
+        },
+        {
+          "rect": [
+            224,
+            657,
+            409,
+            955,
+            318.35
+          ],
+          "padding": [
+            15,
+            16,
+            8,
+            1
+          ],
+          "height": 299,
+          "pixels": 33821
+        },
+        {
+          "rect": [
+            428,
+            657,
+            614,
+            955,
+            522.98
+          ],
+          "padding": [
+            10,
+            16,
+            12,
+            1
+          ],
+          "height": 299,
+          "pixels": 33557
+        },
+        {
+          "rect": [
+            634,
+            657,
+            820,
+            955,
+            730.26
+          ],
+          "padding": [
+            7,
+            16,
+            15,
+            1
+          ],
+          "height": 299,
+          "pixels": 33664
+        },
+        {
+          "rect": [
+            841,
+            656,
+            1028,
+            955,
+            937.5
+          ],
+          "padding": [
+            5,
+            15,
+            16,
+            1
+          ],
+          "height": 300,
+          "pixels": 34067
+        },
+        {
+          "rect": [
+            1052,
+            657,
+            1238,
+            956,
+            1146.98
+          ],
+          "padding": [
+            7,
+            16,
+            15,
+            0
+          ],
+          "height": 300,
+          "pixels": 34181
+        },
+        {
+          "rect": [
+            17,
+            968,
+            203,
+            1251,
+            113.55
+          ],
+          "padding": [
+            17,
+            11,
+            5,
+            2
+          ],
+          "height": 284,
+          "pixels": 32525
+        },
+        {
+          "rect": [
+            224,
+            968,
+            408,
+            1251,
+            318.63
+          ],
+          "padding": [
+            15,
+            11,
+            9,
+            2
+          ],
+          "height": 284,
+          "pixels": 31726
+        },
+        {
+          "rect": [
+            428,
+            969,
+            612,
+            1251,
+            523.04
+          ],
+          "padding": [
+            10,
+            12,
+            14,
+            2
+          ],
+          "height": 283,
+          "pixels": 31761
+        },
+        {
+          "rect": [
+            634,
+            969,
+            819,
+            1251,
+            730.27
+          ],
+          "padding": [
+            7,
+            12,
+            16,
+            2
+          ],
+          "height": 283,
+          "pixels": 32307
+        },
+        {
+          "rect": [
+            845,
+            968,
+            1029,
+            1251,
+            939.18
+          ],
+          "padding": [
+            9,
+            11,
+            15,
+            2
+          ],
+          "height": 284,
+          "pixels": 32175
+        },
+        {
+          "rect": [
+            1050,
+            968,
+            1234,
+            1251,
+            1146.56
+          ],
+          "padding": [
+            5,
+            11,
+            19,
+            2
+          ],
+          "height": 284,
+          "pixels": 32226
+        }
+      ],
+      "excludedFrames": [
+        18,
+        19,
+        20,
+        21,
+        22,
+        23
+      ],
+      "exclusionReason": "Last raw row shrinks the figure and repeats a lifting pose after lowering; never splice these frames into a final chronological action."
+    },
+    "yawn": {
+      "action": "yawn",
+      "src": "/assistant/chibi-yawn-inbetweens-v5.png",
+      "generatedFile": "exec-5abf9511-7e34-4198-9565-26778d674175.png",
+      "sha256": "71c7728528e974bd46ef2c4c2c1ac3faec1a2374e2925775b46a70d42f11c4a8",
+      "bytes": 1790989,
+      "requestedFrames": 30,
+      "actualFrames": 24,
+      "role": "supplementary-full-body-drawings",
+      "review": "static-crops-reviewed-motion-pending",
+      "width": 1236,
+      "height": 1272,
+      "columns": 6,
+      "rows": 4,
+      "alpha": true,
+      "transparentFraction": 0.4991985711668804,
+      "scale": 0.762962962962963,
+      "poses": [
+        {
+          "rect": [
+            31,
+            10,
+            204,
+            279,
+            118.04
+          ],
+          "padding": [
+            31,
+            10,
+            1,
+            5
+          ],
+          "height": 270,
+          "pixels": 29351
+        },
+        {
+          "rect": [
+            229,
+            10,
+            400,
+            279,
+            315.58
+          ],
+          "padding": [
+            23,
+            10,
+            11,
+            5
+          ],
+          "height": 270,
+          "pixels": 29335
+        },
+        {
+          "rect": [
+            427,
+            10,
+            599,
+            279,
+            514.35
+          ],
+          "padding": [
+            15,
+            10,
+            18,
+            5
+          ],
+          "height": 270,
+          "pixels": 29344
+        },
+        {
+          "rect": [
+            626,
+            10,
+            797,
+            279,
+            713.2
+          ],
+          "padding": [
+            8,
+            10,
+            25,
+            5
+          ],
+          "height": 270,
+          "pixels": 28837
+        },
+        {
+          "rect": [
+            824,
+            10,
+            997,
+            279,
+            913.63
+          ],
+          "padding": [
+            1,
+            10,
+            26,
+            5
+          ],
+          "height": 270,
+          "pixels": 29007
+        },
+        {
+          "rect": [
+            1025,
+            10,
+            1196,
+            279,
+            1112.8
+          ],
+          "padding": [
+            1,
+            10,
+            39,
+            5
+          ],
+          "height": 270,
+          "pixels": 28754
+        },
+        {
+          "rect": [
+            29,
+            286,
+            202,
+            554,
+            118.04
+          ],
+          "padding": [
+            29,
+            1,
+            3,
+            4
+          ],
+          "height": 269,
+          "pixels": 28868
+        },
+        {
+          "rect": [
+            229,
+            286,
+            401,
+            554,
+            317.37
+          ],
+          "padding": [
+            23,
+            1,
+            10,
+            4
+          ],
+          "height": 269,
+          "pixels": 28842
+        },
+        {
+          "rect": [
+            427,
+            286,
+            601,
+            554,
+            517.11
+          ],
+          "padding": [
+            15,
+            1,
+            16,
+            4
+          ],
+          "height": 269,
+          "pixels": 29058
+        },
+        {
+          "rect": [
+            627,
+            286,
+            799,
+            554,
+            715.78
+          ],
+          "padding": [
+            9,
+            1,
+            23,
+            4
+          ],
+          "height": 269,
+          "pixels": 28850
+        },
+        {
+          "rect": [
+            826,
+            286,
+            999,
+            554,
+            916.43
+          ],
+          "padding": [
+            3,
+            1,
+            24,
+            4
+          ],
+          "height": 269,
+          "pixels": 28956
+        },
+        {
+          "rect": [
+            1026,
+            286,
+            1197,
+            554,
+            1114.19
+          ],
+          "padding": [
+            2,
+            1,
+            38,
+            4
+          ],
+          "height": 269,
+          "pixels": 28703
+        },
+        {
+          "rect": [
+            31,
+            561,
+            203,
+            828,
+            120.23
+          ],
+          "padding": [
+            31,
+            2,
+            2,
+            5
+          ],
+          "height": 268,
+          "pixels": 28828
+        },
+        {
+          "rect": [
+            229,
+            560,
+            402,
+            828,
+            318.13
+          ],
+          "padding": [
+            23,
+            1,
+            9,
+            5
+          ],
+          "height": 269,
+          "pixels": 28751
+        },
+        {
+          "rect": [
+            428,
+            561,
+            603,
+            828,
+            518.11
+          ],
+          "padding": [
+            16,
+            2,
+            14,
+            5
+          ],
+          "height": 268,
+          "pixels": 29037
+        },
+        {
+          "rect": [
+            628,
+            561,
+            802,
+            828,
+            717.06
+          ],
+          "padding": [
+            10,
+            2,
+            20,
+            5
+          ],
+          "height": 268,
+          "pixels": 28906
+        },
+        {
+          "rect": [
+            828,
+            561,
+            1002,
+            828,
+            918.14
+          ],
+          "padding": [
+            5,
+            2,
+            21,
+            5
+          ],
+          "height": 268,
+          "pixels": 28894
+        },
+        {
+          "rect": [
+            1026,
+            561,
+            1199,
+            828,
+            1115.35
+          ],
+          "padding": [
+            2,
+            2,
+            36,
+            5
+          ],
+          "height": 268,
+          "pixels": 28772
+        },
+        {
+          "rect": [
+            31,
+            835,
+            205,
+            1103,
+            120.03
+          ],
+          "padding": [
+            31,
+            1,
+            0,
+            168
+          ],
+          "height": 269,
+          "pixels": 29113
+        },
+        {
+          "rect": [
+            229,
+            835,
+            401,
+            1103,
+            318.32
+          ],
+          "padding": [
+            23,
+            1,
+            10,
+            168
+          ],
+          "height": 269,
+          "pixels": 28903
+        },
+        {
+          "rect": [
+            428,
+            835,
+            602,
+            1103,
+            516.41
+          ],
+          "padding": [
+            16,
+            1,
+            15,
+            168
+          ],
+          "height": 269,
+          "pixels": 29601
+        },
+        {
+          "rect": [
+            628,
+            835,
+            800,
+            1103,
+            714.77
+          ],
+          "padding": [
+            10,
+            1,
+            22,
+            168
+          ],
+          "height": 269,
+          "pixels": 29429
+        },
+        {
+          "rect": [
+            825,
+            835,
+            1000,
+            1103,
+            914.76
+          ],
+          "padding": [
+            2,
+            1,
+            23,
+            168
+          ],
+          "height": 269,
+          "pixels": 29770
+        },
+        {
+          "rect": [
+            1026,
+            835,
+            1199,
+            1103,
+            1113.64
+          ],
+          "padding": [
+            2,
+            1,
+            36,
+            168
+          ],
+          "height": 269,
+          "pixels": 29637
+        }
+      ]
+    },
+    "yawn-recovery": {
+      "action": "yawn",
+      "src": "/assistant/chibi-yawn-recovery-inbetweens-v5.png",
+      "generatedFile": "exec-820219f4-c051-4874-8c3c-03b295c39946.png",
+      "sha256": "d01ac335b8037a947e721d51397af49984705902824541511e5dacbf6024334c",
+      "bytes": 1542691,
+      "requestedFrames": 12,
+      "actualFrames": 12,
+      "role": "supplementary-hand-lowering-and-eye-reopening",
+      "review": "static-crops-reviewed-motion-pending",
+      "width": 1254,
+      "height": 1254,
+      "columns": 4,
+      "rows": 3,
+      "alpha": true,
+      "transparentFraction": 0.5410755757016145,
+      "scale": 0.5435356200527705,
+      "poses": [
+        {
+          "rect": [
+            48,
+            25,
+            280,
+            403,
+            168.57
+          ],
+          "padding": [
+            48,
+            25,
+            32,
+            14
+          ],
+          "height": 379,
+          "pixels": 53429
+        },
+        {
+          "rect": [
+            361,
+            25,
+            594,
+            403,
+            482.14
+          ],
+          "padding": [
+            48,
+            25,
+            32,
+            14
+          ],
+          "height": 379,
+          "pixels": 53465
+        },
+        {
+          "rect": [
+            675,
+            25,
+            907,
+            403,
+            795.29
+          ],
+          "padding": [
+            48,
+            25,
+            32,
+            14
+          ],
+          "height": 379,
+          "pixels": 53631
+        },
+        {
+          "rect": [
+            988,
+            25,
+            1220,
+            403,
+            1109.46
+          ],
+          "padding": [
+            48,
+            25,
+            33,
+            14
+          ],
+          "height": 379,
+          "pixels": 53561
+        },
+        {
+          "rect": [
+            48,
+            443,
+            280,
+            821,
+            168.45
+          ],
+          "padding": [
+            48,
+            25,
+            32,
+            14
+          ],
+          "height": 379,
+          "pixels": 53792
+        },
+        {
+          "rect": [
+            361,
+            444,
+            594,
+            821,
+            482.09
+          ],
+          "padding": [
+            48,
+            26,
+            32,
+            14
+          ],
+          "height": 378,
+          "pixels": 53699
+        },
+        {
+          "rect": [
+            675,
+            443,
+            907,
+            821,
+            795.15
+          ],
+          "padding": [
+            48,
+            25,
+            32,
+            14
+          ],
+          "height": 379,
+          "pixels": 53702
+        },
+        {
+          "rect": [
+            988,
+            444,
+            1220,
+            821,
+            1109.26
+          ],
+          "padding": [
+            48,
+            26,
+            33,
+            14
+          ],
+          "height": 378,
+          "pixels": 53757
+        },
+        {
+          "rect": [
+            47,
+            862,
+            280,
+            1239,
+            168.51
+          ],
+          "padding": [
+            47,
+            26,
+            32,
+            14
+          ],
+          "height": 378,
+          "pixels": 53931
+        },
+        {
+          "rect": [
+            361,
+            862,
+            594,
+            1239,
+            482.5
+          ],
+          "padding": [
+            48,
+            26,
+            32,
+            14
+          ],
+          "height": 378,
+          "pixels": 53968
+        },
+        {
+          "rect": [
+            675,
+            862,
+            907,
+            1239,
+            795.22
+          ],
+          "padding": [
+            48,
+            26,
+            32,
+            14
+          ],
+          "height": 378,
+          "pixels": 54510
+        },
+        {
+          "rect": [
+            988,
+            862,
+            1220,
+            1239,
+            1109.22
+          ],
+          "padding": [
+            48,
+            26,
+            33,
+            14
+          ],
+          "height": 378,
+          "pixels": 54546
+        }
+      ]
+    },
+    "thinking-recovery": {
+      "action": "thinking",
+      "src": "/assistant/chibi-thinking-recovery-inbetweens-v5.png",
+      "generatedFile": "exec-8adbbb84-14be-40a5-af67-756b9660c299.png",
+      "sha256": "08dfcf4685b267a2f620371f41bd4a9714775cf40b771363704a0ab07e947fef",
+      "bytes": 1424231,
+      "requestedFrames": 12,
+      "actualFrames": 12,
+      "role": "supplementary-chin-release-and-arm-lowering",
+      "review": "static-crops-reviewed-motion-pending",
+      "width": 1448,
+      "height": 1086,
+      "columns": 4,
+      "rows": 3,
+      "alpha": true,
+      "transparentFraction": 0.5861046671347029,
+      "scale": 0.5852272727272727,
+      "poses": [
+        {
+          "rect": [
+            123,
+            10,
+            346,
+            361,
+            238.9
+          ],
+          "padding": [
+            123,
+            10,
+            15,
+            0
+          ],
+          "height": 352,
+          "pixels": 47624
+        },
+        {
+          "rect": [
+            447,
+            10,
+            671,
+            361,
+            562.94
+          ],
+          "padding": [
+            85,
+            10,
+            52,
+            0
+          ],
+          "height": 352,
+          "pixels": 47943
+        },
+        {
+          "rect": [
+            763,
+            10,
+            990,
+            361,
+            882.15
+          ],
+          "padding": [
+            39,
+            10,
+            94,
+            0
+          ],
+          "height": 352,
+          "pixels": 48274
+        },
+        {
+          "rect": [
+            1087,
+            10,
+            1312,
+            361,
+            1204.38
+          ],
+          "padding": [
+            2,
+            10,
+            135,
+            0
+          ],
+          "height": 352,
+          "pixels": 48099
+        },
+        {
+          "rect": [
+            122,
+            371,
+            347,
+            721,
+            242.6
+          ],
+          "padding": [
+            122,
+            9,
+            14,
+            2
+          ],
+          "height": 351,
+          "pixels": 47845
+        },
+        {
+          "rect": [
+            449,
+            371,
+            674,
+            721,
+            568.31
+          ],
+          "padding": [
+            87,
+            9,
+            49,
+            2
+          ],
+          "height": 351,
+          "pixels": 47927
+        },
+        {
+          "rect": [
+            764,
+            372,
+            991,
+            722,
+            883.7
+          ],
+          "padding": [
+            40,
+            10,
+            93,
+            1
+          ],
+          "height": 351,
+          "pixels": 48179
+        },
+        {
+          "rect": [
+            1086,
+            371,
+            1312,
+            721,
+            1204.67
+          ],
+          "padding": [
+            1,
+            9,
+            135,
+            2
+          ],
+          "height": 351,
+          "pixels": 47841
+        },
+        {
+          "rect": [
+            122,
+            732,
+            348,
+            1082,
+            239.79
+          ],
+          "padding": [
+            122,
+            8,
+            13,
+            3
+          ],
+          "height": 351,
+          "pixels": 47858
+        },
+        {
+          "rect": [
+            451,
+            733,
+            676,
+            1082,
+            567.19
+          ],
+          "padding": [
+            89,
+            9,
+            47,
+            3
+          ],
+          "height": 350,
+          "pixels": 48109
+        },
+        {
+          "rect": [
+            761,
+            733,
+            990,
+            1083,
+            882.18
+          ],
+          "padding": [
+            37,
+            9,
+            94,
+            2
+          ],
+          "height": 351,
+          "pixels": 49274
+        },
+        {
+          "rect": [
+            1087,
+            733,
+            1312,
+            1082,
+            1204.68
+          ],
+          "padding": [
+            2,
+            9,
+            135,
+            3
+          ],
+          "height": 350,
+          "pixels": 48595
+        }
+      ]
+    }
+  },
+  "notes": [
+    "Candidate drawings are not imported by the live player.",
+    "Unique PNG bytes do not prove unique anatomical poses or smooth motion.",
+    "Yawn generation requested 30 drawings but produced 24; recovery adds 12 candidates, not duplicated filler.",
+    "Thinking requires phase selection/reordering; do not play its raw row order as an accepted timeline.",
+    "Original PNGs and twelve-pose timelines are unchanged.",
+    "Thinking recovery adds 12 stable lowering candidates. Static crop gates do not approve final mixed original/new motion."
+  ],
+  "review": {
+    "renderChecks": {
+      "date": "2026-10-05",
+      "widths": [
+        1200,
+        390
+      ],
+      "backgrounds": [
+        "light",
+        "dark"
+      ],
+      "sourceFrames": 138,
+      "alpha": true,
+      "completeHeadAndBoots": true,
+      "registeredFootCentre": true,
+      "status": "passed",
+      "report": ".tool-tmp/chibi-inbetween-previews/registration-report.json"
+    },
+    "motionTimeline": "not-integrated-not-accepted",
+    "identity": "static-contact-sheets-reviewed-original-style-close-not-pixel-identical",
+    "visualNotes": [
+      "All nine light-background contact sheets inspected; representative dark/phone crops checked.",
+      "Close original style, not pixel-identical redraws. Static acceptance does not approve a continuous action.",
+      "Exclude thinking source frames 18-23. Added separate stable twelve-frame arm-lowering recovery."
+    ]
+  }
+}
