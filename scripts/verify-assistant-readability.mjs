@@ -22,6 +22,8 @@ try {
     await page.waitForFunction(()=>document.querySelector('[data-action] img')?.complete);
     assert.ok((await frame.boundingBox()).width>=(cssWidth>600?180:128));
     assert.equal(await frame.evaluate(el=>getComputedStyle(el).transform),'none');
+    assert.equal(await frame.evaluate(el=>{const b=el.getBoundingClientRect(),hit=document.elementFromPoint(b.left+5,b.top+b.height/2);return el.closest('button').contains(hit);}),false,'Transparent mascot gutter must pass taps through');
+    assert.equal(await frame.evaluate(el=>{const b=el.getBoundingClientRect(),hit=document.elementFromPoint(b.left+b.width*.6,b.top+b.height/2);return el.closest('button').contains(hit);}),true,'Character body remains clickable');
     const navSize=await page.locator('header nav a').first().evaluate(el=>parseFloat(getComputedStyle(el).fontSize));
     assert.ok(navSize*scale>=14.4-0.01);
     for(const route of ['/posts','/places']) {

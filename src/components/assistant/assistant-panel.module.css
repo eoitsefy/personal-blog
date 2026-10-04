@@ -10,9 +10,13 @@
 .introduction { max-width: 480px; margin: 28px auto 18px; line-height: 1.9; font-size: .94rem; color: var(--ink-soft); }
 .explore { display: flex; justify-content: center; flex-wrap: wrap; gap: 8px; margin: 12px 0; }
 .explore a { padding: 10px 14px; border: 1px solid #ddcfab; border-radius: 999px; color: #554422; text-decoration: none; font-size: .875rem; }
-.floating { position: fixed; z-index: 35; right: max(18px, env(safe-area-inset-right)); bottom: max(18px, env(safe-area-inset-bottom)); width: 180px; color: #29271f; }
+.floating { position: fixed; z-index: 35; right: max(18px, env(safe-area-inset-right)); bottom: max(18px, env(safe-area-inset-bottom)); width: 180px; color: #29271f; pointer-events: none; }
 .floating .launcherLabel { padding: 6px 12px; font-size: .875rem; }
-.floating .launcher { width: 100%; }
+.floating .launcher { width: 100%; pointer-events: none; }
+/* Atlas silhouette stays inside these margins across all 36 poses. Transparent
+   gutters must not steal taps from article cards behind the larger mascot. */
+.floating .launcher > span:first-child { pointer-events: auto; clip-path: inset(0 10% 0 13%); }
+.floating .launcherLabel { pointer-events: auto; }
 .launcher > span:first-child { width: 100%; }
 .companion > button:first-child > span { display: block; width: 100%; }
 .dialog { position: fixed; inset: auto 24px 24px auto; margin: 0; width: min(440px, calc(100vw - 32px)); height: min(720px, calc(100dvh - 48px)); max-height: calc(100dvh - 24px); max-width: calc(100vw - 24px); border: 1px solid #d7ccae; border-radius: 24px; padding: 0; color: #29271f; background: #f9f7ef; box-shadow: 0 20px 90px #0005; display: flex; flex-direction: column; overflow: hidden; }
