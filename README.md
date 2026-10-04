@@ -17,6 +17,8 @@ A personal publishing application built with Next.js 16, PostgreSQL, Prisma, and
 
 Sitemap/RSS, moderated comments, invited users, AMap places and the bounded DeepSeek text assistant are implemented. Voice remains planned.
 
+The chibi assistant uses full-figure drawings, not the withdrawn layered rig. Selected v5 inbetweens share the original neutral start/end, stable sole registration and a persistent HiDPI canvas. Changing drawings are spaced at 15 fps with intentional neutral holds; repeated holds are not counted as new artwork. The original 84 PNG drawings are unchanged. See `docs/codex/13_ASSISTANT_CHARACTER_WORKFLOW.md` for material provenance, reusable motion briefs and current acceptance status. Runtime pixel checks: `node --import tsx scripts/verify-character-integration.mjs`.
+
 PR #27 adds administrator-only working-copy autosave, window recovery, up to 20 saved versions, image paste/upload, live Markdown preview and complete mobile navigation. Autosave never publishes. It was deployed on 2026-10-03 with the additive `20261003090000_post_working_copies` migration; new installations must also apply migrations. Production evidence and remaining acceptance limits are tracked in `docs/codex/09_COMPLETED_FEATURES.md` and `12_WRITING_EXPERIENCE.md`.
 
 ## Requirements

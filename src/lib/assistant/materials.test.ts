@@ -7,7 +7,7 @@ import { CHARACTER_SHEETS, CHARACTER_POSES, CHARACTER_ACTIONS } from "./characte
 
 const manifestPath = "docs/assistant/chibi-v5-inbetween-registration.json";
 
-test("v5 materials remain a separate candidate pack, not a fake 15 fps runtime", async () => {
+test("original candidate provenance remains separate from the selected compact runtime registration", async () => {
   const pack = JSON.parse(await readFile(manifestPath, "utf8"));
   assert.equal(pack.status, "candidate-materials-not-runtime");
   assert.equal(pack.authoringFps, 15);
@@ -21,8 +21,8 @@ test("v5 materials remain a separate candidate pack, not a fake 15 fps runtime",
   for (const sheet of Object.values(CHARACTER_SHEETS)) assert.ok(sheet.src.endsWith("-v4.png"));
   for (const poses of CHARACTER_POSES) assert.equal(poses.length, 12);
   const component = await readFile("src/components/assistant/chibi-assistant.tsx", "utf8");
-  assert.ok(!component.includes("inbetweens-v5"));
   assert.ok(!component.includes("chibi-v5-inbetween-registration"));
+  assert.ok(component.includes("frame-timeline"));
 });
 
 test("the 84 original source drawings are preserved byte-for-byte", async () => {

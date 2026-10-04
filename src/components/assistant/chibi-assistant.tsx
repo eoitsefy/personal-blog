@@ -7,41 +7,47 @@ import { createPortal } from "react-dom";
 import { FormEvent, useEffect, useId, useRef, useState } from "react";
 import { ASSISTANT_GREETINGS, parseAssistantAnswer, pickAssistantGreeting, type AssistantAnswer } from "@/lib/assistant/ui";
 import styles from "./assistant-panel.module.css";
-import { CHARACTER_ACTIONS, CHARACTER_SHEETS, CHARACTER_FRAME_COUNT, CHARACTER_STAGE, PLAYFUL_ACTIONS, characterPose, characterSample, type CharacterAction } from "@/lib/assistant/character";
+import { CHARACTER_ACTIONS, CHARACTER_STAGE, PLAYFUL_ACTIONS, type CharacterAction } from "@/lib/assistant/character";
+import { DRAWING_SEQUENCES, NEUTRAL_DRAWING, drawingKey, drawingPose, drawingSample } from "@/lib/assistant/frame-timeline";
 
 type Settings = { enabled: boolean; maxQuestionChars: number };
 type Turn = { question: string; result: AssistantAnswer };
 
-type CharacterProps = { action?: CharacterAction; small?: boolean; animate?: boolean; active?: boolean };
-function Character({ action = "idle", small = false, animate = true, active = true }: CharacterProps) {
+type CharacterProps = { action?: CharacterAction; small?: boolean; animate?: boolean; active?: boolean; playId?: number };
+function Character({ action = "idle", small = false, animate = true, active = true, playId = 0 }: CharacterProps) {
   const [failed, setFailed] = useState(false);
   const sheet = useRef<HTMLCanvasElement>(null);
+  const cachedImages = useRef(new Map<string, Promise<HTMLImageElement>>());
+  const neutralFrame = useRef<HTMLCanvasElement | null>(null);
   useEffect(() => {
     const element = sheet.current;
     if (!element || failed) return;
     const context = element.getContext("2d");
     if (!context) return;
-    let disposed = false, tick = 0;
-    const images: HTMLImageElement[] = [];
+    let disposed = false, tick = 0, revision = 0;
     const reduced = matchMedia("(prefers-reduced-motion: reduce)");
     let animation: Animation | undefined;
     let playing: CharacterAction = action;
-    const poses: HTMLCanvasElement[] = [];
+    let poses = new Map<string, HTMLCanvasElement>();
     function draw(next: CharacterAction, time: number) {
-      const sample = characterSample(next, time);
+      const sample = drawingSample(next, time);
+      const from = poses.get(drawingKey(sample.from)), to = poses.get(drawingKey(sample.to));
+      if (!from || !to) return;
       context!.clearRect(0, 0, element!.width, element!.height);
       // Add premultiplied colours: shared body pixels stay opaque during blends.
       context!.globalCompositeOperation = "lighter";
       context!.globalAlpha = 1 - sample.mix;
-      context!.drawImage(poses[sample.from], 0, 0);
+      context!.drawImage(from, 0, 0);
       context!.globalAlpha = sample.mix;
-      context!.drawImage(poses[sample.to], 0, 0);
+      context!.drawImage(to, 0, 0);
       context!.globalAlpha = 1;
       context!.globalCompositeOperation = "source-over";
-      element!.dataset.pose = String(sample.to);
+      element!.dataset.pose = drawingKey(sample.to);
       element!.dataset.blend = sample.mix.toFixed(3);
+      element!.dataset.playing = next;
     }
     function play(next: CharacterAction) {
+      if (animation) { animation.onfinish = null; animation.cancel(); }
       playing = next;
       const config = CHARACTER_ACTIONS[next];
       // Constant opacity is a seekable clock, never a whole-character movement.
@@ -61,34 +67,62 @@ function Character({ action = "idle", small = false, animate = true, active = tr
       const visible = element!.getClientRects().length > 0;
       if (animate && active && visible && !reduced.matches && !document.hidden && typeof element!.animate === "function") { play(action); tick = requestAnimationFrame(paint); }
     }
-    // Load only neutral + the requested action, never every sheet on entry.
-    const needed: CharacterAction[] = action === "idle" ? ["idle"] : ["idle", action];
-    Promise.all(needed.map(next => new Promise<void>((resolve, reject) => {
-      const image = new window.Image(); images.push(image);
-      image.onload = () => {
-        if (disposed) return;
-        for (let frameIndex = 0; frameIndex < CHARACTER_FRAME_COUNT; frameIndex++) {
-          const index = CHARACTER_ACTIONS[next].row * CHARACTER_FRAME_COUNT + frameIndex;
-          const pose = characterPose(index), frame = document.createElement("canvas");
-          frame.width = frame.height = CHARACTER_STAGE.size;
-          frame.getContext("2d")!.drawImage(image, pose.x, pose.y, pose.width, pose.height, pose.left, pose.top, pose.drawWidth, pose.drawHeight);
-          poses[index] = frame;
+    // Keep the DOM canvas and original neutral across action changes. Loading a
+    // new sheet cannot briefly show an empty canvas or another action's crop.
+    element.dataset.ready = "false";
+    if (neutralFrame.current) {
+      context.clearRect(0, 0, element.width, element.height);
+      context.drawImage(neutralFrame.current, 0, 0, element.width, element.height);
+      element.dataset.pose = drawingKey(NEUTRAL_DRAWING);
+    }
+    const drawings = [...new Map([...DRAWING_SEQUENCES.idle, ...DRAWING_SEQUENCES[action]].map(pose => [drawingKey(pose), pose])).values()];
+    const sources = new Set<string>(drawings.map(pose => drawingPose(pose).src));
+    // Bound memory to idle + current action instead of retaining every atlas.
+    for (const src of cachedImages.current.keys()) if (!sources.has(src)) cachedImages.current.delete(src);
+    function load(src: string) {
+      if (!cachedImages.current.has(src)) cachedImages.current.set(src, new Promise((resolve, reject) => {
+        const image = new window.Image();
+        image.onload = () => resolve(image);
+        image.onerror = () => { cachedImages.current.delete(src); reject(new Error("Character artwork unavailable")); };
+        image.src = src;
+      }));
+      return cachedImages.current.get(src)!;
+    }
+    async function prepare() {
+      const current = ++revision;
+      try {
+        const images = new Map(await Promise.all([...sources].map(async src => [src, await load(src)] as const)));
+        if (disposed || current !== revision) return;
+        // Rasterize at the displayed device-pixel size: no second enlargement
+        // of a low-resolution crop and no per-pose changes to the viewport.
+        const pixels = Math.round(Math.min(3, Math.max(.5, element!.getBoundingClientRect().width * devicePixelRatio / CHARACTER_STAGE.size)) * CHARACTER_STAGE.size);
+        const ratio = pixels / CHARACTER_STAGE.size, nextPoses = new Map<string, HTMLCanvasElement>();
+        for (const drawing of drawings) {
+          if (drawingKey(drawing) === drawingKey(NEUTRAL_DRAWING) && neutralFrame.current?.width === pixels) {
+            nextPoses.set(drawingKey(drawing), neutralFrame.current);
+            continue;
+          }
+          const pose = drawingPose(drawing), frame = document.createElement("canvas");
+          frame.width = frame.height = pixels;
+          const ctx = frame.getContext("2d")!; ctx.scale(ratio, ratio);
+          ctx.drawImage(images.get(pose.src)!, pose.x, pose.y, pose.width, pose.height, pose.left, pose.top, pose.drawWidth, pose.drawHeight);
+          nextPoses.set(drawingKey(drawing), frame);
         }
-        resolve();
-      };
-      image.onerror = () => reject(new Error("Character artwork unavailable"));
-      image.src = CHARACTER_SHEETS[next].src;
-    }))).then(() => {
-      if (disposed) return;
-      element.dataset.ready = "true";
-      refresh();
-      reduced.addEventListener("change", refresh); document.addEventListener("visibilitychange", refresh);
-      window.addEventListener("resize", refresh);
-    }).catch(() => { if (!disposed) setFailed(true); });
-    return () => { disposed = true; for (const image of images) { image.onload = null; image.onerror = null; } cancelAnimationFrame(tick); if (animation) { animation.onfinish = null; animation.cancel(); } reduced.removeEventListener("change", refresh); document.removeEventListener("visibilitychange", refresh); window.removeEventListener("resize", refresh); };
-  }, [action, active, animate, failed]);
+        poses = nextPoses;
+        if (element!.width !== pixels) element!.width = element!.height = pixels;
+        neutralFrame.current = poses.get(drawingKey(NEUTRAL_DRAWING))!;
+        element!.dataset.ready = "true"; element!.dataset.loadedAction = action;
+        element!.dataset.frameCount = String(DRAWING_SEQUENCES[action].length);
+        refresh();
+      } catch { if (!disposed && current === revision) setFailed(true); }
+    }
+    void prepare();
+    reduced.addEventListener("change", refresh); document.addEventListener("visibilitychange", refresh);
+    window.addEventListener("resize", prepare);
+    return () => { disposed = true; cancelAnimationFrame(tick); if (animation) { animation.onfinish = null; animation.cancel(); } reduced.removeEventListener("change", refresh); document.removeEventListener("visibilitychange", refresh); window.removeEventListener("resize", prepare); };
+  }, [action, active, animate, failed, playId]);
   // Draw registered pose rectangles, never translate the character viewport.
-  return <span className={styles.character} data-action={action} data-engine="frames" data-character-version="original-v4" aria-hidden="true">
+  return <span className={styles.character} data-action={action} data-engine="frames" data-character-version="original-inbetweens-v5" aria-hidden="true">
     {failed ? <Image className={styles.fallbackCharacter} src="/assistant/chibi-idle-v3.png" alt="" width={1024} height={1536} sizes={small ? "180px" : "400px"} /> :
       <canvas ref={sheet} className={styles.spriteSheet} width={CHARACTER_STAGE.size} height={CHARACTER_STAGE.size} />}
   </span>;
@@ -112,7 +146,7 @@ export function ChibiAssistant({ floating = false, settings }: { floating?: bool
   return <div className={`${floating ? styles.floating : styles.panel} ${animate ? "" : styles.still}`}>
     {!floating ? <><h1>小助手</h1><p className={styles.invitation}>有想找的记录吗？</p></> : null}
     <button ref={trigger} type="button" className={styles.launcher} onClick={show} aria-label="打开小助手对话" aria-haspopup="dialog" aria-expanded={open}>
-      <span key={wave}><Character action="idle" small={floating} animate={animate} active={!open} /></span><span className={styles.launcherLabel}>{floating ? "聊聊" : "点击和我聊聊"}</span>
+      <span><Character action="idle" small={floating} animate={animate} active={!open} playId={wave} /></span><span className={styles.launcherLabel}>{floating ? "聊聊" : "点击和我聊聊"}</span>
     </button>
     {!floating ? <><div className={styles.introduction}>{ASSISTANT_GREETINGS[0]}</div><nav className={styles.explore} aria-label="浏览网站"><Link href="/posts">浏览日志 ↗</Link><Link href="/places">看看地点 ↗</Link></nav></> : null}
     {started ? createPortal(<AssistantDialog open={open} greeting={greeting} initialSettings={settings} animate={animate} onAnimate={() => setAnimate(value => !value)} onClose={() => setOpen(false)} returnFocus={() => trigger.current?.focus({ preventScroll: true })} />, document.body) : null}
@@ -184,7 +218,7 @@ function AssistantDialog({ open, greeting, initialSettings, animate, onAnimate, 
     else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first?.focus(); }
   }}>
     <header className={styles.header}><div><strong id={`${id}-title`}>小助手</strong><small>AI 回答仅供参考 · 公开文章检索</small></div><div className={styles.headerControls}><button className={styles.motion} type="button" onClick={onAnimate} aria-pressed={!animate}>{animate ? "暂停动作" : "开启动作"}</button><button ref={closeButton} type="button" onClick={close} aria-label="关闭小助手对话">×</button></div></header>
-    <div className={styles.companion}><button type="button" aria-label="让小助手点头" onClick={() => perform("nod")}><span key={touch}><Character action={pending ? "thinking" : action} small animate={animate} active={open} /></span></button><div className={styles.companionControls}><p>{pending ? "让我找找相关记录…" : turns.length ? "还想了解什么？" : "你好，很高兴见到你！"}</p><div className={styles.actions} aria-label="助手动作">{PLAYFUL_ACTIONS.map(next => <button type="button" key={next} onClick={() => perform(next)} disabled={pending || !animate} aria-label={`播放${CHARACTER_ACTIONS[next].label}动作`}>{CHARACTER_ACTIONS[next].label}</button>)}</div></div></div>
+    <div className={styles.companion}><button type="button" aria-label="让小助手点头" onClick={() => perform("nod")}><span><Character action={pending ? "thinking" : action} small animate={animate} active={open} playId={touch} /></span></button><div className={styles.companionControls}><p>{pending ? "让我找找相关记录…" : turns.length ? "还想了解什么？" : "你好，很高兴见到你！"}</p><div className={styles.actions} aria-label="助手动作">{PLAYFUL_ACTIONS.map(next => <button type="button" key={next} onClick={() => perform(next)} disabled={pending || !animate} aria-label={`播放${CHARACTER_ACTIONS[next].label}动作`}>{CHARACTER_ACTIONS[next].label}</button>)}</div></div></div>
     <div ref={messages} className={styles.messages} aria-label="对话记录" tabIndex={0}>
       <p className={styles.bubble}>{greeting}</p>
       {!turns.length ? <nav className={styles.explore} aria-label="助手推荐入口"><Link href="/posts" onClick={close}>浏览日志 ↗</Link><Link href="/places" onClick={close}>看看地点 ↗</Link></nav> : null}

@@ -13,7 +13,7 @@
 .floating { position: fixed; z-index: 35; right: max(18px, env(safe-area-inset-right)); bottom: max(18px, env(safe-area-inset-bottom)); width: 180px; color: #29271f; pointer-events: none; }
 .floating .launcherLabel { padding: 6px 12px; font-size: .875rem; }
 .floating .launcher { width: 100%; pointer-events: none; }
-/* Atlas silhouette stays inside these margins across all 36 poses. Transparent
+/* Registered full-figure silhouettes stay inside these margins. Transparent
    gutters must not steal taps from article cards behind the larger mascot. */
 .floating .launcher > span:first-child { pointer-events: auto; clip-path: inset(0 10% 0 13%); }
 .floating .launcherLabel { pointer-events: auto; }

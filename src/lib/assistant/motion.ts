@@ -1,5 +1,6 @@
 // Skin-neutral drawing brief and timing. No sprite paths, crops or rig joints.
-// 15 fps is the target for FUTURE genuine drawings, not the count of v4 assets.
+// Genuine-drawing authoring target; runtime timelines may include resting holds.
+// This is not the count of archived v4 assets or a promise of unique art in holds.
 export const MOTION_AUTHORING_FPS = 15;
 const actionTimes = [...Array.from({ length: 12 }, (_, i) => i / 12), .975];
 export const CHARACTER_MOTION_TEMPLATES = {

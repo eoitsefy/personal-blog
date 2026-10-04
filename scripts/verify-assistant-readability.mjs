@@ -2,6 +2,7 @@
 import assert from 'node:assert/strict';
 import {createRequire} from 'node:module';
 import {mkdir} from 'node:fs/promises';
+import {DRAWING_SEQUENCES,drawingTimes,drawingKey,FRAME_BLEND_MS} from '../src/lib/assistant/frame-timeline.ts';
 const base=process.env.TEST_BASE_URL || 'http://127.0.0.1:3220';
 if(!['localhost','127.0.0.1'].includes(new URL(base).hostname)) throw Error('Local test only');
 const {chromium}=createRequire(import.meta.url)(process.env.PLAYWRIGHT_MODULE || 'C:/Users/Administrator/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright');
@@ -64,16 +65,16 @@ try {
     assert.ok(new Set(positions.map(p=>p.left)).size>=2,'wave must use distinct hand frames');
     await dialog.getByRole('button',{name:'让小助手点头'}).click();
     assert.equal(await character.getAttribute('data-action'),'nod');
-    for(const [label,action,duration] of [['挥手','wave',1800],['点头','nod',1500],['思考','thinking',2400],['鞠躬','bow',2000],['开心','cheer',1800],['打哈欠','yawn',2600]]) {
+    for(const [label,action] of [['挥手','wave'],['点头','nod'],['思考','thinking'],['鞠躬','bow'],['开心','cheer'],['打哈欠','yawn']]) {
       await dialog.getByRole('button',{name:`播放${label}动作`}).click();
       assert.equal(await character.getAttribute('data-action'),action);
       const frames=[];
-      for(const offset of Array.from({length:12},(_,i)=>(i+.55)/12)) {
-        await page.waitForSelector('dialog canvas[data-ready=true]');
-        frames.push(await sheet.evaluate(async(el,time)=>{const a=el.getAnimations()[0];a.pause();a.currentTime=time;await new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)));return {left:el.dataset.pose,top:'0px'};},duration*offset));
+      for(const time of drawingTimes(action)) {
+        await page.waitForSelector(`dialog canvas[data-ready=true][data-loaded-action=${action}]`);
+        frames.push(await sheet.evaluate(async(el,time)=>{const a=el.getAnimations()[0];a.pause();a.currentTime=time;await new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)));return {left:el.dataset.pose,top:'0px'};},time+FRAME_BLEND_MS+1));
         assert.deepEqual(await character.boundingBox(),before);
       }
-      assert.equal(new Set(frames.map(frame=>frame.left)).size,12,`${action}: twelve distinct intermediate poses`);
+      assert.deepEqual(frames.map(frame=>frame.left),DRAWING_SEQUENCES[action].map(drawingKey),`${action}: selected drawing sequence`);
       assert.equal(new Set(frames.map(frame=>frame.top)).size,1);
       if(action!=='thinking') {
         await sheet.evaluate(el=>el.getAnimations()[0].finish());
