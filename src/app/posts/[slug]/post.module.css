@@ -55,7 +55,7 @@
   margin-bottom: 62px;
   color: var(--ink-soft);
   font-family: monospace;
-  font-size: 0.66rem;
+  font-size: .875rem;
   letter-spacing: 0.06em;
 }
 
@@ -68,7 +68,7 @@
   gap: 24px;
   color: #8a681b;
   font-family: "Arial Narrow", Arial, sans-serif;
-  font-size: 0.62rem;
+  font-size: .875rem;
   letter-spacing: 0.17em;
 }
 
@@ -121,14 +121,14 @@
 .articleEnd > span {
   color: var(--ink-soft);
   font-family: "Arial Narrow", Arial, sans-serif;
-  font-size: 0.52rem;
+  font-size: .875rem;
   letter-spacing: 0.15em;
 }
 
 .heroMeta time,
 .heroMeta strong {
   font-family: Georgia, "Noto Serif SC", serif;
-  font-size: 0.78rem;
+  font-size: .875rem;
   font-weight: 500;
 }
 
@@ -161,7 +161,7 @@
 .asideBlock b,
 .asideBlock time {
   font-family: Georgia, "Noto Serif SC", serif;
-  font-size: 0.76rem;
+  font-size: .875rem;
   font-weight: 500;
 }
 
@@ -180,7 +180,7 @@
   color: var(--ink-soft);
   border: 1px solid var(--line);
   font-family: monospace;
-  font-size: 0.58rem;
+  font-size: .875rem;
 }
 
 .tagList a:hover {
@@ -220,7 +220,7 @@
 
 .asideMark span {
   bottom: 7px;
-  font-size: 0.44rem;
+  font-size: .875rem;
 }
 
 .asideMark i {
@@ -235,7 +235,7 @@
 
 .prose {
   font-family: Georgia, "Noto Serif SC", "Songti SC", serif;
-  font-size: 1.05rem;
+  font-size: 1.125rem;
   line-height: 2.05;
   overflow-wrap: anywhere;
 }
@@ -333,7 +333,7 @@
   background: #17191d;
   box-shadow: 8px 8px 0 rgba(23,25,29,0.1);
   font-family: "SFMono-Regular", Consolas, monospace;
-  font-size: 0.82rem;
+  font-size: .875rem;
   line-height: 1.7;
 }
 
@@ -508,7 +508,7 @@
   }
 
   .prose {
-    font-size: 1rem;
+    font-size: 1.125rem;
     line-height: 1.95;
   }
 

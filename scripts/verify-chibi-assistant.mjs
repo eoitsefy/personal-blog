@@ -32,7 +32,7 @@ try {
     await trigger.click();await input.fill('你好');await dialog.getByRole('button',{name:'发送 ↗',exact:true}).click();await dialog.getByText('正在查找',{exact:false}).waitFor();await dialog.getByRole('article').getByText('这里有一段公开记录。',{exact:true}).waitFor();
     await dialog.locator('summary').click();assert.equal(await dialog.getByRole('link',{name:'参考记录 ↗'}).getAttribute('href'),'/posts/example-post');
     await dialog.getByRole('button',{name:'暂停动作'}).click();assert.equal(await dialog.getByRole('button',{name:'开启动作'}).getAttribute('aria-pressed'),'true');
-    assert.equal(await dialog.locator('[aria-hidden="true"]').first().evaluate(el=>getComputedStyle(el).animationName),'none');
+    assert.equal(await dialog.locator('[data-action] img').evaluate(el=>el.getAnimations().length),0);
     await dialog.getByRole('button',{name:'让小助手点头'}).click();
     await page.screenshot({path:`.tool-tmp/chibi-previews/dialog-${width}.png`});
     for(const [kind,text] of [['rate','提问过于频繁'],['html','助手暂时没有连接上'],['unsafe','助手返回的内容暂时无法显示']]) {
@@ -50,6 +50,6 @@ try {
   await context.route('**/api/assistant/status',r=>r.fulfill({json:{feature:{enabled:false}}}));
   const page=await context.newPage();await page.goto(base);await page.getByRole('button',{name:'打开小助手对话'}).click();
   const dialog=page.getByRole('dialog',{name:'小助手',exact:true});await dialog.getByText('助手暂不可用，你仍可以浏览日志和地点。',{exact:true}).waitFor();assert.equal(await dialog.getByLabel('你的问题',{exact:true}).isDisabled(),true);
-  assert.equal(await dialog.locator('[aria-hidden="true"]').first().evaluate(el=>getComputedStyle(el).animationName),'none');await context.close();
+  assert.equal(await dialog.locator('[data-action] img').evaluate(el=>el.getAnimations().length),0);await context.close();
   assert.deepEqual(errors,[]);console.log(JSON.stringify({accepted:true,mockedProvider:true,disabledFallback:true,reducedMotion:true,results},null,2));
 }finally{await browser.close()}
