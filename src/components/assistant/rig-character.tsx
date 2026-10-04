@@ -48,7 +48,7 @@ export function RigCharacter({action="idle",skin="gold",animate=true,active=true
       reduced.removeEventListener("change",refresh);document.removeEventListener("visibilitychange",refresh);window.removeEventListener("resize",refresh);};
   },[action,skin,animate,active,failed]);
   if(failed)return fallback;
-  return <span className={styles.character} data-action={action} data-engine="rig" data-skin={skin} aria-hidden="true">
+  return <span className={styles.character} data-action={action} data-engine="rig" data-skin={skin} data-rig-version={RIG_SKINS[skin].geometry.version} aria-hidden="true">
     <canvas ref={canvas} className={styles.spriteSheet} width={RIG_STAGE.size} height={RIG_STAGE.size}/>
   </span>;
 }

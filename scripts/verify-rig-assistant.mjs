@@ -23,7 +23,7 @@ try {
   const page=await context.newPage();page.on('pageerror',e=>errors.push(e.message));
   page.on('request',r=>{const p=new URL(r.url()).pathname;if(p==='/api/assistant/query')queries++;if(/rig-.*\.png$/.test(p))atlas.add(p);});
   await page.goto(base);await page.waitForSelector('[data-engine=rig] canvas[data-ready=true]');
-  assert.deepEqual([...atlas],['/assistant/rig-gold-v1.png']);
+  assert.deepEqual([...atlas],['/assistant/rig-gold-v2.png']);
   await page.getByRole('button',{name:'打开小助手对话',exact:true}).click();
   const dialog=page.getByRole('dialog',{name:'小助手',exact:true});
   const samples={};
