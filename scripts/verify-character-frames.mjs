@@ -34,11 +34,12 @@ try {
   const character=dialog.locator('[data-action]'),canvas=character.locator('canvas');
   await page.waitForSelector('dialog canvas[data-ready=true]');
   const box=await character.boundingBox(), pixels=[];
-  const idleTimes=[1,5270,5510,5690,5870,5990];
+  const idleTimes=[1,5270,5510,5690,5870,5885], idleSeen=[];
   for(const time of idleTimes) {
-   const p=await seek(canvas,time);pixels.push(p);
+   const p=await seek(canvas,time);pixels.push(p);idleSeen.push(p.pose);
    assert.ok(p.top>=8 && p.bottom<=216 && p.left>=8 && p.right<216,'Idle must contain complete figure with blank borders');
   }
+  assert.deepEqual(idleSeen,[0,1,2,3,4,5]);
   for(const [label,action,duration,row] of actions) {
    await dialog.getByRole('button',{name:`播放${label}动作`}).click();
    await page.waitForSelector('dialog canvas[data-ready=true]');

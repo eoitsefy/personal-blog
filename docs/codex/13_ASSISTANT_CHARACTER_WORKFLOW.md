@@ -50,6 +50,10 @@
 
 ## 本次上线验收
 
+2026-10-04 播放器修复已直接提交 main 并部署至 `9765c18cbdaf48f88b348dd8934d3fc8e7512e40`。119 项单元测试、PostgreSQL 集成测试和完整 CI 通过。真实 HTTPS 的逐帧像素检查覆盖 1280/768/390/320px：完整头脚、独立行边界、脚底中心误差不超过 2 个素材像素、固定视口及平滑渐变；暂停、减少动态效果和静态回退通过。生产聊天/焦点、文章原图/放大/卡片与缩略图点击、高德底图与周边定位、字体缩放模拟回归通过；一次真实本地问候输入/输出用量均为 0。镜像 `sha256:33ed50339c863d3412c2d9b81da23227379be09f0bc04879570e150fe49a626c`，备份 `/root/backups/chibi-assistant-20261004-210852`，日志 `/root/server-ops/logs/deploy-chibi-assistant-20261004-210852.log`，上一版本回滚镜像 `personal-blog-web-app:rollback-chibi-assistant-20261004-210852`。本次不修改原图、数据库、环境、Nginx 或上传 ACL。
+
+### 上一切片验收
+
 2026-10-04 已直接合并 PR #35，并将点击区补丁提交 main，应用部署至 `3fea8391ffab2a19bd62cfc353fa27cfbcf2c7d7`。118 项单元测试、9 项 PostgreSQL 集成测试、lint、类型检查、生产构建和 Linux 镜像运行检查通过。真实 HTTPS 在 1280/768/390/320px 验证默认待机、五组可选动作的六张过程帧、非循环回待机、暂停、减少动态效果、焦点和无横向溢出；问候走本地回答，模型输入/输出用量均为 0。100%/90%/80%/200% 的导航/聊天字体缩放模拟通过。
 
 文章图片的原图、放大、整卡点击、摘要/缩略图点击和键盘回归通过；高德底图和周边定位正常。新镜像 `sha256:d0bfd667b4eef251c8ec08ee0d5c887577dfd01edf85555c7b044f39752b8cfe`。备份 `/root/backups/chibi-assistant-20261004-203405`，部署日志 `/root/server-ops/logs/deploy-chibi-assistant-20261004-203405.log`。若需完整撤回本次外观修改，使用原 PR #34 `5c9ae8c` 与已保留镜像 `personal-blog-web-app:rollback-chibi-assistant-20261004-201933`，不恢复数据库覆盖新写入。
