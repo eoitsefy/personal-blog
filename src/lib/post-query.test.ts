@@ -9,7 +9,7 @@ test("public queries always exclude drafts and soft-deleted posts", () => {
   assert.equal(where.status, "PUBLISHED");
   assert.equal(where.deletedAt, null);
   assert.ok(where.OR);
-  assert.deepEqual(where.category, { slug: "技术" });
+  assert.deepEqual(where.category, { slug: { in: ["development", "技术随记", "技术随笔", "技术"] } });
   assert.deepEqual(where.tags, { some: { tag: { slug: "nextjs" } } });
 });
 

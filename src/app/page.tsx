@@ -5,6 +5,7 @@ import { SiteFooter, SiteHeader } from "@/components/site/site-shell";
 import { absoluteUrl } from "@/lib/site";
 import nightCourier from "../../public/images/journal/night-courier.png";
 import styles from "./home.module.css";
+import { POST_CATEGORIES } from "@/lib/post-categories";
 
 export const metadata: Metadata = {
   alternates: {
@@ -13,23 +14,9 @@ export const metadata: Metadata = {
   },
 };
 
-const notebooks = [
-  {
-    title: "技术随记",
-    accent: "amber",
-    href: "/posts?category=development",
-  },
-  {
-    title: "生活切片",
-    accent: "blue",
-    href: "/posts?category=daily-life",
-  },
-  {
-    title: "阅读与灵感",
-    accent: "red",
-    href: "/posts?category=reading",
-  },
-] as const;
+const notebooks = POST_CATEGORIES.slice(0, 3).map((category, index) => ({
+  title: category.name, href: `/posts?category=${category.slug}`, accent: ["amber", "blue", "red"][index],
+}));
 
 export default function HomePage() {
   return (

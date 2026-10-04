@@ -5,7 +5,7 @@ import { InvalidAssetReferenceError, syncPostAssets } from "@/lib/media/referenc
 import { prisma } from "@/lib/prisma";
 import { requireAdmin } from "@/lib/require-admin";
 import { ADMIN_POST_PAGE_SIZE } from "@/lib/post-query";
-import { normalizeTags, normalizeTaxonomyTerm } from "@/lib/post-taxonomy";
+import { normalizeTags, normalizePostCategory } from "@/lib/post-taxonomy";
 import { InvalidPlaceReferenceError, syncPostPlaces } from "@/lib/places";
 import { readJsonMutation } from "@/lib/request-security";
 import { clearWorkingCopy, EditorConflictError, recordPostRevision } from "@/lib/post-revisions";
@@ -96,7 +96,7 @@ export async function POST(req: Request) {
     }
 
     const input = parsed.data;
-    const category = normalizeTaxonomyTerm(input.category);
+    const category = normalizePostCategory(input.category);
     const tags = normalizeTags(input.tags);
     const post = await prisma.$transaction(async (tx) => {
       await clearWorkingCopy(tx, auth.user.id, "new", input.workingCopyVersion);

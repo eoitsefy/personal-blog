@@ -14,7 +14,7 @@ type MediaQuery = {
   deleted: "active" | "trash";
   page: number;
   q: string;
-  kind: "ALL" | "IMAGE" | "AUDIO" | "DOCUMENT";
+  kind: "ALL" | "IMAGE" | "AUDIO" | "DOCUMENT" | "VIDEO";
   referenced: "ALL" | "REFERENCED" | "UNUSED";
 };
 
@@ -80,6 +80,7 @@ export default async function MediaPage({ searchParams }: PageProps) {
             <option value="ALL">全部</option>
             <option value="IMAGE">图片</option>
             <option value="AUDIO">音频</option>
+            <option value="VIDEO">视频</option>
             <option value="DOCUMENT">文档</option>
           </select>
         </label>

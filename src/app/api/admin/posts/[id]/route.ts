@@ -4,7 +4,7 @@ import { syncPostAssistantIndex } from "@/lib/assistant/indexing";
 import { InvalidAssetReferenceError, syncPostAssets } from "@/lib/media/references";
 import { prisma } from "@/lib/prisma";
 import { requireAdmin } from "@/lib/require-admin";
-import { normalizeTags, normalizeTaxonomyTerm } from "@/lib/post-taxonomy";
+import { normalizeTags, normalizePostCategory } from "@/lib/post-taxonomy";
 import { InvalidPlaceReferenceError, syncPostPlaces } from "@/lib/places";
 import { readJsonMutation, validateMutationOrigin } from "@/lib/request-security";
 import { clearWorkingCopy, EditorConflictError, lockPost, recordPostRevision } from "@/lib/post-revisions";
@@ -81,7 +81,7 @@ export async function PATCH(req: Request, { params }: RouteParams) {
     };
 
     if (input.category !== undefined) {
-      const category = normalizeTaxonomyTerm(input.category);
+      const category = normalizePostCategory(input.category);
       data.category = category
         ? { connectOrCreate: { where: { slug: category.slug }, create: category } }
         : { disconnect: true };

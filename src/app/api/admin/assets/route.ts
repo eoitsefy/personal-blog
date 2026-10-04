@@ -2,6 +2,7 @@ import { createHash } from "node:crypto";
 import { Prisma } from "@prisma/client";
 import { fail, logApi, ok } from "@/lib/api";
 import { getMaxUploadBytes, MediaValidationError } from "@/lib/media/image";
+import { getMaxVideoUploadBytes } from "@/lib/media/video-upload";
 import { getMediaStorageQuotaBytes, mediaStorageStatus, wouldExceedMediaStorageQuota } from "@/lib/media/quota";
 import { validateAssetUpload } from "@/lib/media/upload";
 import { ADMIN_ASSET_PAGE_SIZE, adminAssetListQuerySchema } from "@/lib/media/validators";
@@ -78,7 +79,7 @@ export async function POST(req: Request) {
     return fail("BAD_REQUEST", "上传请求必须使用 multipart/form-data", 415, auth.requestId);
   }
 
-  const maxBytes = getMaxUploadBytes();
+  const maxBytes = Math.max(getMaxUploadBytes(), getMaxVideoUploadBytes());
   const rawContentLength = req.headers.get("content-length");
   const contentLength = Number(rawContentLength);
   if (!rawContentLength || !Number.isSafeInteger(contentLength) || contentLength <= 0) {

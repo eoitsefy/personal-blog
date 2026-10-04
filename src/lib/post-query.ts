@@ -1,5 +1,6 @@
 import { Prisma } from "@prisma/client";
 import type { PostListQuery } from "@/lib/validators/post";
+import { categoryFilterSlugs } from "./post-categories";
 
 export const PUBLIC_POST_PAGE_SIZE = 10;
 export const ADMIN_POST_PAGE_SIZE = 20;
@@ -17,7 +18,7 @@ export function buildPublicPostWhere(filters: PostListQuery): Prisma.PostWhereIn
           ],
         }
       : {}),
-    ...(filters.category ? { category: { slug: filters.category } } : {}),
+    ...(filters.category ? { category: { slug: { in: categoryFilterSlugs(filters.category) } } } : {}),
     ...(filters.tag ? { tags: { some: { tag: { slug: filters.tag } } } } : {}),
   };
 }

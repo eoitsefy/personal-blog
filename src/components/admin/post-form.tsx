@@ -9,6 +9,9 @@ import { EditorStateSchema, editorState, insertMarkdownAtSelection } from "@/lib
 import { usePostWorkingCopy } from "./use-post-working-copy";
 import type { MediaAsset } from "@/lib/media/types";
 import { parseTrustedVideoUrl } from "@/lib/media/video";
+import { LocalVideo } from "@/components/content/local-video";
+import { readUploadResponse } from "@/lib/media/upload-response";
+import { fixedCategory, POST_CATEGORIES } from "@/lib/post-categories";
 import { CreatePostInputSchema, type CreatePostInput } from "@/lib/validators/post";
 
 type PostFormProps = {
@@ -46,7 +49,6 @@ export function PostForm({
   mode,
   postId,
   initialValue = EMPTY_POST,
-  categoryOptions = [],
   tagOptions = [],
   mediaOptions = [],
   placeOptions = [],
@@ -96,9 +98,9 @@ export function PostForm({
   }
 
   function insertAsset(asset: MediaAsset) {
-    const fallback = asset.kind === "AUDIO" ? "音频" : asset.kind === "DOCUMENT" ? "文档" : "图片";
+    const fallback = asset.kind === "VIDEO" ? "视频" : asset.kind === "AUDIO" ? "音频" : asset.kind === "DOCUMENT" ? "文档" : "图片";
     const title = (asset.originalName ?? fallback).replace(/[\[\]]/g, "");
-    const markdown = asset.kind === "AUDIO"
+    const markdown = asset.kind === "VIDEO" ? `[video:${title}](${asset.url})` : asset.kind === "AUDIO"
       ? `[audio:${title}](${asset.url})`
       : asset.kind === "DOCUMENT"
         ? `[${title}](${asset.url})`
@@ -111,26 +113,25 @@ export function PostForm({
     }));
   }
 
-  async function uploadImage(file?: File) {
+  async function uploadMedia(file?: File) {
     if (!file || uploadBusy.current || submitting) return;
-    if (!["image/jpeg", "image/png", "image/webp"].includes(file.type)) {
-      setMessage("粘贴或上传图片仅支持 JPEG、PNG、WebP。"); return;
+    const video = /\.(mp4|mov|webm)$/i.test(file.name);
+    if (!video && !["image/jpeg", "image/png", "image/webp"].includes(file.type)) {
+      setMessage("仅支持 JPEG、PNG、WebP 图片或 MP4、MOV、WebM 视频。"); return;
     }
-    if (file.size > 20 * 1024 * 1024 || form.assetIds.length >= 20) {
-      setMessage("图片过大或文章已关联 20 个媒体文件。"); return;
+    if (file.size > (video ? 64 : 20) * 1024 * 1024 || form.assetIds.length >= 20) {
+      setMessage("文件过大（视频最多 64 MiB）或文章已关联 20 个媒体文件。"); return;
     }
     uploadBusy.current = true;
     setUploading(true);
     setMessage("");
     try {
       const data = new FormData(); data.set("file", file);
-      const response = await fetch("/api/admin/assets", { method: "POST", body: data, signal: AbortSignal.timeout(60_000) });
-      const body = await response.json();
-      if (!response.ok) throw new Error(body.error?.message ?? "图片上传失败");
-      const asset = body.data.asset as MediaAsset;
+      const response = await fetch("/api/admin/assets", { method: "POST", body: data, signal: AbortSignal.timeout(180_000) });
+      const asset = await readUploadResponse(response) as MediaAsset;
       setAvailableMedia((current) => [asset, ...current.filter(({ id }) => id !== asset.id)]);
       insertAsset(asset);
-    } catch (error) { setMessage(error instanceof Error ? error.message : "图片上传失败，请重试"); }
+    } catch (error) { setMessage(error instanceof TypeError ? "网络连接失败，请检查网络后重试" : error instanceof Error ? error.message : "媒体上传失败，请重试"); }
     finally { uploadBusy.current = false; setUploading(false); }
   }
 
@@ -298,18 +299,16 @@ export function PostForm({
       <div className="grid gap-6 md:grid-cols-2">
         <label className="grid gap-2">
           <span className="font-medium">分类</span>
-          <input
-            value={form.category}
+          <select
+            value={fixedCategory(form.category)?.name ?? form.category}
             onChange={(event) => update("category", event.target.value)}
-            list="category-options"
-            maxLength={50}
-            placeholder="例如：技术"
             aria-invalid={Boolean(errors.category)}
             className={fieldClass}
-          />
-          <datalist id="category-options">
-            {categoryOptions.map((category) => <option key={category} value={category} />)}
-          </datalist>
+          >
+            <option value="">未分类</option>
+            {POST_CATEGORIES.map(category => <option key={category.slug} value={category.name}>{category.name}</option>)}
+            {form.category && !fixedCategory(form.category) ? <option value={form.category}>{form.category}（原有分类）</option> : null}
+          </select>
           {errors.category ? <span className="text-sm text-red-600">{errors.category}</span> : null}
         </label>
 
@@ -334,9 +333,13 @@ export function PostForm({
         <button type="button" aria-pressed={preview} onClick={() => setPreview(!preview)} className="rounded-lg border px-3 py-2 text-sm">{preview ? "隐藏预览" : "显示预览"}</button>
         <label className="cursor-pointer rounded-lg border px-3 py-2 text-sm">{uploading ? "上传中…" : "插入图片"}
           <input type="file" aria-label="上传正文图片" accept="image/jpeg,image/png,image/webp" disabled={uploading} className="sr-only"
-            onChange={(event) => { void uploadImage(event.target.files?.[0]); event.target.value = ""; }} />
+            onChange={(event) => { void uploadMedia(event.target.files?.[0]); event.target.value = ""; }} />
         </label>
-        <span className="text-xs text-neutral-500">正文可直接粘贴图片；图片沿用媒体库公开链接。</span>
+        <label className="cursor-pointer rounded-lg border px-3 py-2 text-sm">上传视频
+          <input type="file" aria-label="上传正文视频" accept="video/mp4,video/quicktime,video/webm,.mp4,.mov,.webm" disabled={uploading} className="sr-only"
+            onChange={(event) => { void uploadMedia(event.target.files?.[0]); event.target.value = ""; }} />
+        </label>
+        <span className="text-xs text-neutral-500">正文可直接粘贴图片；视频最多 64 MiB，上传后自动插入正文。</span>
       </div>
       <div className={`grid min-w-0 gap-4 ${preview ? "lg:grid-cols-2" : ""}`}>
       <label className="grid min-w-0 gap-2">
@@ -346,7 +349,7 @@ export function PostForm({
           disabled={uploading}
           onPaste={(event) => {
             const images = Array.from(event.clipboardData.files).filter((file) => file.type.startsWith("image/"));
-            if (images.length) { event.preventDefault(); if (images.length > 1) setMessage("请一次粘贴一张图片。"); else void uploadImage(images[0]); }
+            if (images.length) { event.preventDefault(); if (images.length > 1) setMessage("请一次粘贴一张图片。"); else void uploadMedia(images[0]); }
           }}
           value={form.contentMd}
           onChange={(event) => update("contentMd", event.target.value)}
@@ -389,7 +392,7 @@ export function PostForm({
         </div>
         {availableMedia.length === 0 ? (
           <p className="rounded-xl border border-dashed border-neutral-300 p-4 text-sm text-neutral-500 dark:border-neutral-700">
-            暂无可用媒体，请先前往媒体管理上传图片、音频或文档。
+            暂无可用媒体，请先上传图片、音频、视频或文档。
           </p>
         ) : (
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
@@ -403,6 +406,8 @@ export function PostForm({
                       <ImagePreview src={asset.url} alt={asset.originalName ?? "媒体图片"} className="absolute inset-0 h-full w-full">
                         <Image src={asset.url} alt={asset.originalName ?? "媒体图片"} fill sizes="(max-width: 640px) 100vw, 33vw" className="object-cover" unoptimized />
                       </ImagePreview>
+                    ) : asset.kind === "VIDEO" ? (
+                      <LocalVideo url={asset.url} mime={asset.mime} title={asset.originalName || "视频"} />
                     ) : asset.kind === "AUDIO" ? (
                       <audio controls preload="metadata" src={asset.url} className="w-[90%]">浏览器不支持音频播放。</audio>
                     ) : (
@@ -425,7 +430,7 @@ export function PostForm({
                           disabled={usedInContent}
                           onChange={() => toggleAsset(asset.id)}
                         />
-                        {usedInContent ? "已插入正文" : asset.kind === "IMAGE" ? "显示在文末" : "保持引用"}
+                        {usedInContent ? "已插入正文" : ["IMAGE", "VIDEO"].includes(asset.kind) ? "显示在文末" : "保持引用"}
                       </label>
                     </div>
                   </div>

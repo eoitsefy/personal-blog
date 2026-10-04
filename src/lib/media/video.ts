@@ -11,6 +11,9 @@ export type VideoDirective = {
 };
 
 const VIDEO_DIRECTIVE = /\[video:([^\]\r\n]{1,160})\]\(([^)\s]{1,2048})\)/gi;
+export function isLocalVideoUrl(value: string) {
+  return /^\/uploads\/[a-z0-9][a-z0-9/_-]*\.(mp4|mov|webm)$/.test(value);
+}
 
 function safeUrl(value: string) {
   try {

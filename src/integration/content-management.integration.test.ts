@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { access, mkdtemp, rm } from "node:fs/promises";
+import { access, mkdtemp, rm, readFile } from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import test from "node:test";
@@ -34,6 +34,57 @@ import { GET as listPublicPlaces } from "@/app/api/places/route";
 import { hashPassword, hashSessionToken, issueUserSession, parseCookie, SESSION_COOKIE_NAME } from "@/lib/auth";
 import { commentRateLimitKey } from "@/lib/comments";
 import { loginThrottleKey } from "@/lib/login-throttle";
+import { GET as serveUpload } from "@/app/uploads/[...path]/route";
+
+test("video uploads preserve references, range playback, fixed categories and deletion safety", async () => {
+  const root = await mkdtemp(path.join(os.tmpdir(), "blog-video-integration-"));
+  const previous = process.env.UPLOAD_ROOT; process.env.UPLOAD_ROOT = root;
+  const suffix = Date.now(); let userId = "", postId = "";
+  const assetIds: string[] = [];
+  try {
+    const user = await prisma.user.create({ data: { email: `video-${suffix}@example.test`, passwordHash: "!test-only", role: "ADMIN" } }); userId = user.id;
+    const session = await issueUserSession(userId), cookie = `${SESSION_COOKIE_NAME}=${session.token}`;
+    const headers = { cookie, origin: "http://localhost", "content-type": "application/json" };
+    const route = (id: string) => ({ params: Promise.resolve({ id }) });
+    const videos: { id: string; url: string; kind: string }[] = [];
+    for (const [ext, mime] of [["mp4", "video/mp4"], ["mov", "video/quicktime"], ["webm", "video/webm"]]) {
+      const bytes = await readFile(`src/integration/fixtures/video.${ext}`);
+      const data = new FormData(); data.set("file", new File([bytes], `video.${ext}`, { type: mime }));
+      const response = await uploadAsset(new Request("http://localhost/api/admin/assets", { method: "POST", headers: { cookie, origin: "http://localhost", "content-length": String(bytes.length + 1024) }, body: data }));
+      assert.equal(response.status, 201); const asset = (await response.json()).data.asset; videos.push(asset); assetIds.push(asset.id);
+      assert.equal(asset.kind, "VIDEO");
+      const served = await serveUpload(new Request(`http://localhost${asset.url}`, { headers: { range: "bytes=0-15" } }), { params: Promise.resolve({ path: asset.url.slice(9).split("/") }) });
+      assert.equal(served.status, 206); assert.equal(served.headers.get("content-type"), mime);
+      assert.equal((await served.arrayBuffer()).byteLength, 16);
+    }
+    const created = await createPost(new Request("http://localhost/api/admin/posts", { method: "POST", headers, body: JSON.stringify({ title: "Video integration", slug: `video-${suffix}`, contentMd: `[video:Clip](${videos[0].url})`, assetIds: assetIds.slice(1), status: "PUBLISHED", category: "技术随记", tags: ["视频记录"] }) }));
+    assert.equal(created.status, 201); const post = (await created.json()).data.post; postId = post.id;
+    assert.equal(post.category.slug, "development"); assert.equal(post.tags[0].tag.name, "视频记录");
+    for (const asset of videos) {
+      assert.equal((await prisma.asset.findUniqueOrThrow({ where: { id: asset.id } })).refCount, 1);
+      assert.equal((await deleteAsset(new Request(`http://localhost/api/admin/assets/${asset.id}`, { method: "DELETE", headers }), route(asset.id))).status, 409);
+    }
+    const list = await listPublicPosts(new Request("http://localhost/api/posts?category=development"));
+    assert.ok((await list.json()).data.posts.some((p: { id: string }) => p.id === postId));
+    assert.equal((await updatePost(new Request(`http://localhost/api/admin/posts/${postId}`, { method: "PATCH", headers, body: JSON.stringify({ category: "生活切片", contentMd: "Detached", assetIds: [] }) }), route(postId))).status, 200);
+    assert.equal((await prisma.post.findUniqueOrThrow({ where: { id: postId }, include: { category: true } })).category?.slug, "daily-life");
+    for (const asset of videos) {
+      assert.equal((await deleteAsset(new Request(`http://localhost/api/admin/assets/${asset.id}`, { method: "DELETE", headers }), route(asset.id))).status, 200);
+      assert.equal((await restoreAsset(new Request(`http://localhost/api/admin/assets/${asset.id}/restore`, { method: "POST", headers }), route(asset.id))).status, 200);
+      assert.equal((await deleteAsset(new Request(`http://localhost/api/admin/assets/${asset.id}`, { method: "DELETE", headers }), route(asset.id))).status, 200);
+      assert.equal((await purgeAsset(new Request(`http://localhost/api/admin/assets/${asset.id}/purge`, { method: "DELETE", headers }), route(asset.id))).status, 200);
+      await assert.rejects(access(path.join(root, asset.url.slice(9))));
+    }
+  } finally {
+    if (postId) await prisma.post.deleteMany({ where: { id: postId } });
+    await prisma.asset.deleteMany({ where: { id: { in: assetIds } } });
+    if (userId) await prisma.user.deleteMany({ where: { id: userId } });
+    await prisma.category.deleteMany({ where: { posts: { none: {} } } });
+    await prisma.tag.deleteMany({ where: { posts: { none: {} } } });
+    if (previous === undefined) delete process.env.UPLOAD_ROOT; else process.env.UPLOAD_ROOT = previous;
+    await rm(root, { recursive: true, force: true }); await prisma.$disconnect();
+  }
+});
 
 const prisma = new PrismaClient();
 const PNG_1X1 = Buffer.from(

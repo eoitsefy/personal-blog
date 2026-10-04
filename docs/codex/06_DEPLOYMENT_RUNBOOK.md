@@ -342,7 +342,9 @@ sudo du -sh /var/www/personal-blog/uploads
 
 Verify ownership and that the application can write only to the intended directory. Never mount the entire `/root` directory into Nginx or the application for uploads.
 
-The HTTPS Nginx server should cap request bodies slightly above `MAX_UPLOAD_BYTES` (the checked-in configuration uses `10m` for the default 8 MiB application limit) and serve `/uploads/` from `/var/www/personal-blog/uploads/` with directory listing disabled.
+The HTTPS Nginx server retains the default small body limit for ordinary routes and serves `/uploads/` from `/var/www/personal-blog/uploads/` with directory listing disabled. For direct video uploads, install `deploy/nginx/video-upload.conf.example` inside the HTTPS server: the exact `/api/admin/assets` route permits 65m with 180-second timeouts. Keep image/audio/document limits controlled by `MAX_UPLOAD_BYTES`; `MAX_VIDEO_UPLOAD_BYTES` defaults to and cannot exceed 67108864 (64 MiB). Add `video/mp4 mp4`, `video/quicktime mov`, and `video/webm webm` to the existing uploads MIME block, retaining all previous entries, ACLs, media headers and AMap privacy logging. Do not change the global body cap or upload alias.
+
+Video deployment acceptance: back up the database, uploads, environment, current image and Nginx config first; this slice requires no schema migration. Run a private `nginx -t` before reload; on failure restore the exact backup. Through Nginx upload a real MP4, verify MIME and a `Range: bytes=0-15` response of 206, seek/play on desktop and mobile, verify fixed-category homepage filtering, refuse referenced-video deletion, and test 413 error text. Restore Nginx and the previous application image together for rollback. Keep existing assets and avoid restoring the database over new writes.
 
 ## Routine operations
 
