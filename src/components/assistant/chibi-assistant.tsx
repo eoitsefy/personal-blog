@@ -12,7 +12,12 @@ type Settings = { enabled: boolean; maxQuestionChars: number };
 type Turn = { question: string; result: AssistantAnswer };
 
 function Character({ action = "idle", small = false }: { action?: "idle" | "wave" | "thinking" | "nod"; small?: boolean }) {
-  return <span className={`${styles.character} ${styles[action]}`} aria-hidden="true"><Image src="/assistant/chibi-v1.png" alt="" width={1223} height={1286} loading={small ? "lazy" : "eager"} sizes={small ? "88px" : "(max-width: 600px) 200px, 320px"} /></span>;
+  const [failed, setFailed] = useState(false);
+  // Registered pose frames change eyes, forearm and head; the viewport never moves.
+  return <span className={styles.character} data-action={action} aria-hidden="true">
+    {failed ? <Image className={styles.fallbackCharacter} src="/assistant/chibi-v1.png" alt="" width={1223} height={1286} sizes={small ? "180px" : "400px"} /> :
+      <Image className={`${styles.spriteSheet} ${styles[action]}`} src="/assistant/chibi-actions-v2.png" alt="" width={1774} height={887} loading={small ? "lazy" : "eager"} unoptimized onError={() => setFailed(true)} />}
+  </span>;
 }
 
 export function FloatingAssistant() {

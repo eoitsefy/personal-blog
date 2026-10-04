@@ -97,29 +97,29 @@
 .brandCopy strong,
 .footerBrand strong {
   font-family: "Arial Narrow", "Roboto Condensed", Arial, sans-serif;
-  font-size: 0.78rem;
+  font-size: .875rem;
   line-height: 1;
   letter-spacing: 0.14em;
 }
 
 .brandCopy small {
-  font-size: 0.64rem;
+  font-size: .875rem;
   letter-spacing: 0.08em;
-  opacity: 0.62;
+  opacity: 0.85;
 }
 
 .nav {
   display: flex;
   align-items: center;
   gap: 26px;
-  font-size: 0.82rem;
+  font-size: 1rem;
   letter-spacing: 0.08em;
 }
 
 .nav a {
   position: relative;
   padding: 29px 2px 26px;
-  opacity: 0.68;
+  opacity: 0.9;
   transition: opacity 180ms ease;
 }
 
@@ -142,9 +142,9 @@
   justify-self: end;
   padding: 9px 13px;
   border: 1px solid currentColor;
-  font-size: 0.72rem;
+  font-size: .875rem;
   letter-spacing: 0.08em;
-  opacity: 0.72;
+  opacity: 0.9;
   transition: color 180ms ease, background 180ms ease, opacity 180ms ease;
 }
 
@@ -174,16 +174,18 @@
   opacity: 0.65;
 }
 
+
 .footerMeta {
+  padding-right: 180px;
   display: grid;
   gap: 7px;
   text-align: right;
-  font-size: 0.58rem;
+  font-size: .875rem;
   letter-spacing: 0.16em;
 }
 
 .footerMeta > span {
-  opacity: 0.5;
+  opacity: 0.85;
 }
 
 .filingLink {
@@ -277,6 +279,7 @@
   }
 
   .footerMeta {
+    padding-right: 128px;
     text-align: left;
   }
 

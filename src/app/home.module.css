@@ -67,7 +67,7 @@
   gap: 18px;
   margin-bottom: 30px;
   color: var(--signal-strong);
-  font-size: 0.65rem;
+  font-size: .875rem;
 }
 
 .eyebrow span:first-child::before {
@@ -120,7 +120,7 @@
   align-items: center;
   justify-content: center;
   min-height: 48px;
-  font-size: 0.82rem;
+  font-size: .875rem;
   letter-spacing: 0.06em;
   transition: transform 180ms ease, background 180ms ease, color 180ms ease;
 }
@@ -164,7 +164,7 @@
   color: var(--signal-strong);
   border-bottom: 1px solid rgba(255,255,255,0.14);
   font-family: monospace;
-  font-size: 0.7rem;
+  font-size: .875rem;
 }
 
 .coordinateCard div {
@@ -173,14 +173,14 @@
 }
 
 .coordinateCard small {
-  font-size: 0.52rem;
+  font-size: .875rem;
   letter-spacing: 0.16em;
   opacity: 0.5;
 }
 
 .coordinateCard strong {
   font-family: monospace;
-  font-size: 0.7rem;
+  font-size: .875rem;
   letter-spacing: 0.04em;
 }
 
@@ -203,7 +203,7 @@
   gap: 14px;
   color: rgba(255,255,255,0.45);
   font-family: monospace;
-  font-size: 0.57rem;
+  font-size: .875rem;
   letter-spacing: 0.16em;
   transform: translateX(-50%);
 }
@@ -229,7 +229,7 @@
 
 .sectionHeading > div > span {
   color: #9a7621;
-  font-size: 0.66rem;
+  font-size: .875rem;
 }
 
 .sectionHeading h2,
@@ -295,7 +295,7 @@
   display: flex;
   justify-content: space-between;
   color: var(--ink-soft);
-  font-size: 0.58rem;
+  font-size: .875rem;
 }
 
 .notebookCard:hover .cardTopline {
@@ -344,7 +344,7 @@
   display: grid;
   gap: 12px;
   color: rgba(255,255,255,0.45);
-  font-size: 0.56rem;
+  font-size: .875rem;
 }
 
 .aboutLabel b {
@@ -372,7 +372,7 @@
   padding-bottom: 8px;
   color: var(--signal-strong);
   border-bottom: 1px solid rgba(233,185,73,0.42);
-  font-size: 0.82rem;
+  font-size: .875rem;
 }
 
 .aboutGraphic {
@@ -411,7 +411,7 @@
   right: 4%;
   bottom: 7%;
   color: var(--signal);
-  font-size: 0.65rem;
+  font-size: .875rem;
 }
 
 .aboutGraphic i {
