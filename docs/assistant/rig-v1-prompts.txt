@@ -1,0 +1,25 @@
+Mode: built-in imagegen. All assets are original RGBA cutout atlases, not frame sequences.
+Reference 1: public/assistant/chibi-idle-v4.png for black/gold identity.
+Gold output: public/assistant/rig-gold-v1.png
+Use case: stylized-concept
+Asset type: production transparent 2D skeletal animation cutout atlas, NOT an animation sprite sheet.
+Input image 1 is identity/style reference only. Build separable parts for the same original black-haired gold-accent chibi boy, black/gold jacket, white shirt, black shorts, boots, headset.
+Output a square transparent PNG arranged as EXACTLY FOUR columns and FOUR rows of equally sized invisible cells. Each cell has exactly ONE isolated part centered, generous transparent margins, parts never overlap another cell. No full assembled character, no text, labels, shadows on background, grid or decorations.
+Read cells left-to-right row-by-row:
+Row1: (1) complete head with hair, ears and headset, peach skin face with eyebrows and tiny nose but absolutely NO eyes and NO mouth (leave clean face areas for separate eye/mouth overlays); (2) sleeveless torso with full jacket front, hood, white shirt and black shorts, no head, no arms, no legs; (3) viewer-left upper arm jacket sleeve alone, rounded shoulder cap at TOP and elbow at BOTTOM, straight vertical; (4) viewer-right upper arm sleeve alone, shoulder TOP elbow BOTTOM.
+Row2: (5) viewer-left lower forearm jacket sleeve, elbow TOP cuff BOTTOM, straight vertical, NO HAND; (6) viewer-right lower forearm same; (7) viewer-left leg including pale knee, sock and complete black/gold boot pointing slightly outward, hip TOP sole BOTTOM; (8) viewer-right leg and boot.
+Row3: (9) viewer-left golden open eye with eyelid and lashes on transparent background, NO skin patch; (10) viewer-right open eye; (11) viewer-left gently closed eyelid/eyelashes on transparent background, no skin; (12) viewer-right closed eyelid.
+Row4: (13) viewer-left peach hand alone with naturally extended fingers, wrist TOP fingers BOTTOM, palm visible suitable for waving and covering mouth; (14) viewer-right hand alone same; (15) small smiling mouth line alone no skin patch; (16) small open oval yawning mouth interior alone with pink tongue no face/skin patch.
+Cute polished anime illustration, original reference identity preserved, consistent front view and outline thickness, no existing game character. All detached joints fully painted to rounded caps so rotation never reveals holes. Keep every limb straight vertical so the rig can rotate it itself. Strict clean RGBA transparency. Head and torso may each fill 75% of their cell; arms and legs around 60%; eyes/hands/mouth around 45%. No checkerboard pixels.
+
+Reference 2: public/assistant/rig-gold-v1.png for attachment geometry and style.
+Mist output: public/assistant/rig-mist-v1.png
+Use case: stylized-concept
+Asset type: transparent skin atlas for the SAME 2D skeleton. Image1 is the exact atlas layout and component reference.
+Create a second original chibi skin "mist": short silver-grey hair with one navy-blue streak, blue eyes, dark navy jacket with pale-blue accents, white shirt, grey shorts, navy boots, blue headset. Same cute illustration style and chibi proportions as reference.
+Keep ALL SIXTEEN separate pieces in precisely the same locations, orientations, similar shapes and sizes as the reference atlas. FOUR rows, FOUR columns, no labels or grid. Do not assemble a character.
+Row1: head with hair/headset and clean face but NO eyes/mouth (eyebrows/tiny nose allowed); sleeveless torso with shorts no arms/legs; upper sleeve viewer-left; upper sleeve viewer-right.
+Row2: lower forearm viewer-left without hand; lower forearm viewer-right without hand; left leg with boot; right leg with boot.
+Row3: open left eye blue; open right eye blue; closed left eyelid; closed right eyelid.
+Row4: left open palm with fingers pointing UP wrist at BOTTOM as reference; right open palm same; small smile mouth; small open oval yawn mouth.
+Fully paint covered joints, transparent gaps between parts. Preserve geometry, camera, part order. Change ONLY skin appearance, not the arrangement or rig. Authentic RGBA transparency, no skin patches behind eyes/mouth, no text, no extra parts, no complete character, no scenery or ground shadow.

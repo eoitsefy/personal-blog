@@ -42,6 +42,8 @@ try {
     assert.ok((await bodyText.evaluate(el=>parseFloat(getComputedStyle(el).fontSize)))*scale>=14.4-0.01);
     await page.getByRole('button',{name:'打开小助手对话',exact:true}).click();
     const dialog=page.getByRole('dialog',{name:'小助手',exact:true});await dialog.waitFor();
+    await dialog.locator('select[aria-label="助手形象"]').selectOption('classic',{force:true});
+    await page.waitForSelector('dialog canvas[data-ready=true]',{state:'attached'});
     const bubble=dialog.getByLabel('对话记录',{exact:true}).locator('p').first();
     assert.ok((await bubble.evaluate(el=>parseFloat(getComputedStyle(el).fontSize)))*scale>=14.4-0.01);
     assert.ok(await dialog.evaluate(el=>el.scrollWidth<=el.clientWidth),'dialog internal overflow');
@@ -91,6 +93,7 @@ try {
     await context.close();
   }
   const context=await browser.newContext({viewport:{width:390,height:844}});
+  await context.route('**/assistant/rig-*.png',r=>r.abort());
   await context.route('**/assistant/chibi-idle-v4.png',r=>r.abort());
   const page=await context.newPage();await page.goto(base+'/assistant');
   await page.waitForFunction(()=>document.querySelector('[data-action] img')?.getAttribute('src')?.includes('chibi-idle-v3'));

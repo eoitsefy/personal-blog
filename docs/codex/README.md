@@ -16,7 +16,7 @@ This directory provides stable project context for Codex and human maintainers. 
 - `10_PENDING_REQUIREMENTS.md`: agreed default decisions, pending requirements, dependencies, and acceptance criteria.
 - `11_PHASE_7A_OPERATIONS_BASELINE.md`: dated production audit evidence, staged hardening scope, rollback boundaries, and acceptance criteria.
 - `12_WRITING_EXPERIENCE.md`: security upgrades, private working copies, revision semantics, mobile navigation, production acceptance, rollback evidence and remaining security follow-up (2026-10-03).
-- `13_ASSISTANT_CHARACTER_WORKFLOW.md`: original mascot generation prompts, seven twelve-pose actions including yawning, neutral pose, replacement configuration, testing and direct deployment workflow.
+- `13_ASSISTANT_CHARACTER_WORKFLOW.md`: skin-neutral 2D rig, continuous motions, original layered skin prompts, attachment workflow, legacy twelve-pose fallback, testing and direct deployment.
 
 ## Evidence rules
 

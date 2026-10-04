@@ -28,12 +28,14 @@ try {
   const requestedSheets=new Set();
   page.on('request',request=>{const path=new URL(request.url()).pathname;if(/chibi-.*-v4\.png$/.test(path))requestedSheets.add(path);});
   await page.goto(base);await page.waitForSelector('[data-action] canvas[data-ready=true]');
-  assert.deepEqual([...requestedSheets],['/assistant/chibi-idle-v4.png'],'Page entry must not download every action');
   const floating=page.locator('[data-action]').first();
   assert.equal(await floating.evaluate(el=>getComputedStyle(el).transform),'none');
   assert.equal(await floating.evaluate(el=>{const b=el.getBoundingClientRect();return el.closest('button').contains(document.elementFromPoint(b.left+5,b.top+b.height/2));}),false);
   await page.getByRole('button',{name:'打开小助手对话',exact:true}).click();
   const dialog=page.getByRole('dialog',{name:'小助手',exact:true});
+  await dialog.getByRole('combobox',{name:'助手形象'}).selectOption('classic');
+  await page.waitForSelector('dialog canvas[data-ready=true]');
+  assert.deepEqual([...requestedSheets],['/assistant/chibi-idle-v4.png'],'Legacy selection must not download every action');
   const character=dialog.locator('[data-action]'),canvas=character.locator('canvas');
   await page.waitForSelector('dialog canvas[data-ready=true]');
   const box=await character.boundingBox(), pixels=[];
@@ -77,7 +79,7 @@ try {
  const page=await reduced.newPage();await page.goto(base+'/assistant');await page.waitForSelector('canvas[data-ready=true]');
  assert.equal(await page.locator('canvas').evaluate(el=>el.getAnimations().length),0);
  await reduced.close();
- const fallback=await browser.newContext();await fallback.route('**/assistant/chibi-idle-v4.png',r=>r.abort());
+ const fallback=await browser.newContext();await fallback.route('**/assistant/rig-*.png',r=>r.abort());await fallback.route('**/assistant/chibi-idle-v4.png',r=>r.abort());
  const f=await fallback.newPage();await f.goto(base+'/assistant');await f.waitForSelector('img[src*="chibi-idle-v3"]');await fallback.close();
  assert.deepEqual(errors,[]);
  console.log(JSON.stringify({accepted:true,noAIRequests:true,reducedMotion:true,fallback:true,results},null,2));
