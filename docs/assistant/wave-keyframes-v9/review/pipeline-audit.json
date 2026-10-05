@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "reviewedAt": "2026-10-05T10:11:15Z",
+  "status": "EXECUTABLE_OFFLINE_PIPELINE_VERIFIED_ART_BLOCKED",
+  "reviewRoles": ["motion_art_review: actual image inspection", "pipeline_core: architecture and implementation", "root: independent safety, artifact and browser regression"],
+  "engineSha256": "b7b4f8c80e2727f4a8241896058f46b84c9c55b9c8d208f75dccc4d73854daad",
+  "manifestScopeSha256": "d06d3e31712b6c0edaf197fced75b148efc4dc0e396f539736206612b057a051",
+  "keyScopeSha256": "0aa0cf4bb3beadc235ac4430a41b5879c6dbba36c6aa281feb3ec5482df96a41",
+  "frameScopeSha256": "21167c671bfbf29737b1c939bb50061890ddc612e66772b11c8514c71717dd68",
+  "tests": {"unitCount": 175, "passed": 175, "failed": 0, "skipped": 0, "realGeometryBrowserAndWebpRoundtripIncluded": true},
+  "lint": "PASSED",
+  "diffWhitespace": "PASSED",
+  "realCharacterRun": {"prepare": "PASSED", "interpolate": "PASSED_37_PNG", "check": "REJECTED_TECHNICAL", "preview": "PASSED_PLAYBACK_ONLY", "package": "REJECTED_TECHNICAL"},
+  "readOnlyViewerSmoke": {"routes": ["/", "/frames/000.png", "/frames/036.png", "/manifest.json"], "statuses": [200, 200, 200, 404], "loopbackOnly": true, "releaseAllowed": false},
+  "refactors": [
+    "Separate scoped key and final art approval; no automatic approval generation.",
+    "Bind source, manifest, algorithm, cache and actual output hashes; immutable artifacts and exclusive lock.",
+    "Reject Windows path aliases, devices, escapes and symbolic links.",
+    "Check complete real browser modes and actual PNG hashes, not a PASSED label.",
+    "Repository-first Playwright with explicit local fallback and browser whitelist.",
+    "Non-system-drive artifacts, disk/RAM guard and third-party path-length preflight."
+  ],
+  "limits": [
+    "37-frame character art is still rejected for sleeve/finger ghosts; no final art approval.",
+    "Geometry roundtrip verifies executable tooling, not character appearance.",
+    "Prepared full PNG keys and manual art review remain prerequisites; no automatic arbitrary-character generation.",
+    "Next build, database integration, CI and production acceptance were not rerun: no app, database or public asset changes."
+  ],
+  "builtinImagegenEdits": 4,
+  "selectedNewKeyDrawings": 2,
+  "deepseekRequests": 0,
+  "paidImageApiRequests": 0,
+  "productionChanged": false,
+  "releaseAllowed": false
+}

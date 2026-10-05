@@ -2,6 +2,70 @@
 
 这套工具用于保留原角色的完整人物逐帧动画制作，不恢复分层拼装。软件和模型安装在 `D:\CodexTools\assistant-animation`，与生产博客、网站 DeepSeek 配置及数据库独立。DeepSeek 只生成动作草案；本地显卡制图须先通过资源检查，少量参考编辑也可使用内置 imagegen，实际工具必须分别记录。发布仍需美术和浏览器检查。
 
+## 统一可执行流水线
+
+入口是 `scripts/animation-pipeline.mjs`，不需要启动ComfyUI，不调用DeepSeek或图像API，也不会部署。输入必须是已制作好的完整透明PNG关键姿态、原中立图、允许修改区域的透明蒙版，以及固定时序的 `manifest.json`。当前批准的执行适配器只有 `rife-rgba` 和 `hold`；后者是保持关键姿态的诊断/测试模式，不是新增流畅中间帧。
+
+| 阶段 | 执行内容 | 必须保留的界限 |
+| --- | --- | --- |
+| doctor / prepare | 源PNG摘要/尺寸、原中立、静区/20%留白、系统盘/内存检查 | 技术准备不等于关键图美术通过 |
+| interpolate | 独立关键图许可后，本地固定版本RIFE输出完整PNG | 中间帧不能当作独立绘制数量 |
+| check | 重新读取全部实际帧，核对数量/时序/关键节点/静区/alpha/组件 | 指标不能发现所有黑袖残影和手型错误 |
+| preview | 正常/半速实际整轮、源PNG与画布、暂停/减少动态/手机宽度 | 允许拒收动画的诊断预览，不放行发布 |
+| package | 重查技术、完整播放记录、最终全帧美术许可；无损WebP解码核对 | 仅产出本机离线文件，不自动部署 |
+
+每个任务按 manifest 摘要和执行器代码摘要隔离到 D 盘目录；工具升级不借用旧结果。缓存同时核对文件摘要，重复执行可续跑但不能覆盖不相同的历史产物。来源、蒙版、顺序、参数或审批范围变化都要新版本/新审查；不能把旧动作许可复制给新素材。并发锁阻止两个任务写同一范围，崩溃留下的锁须先确认进程已停止再人工处理，不自动删除。Windows路径拒越界、链接和设备别名；外部工具的过长路径在执行前明确拒绝，避免声称任意长任务名都兼容第三方工具。
+
+### 本机执行：每段不超过20行
+
+以下在普通PowerShell、仓库根目录执行，**不在阿里云服务器执行**。Node须满足 `package.json`，仓库依赖须已安装，本地RIFE与锁定权重位于D盘。WebP和临时浏览器数据同样留在D盘。
+
+```powershell
+cd 'C:\Users\Administrator\Documents\Codex\2026-07-15\github-plugin-github-openai-curated-remote-4\work\personal-blog'
+$manifest = 'docs/assistant/wave-keyframes-v9/manifest.json'
+$env:ANIMATION_TOOL_ROOT = 'D:\CodexTools\assistant-animation'
+npm run animation:pipeline -- doctor $manifest
+npm run animation:pipeline -- prepare $manifest
+```
+
+关键图须由独立视觉审查给出仅限补帧的摘要许可，命令行不会生成或自动批准。已冻结的v9可以直接复用其关键图许可；不要重新运行v9专用来源准备脚本覆盖已审查图。
+
+```powershell
+npm run animation:pipeline -- interpolate $manifest
+npm run animation:pipeline -- check $manifest
+npm run animation:pipeline -- status $manifest
+```
+
+当前v9的 `check` 必须非零退出，因为技术和美术仍拒收；不是部署异常，也不能强行改成成功。诊断预览先从仓库解析Playwright；如仓库没有它，在本机显式配置已有运行时的包解析锚点（必须是本地目录下的 `package.json` 路径，文件本身不要求存在；不在manifest内指定可执行模块）：
+
+```powershell
+$env:ANIMATION_PLAYWRIGHT_PACKAGE_JSON = 'C:\Users\Administrator\.cache\codex-runtimes\codex-primary-runtime\dependencies\node\package.json'
+$env:ANIMATION_BROWSER_CHANNEL = 'msedge'
+npm run animation:pipeline -- preview $manifest
+node scripts/view-animation-review.mjs $manifest
+```
+
+预览入口打印临时 `http://127.0.0.1:端口`，浏览器打开后可查看正常/半速、暂停和深浅背景；Ctrl+C关闭。只服务绑定摘要的HTML和PNG，不开放目录、其他仓库文件或生成API。直接双击 `preview.html` 不等价于运行预览。自动浏览器命令默认关闭其临时服务，手工查看才使用最后一个命令。
+
+所有技术、完整播放和最终美术审查通过后才可打包，v9尚不具备这些条件：
+
+```powershell
+npm run animation:pipeline -- package $manifest --dry-run
+# 真正执行时不加 --dry-run；未通过门禁会拒绝。
+# 已准备并分别审批的新素材可用 run 顺序执行所有阶段。
+npm run animation:pipeline -- run $manifest --dry-run
+```
+
+`--dry-run`只读取/校验输入并展示任务范围，不出图、不启动浏览器、不审批、不写文件。浏览器channel只允许本机白名单；缺少依赖/浏览器时须先补齐，不宣称预览已通过。几何测试素材已实际完成浏览器和WebP打包/解码，五张PNG合并为三编码帧，两个计数分别保存；不将它作为人物发布许可。
+
+### 当前人物优化和还需制作的部分
+
+v9本轮新增两张真实过渡姿态，七关键图经审查可补帧，37帧RIFE约15fps样片的正常/半速浏览器检查通过。但全帧美术仍发现袖口灰边、手指叠线；技术拒收1/14/16/17/22/35。`docs/assistant/wave-keyframes-v9/review/visual.json`保留明确拒收及实际帧摘要，没有最终许可，没有新生产接入。
+
+多agent复审推动了两次边界修正：皮肤透明度指标增加全alpha/孤立组件测量，但仍承认连接黑袖残影会漏检；打包不能信任单个PASSED标签，必须核对实际PNG与完整播放记录。关键图许可与最终动画许可从结构上分离。175项单元测试零跳过通过，包含真实几何浏览器和WebP回读，lint/差异检查通过；真实v9打包正确拒绝。审查证据见新包 `review/pipeline-audit.json`。离线共享RGBA变形实验虽然保证同一颜色/alpha采样坐标，仍出现遮挡折叠，24过程帧拒收；`try-shared-wave-warp.mjs`仅为孤立实验，不是流水线适配器。
+
+后续先修握拳到张掌的真实手型过程及准备到胸前的更小跨度姿态，再重新逐帧审查，不降低阈值、删坏帧、复制许可或只增加fps。任意单图自动绑定、自动关键图修绘/抠图、美术自动放行、LoRA训练、EbSynth/ToonCrafter整链仍未完成；当前可流水执行的是**经过素材制作和关键图审查之后**的离线阶段。
+
 ## 已安装工具
 
 | 工具 | 用途 | 当前验证 |

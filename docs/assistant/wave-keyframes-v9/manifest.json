@@ -1,0 +1,83 @@
+{
+  "schemaVersion": 1,
+  "id": "wave-v9",
+  "action": "wave",
+  "reference": {
+    "file": "docs/assistant/wave-keyframes-v8/reference/neutral-clean.png",
+    "sha256": "5a12d3aec74704c6ae4360159e1cdcda98fc35b6b43abeccc06cf4d87765bbe0"
+  },
+  "editableMask": {
+    "file": "docs/assistant/wave-keyframes-v9/editable-mask.png",
+    "sha256": "1c2069457b140b70dc7e8a39106e79885fbd5577233ba96a75fa19c5eb9dbecd"
+  },
+  "keys": [
+    {
+      "id": "neutral",
+      "file": "docs/assistant/wave-keyframes-v9/keys/00-neutral.png",
+      "sha256": "5a12d3aec74704c6ae4360159e1cdcda98fc35b6b43abeccc06cf4d87765bbe0"
+    },
+    {
+      "id": "prep",
+      "file": "docs/assistant/wave-keyframes-v9/keys/01-prep.png",
+      "sha256": "21a281c6d822ad65d13fc5695e87d7013463a353559dcf1f96dc790918f7135d"
+    },
+    {
+      "id": "bridge",
+      "file": "docs/assistant/wave-keyframes-v9/keys/02-bridge.png",
+      "sha256": "39f5bcb5bf4eb60a2cf09cbf098017acdcea657a636a4e70cf600a7bd4355edf"
+    },
+    {
+      "id": "middle",
+      "file": "docs/assistant/wave-keyframes-v9/keys/03-middle.png",
+      "sha256": "2e942c89302256101d96f9ae6692e54e56360667b4f77e78152eeac259bb1a84"
+    },
+    {
+      "id": "half",
+      "file": "docs/assistant/wave-keyframes-v9/keys/04-half.png",
+      "sha256": "ea3263dafd86939b25bcbaa83a00fd8167196a3e70dbb2e1f07c3f5c1f6e0419"
+    },
+    {
+      "id": "opening",
+      "file": "docs/assistant/wave-keyframes-v9/keys/05-opening.png",
+      "sha256": "5b7b173b91a97fca211dd4f589566a59ff1ecb50edd5766fecea3505471db67d"
+    },
+    {
+      "id": "peak",
+      "file": "docs/assistant/wave-keyframes-v9/keys/06-peak.png",
+      "sha256": "266fc3591cb790e79f3ccacdfc3489c7f60c0425eb8c5eb26e84b35d1d39bbd1"
+    }
+  ],
+  "canvas": {
+    "width": 768,
+    "height": 768,
+    "safetyInset": 0.2
+  },
+  "motion": {
+    "sequence": [
+      "neutral",
+      "prep",
+      "bridge",
+      "middle",
+      "half",
+      "opening",
+      "peak",
+      "opening",
+      "half",
+      "middle",
+      "bridge",
+      "prep",
+      "neutral"
+    ],
+    "stepsPerInterval": 3,
+    "fps": 15,
+    "loopDurationMs": 3000
+  },
+  "interpolation": {
+    "method": "rife-rgba",
+    "gpu": 1
+  },
+  "review": {
+    "keyApproval": "docs/assistant/wave-keyframes-v9/review/key-approval.json",
+    "finalApproval": "docs/assistant/wave-keyframes-v9/review/final-approval.json"
+  }
+}

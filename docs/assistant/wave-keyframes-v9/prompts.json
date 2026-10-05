@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "date": "2026-10-05",
+  "mode": "builtin imagegen reference edit",
+  "requests": [
+    {
+      "name": "bridge-initial",
+      "prompt": "Use case: identity-preserve. Asset type: full-frame transparent PNG animation KEYFRAME, not a sprite sheet. Image 1 is the exact edit target (the waist-level preparation pose of our original black/gold chibi blog assistant). Image 2 is the later chest-level closed-fist keyframe. Produce ONE true intermediate pose halfway BETWEEN Image 1 and Image 2. Change ONLY the character's right arm (viewer-left) from shoulder to hand. Keep the head, face, huge amber round eyes, hair, headphones, hood and collar, torso center, the other arm, shorts, boots, feet position, body scale, and every other part unchanged from Image 1. The hand remains a small opaque peach CLOSED FIST, not an open palm. Lift that fist only halfway from waist level toward the chest; on a 768-pixel canvas the fist center should be about x=299,y=458 (Image 1 center around310,488 and Image 2 around295,430). The elbow bends gently and naturally with one continuous solid dark sleeve connected to the existing shoulder. Retain the thin gold outer-sleeve stripe, no broken gold line or collar notch. NOT a ghost or crossfade between the input poses: draw one clean connected sleeve and one clean fist with stable fingers. Preserve exact original head/body/foot proportions and original rendering style, line widths and muted palette. Entire character fully visible, fixed square canvas, centered at the same scale and location as the references, at least 20 percent transparent safe padding on every side, no crop, no ground shadow. Background genuinely transparent alpha. Skin fully opaque peach, no gray hand, no translucent arm, no doubled outlines, no extra limb, no halo, no white edge, no text, no watermark. Keep feet aligned and character absolutely still except for the single articulated viewer-left arm. Output one complete character drawing.",
+      "selected": false,
+      "referencedImagePaths": [
+        "docs/assistant/wave-keyframes-v8/keys/01-prep.png",
+        "docs/assistant/wave-keyframes-v8/keys/02-middle.png"
+      ],
+      "transparentBackground": true,
+      "resultFile": "generated/bridge-initial.png"
+    },
+    {
+      "name": "bridge",
+      "prompt": "Use case: precise-object-edit. Image 1 is the EXACT target. Output one square transparent full-body PNG, not a sprite sheet. Make only a TINY arm edit, not a chest-level greeting pose: move the little SCREEN LEFT fist UP by just THREE percent of the entire canvas height (about 23 pixels on this 768 reference), and LEFT by one percent of canvas width (about 8px). The fist MUST remain low, around the LOWER WHITE SHIRT / upper jacket pocket level, midway between lower abdomen and chest, clearly BELOW the golden pendant and BELOW the bottom of the neck. Do NOT lift to shoulder, neck or cheek. Keep the fist CLOSED and opaque warm peach, exact same compact size. Bend the single attached black sleeve slightly more to follow the small upward hand movement. Preserve one continuous gold sleeve stripe, no double arm or old fist remaining below. Absolutely preserve the same whole character scale/framing, head/face/huge amber eyes/hair/headset/hood/collar/pendant/torso/opposite arm/shorts/legs/feet from image 1. Top of hair at21% of square, boots bottom79%,20% transparent padding every side. No body translation, crop, redesign, enlarged hand, extra fingers, ghost, transparent skin, disconnected wrist, text or shadow. A subtle in-between preparation keyframe, NOT the completed lifted-arm pose. Genuine transparent background.",
+      "selected": true,
+      "referencedImagePaths": [
+        "docs/assistant/wave-keyframes-v8/keys/01-prep.png"
+      ],
+      "transparentBackground": true,
+      "resultFile": "generated/bridge.png"
+    },
+    {
+      "name": "half",
+      "prompt": "Use case: precise-object-edit. One complete-body transparent PNG animation keyframe. Image 1 is the exact closed-fist chest-level pose to edit. Image 2 is the later open palm reference. Create a small intermediate BETWEEN those hands: change ONLY the SCREEN LEFT wrist and fingers to a HALF-OPEN palm, palm center almost the same as Image1, moved LEFT just1% and UP just1% of full canvas. Hand remains BELOW the head, never overlaps hair. Thumb visible and two or three compact bent fingers visibly unfurling, curled halfway, NOT a fist, NOT the fully extended five-finger peak. Compact chibi hand, fully opaque peach skin, clean single dark contour, no gray translucent flesh. Keep the elbow position close to Image1, the entire sleeve attached and same thickness, one continuous gold trim into the original shoulder. Preserve everything else from Image1: huge round amber eyes, original face/hair/headphones/hood/collar/torso/otherarm/shorts/legs/boots, framing and scale. Hair at21%height,boots at79%, fixed feet,20% empty transparent margin each side. No pose bounce, lean, translation, enlarged hands, disconnected wrist, duplicated arm or fingers, no ghost/crossfade, no scene, no text or shadows. True transparent alpha.",
+      "selected": true,
+      "referencedImagePaths": [
+        "docs/assistant/wave-keyframes-v8/keys/02-middle.png",
+        "docs/assistant/wave-keyframes-v8/keys/03-opening.png"
+      ],
+      "transparentBackground": true,
+      "resultFile": "generated/half.png"
+    },
+    {
+      "name": "lift-low-to-chest-revision",
+      "prompt": "Use case: precise-object-edit. Image1 is exact target, one full-body transparent animation keyframe. Make ONLY a TINY arm edit: raise the SCREEN LEFT closed fist TWO percent of the entire square canvas height (15px at768) and move it LEFT ONE percent of canvas width (8px). The fist stays at mid-white-shirt height BELOW the pendant and below shoulder height. Do NOT move hand to neck or cheek. The short black sleeve bends naturally with the elbow at lower chest level; one continuous dark outline and uninterrupted thin gold sleeve stripe joins the original shoulder under the hood. Keep the exact same small closed peach fist, fully opaque, no older fist left below, no duplicate sleeve or ghost. Preserve Image1 entire head/face/huge amber eyes/hair/headset/collar/torso/opposite arm/shorts/legs/boots pixel style and proportions. Same character scale and framing: hair starts21%,feet end79%,20% transparent safety margins. Body and feet absolutely fixed, no translation or lean, no camera changes. This is a low-to-chest in-between preparation pose, not a completed wave. No extra objects,text,white fringe,shadows or watermark. Truly transparent alpha.",
+      "selected": false,
+      "referencedImagePaths": [
+        "docs/assistant/wave-keyframes-v9/keys/02-bridge.png"
+      ],
+      "transparentBackground": true,
+      "resultFile": "generated/lift-rejected.png",
+      "note": "Rejected: fist raised near chest, not the requested halfway low-to-chest stage."
+    }
+  ],
+  "deepSeekCalls": 0,
+  "paidImageApiCalls": 0,
+  "note": "Two selected real bridge poses; initial candidate lifted fist too high and is rejected. No interpolation art approval is implied."
+}

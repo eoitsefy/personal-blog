@@ -1,0 +1,15 @@
+{
+  "status": "APPROVED_FOR_INTERPOLATION_ONLY",
+  "releaseAllowed": false,
+  "productionChanged": false,
+  "reviewer": "Independent motion_art_review agent plus root inspection",
+  "keyOnlyScopeSha256": "8996236e4c65a0d0cd699bdae9db831874150b9acb89daa0e2f401ec7044771d",
+  "pipelineKeyScopeSha256": "0aa0cf4bb3beadc235ac4430a41b5879c6dbba36c6aa281feb3ec5482df96a41",
+  "reviewed": ["keys-light.png", "keys-dark.png", "arm-light.png", "arm-dark.png", "../keys/02-bridge.png", "../keys/04-half.png"],
+  "findings": [
+    "Two additional true poses reduce the waist-to-chest and fist-to-palm topology jump.",
+    "Connected sleeve and gold trim, opaque peach hand, clear hair gap, stable original full-frame identity.",
+    "Seven still keys only. RIFE may still introduce doubled sleeves or translucent skin; full animation not approved.",
+    "Initial generated bridge moved too high and was discarded; retained for provenance."
+  ]
+}

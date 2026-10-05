@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "status": "REJECTED_TECHNICAL_AND_VISUAL",
+  "candidateScopeSha256": "fa6d33819ba8525c8ee88449c707b61e776f0d5bc7467e974f8716a337334fac",
+  "implementationSha256": "39f7f9ad5287fdc31a19e95591e8210e0a73263960e0c8aaf6c2e35ffea0a472",
+  "sourceKeyScopeSha256": "0aa0cf4bb3beadc235ac4430a41b5879c6dbba36c6aa281feb3ec5482df96a41",
+  "frameScopeSha256": "47035afcf5aafeb5f31ad9e68af148dfc5f12281242a8c5b921a084748b85f95",
+  "method": "Offline inverse TPS shared spatial map for premultiplied RGBA sampling",
+  "frameCount": 37,
+  "failedTechnicalFrames": 24,
+  "findings": [
+    "Shared color/alpha coordinates alone do not solve occlusion or limb topology changes.",
+    "Folded sleeve and duplicated silhouettes occur around 7/8 and 28/29.",
+    "Retained as an isolated try-script; not an approved generic pipeline adapter."
+  ],
+  "releaseAllowed": false,
+  "productionChanged": false,
+  "paidRequests": 0
+}

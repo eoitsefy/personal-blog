@@ -16,6 +16,7 @@
     "typecheck": "next typegen && tsc --noEmit --incremental false",
     "test": "node scripts/run-unit-tests.mjs",
     "animation:workbench": "node --import tsx scripts/animation-workbench.mjs",
+    "animation:pipeline": "node scripts/animation-pipeline.mjs",
     "test:integration": "node scripts/run-integration-tests.mjs"
   },
   "dependencies": {
