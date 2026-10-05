@@ -1,0 +1,8 @@
+{
+  "status": "REJECTED_ART",
+  "releaseAllowed": false,
+  "productionChanged": false,
+  "rawFrameScopeSha256": "32115979f9350004b1a04eaaa1b24ef68030b1d5c3bd263f3a56f976a04fd656",
+  "issues": ["Frame 7 local alignment moved pocket/hem and created a shoulder boundary jump despite passing technical alpha checks."],
+  "nextCandidate": "wave-v12 uses 32px horizontal and 20/30px vertical falloffs and restores original pocket pixels."
+}

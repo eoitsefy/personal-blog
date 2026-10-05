@@ -1,0 +1,11 @@
+{
+  "schemaVersion": 1,
+  "reviewer": "Independent motion_art_review agent and root",
+  "reviewedAt": "2026-10-05T11:57:04Z",
+  "scopeSha256": "e5d9c3c2d8f54edc05288bb52e407ee9d5c4488cd8e204c23bc6dfc1f3534add",
+  "status": "APPROVED_FOR_RELEASE",
+  "releaseAllowed": true,
+  "manifestScopeSha256": "2e08284f63548da3d68c9712b7de47ab62458d85da6991949194836643bc101f",
+  "keyScopeSha256": "3077d5ac7e1ef215e61970707a9b7e7ac40fc2a8747fc169ec2d93cde4c076e1",
+  "frameScopeSha256": "e5d9c3c2d8f54edc05288bb52e407ee9d5c4488cd8e204c23bc6dfc1f3534add"
+}

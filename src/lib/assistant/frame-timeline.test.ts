@@ -19,7 +19,7 @@ test("selected whole-figure timelines share an exact original neutral, excluding
       if (pose.sheet === "yawn") assert.ok(pose.frame < 20, "Abrupt hand drop is replaced by recovery drawings");
     }
   }
-  assert.equal(sources.size, 140); // Drawing addresses, not a claim of independently drawn or unique pixels.
+  assert.equal(sources.size, 146); // Drawing addresses, not a claim of independently drawn or unique pixels.
 });
 
 test("real drawing changes use 15 fps spacing with explicit neutral holds and short non-geometric blends", () => {

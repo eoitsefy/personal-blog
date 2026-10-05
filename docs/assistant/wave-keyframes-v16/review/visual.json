@@ -1,0 +1,15 @@
+{
+  "status": "APPROVED_FOR_RELEASE",
+  "releaseAllowed": true,
+  "reviewer": "Independent motion_art_review agent with root verification",
+  "reviewedAt": "2026-10-05T11:57:04Z",
+  "manifestScopeSha256": "2e08284f63548da3d68c9712b7de47ab62458d85da6991949194836643bc101f",
+  "keyScopeSha256": "3077d5ac7e1ef215e61970707a9b7e7ac40fc2a8747fc169ec2d93cde4c076e1",
+  "frameScopeSha256": "e5d9c3c2d8f54edc05288bb52e407ee9d5c4488cd8e204c23bc6dfc1f3534add",
+  "actualVisualReview": ["all 37 full PNGs and arm enlargements on light/dark backgrounds", "normal and half-speed complete cycles", "actual browser canvas samples, not only technical labels"],
+  "resolved": ["13->14->15->16 and reverse palm reopening defect", "7/29 isolated gold fragment", "sleeve/palm duplicate contours in repaired poses"],
+  "preserved": ["original head and face pixels", "static central body and boot anchors", "exact 35 unchanged v15 frames", "common neutral endpoints", "37 slots and three-second timing"],
+  "limitations": ["raise-hand greeting and return, not side-to-side wrist waving", "not a general automatic character rig or automatic art approval", "other new action materials remain separate work"],
+  "evidence": ["actual-playback-sampling.json", "actual-normal-hand-forward.png", "actual-half-hand-forward.png", "actual-half-hand-reverse.png", "actual-normal-whole.png", "local-application-browser.json"],
+  "productionChangedAtReview": false
+}

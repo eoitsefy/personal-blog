@@ -1,0 +1,8 @@
+{
+  "status": "REJECTED_ART",
+  "releaseAllowed": false,
+  "productionChanged": false,
+  "rawFrameScopeSha256": "78f34c7fcdc7ff5a5bb9ff829045ca5d868fd0f02e2538e04cc78aaf4d5f033b",
+  "issues": ["Independent review found one-frame gold pocket stripe flashing on frames 7/29 at x317..343 y454..476."],
+  "nextCandidate": "wave-v13 restores only common opaque original cloth, preserving the repaired hand and silhouette."
+}

@@ -1,0 +1,126 @@
+{
+  "status": "PENDING_ART_REVIEW",
+  "releaseAllowed": false,
+  "preparedKeyCount": 19,
+  "referenceFrames": 1,
+  "authoredKeyframes": 6,
+  "imageEditedFrames": 6,
+  "interpolatedFrames": 6,
+  "frames": 37,
+  "fps": 15,
+  "periodMs": 3000,
+  "reverseReuse": "frame[36-i] exactly equals frame[i]",
+  "parentFrameScopeSha256": "21167c671bfbf29737b1c939bb50061890ddc612e66772b11c8514c71717dd68",
+  "rawFrameScopeSha256": "ce1db3f2335f58f7d1d8564ce3484d45c83d1417d7f672569014b1086e23d66c",
+  "poses": [
+    {
+      "frame": 1,
+      "source": "docs/assistant/wave-keyframes-v10/generated/001.png",
+      "registration": {
+        "x": -1,
+        "y": -3
+      },
+      "aboveShoulderEditRect": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "armOnlyAlignment": null
+    },
+    {
+      "frame": 7,
+      "source": "docs/assistant/wave-keyframes-v10/generated/007.png",
+      "registration": {
+        "x": -2,
+        "y": -3
+      },
+      "aboveShoulderEditRect": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "armOnlyAlignment": {
+        "translation": [
+          -6,
+          -11
+        ],
+        "fixedSeamX": 346,
+        "falloffStartX": 314,
+        "verticalFalloff": [
+          400,
+          420,
+          465,
+          495
+        ],
+        "preservedPocket": true,
+        "restoredOriginalGoldCloth": true,
+        "clothSource": "original neutral",
+        "removedIsolatedGoldFragment": true,
+        "premultipliedRgbaSampling": true
+      }
+    },
+    {
+      "frame": 8,
+      "source": "docs/assistant/wave-keyframes-v10/generated/008-exact.png",
+      "registration": {
+        "x": -1,
+        "y": -2
+      },
+      "aboveShoulderEditRect": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "armOnlyAlignment": null
+    },
+    {
+      "frame": 14,
+      "source": "docs/assistant/wave-keyframes-v10/generated/014.png",
+      "registration": {
+        "x": -1,
+        "y": -2
+      },
+      "aboveShoulderEditRect": [
+        243,
+        372,
+        64,
+        66
+      ],
+      "armOnlyAlignment": null
+    },
+    {
+      "frame": 16,
+      "source": "docs/assistant/wave-keyframes-v10/generated/016.png",
+      "registration": {
+        "x": -1,
+        "y": -3
+      },
+      "aboveShoulderEditRect": [
+        232,
+        355,
+        69,
+        70
+      ],
+      "armOnlyAlignment": null
+    },
+    {
+      "frame": 17,
+      "source": "docs/assistant/wave-keyframes-v10/generated/017.png",
+      "registration": {
+        "x": -1,
+        "y": -3
+      },
+      "aboveShoulderEditRect": [
+        224,
+        347,
+        69,
+        68
+      ],
+      "armOnlyAlignment": null
+    }
+  ],
+  "productionChanged": false
+}

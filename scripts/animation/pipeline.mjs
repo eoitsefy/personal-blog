@@ -23,11 +23,20 @@ export function safeRelative(value) {
 }
 const artifactPath = z.string().max(400).refine(value => { try { safeRelative(value); return true; } catch { return false; } });
 const source = z.object({ file: artifactPath.refine(value => value.endsWith('.png')), sha256: digest }).strict();
+const parentFrame = { parentFrameScopeSha256: digest, parentFrameIndex: z.number().int().min(0).max(255) };
+// Source declarations are scoped audit metadata, never an artistic verdict.
+// Imported whole PNGs do not become independently authored merely by being keys.
+export const KeyProvenanceSchema = z.discriminatedUnion('kind', [
+  z.object({ kind: z.literal('reference') }).strict(),
+  z.object({ kind: z.literal('authored-keyframe') }).strict(),
+  z.object({ kind: z.literal('interpolated-frame'), ...parentFrame }).strict(),
+  z.object({ kind: z.literal('image-edited-frame'), ...parentFrame, editSourceSha256: digest }).strict(),
+]);
 export const ManifestSchema = z.object({
   schemaVersion: z.literal(1), id: name,
   action: z.enum(['idle', 'wave', 'nod', 'thinking', 'bow', 'cheer', 'yawn']),
   reference: source, editableMask: source,
-  keys: z.array(source.extend({ id: name }).strict()).min(2).max(24),
+  keys: z.array(source.extend({ id: name, provenance: KeyProvenanceSchema.optional() }).strict()).min(2).max(24),
   canvas: z.object({ width: z.number().int().min(64).max(1024), height: z.number().int().min(64).max(1024), safetyInset: z.literal(0.2) }).strict(),
   motion: z.object({ sequence: z.array(name).min(3).max(48), stepsPerInterval: z.number().int().min(1).max(8), fps: z.number().int().min(10).max(24), loopDurationMs: z.number().int().min(500).max(10000) }).strict(),
   interpolation: z.object({ method: z.enum(['hold', 'rife-rgba']), gpu: z.literal(1) }).strict(),
@@ -42,6 +51,13 @@ export const ManifestSchema = z.object({
 export function parseManifest(value) { return ManifestSchema.parse(value); }
 export function manifestScope(manifest) { return sha256(Buffer.from(JSON.stringify(parseManifest(manifest)))); }
 export function keyScope(referenceRgbaHash, keyRgbaHashes, maskRgbaHash, manifestHash) { return sha256(Buffer.from(JSON.stringify({ manifestHash, referenceRgbaHash, keyRgbaHashes, maskRgbaHash }))); }
+export function deriveProvenance(manifest) {
+  const m = parseManifest(manifest);
+  const counts = { preparedKeyCount: m.keys.length, authoredKeyframes: 0, imageEditedFrames: 0, interpolatedFrames: 0, referenceFrames: 0, unspecifiedFrames: 0 };
+  const fields = { reference: 'referenceFrames', 'authored-keyframe': 'authoredKeyframes', 'interpolated-frame': 'interpolatedFrames', 'image-edited-frame': 'imageEditedFrames' };
+  for (const key of m.keys) counts[key.provenance ? fields[key.provenance.kind] : 'unspecifiedFrames']++;
+  return counts;
+}
 export function deriveMotion(manifest) {
   const m = parseManifest(manifest), count = (m.motion.sequence.length - 1) * m.motion.stepsPerInterval + 1;
   const delayMs = Array.from({ length: count }, () => Math.round(1000 / m.motion.fps));
@@ -288,7 +304,7 @@ export class AnimationPipeline {
     if (measures.some(m => !m.passed)) throw Error('prepared_keys_technical_rejected');
     const artifacts = [];
     for (const [i, key] of this.manifest.keys.entries()) artifacts.push(await this.immutable(`keys/${String(i).padStart(3, '0')}-${key.id}.png`, await readFile(await this.input(key.file))));
-    artifacts.push(await this.json('prepared.json', { manifestScopeSha256: this.manifestScopeSha256, keyScopeSha256: this.keyScopeSha256, measures, releaseAllowed: false }));
+    artifacts.push(await this.json('prepared.json', { manifestScopeSha256: this.manifestScopeSha256, keyScopeSha256: this.keyScopeSha256, ...deriveProvenance(this.manifest), measures, releaseAllowed: false }));
     this.mark('prepare', artifacts); return this.state.stages.prepare;
   }
   async keyApproval() { return validateKeyApproval(JSON.parse(await readFile(await this.input(this.manifest.review.keyApproval), 'utf8')), this.keyScopeSha256); }
@@ -320,7 +336,7 @@ export class AnimationPipeline {
     for (const [i, data] of frames.entries()) artifacts.push(await this.immutable(`frames/${String(i).padStart(3, '0')}.png`, await sharp(data, { raw: { ...m.canvas, channels: 4 } }).png().toBuffer()));
     const frameHashes = frames.map(sha256), { delayMs } = deriveMotion(m);
     const frameScopeSha256 = sha256(Buffer.from(frameHashes.join('')));
-    const report = { manifestScopeSha256: this.manifestScopeSha256, keyScopeSha256: this.keyScopeSha256, frameScopeSha256, frameHashes, delayMs, frameCount: frames.length, method: m.interpolation.method, independentDrawings: m.keys.length, paidRequests: 0, productionChanged: false, releaseAllowed: false };
+    const report = { manifestScopeSha256: this.manifestScopeSha256, keyScopeSha256: this.keyScopeSha256, frameScopeSha256, frameHashes, delayMs, frameCount: frames.length, method: m.interpolation.method, ...deriveProvenance(m), paidRequests: 0, productionChanged: false, releaseAllowed: false };
     artifacts.push(await this.json('interpolation.json', report)); this.mark('interpolate', artifacts, { frameScopeSha256 }); return report;
   }
   async verifyRife() {
@@ -372,8 +388,8 @@ export class AnimationPipeline {
     await this.prepareStage();
     // No cached verdict is trusted: every frame is read and re-measured.
     if (!(await this.receiptValid('interpolate'))) throw Error('interpolation_not_completed');
-    const report = await this.readJson('interpolation.json'), measures = [], motion = deriveMotion(this.manifest);
-    if (report.manifestScopeSha256 !== this.manifestScopeSha256 || report.keyScopeSha256 !== this.keyScopeSha256 || report.method !== this.manifest.interpolation.method || report.independentDrawings !== this.manifest.keys.length || report.frameCount !== motion.frameCount || JSON.stringify(report.delayMs) !== JSON.stringify(motion.delayMs) || !Array.isArray(report.frameHashes) || report.frameHashes.length !== motion.frameCount) throw Error('interpolation_report_manifest_mismatch');
+    const report = await this.readJson('interpolation.json'), measures = [], motion = deriveMotion(this.manifest), provenance = deriveProvenance(this.manifest);
+    if (report.manifestScopeSha256 !== this.manifestScopeSha256 || report.keyScopeSha256 !== this.keyScopeSha256 || report.method !== this.manifest.interpolation.method || 'independentDrawings' in report || Object.entries(provenance).some(([field, count]) => report[field] !== count) || report.frameCount !== motion.frameCount || JSON.stringify(report.delayMs) !== JSON.stringify(motion.delayMs) || !Array.isArray(report.frameHashes) || report.frameHashes.length !== motion.frameCount) throw Error('interpolation_report_manifest_mismatch');
     const expectedFiles = Array.from({ length: motion.frameCount }, (_, i) => String(i).padStart(3, '0') + '.png');
     if (JSON.stringify((await readdir(await this.output('frames'))).sort()) !== JSON.stringify(expectedFiles)) throw Error('unexpected_frame_directory_contents');
     for (let i = 0; i < motion.frameCount; i++) {
@@ -445,7 +461,7 @@ export class AnimationPipeline {
     const webp = await sharp(sources, { join: { animated: true } }).webp({ lossless: true, effort: 6, loop: 0, delay: interpolation.delayMs }).toBuffer();
     const encodedTimeline = await verifyEncodedTimeline(webp, await Promise.all(sources.map(source => sharp(source).ensureAlpha().raw().toBuffer())), interpolation.delayMs, this.manifest.canvas);
     const asset = await this.immutable('release/animation.webp', webp);
-    const metadata = await this.json('release/package.json', { ...scopes, approval, asset, frameCount: interpolation.frameCount, ...encodedTimeline, byteSize: webp.length, fps: this.manifest.motion.fps, delayMs: interpolation.delayMs, independentDrawings: this.manifest.keys.length, method: this.manifest.interpolation.method, deployAllowed: false, paidRequests: 0, note: 'Offline artifact only. Packaging is not deployment authorization.' });
+    const metadata = await this.json('release/package.json', { ...scopes, approval, asset, frameCount: interpolation.frameCount, ...encodedTimeline, byteSize: webp.length, fps: this.manifest.motion.fps, delayMs: interpolation.delayMs, ...deriveProvenance(this.manifest), method: this.manifest.interpolation.method, deployAllowed: false, paidRequests: 0, note: 'Offline artifact only. Packaging is not deployment authorization.' });
     this.mark('package', [asset, metadata], scopes); return { ...scopes, asset: await this.output(asset.file), productionChanged: false };
   }
   async prepare() { return this.locked('prepare', () => this.prepareStage()); }

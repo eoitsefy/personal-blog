@@ -4,7 +4,8 @@ import sharp from 'sharp';
 import { mkdtemp, mkdir, readFile, writeFile, readdir } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { tmpdir } from 'node:os';
-import { AnimationPipeline, parseManifest, manifestScope, keyScope, safeRelative, validateKeyApproval, validateFinalApproval, validatePlaybackReport, assertResources, sha256, silhouetteMetrics, browserChannel, assertExternalPathLength, resolvePlaywright } from './pipeline.mjs';
+import { AnimationPipeline, parseManifest, manifestScope, keyScope, deriveProvenance, safeRelative, validateKeyApproval, validateFinalApproval, validatePlaybackReport, assertResources, sha256, silhouetteMetrics, browserChannel, assertExternalPathLength, resolvePlaywright } from './pipeline.mjs';
+import { waveExportContract, compareVisiblePixels, publishReviewedWave } from '../publish-reviewed-wave.mjs';
 const A='a'.repeat(64),B='b'.repeat(64),C='c'.repeat(64);
 const manifest=()=>({schemaVersion:1,id:'unit-wave',action:'wave',reference:{file:'reference.png',sha256:A},editableMask:{file:'mask.png',sha256:B},
   keys:[{id:'neutral',file:'reference.png',sha256:A},{id:'pose',file:'pose.png',sha256:C}],canvas:{width:64,height:64,safetyInset:.2},
@@ -13,7 +14,7 @@ const manifest=()=>({schemaVersion:1,id:'unit-wave',action:'wave',reference:{fil
 const keyReview=scope=>({schemaVersion:1,reviewer:'Unit fixture reviewer',reviewedAt:'2026-10-05T12:00:00Z',scopeSha256:scope,
   status:'APPROVED_FOR_INTERPOLATION_ONLY',interpolationAllowed:true,releaseAllowed:false});
 
-async function fixture() {
+async function fixture(provenance = []) {
   const base=process.platform==='win32'?'D:/CodexTools/assistant-animation/jobs/test-fixtures':resolve(tmpdir(),'animation-pipeline-tests');
   await mkdir(base,{recursive:true});const repoRoot=await mkdtemp(resolve(base,'fixture-')),toolRoot=resolve(repoRoot,'tools');await mkdir(toolRoot);
   const neutral=Buffer.alloc(64*64*4),mask=Buffer.alloc(neutral.length),pose=Buffer.alloc(neutral.length);
@@ -22,6 +23,7 @@ async function fixture() {
   for(let y=25;y<39;y++)for(let x=19;x<27;x++){const p=(y*64+x)*4;mask.fill(255,p,p+4);if(x>=22)pose.set([237,185,155,255],p);}
   for(const [name,data]of [['reference',neutral],['pose',pose],['mask',mask]])await sharp(data,{raw:{width:64,height:64,channels:4}}).png().toFile(resolve(repoRoot,name+'.png'));
   const m=manifest();for(const source of [m.reference,m.editableMask,...m.keys])source.sha256=sha256(await readFile(resolve(repoRoot,source.file)));
+  for(const [index,declaration]of provenance.entries())if(declaration)m.keys[index].provenance=declaration;
   const path=resolve(repoRoot,'manifest.json');await writeFile(path,JSON.stringify(m));
   const pipeline=await AnimationPipeline.load(path,{repoRoot,toolRoot});
   await writeFile(resolve(repoRoot,'key-approval.json'),JSON.stringify(keyReview(pipeline.keyScopeSha256)));
@@ -38,6 +40,72 @@ test('pipeline strict manifest rejects path escapes, unknown adapters, duplicate
   assert.throws(()=>parseManifest({...m,keys:[m.keys[0],m.keys[0]]}));
   assert.throws(()=>parseManifest({...m,motion:{...m.motion,sequence:['pose','neutral','pose']}}));
   assert.throws(()=>parseManifest({...m,motion:{...m.motion,loopDurationMs:1}}));
+});
+test('optional source provenance is strict and requires bounded parent identity for derived drawings',()=>{
+  const m=manifest(), valid=[{kind:'reference'},{kind:'authored-keyframe'},
+    {kind:'interpolated-frame',parentFrameScopeSha256:A,parentFrameIndex:255},
+    {kind:'image-edited-frame',parentFrameScopeSha256:B,parentFrameIndex:0,editSourceSha256:C}];
+  for(const provenance of valid)assert.deepEqual(parseManifest({...m,keys:[m.keys[0],{...m.keys[1],provenance}]}).keys[1].provenance,provenance);
+  for(const provenance of [
+    {kind:'independent-rife-frame'},{kind:'reference',parentFrameIndex:0},
+    {kind:'authored-keyframe',editSourceSha256:A},{kind:'interpolated-frame'},
+    {kind:'interpolated-frame',parentFrameScopeSha256:A},
+    {kind:'interpolated-frame',parentFrameScopeSha256:'invalid',parentFrameIndex:0},
+    ...[-1,256,1.5].map(parentFrameIndex=>({kind:'interpolated-frame',parentFrameScopeSha256:A,parentFrameIndex})),
+    {kind:'image-edited-frame',parentFrameScopeSha256:A,parentFrameIndex:0},
+    {kind:'image-edited-frame',parentFrameScopeSha256:A,parentFrameIndex:0,editSourceSha256:'invalid'},
+    {...valid[3],automaticArtApproval:true},
+  ])assert.throws(()=>parseManifest({...m,keys:[m.keys[0],{...m.keys[1],provenance}]}));
+});
+test('prepared keys are counted by declared source kind, with old unspecified manifests never claimed as independent',()=>{
+  const m=manifest();
+  assert.deepEqual(deriveProvenance(m),{preparedKeyCount:2,authoredKeyframes:0,imageEditedFrames:0,interpolatedFrames:0,referenceFrames:0,unspecifiedFrames:2});
+  const kinds=[{kind:'reference'},{kind:'authored-keyframe'},
+    {kind:'interpolated-frame',parentFrameScopeSha256:A,parentFrameIndex:1},
+    {kind:'image-edited-frame',parentFrameScopeSha256:A,parentFrameIndex:2,editSourceSha256:B},undefined];
+  const keys=kinds.map((provenance,i)=>({...m.keys[i===0?0:1],id:i===0?'neutral':'source-'+i,...(provenance?{provenance}:{})}));
+  const counts=deriveProvenance({...m,keys,motion:{...m.motion,sequence:['neutral','source-1','neutral']}});
+  assert.deepEqual(counts,{preparedKeyCount:5,authoredKeyframes:1,imageEditedFrames:1,interpolatedFrames:1,referenceFrames:1,unspecifiedFrames:1});
+  assert.equal(Object.entries(counts).filter(([name])=>name!=='preparedKeyCount').reduce((sum,[,value])=>sum+value,0),counts.preparedKeyCount);
+});
+test('runtime wave export requires complete attributed 37-slot neutral-ended source, without hardcoding a final version',()=>{
+  const base=manifest(),keys=Array.from({length:19},(_,i)=>({...base.keys[i?1:0],id:'pose-'+String(i).padStart(2,'0'),provenance:{kind:i?'authored-keyframe':'reference'}}));
+  const m={...base,id:'wave-v14',keys,canvas:{width:768,height:768,safetyInset:.2},motion:{sequence:[...keys,...keys.slice(0,-1).reverse()].map(key=>key.id),stepsPerInterval:1,fps:15,loopDurationMs:3000}};
+  const contract=waveExportContract(m);assert.equal(contract.src,'/assistant/chibi-wave-reviewed-v14.webp');assert.equal(contract.sourceDir,'docs/assistant/wave-keyframes-v14');
+  assert.equal(contract.frames,37);assert.equal(contract.width,2196);assert.equal(contract.height,3220);
+  assert.deepEqual(contract.provenance,{preparedKeyCount:19,authoredKeyframes:18,imageEditedFrames:0,interpolatedFrames:0,referenceFrames:1,unspecifiedFrames:0});
+  const mixed=structuredClone(m);
+  mixed.keys[1].provenance={kind:'image-edited-frame',parentFrameScopeSha256:A,parentFrameIndex:1,editSourceSha256:B};
+  mixed.keys[2].provenance={kind:'interpolated-frame',parentFrameScopeSha256:A,parentFrameIndex:2};
+  assert.deepEqual(waveExportContract(mixed).provenance,{preparedKeyCount:19,authoredKeyframes:16,imageEditedFrames:1,interpolatedFrames:1,referenceFrames:1,unspecifiedFrames:0});
+  assert.equal(waveExportContract({...m,id:'wave-v15'}).src,'/assistant/chibi-wave-reviewed-v15.webp');
+  const unspecified=structuredClone(m);delete unspecified.keys[7].provenance;
+  const skipped=structuredClone(m);skipped.motion.sequence[7]=keys[8].id;
+  for(const changed of [{...m,id:'wave-v014'},{...m,id:'other-v14'},{...m,action:'idle'},
+    {...m,interpolation:{method:'rife-rgba',gpu:1}},{...m,canvas:{width:767,height:768,safetyInset:.2}},
+    {...m,motion:{...m.motion,fps:16}},{...m,motion:{...m.motion,loopDurationMs:3100}},unspecified,skipped])assert.throws(()=>waveExportContract(changed));
+});
+test('lossless runtime atlas readback preserves every alpha and visible RGB; missing manifest never writes release assets',async()=>{
+  const expected=Buffer.from([21,25,29,255,230,180,150,120,8,9,10,0]),actual=Buffer.from(expected);
+  actual[8]=100;assert.doesNotThrow(()=>compareVisiblePixels(actual,expected));
+  const alpha=Buffer.from(actual);alpha[7]=119;assert.throws(()=>compareVisiblePixels(alpha,expected),/pixel_mismatch/);
+  const color=Buffer.from(actual);color[4]=229;assert.throws(()=>compareVisiblePixels(color,expected),/pixel_mismatch/);
+  assert.throws(()=>compareVisiblePixels(Buffer.alloc(1),expected));
+  await assert.rejects(publishReviewedWave(),/wave_manifest_argument_required/);
+});
+test('every provenance change binds manifest, key approval and final art approval to a new scope',()=>{
+  const m=manifest(), scope=manifestScope(m), oldKeyScope=keyScope(A,[B,C],A,scope);
+  const original={kind:'image-edited-frame',parentFrameScopeSha256:A,parentFrameIndex:1,editSourceSha256:B};
+  const variants=[original,{...original,parentFrameScopeSha256:B},{...original,parentFrameIndex:2},{...original,editSourceSha256:C},
+    {kind:'interpolated-frame',parentFrameScopeSha256:A,parentFrameIndex:1},{kind:'authored-keyframe'}];
+  const seen=new Set();
+  const review={schemaVersion:1,reviewer:'Synthetic fixture review',reviewedAt:'2026-10-05T12:00:00Z',scopeSha256:C,status:'APPROVED_FOR_RELEASE',releaseAllowed:true,manifestScopeSha256:scope,keyScopeSha256:oldKeyScope,frameScopeSha256:C};
+  for(const provenance of variants){
+    const nextScope=manifestScope({...m,keys:[m.keys[0],{...m.keys[1],provenance}]}), nextKeyScope=keyScope(A,[B,C],A,nextScope);
+    assert.notEqual(nextScope,scope);assert.notEqual(nextKeyScope,oldKeyScope);assert.ok(!seen.has(nextScope));seen.add(nextScope);
+    assert.throws(()=>validateKeyApproval(keyReview(oldKeyScope),nextKeyScope),/stale_key/);
+    assert.throws(()=>validateFinalApproval(review,{manifestScopeSha256:nextScope,keyScopeSha256:nextKeyScope,frameScopeSha256:C}),/stale_final/);
+  }
 });
 test('browser report requires all real PNG hashes and complete normal/half cycles, not a PASSED label',()=>{
   const expected={manifestScopeSha256:A,keyScopeSha256:B,frameScopeSha256:C,frameCount:5,sourcePngSha256:[A,A,B,B,A],technicalStatus:'PASSED_TECHNICAL_ONLY'};
@@ -114,11 +182,28 @@ test('prepared artifacts are immutable and interrupted or concurrent jobs never 
 test('complete local hold pipeline can resume but cannot package without browser and whole-animation approval',async()=>{
   const {pipeline}=await fixture();
   await pipeline.interpolate();const report=await pipeline.readJson('interpolation.json');
-  assert.equal(report.frameCount,5);assert.equal(report.method,'hold');assert.equal(report.independentDrawings,2);assert.equal(report.paidRequests,0);
+  assert.equal(report.frameCount,5);assert.equal(report.method,'hold');assert.equal(report.preparedKeyCount,2);assert.equal(report.unspecifiedFrames,2);assert.equal('independentDrawings' in report,false);assert.equal(report.paidRequests,0);
   assert.equal(report.delayMs.reduce((a,b)=>a+b,0),1000);
   const check=await pipeline.check();assert.equal(check.status,'PASSED_TECHNICAL_ONLY');assert.equal(check.releaseAllowed,false);
   await pipeline.interpolate();assert.equal(await pipeline.receiptValid('interpolate'),true);
   await assert.rejects(pipeline.package(),/browser_playback_not_completed/);
+});
+test('declared repair provenance survives preparation and interpolation without bypassing release gates',async()=>{
+  const {pipeline,m}=await fixture([{kind:'reference'},{kind:'image-edited-frame',parentFrameScopeSha256:A,parentFrameIndex:7,editSourceSha256:B}]);
+  await pipeline.interpolate();const prepared=await pipeline.readJson('prepared.json'),report=await pipeline.readJson('interpolation.json');
+  for(const [field,count]of Object.entries(deriveProvenance(m))){assert.equal(prepared[field],count);assert.equal(report[field],count);}
+  assert.equal(report.preparedKeyCount,2);assert.equal(report.referenceFrames,1);assert.equal(report.imageEditedFrames,1);assert.equal(report.interpolatedFrames,0);
+  assert.equal('independentDrawings' in prepared,false);assert.equal('independentDrawings' in report,false);
+  assert.equal((await pipeline.check()).releaseAllowed,false);
+  await assert.rejects(pipeline.package(),/browser_playback_not_completed/);
+});
+test('provenance-only changes isolate output caches and invalidate the old interpolation approval',async()=>{
+  const {pipeline,m,path,repoRoot,toolRoot}=await fixture();await pipeline.interpolate();
+  m.keys[1].provenance={kind:'interpolated-frame',parentFrameScopeSha256:A,parentFrameIndex:1};await writeFile(path,JSON.stringify(m));
+  const next=await AnimationPipeline.load(path,{repoRoot,toolRoot});
+  assert.notEqual(next.outputRoot,pipeline.outputRoot);assert.notEqual(next.keyScopeSha256,pipeline.keyScopeSha256);
+  assert.equal(await next.receiptValid('interpolate'),false);
+  await assert.rejects(next.interpolate(),/stale_key_art_approval/);
 });
 test('stale key permission and tampered cached PNGs cannot be reused',async()=>{
   const {pipeline,repoRoot}=await fixture();await pipeline.prepare();
@@ -155,6 +240,14 @@ test('even a forged matching file receipt cannot hide timeline nodes or alter ap
     await pipeline.persistState();await assert.rejects(pipeline.check(),/interpolation_report_manifest_mismatch/);
   }
 });
+test('even a matching forged receipt cannot relabel imported key counts or add an independent-drawing claim',async()=>{
+  for(const field of [...Object.keys(deriveProvenance(manifest())),'independentDrawings']){
+    const {pipeline}=await fixture();await pipeline.interpolate();const report=await pipeline.readJson('interpolation.json');
+    report[field]=(report[field]??0)+1;const bytes=Buffer.from(JSON.stringify(report));await writeFile(await pipeline.output('interpolation.json'),bytes);
+    pipeline.state.stages.interpolate.artifacts.find(a=>a.file==='interpolation.json').sha256=sha256(bytes);await pipeline.persistState();
+    await assert.rejects(pipeline.check(),/interpolation_report_manifest_mismatch/);
+  }
+});
 test('a matching forged browser receipt cannot bypass pause or source provenance gates during package',async()=>{
   const {pipeline,repoRoot}=await fixture();await pipeline.interpolate();await pipeline.check();
   const report=await pipeline.readJson('interpolation.json');
@@ -180,4 +273,6 @@ test('real offline browser and WebP package roundtrip require a separate complet
     scopeSha256:report.frameScopeSha256,status:'APPROVED_FOR_RELEASE',releaseAllowed:true,...scopes}));
   await pipeline.package();const bundle=await pipeline.readJson('release/package.json');
   assert.equal(bundle.deployAllowed,false);assert.equal(bundle.retainedPngCount,5);assert.equal(bundle.encodedFrameCount,3);
+  assert.deepEqual(Object.fromEntries(Object.keys(deriveProvenance(pipeline.manifest)).map(field=>[field,bundle[field]])),deriveProvenance(pipeline.manifest));
+  assert.equal('independentDrawings' in bundle,false);
 });

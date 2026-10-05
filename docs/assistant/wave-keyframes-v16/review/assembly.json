@@ -1,0 +1,23 @@
+{
+  "status": "PENDING_ART_REVIEW",
+  "releaseAllowed": false,
+  "productionChanged": false,
+  "parent": "wave-v15",
+  "changedFrames": [
+    14,
+    22
+  ],
+  "changedRegion": {
+    "left": 247,
+    "top": 374,
+    "width": 54,
+    "height": 54
+  },
+  "registration": {
+    "x": -1,
+    "y": -2
+  },
+  "source": "docs/assistant/wave-keyframes-v16/generated/014-partial-open.png",
+  "rawFrameScopeSha256": "e5d9c3c2d8f54edc05288bb52e407ee9d5c4488cd8e204c23bc6dfc1f3534add",
+  "note": "All other 35 PNGs retain exact v15 pixels; reverse reuses the corrected forward pose. No deletion, timing change or whole-character translation."
+}

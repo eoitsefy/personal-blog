@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "method": "built-in imagegen",
+  "calls": 1,
+  "extraPaidApiCalls": 0,
+  "items": [
+    {
+      "id": "014-partial-open",
+      "source": "C:/Users/Administrator/.codex/generated_images/019f6678-3f85-7643-88a8-361bd51c2ee0/exec-dbba1ab2-22e3-4088-8492-2ee9b0506093.png",
+      "references": [
+        "docs/assistant/wave-keyframes-v9/frames/014.png",
+        "docs/assistant/wave-keyframes-v9/frames/013.png",
+        "docs/assistant/wave-keyframes-v9/frames/015.png"
+      ],
+      "prompt": "Surgical animation in-between edit. Image 1 is the exact target full-body frame; images 2 and 3 are its immediate preceding and following frames, solely to constrain the raised hand. Change ONLY the tiny viewer-left hand and cuff. Replace its excessively wide open palm with a small HALF-CURLED hand: four fingers remain mostly bent at their middle joints, the index and middle finger just beginning to uncurl; fingertips stay grouped, not spread into a fan, not straight upright. It must look slightly MORE OPEN than image 2 but LESS OPEN than image 3, so opening is continuous with no reopening/reclosing. Preserve image 1's exact palm centre, wrist rotation, overall hand size and sleeve position. One opaque peach palm, exactly four fingers and one thumb, crisp delicate original dark outline, simple original shading; one black cuff naturally connected to wrist, no ghost lines. Keep head, face, golden eyes, dark hair with gold streak, headset, hoodie torso, other arm, shorts and boots unchanged, same chibi identity and full transparent square composition. Do not move, scale or rotate the whole figure; preserve the foot baseline and generous margins. Do not make an open waving fan, do not add extra digits, blur, translucent duplicates, halo, labels, background or shadows. Output ONE entire full-body transparent image, not a sheet.",
+      "status": "SELECTED_HAND_REGION_RELEASED_IN_V16"
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "schemaVersion": 1,
+  "reviewer": "Independent motion_art_review agent and root actual image inspection",
+  "reviewedAt": "2026-10-05T11:29:44Z",
+  "scopeSha256": "f94fd3fd34aa1478b90354693b374931c37d906ba2274402ecf284bfaaf1d7fa",
+  "status": "APPROVED_FOR_INTERPOLATION_ONLY",
+  "interpolationAllowed": true,
+  "releaseAllowed": false
+}
