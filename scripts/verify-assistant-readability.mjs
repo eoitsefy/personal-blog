@@ -78,7 +78,7 @@ try {
       assert.equal(new Set(frames.map(frame=>frame.top)).size,1);
       if(action!=='thinking') {
         await sheet.evaluate(el=>el.getAnimations()[0].finish());
-        await page.waitForFunction(()=>{const canvas=document.querySelector('dialog [data-action] canvas');return canvas?.getAnimations()[0]?.effect?.getTiming().duration===6000;});
+        await page.waitForFunction(()=>document.querySelector('dialog [data-action] canvas')?.dataset.playing==='idle');
         assert.equal(await sheet.evaluate(el=>getComputedStyle(el).top),'0px');
       }
     }
@@ -96,7 +96,7 @@ try {
   }
   const context=await browser.newContext({viewport:{width:390,height:844}});
   await context.route('**/assistant/rig-*.png',r=>r.abort());
-  await context.route('**/assistant/chibi-idle-v4.png',r=>r.abort());
+  await context.route('**/assistant/chibi-blink-pilot-v6.webp',r=>r.abort());
   const page=await context.newPage();await page.goto(base+'/assistant');
   await page.waitForFunction(()=>document.querySelector('[data-action] img')?.getAttribute('src')?.includes('chibi-idle-v3'));
   await context.close();

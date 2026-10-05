@@ -1,0 +1,186 @@
+{
+  "status": "technical-pass-art-review-separate",
+  "results": [
+    {
+      "viewportWidth": 1200,
+      "dpr": 1,
+      "requestedCanvas": 200,
+      "action": "blink",
+      "width": 200,
+      "height": 200,
+      "cssWidth": 200,
+      "footHash": 3302977571,
+      "allFramesChecked": 17
+    },
+    {
+      "viewportWidth": 1200,
+      "dpr": 1,
+      "requestedCanvas": 200,
+      "action": "wave",
+      "width": 200,
+      "height": 200,
+      "cssWidth": 200,
+      "footHash": 3302977571,
+      "allFramesChecked": 61
+    },
+    {
+      "viewportWidth": 1200,
+      "dpr": 1,
+      "requestedCanvas": 400,
+      "action": "blink",
+      "width": 400,
+      "height": 400,
+      "cssWidth": 400,
+      "footHash": 1325302268,
+      "allFramesChecked": 17
+    },
+    {
+      "viewportWidth": 1200,
+      "dpr": 1,
+      "requestedCanvas": 400,
+      "action": "wave",
+      "width": 400,
+      "height": 400,
+      "cssWidth": 400,
+      "footHash": 1325302268,
+      "allFramesChecked": 61
+    },
+    {
+      "viewportWidth": 1200,
+      "dpr": 2,
+      "requestedCanvas": 200,
+      "action": "blink",
+      "width": 400,
+      "height": 400,
+      "cssWidth": 200,
+      "footHash": 1325302268,
+      "allFramesChecked": 17
+    },
+    {
+      "viewportWidth": 1200,
+      "dpr": 2,
+      "requestedCanvas": 200,
+      "action": "wave",
+      "width": 400,
+      "height": 400,
+      "cssWidth": 200,
+      "footHash": 1325302268,
+      "allFramesChecked": 61
+    },
+    {
+      "viewportWidth": 1200,
+      "dpr": 2,
+      "requestedCanvas": 400,
+      "action": "blink",
+      "width": 800,
+      "height": 800,
+      "cssWidth": 400,
+      "footHash": 581870352,
+      "allFramesChecked": 17
+    },
+    {
+      "viewportWidth": 1200,
+      "dpr": 2,
+      "requestedCanvas": 400,
+      "action": "wave",
+      "width": 800,
+      "height": 800,
+      "cssWidth": 400,
+      "footHash": 581870352,
+      "allFramesChecked": 61
+    },
+    {
+      "viewportWidth": 390,
+      "dpr": 1,
+      "requestedCanvas": 200,
+      "action": "blink",
+      "width": 200,
+      "height": 200,
+      "cssWidth": 200,
+      "footHash": 3302977571,
+      "allFramesChecked": 17
+    },
+    {
+      "viewportWidth": 390,
+      "dpr": 1,
+      "requestedCanvas": 200,
+      "action": "wave",
+      "width": 200,
+      "height": 200,
+      "cssWidth": 200,
+      "footHash": 3302977571,
+      "allFramesChecked": 61
+    },
+    {
+      "viewportWidth": 390,
+      "dpr": 1,
+      "requestedCanvas": 400,
+      "action": "blink",
+      "width": 350,
+      "height": 350,
+      "cssWidth": 350,
+      "footHash": 2073190162,
+      "allFramesChecked": 17
+    },
+    {
+      "viewportWidth": 390,
+      "dpr": 1,
+      "requestedCanvas": 400,
+      "action": "wave",
+      "width": 350,
+      "height": 350,
+      "cssWidth": 350,
+      "footHash": 2073190162,
+      "allFramesChecked": 61
+    },
+    {
+      "viewportWidth": 390,
+      "dpr": 2,
+      "requestedCanvas": 200,
+      "action": "blink",
+      "width": 400,
+      "height": 400,
+      "cssWidth": 200,
+      "footHash": 1325302268,
+      "allFramesChecked": 17
+    },
+    {
+      "viewportWidth": 390,
+      "dpr": 2,
+      "requestedCanvas": 200,
+      "action": "wave",
+      "width": 400,
+      "height": 400,
+      "cssWidth": 200,
+      "footHash": 1325302268,
+      "allFramesChecked": 61
+    },
+    {
+      "viewportWidth": 390,
+      "dpr": 2,
+      "requestedCanvas": 400,
+      "action": "blink",
+      "width": 700,
+      "height": 700,
+      "cssWidth": 350,
+      "footHash": 2702578249,
+      "allFramesChecked": 17
+    },
+    {
+      "viewportWidth": 390,
+      "dpr": 2,
+      "requestedCanvas": 400,
+      "action": "wave",
+      "width": 700,
+      "height": 700,
+      "cssWidth": 350,
+      "footHash": 2702578249,
+      "allFramesChecked": 61
+    }
+  ],
+  "pause": true,
+  "reducedMotion": true,
+  "noOverflow": true,
+  "noProviderOrMicRequests": true,
+  "errors": []
+}

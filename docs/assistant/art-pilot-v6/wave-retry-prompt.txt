@@ -1,0 +1,15 @@
+Use case: identity-preserve
+Asset type: six-keyframe full-figure chibi assistant animation sheet for offline review
+Input image 1 is the exact identity reference. Match its face, hair/yellow streak, black/gold headset, jacket, white shirt, shorts and boots, proportions and painterly-clean chibi line style precisely.
+Primary request: one 3-column x 2-row sprite sheet, SIX complete full-figure drawings. Each cell is square with equal dimensions, no border, no text. Keep every character at the same center, same scale, same hair and head, identical face and open amber eyes, and identical foot baseline. At least 20% transparent safety margins inside each cell. No character body bobbing or leaning.
+Change ONLY the arm on the VIEWER'S LEFT (the character's right arm). The other arm remains hanging naturally down exactly like the reference. The face, torso, legs, headset, hair silhouette and boots are motionless and unchanged.
+Reading order 1 to 6:
+1) right elbow gently bending, hand just above waist, beginning to lift outwards;
+2) right elbow bent, forearm rising, hand at upper-chest height;
+3) right forearm up, open palm beside but NOT overlapping the face, palm turned towards viewer;
+4) same raised arm, palm tilts slightly outwards, a small friendly wave;
+5) same raised arm, palm tilts slightly inwards; arm and fingers structurally consistent;
+6) recovery, hand at chest height, elbow lowering, clean anatomical return path.
+Every cell is one entire person, not detachable parts or layers. No stretching or deforming head/face. Preserve black jacket zipper, gold seams, sleeve cuffs, white shirt, shorts, gold leg strap and exactly two boots. Clean fingers and wrist, one sleeve per arm, no joint gaps, no extra hand.
+Backdrop: genuine transparent alpha; no checkerboard, shadows, colored floor or glow. No labels, captions, gridlines, watermark, clipped hair or feet, white/black halo, duplicated limbs or changed costume.
+Targeted correction after art review: the raised palm must stay clearly to the LEFT OUTSIDE the hair silhouette, with a visible transparent gap of about half a palm width between fingers and hair. Do not overlap the face or hair, and do not lift the elbow into the head. Give the raised arm a relaxed bent elbow and a small wrist-only wave. The reference head and feet remain completely static. Keep this same hand clearance in keyframes 3, 4, 5. All other identity, six-cell order, uniform proportions, true-alpha and margin constraints remain unchanged.

@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {createRequire} from 'node:module';
 import {mkdir,writeFile} from 'node:fs/promises';
 import {CHARACTER_ACTIONS} from '../src/lib/assistant/character.ts';
-import {DRAWING_SEQUENCES,drawingKey,drawingTimes,FRAME_BLEND_MS} from '../src/lib/assistant/frame-timeline.ts';
+import {DRAWING_SEQUENCES,NEUTRAL_DRAWING,isPilotAction,drawingKey,drawingTimes,FRAME_BLEND_MS} from '../src/lib/assistant/frame-timeline.ts';
 const base=process.env.TEST_BASE_URL || 'http://127.0.0.1:3220';
 if(!['localhost','127.0.0.1','eastherphil.cn'].includes(new URL(base).hostname))throw Error('Unexpected target');
 const {chromium}=createRequire(import.meta.url)(process.env.PLAYWRIGHT_MODULE || 'C:/Users/Administrator/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright');
@@ -28,15 +28,15 @@ try{
  for(const [width,dpr] of [[1280,1],[768,1],[390,2],[320,2]]){
   const context=await browser.newContext({viewport:{width,height:844},deviceScaleFactor:dpr}),page=await context.newPage();
   page.on('pageerror',e=>errors.push(e.message));const requested=new Set(),rigRequests=[];let queries=0;
-  page.on('request',r=>{const p=new URL(r.url()).pathname;if(/chibi-.*\.png$/.test(p))requested.add(p);if(/rig-.*\.png$/.test(p))rigRequests.push(p);if(p==='/api/assistant/query')queries++;});
+  page.on('request',r=>{const p=new URL(r.url()).pathname;if(/chibi-.*\.(png|webp)$/.test(p))requested.add(p);if(/rig-.*\.png$/.test(p))rigRequests.push(p);if(p==='/api/assistant/query')queries++;});
   await page.goto(base);await page.waitForSelector('[data-action] canvas[data-ready=true]');
   const floating=page.locator('[data-action]').first();assert.equal(await floating.evaluate(el=>getComputedStyle(el).transform),'none');
   assert.equal(await floating.evaluate(el=>{const b=el.getBoundingClientRect();return el.closest('button').contains(document.elementFromPoint(b.left+5,b.top+b.height/2));}),false);
   await page.getByRole('button',{name:'打开小助手对话',exact:true}).click();
   const dialog=page.getByRole('dialog',{name:'小助手',exact:true}),character=dialog.locator('[data-action]'),canvas=character.locator('canvas');
   await page.waitForSelector('dialog canvas[data-ready=true]');
-  assert.equal(await character.getAttribute('data-character-version'),'original-inbetweens-v5');
-  assert.deepEqual([...requested].sort(),['/assistant/chibi-idle-inbetweens-v5.png','/assistant/chibi-idle-v4.png']);
+  assert.equal(await character.getAttribute('data-character-version'),'original-pilot-v6');
+  assert.deepEqual([...requested].sort(),['/assistant/chibi-blink-pilot-v6.webp']);
   await canvas.evaluate(el=>{el.dataset.instance='persistent-canvas';});
   const box=await character.boundingBox(),neutral=await seek(canvas,0),gallery=[];let checked=0,maxDrift=0;
   for(const action of Object.keys(DRAWING_SEQUENCES)){
@@ -54,13 +54,13 @@ try{
    }
    assert.deepEqual(seen,DRAWING_SEQUENCES[action].map(drawingKey));
    assert.equal((await seek(canvas,times.at(-1)+FRAME_BLEND_MS+1)).alphaHash,neutral.alphaHash,'Exact neutral ending required');
-   assert.ok(Math.abs((await seek(canvas,times[1]+FRAME_BLEND_MS/2)).blend-.5)<.001);
+   assert.ok(Math.abs((await seek(canvas,times[1]+FRAME_BLEND_MS/2)).blend-(isPilotAction(action)?1:.5))<.001);
    if(!CHARACTER_ACTIONS[action].loop){await canvas.evaluate(el=>el.getAnimations()[0].finish());await page.waitForFunction(()=>document.querySelector('dialog canvas')?.dataset.playing==='idle');}
   }
   for(const action of ['wave','bow','yawn','nod'])await dialog.getByRole('button',{name:`播放${CHARACTER_ACTIONS[action].label}动作`}).click();
   await page.waitForSelector('dialog canvas[data-ready=true][data-loaded-action=nod]');assert.equal(await canvas.getAttribute('data-instance'),'persistent-canvas');
   await dialog.getByRole('button',{name:'暂停动作'}).click();await page.waitForSelector('dialog canvas[data-ready=true]');
-  assert.equal(await canvas.evaluate(el=>el.getAnimations().length),0);assert.equal(await canvas.getAttribute('data-pose'),'original:0');
+  assert.equal(await canvas.evaluate(el=>el.getAnimations().length),0);assert.equal(await canvas.getAttribute('data-pose'),drawingKey(NEUTRAL_DRAWING));
   await page.screenshot({path:`${output}/dialog-${width}.png`});assert.ok(await dialog.evaluate(el=>el.scrollWidth<=el.clientWidth));
   await page.keyboard.press('Escape');assert.equal(await dialog.isVisible(),false);
   await page.goto(base+'/assistant');await page.waitForSelector('canvas[data-ready=true]');
@@ -75,7 +75,7 @@ try{
   }
   results.push({width,dpr,poses:checked,sharedNeutral:true,persistentCanvas:true,maxBootMidpointDrift:maxDrift,fixedViewport:true,hiDpi:true});await context.close();
  }
- const reduced=await browser.newContext({viewport:{width:390,height:844},reducedMotion:'reduce'}),page=await reduced.newPage();await page.goto(base+'/assistant');await page.waitForSelector('canvas[data-ready=true]');assert.equal(await page.locator('canvas').evaluate(el=>el.getAnimations().length),0);assert.equal(await page.locator('canvas').getAttribute('data-pose'),'original:0');await reduced.close();
- const fallback=await browser.newContext();await fallback.route('**/assistant/chibi-idle-v4.png',r=>r.abort());const f=await fallback.newPage();await f.goto(base+'/assistant');await f.waitForSelector('img[src*="chibi-idle-v3"]');await fallback.close();
+ const reduced=await browser.newContext({viewport:{width:390,height:844},reducedMotion:'reduce'}),page=await reduced.newPage();await page.goto(base+'/assistant');await page.waitForSelector('canvas[data-ready=true]');assert.equal(await page.locator('canvas').evaluate(el=>el.getAnimations().length),0);assert.equal(await page.locator('canvas').getAttribute('data-pose'),drawingKey(NEUTRAL_DRAWING));await reduced.close();
+ const fallback=await browser.newContext();await fallback.route('**/assistant/chibi-blink-pilot-v6.webp',r=>r.abort());const f=await fallback.newPage();await f.goto(base+'/assistant');await f.waitForSelector('img[src*="chibi-idle-v3"]');await fallback.close();
  assert.deepEqual(errors,[]);const report={accepted:true,noAIRequests:true,reducedMotion:true,fallback:true,results};await writeFile(`${output}/report.json`,JSON.stringify(report,null,2));console.log(JSON.stringify(report,null,2));
 }finally{await browser.close();}

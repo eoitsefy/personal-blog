@@ -1,21 +1,20 @@
 import { CHARACTER_ACTIONS, CHARACTER_STAGE, type CharacterAction } from "./character";
 import { MOTION_AUTHORING_FPS } from "./motion";
 import { REGISTERED_SHEETS } from "./registered-sheets";
+import { PILOT_SHEETS } from "./pilot-sheets";
 
-type Sheet = keyof typeof REGISTERED_SHEETS;
+export const RUNTIME_SHEETS = { ...REGISTERED_SHEETS, ...PILOT_SHEETS };
+type Sheet = keyof typeof RUNTIME_SHEETS;
 export type Drawing = { sheet: Sheet; frame: number };
-export const NEUTRAL_DRAWING: Drawing = { sheet: "original", frame: 0 };
+export const NEUTRAL_DRAWING: Drawing = { sheet: "pilot-blink", frame: 0 };
 const range = (sheet: Sheet, first: number, last: number): Drawing[] =>
   Array.from({ length: last - first + 1 }, (_, i) => ({ sheet, frame: first + i }));
-// Artist-drawn full figures, not layered pieces or repeated frames to pad counts.
-// Start/end reuse the EXACT original neutral drawing. Discard the undersized
-// thinking row and replace abrupt hand drops with the dedicated recovery sheets.
+// Whole figures: v6 idle/wave are selected RIFE sample frames, NOT independently
+// drawn poses. Other actions keep the selected v5 drawings and motion briefs.
+// Every action starts/ends on the exact same canonical original-derived neutral.
 export const DRAWING_SEQUENCES: Record<CharacterAction, readonly Drawing[]> = {
-  idle: [NEUTRAL_DRAWING, ...range("original", 1, 4), ...range("idle", 0, 2),
-    ...range("original", 5, 7), ...range("idle", 3, 3),
-    ...range("original", 8, 8), ...range("idle", 4, 4), ...range("original", 9, 9),
-    ...range("idle", 5, 5), ...range("original", 10, 11), NEUTRAL_DRAWING],
-  wave: [NEUTRAL_DRAWING, ...range("wave", 0, 14), NEUTRAL_DRAWING],
+  idle: [NEUTRAL_DRAWING, ...range("pilot-blink", 1, 7), NEUTRAL_DRAWING],
+  wave: [NEUTRAL_DRAWING, ...range("pilot-wave", 1, 29), NEUTRAL_DRAWING],
   nod: [NEUTRAL_DRAWING, ...range("nod", 0, 11), NEUTRAL_DRAWING],
   thinking: [NEUTRAL_DRAWING, ...range("thinking", 0, 13), ...range("thinking-recovery", 0, 11), NEUTRAL_DRAWING],
   bow: [NEUTRAL_DRAWING, ...range("bow", 0, 17), NEUTRAL_DRAWING],
@@ -24,9 +23,11 @@ export const DRAWING_SEQUENCES: Record<CharacterAction, readonly Drawing[]> = {
 };
 export const FRAME_INTERVAL_MS = 1000 / MOTION_AUTHORING_FPS;
 export const FRAME_BLEND_MS = 24;
+export const isPilotAction = (action: CharacterAction) => action === "idle" || action === "wave";
+export const drawingDuration = (action: CharacterAction) => action === "idle" ? 4000 : action === "wave" ? 3000 : CHARACTER_ACTIONS[action].duration;
 export function drawingKey(drawing: Drawing) { return `${drawing.sheet}:${drawing.frame}`; }
 export function drawingPose(drawing: Drawing) {
-  const sheet = REGISTERED_SHEETS[drawing.sheet];
+  const sheet = RUNTIME_SHEETS[drawing.sheet];
   const rect = sheet.poses[drawing.frame];
   if (!rect) throw new Error("Unregistered character drawing");
   const [x, y, right, bottom, anchorX, anchorY] = rect;
@@ -39,14 +40,16 @@ export function drawingPose(drawing: Drawing) {
 export function drawingTimes(action: CharacterAction) {
   // Neutral resting holds are intentional, not counted as newly drawn poses.
   return DRAWING_SEQUENCES[action].map((_, index) => index === 0 ? 0 :
-    action === "idle" ? 4800 + (index - 1) * FRAME_INTERVAL_MS : index * FRAME_INTERVAL_MS);
+    action === "idle" ? drawingDuration(action) - (DRAWING_SEQUENCES.idle.length - index) * FRAME_INTERVAL_MS : index * FRAME_INTERVAL_MS);
 }
 export function drawingSample(action: CharacterAction, elapsed: number) {
   const config = CHARACTER_ACTIONS[action], sequence = DRAWING_SEQUENCES[action];
-  const time = config.loop ? Math.max(0, elapsed) % config.duration : Math.min(config.duration, Math.max(0, elapsed));
-  if (!config.loop && time === config.duration) return { from: NEUTRAL_DRAWING, to: NEUTRAL_DRAWING, mix: 1 };
+  const duration = drawingDuration(action);
+  const time = config.loop ? Math.max(0, elapsed) % duration : Math.min(duration, Math.max(0, elapsed));
+  if (!config.loop && time === duration) return { from: NEUTRAL_DRAWING, to: NEUTRAL_DRAWING, mix: 1 };
   const times = drawingTimes(action), step = Math.max(0, times.findLastIndex(at => time >= at));
   if (step === 0) return { from: sequence[0], to: sequence[0], mix: 1 };
+  if (isPilotAction(action)) return { from: sequence[step], to: sequence[step], mix: 1 };
   const progress = Math.min(1, (time - times[step]) / FRAME_BLEND_MS);
   return { from: sequence[step - 1], to: sequence[step], mix: progress * progress * (3 - 2 * progress) };
 }

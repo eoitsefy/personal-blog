@@ -50,6 +50,9 @@ try {
   await context.route('**/api/assistant/status',r=>r.fulfill({json:{feature:{enabled:false}}}));
   const page=await context.newPage();await page.goto(base);await page.getByRole('button',{name:'打开小助手对话'}).click();
   const dialog=page.getByRole('dialog',{name:'小助手',exact:true});await dialog.getByText('助手暂不可用，你仍可以浏览日志和地点。',{exact:true}).waitFor();assert.equal(await dialog.getByLabel('你的问题',{exact:true}).isDisabled(),true);
-  assert.equal(await dialog.locator('[data-action] canvas').evaluate(el=>el.getAnimations().length),0);await context.close();
+  await page.waitForSelector('dialog canvas[data-ready=true]');
+  assert.equal(await page.evaluate(()=>matchMedia('(prefers-reduced-motion: reduce)').matches),true);
+  const reducedAnimations=await dialog.locator('[data-action] canvas').evaluate(el=>el.getAnimations().map(a=>({kind:a.constructor.name,state:a.playState,timing:a.effect?.getTiming(),keys:a.effect?.getKeyframes(),data:{...el.dataset}})));
+  assert.equal(reducedAnimations.length,0,JSON.stringify(reducedAnimations));await context.close();
   assert.deepEqual(errors,[]);console.log(JSON.stringify({accepted:true,mockedProvider:true,disabledFallback:true,reducedMotion:true,results},null,2));
 }finally{await browser.close()}

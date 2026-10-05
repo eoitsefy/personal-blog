@@ -1,0 +1,74 @@
+{
+  "status": "PENDING_VISUAL_REVIEW_NOT_RUNTIME",
+  "frames": 21,
+  "actualGeneratedKeys": 4,
+  "unchangedRegions": "all pixels outside eyes and mouth; exact neutral alpha everywhere",
+  "registered": [
+    {
+      "ox": 0,
+      "oy": 0,
+      "top": 14,
+      "bottom": 607,
+      "anchorX": 346.5,
+      "anchorY": 608
+    },
+    {
+      "ox": 627,
+      "oy": 0,
+      "top": 14,
+      "bottom": 607,
+      "anchorX": 294.5,
+      "anchorY": 608
+    },
+    {
+      "ox": 0,
+      "oy": 627,
+      "top": 11,
+      "bottom": 605,
+      "anchorX": 346.5,
+      "anchorY": 606
+    },
+    {
+      "ox": 627,
+      "oy": 627,
+      "top": 11,
+      "bottom": 604,
+      "anchorX": 294,
+      "anchorY": 605
+    }
+  ],
+  "sharedScale": 0.7575757575757576,
+  "masks": [
+    [
+      341,
+      337,
+      36,
+      28,
+      314
+    ],
+    [
+      422,
+      331,
+      36,
+      29,
+      307
+    ],
+    [
+      386,
+      364,
+      18,
+      14,
+      350
+    ]
+  ],
+  "rife": {
+    "model": "v4.6",
+    "elapsedMs": 6833,
+    "gpu": 1,
+    "requestedFrames": 24,
+    "retainedFrames": 21
+  },
+  "authorizesDeployment": false,
+  "noPaidAPI": true,
+  "changesArmPose": false
+}

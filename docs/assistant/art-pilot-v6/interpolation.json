@@ -1,0 +1,187 @@
+{
+  "status": "offline-art-review-required",
+  "tool": "official rife-ncnn-vulkan",
+  "model": "rife-v4.6",
+  "download": {
+    "source": "https://github.com/nihui/rife-ncnn-vulkan/releases/download/20221029/rife-ncnn-vulkan-20221029-windows.zip",
+    "release": "20221029",
+    "selectiveRangeDownload": true,
+    "files": [
+      {
+        "file": "rife-ncnn-vulkan-20221029-windows/LICENSE",
+        "bytes": 1093,
+        "sha256": "de18cbedb0c3b0d1eeb9ccac3988cdf69c21fa89039cd97dd8846cb68f661f81"
+      },
+      {
+        "file": "rife-ncnn-vulkan-20221029-windows/rife-ncnn-vulkan.exe",
+        "bytes": 6974464,
+        "sha256": "4b970319db2814c82b15fceed8193151560a676a9eb63f20d4877be77b98f44f"
+      },
+      {
+        "file": "rife-ncnn-vulkan-20221029-windows/rife-v4.6/flownet.bin",
+        "bytes": 10614320,
+        "sha256": "f334ed2260149ce0188a6dcf049844e8b0cdd912e01cbcfb63553157d2508958"
+      },
+      {
+        "file": "rife-ncnn-vulkan-20221029-windows/rife-v4.6/flownet.param",
+        "bytes": 16749,
+        "sha256": "28df14d57a225725ee5386f52eba422488450d37c9f40800ed4f62e8ba846692"
+      }
+    ]
+  },
+  "method": "RGB and separate alpha pass; immutable original region protection; no layered animation, no crossfade",
+  "plan": {
+    "blink": {
+      "keys": [
+        0,
+        3,
+        1,
+        3,
+        2
+      ],
+      "stepsPerInterval": 4,
+      "count": 17,
+      "duration": 4,
+      "activeFps": 30
+    },
+    "wave": {
+      "keys": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        3,
+        4,
+        3,
+        2,
+        1,
+        0
+      ],
+      "stepsPerInterval": 6,
+      "count": 61,
+      "duration": 3,
+      "activeFps": 30
+    }
+  },
+  "excludedKeys": {
+    "wave": [
+      5,
+      6
+    ],
+    "reason": "05 palm partly occluded by reference hair; 06 redundant recovery, reverse original lift keys instead"
+  },
+  "trace": [
+    {
+      "args": [
+        "-i",
+        ".tool-tmp/art-pilot-rife/blink/color-in",
+        "-o",
+        ".tool-tmp/art-pilot-rife/blink/color-out",
+        "-n",
+        "20",
+        "-m",
+        ".tool-tmp/art-pilot-tools/rife-portable/rife-v4.6",
+        "-g",
+        "1",
+        "-j",
+        "1:1:1",
+        "-f",
+        "%08d.png"
+      ],
+      "elapsedMs": 4011,
+      "diagnostics": [
+        "[0 Intel(R) UHD Graphics]  queueC=0[1]  queueG=0[1]  queueT=0[1]\r",
+        "[0 Intel(R) UHD Graphics]  bugsbn1=0  bugbilz=0  bugcopc=0  bugihfa=0\r",
+        "[0 Intel(R) UHD Graphics]  fp16-p/s/a=1/1/1  int8-p/s/a=1/1/1\r",
+        "[0 Intel(R) UHD Graphics]  subgroup=32  basic=1  vote=1  ballot=1  shuffle=1\r",
+        "[1 NVIDIA GeForce RTX 2070]  queueC=2[8]  queueG=0[16]  queueT=1[2]\r",
+        "[1 NVIDIA GeForce RTX 2070]  bugsbn1=0  bugbilz=0  bugcopc=0  bugihfa=0\r",
+        "[1 NVIDIA GeForce RTX 2070]  fp16-p/s/a=1/1/1  int8-p/s/a=1/1/1\r",
+        "[1 NVIDIA GeForce RTX 2070]  subgroup=32  basic=1  vote=1  ballot=1  shuffle=1\r",
+        "[2 Intel(R) UHD Graphics]  queueC=0[1]  queueG=0[1]  queueT=0[1]\r",
+        "[2 Intel(R) UHD Graphics]  bugsbn1=0  bugbilz=0  bugcopc=0  bugihfa=0\r",
+        "[2 Intel(R) UHD Graphics]  fp16-p/s/a=1/1/1  int8-p/s/a=1/1/1\r",
+        "[2 Intel(R) UHD Graphics]  subgroup=32  basic=1  vote=1  ballot=1  shuffle=1\r",
+        "[3 Intel(R) UHD Graphics]  queueC=0[1]  queueG=0[1]  queueT=0[1]\r",
+        "[3 Intel(R) UHD Graphics]  bugsbn1=0  bugbilz=0  bugcopc=0  bugihfa=0\r",
+        "[3 Intel(R) UHD Graphics]  fp16-p/s/a=1/1/1  int8-p/s/a=1/1/1\r",
+        "[3 Intel(R) UHD Graphics]  subgroup=32  basic=1  vote=1  ballot=1  shuffle=1\r"
+      ]
+    },
+    {
+      "args": [
+        "-i",
+        ".tool-tmp/art-pilot-rife/wave/color-in",
+        "-o",
+        ".tool-tmp/art-pilot-rife/wave/color-out",
+        "-n",
+        "66",
+        "-m",
+        ".tool-tmp/art-pilot-tools/rife-portable/rife-v4.6",
+        "-g",
+        "1",
+        "-j",
+        "1:1:1",
+        "-f",
+        "%08d.png"
+      ],
+      "elapsedMs": 2082,
+      "diagnostics": [
+        "[0 Intel(R) UHD Graphics]  queueC=0[1]  queueG=0[1]  queueT=0[1]\r",
+        "[0 Intel(R) UHD Graphics]  bugsbn1=0  bugbilz=0  bugcopc=0  bugihfa=0\r",
+        "[0 Intel(R) UHD Graphics]  fp16-p/s/a=1/1/1  int8-p/s/a=1/1/1\r",
+        "[0 Intel(R) UHD Graphics]  subgroup=32  basic=1  vote=1  ballot=1  shuffle=1\r",
+        "[1 NVIDIA GeForce RTX 2070]  queueC=2[8]  queueG=0[16]  queueT=1[2]\r",
+        "[1 NVIDIA GeForce RTX 2070]  bugsbn1=0  bugbilz=0  bugcopc=0  bugihfa=0\r",
+        "[1 NVIDIA GeForce RTX 2070]  fp16-p/s/a=1/1/1  int8-p/s/a=1/1/1\r",
+        "[1 NVIDIA GeForce RTX 2070]  subgroup=32  basic=1  vote=1  ballot=1  shuffle=1\r",
+        "[2 Intel(R) UHD Graphics]  queueC=0[1]  queueG=0[1]  queueT=0[1]\r",
+        "[2 Intel(R) UHD Graphics]  bugsbn1=0  bugbilz=0  bugcopc=0  bugihfa=0\r",
+        "[2 Intel(R) UHD Graphics]  fp16-p/s/a=1/1/1  int8-p/s/a=1/1/1\r",
+        "[2 Intel(R) UHD Graphics]  subgroup=32  basic=1  vote=1  ballot=1  shuffle=1\r",
+        "[3 Intel(R) UHD Graphics]  queueC=0[1]  queueG=0[1]  queueT=0[1]\r",
+        "[3 Intel(R) UHD Graphics]  bugsbn1=0  bugbilz=0  bugcopc=0  bugihfa=0\r",
+        "[3 Intel(R) UHD Graphics]  fp16-p/s/a=1/1/1  int8-p/s/a=1/1/1\r",
+        "[3 Intel(R) UHD Graphics]  subgroup=32  basic=1  vote=1  ballot=1  shuffle=1\r"
+      ]
+    },
+    {
+      "args": [
+        "-i",
+        ".tool-tmp/art-pilot-rife/wave/alpha-in",
+        "-o",
+        ".tool-tmp/art-pilot-rife/wave/alpha-out",
+        "-n",
+        "66",
+        "-m",
+        ".tool-tmp/art-pilot-tools/rife-portable/rife-v4.6",
+        "-g",
+        "1",
+        "-j",
+        "1:1:1",
+        "-f",
+        "%08d.png"
+      ],
+      "elapsedMs": 1853,
+      "diagnostics": [
+        "[0 Intel(R) UHD Graphics]  queueC=0[1]  queueG=0[1]  queueT=0[1]\r",
+        "[0 Intel(R) UHD Graphics]  bugsbn1=0  bugbilz=0  bugcopc=0  bugihfa=0\r",
+        "[0 Intel(R) UHD Graphics]  fp16-p/s/a=1/1/1  int8-p/s/a=1/1/1\r",
+        "[0 Intel(R) UHD Graphics]  subgroup=32  basic=1  vote=1  ballot=1  shuffle=1\r",
+        "[1 NVIDIA GeForce RTX 2070]  queueC=2[8]  queueG=0[16]  queueT=1[2]\r",
+        "[1 NVIDIA GeForce RTX 2070]  bugsbn1=0  bugbilz=0  bugcopc=0  bugihfa=0\r",
+        "[1 NVIDIA GeForce RTX 2070]  fp16-p/s/a=1/1/1  int8-p/s/a=1/1/1\r",
+        "[1 NVIDIA GeForce RTX 2070]  subgroup=32  basic=1  vote=1  ballot=1  shuffle=1\r",
+        "[2 Intel(R) UHD Graphics]  queueC=0[1]  queueG=0[1]  queueT=0[1]\r",
+        "[2 Intel(R) UHD Graphics]  bugsbn1=0  bugbilz=0  bugcopc=0  bugihfa=0\r",
+        "[2 Intel(R) UHD Graphics]  fp16-p/s/a=1/1/1  int8-p/s/a=1/1/1\r",
+        "[2 Intel(R) UHD Graphics]  subgroup=32  basic=1  vote=1  ballot=1  shuffle=1\r",
+        "[3 Intel(R) UHD Graphics]  queueC=0[1]  queueG=0[1]  queueT=0[1]\r",
+        "[3 Intel(R) UHD Graphics]  bugsbn1=0  bugbilz=25  bugcopc=0  bugihfa=0\r",
+        "[3 Intel(R) UHD Graphics]  fp16-p/s/a=1/1/1  int8-p/s/a=1/1/1\r",
+        "[3 Intel(R) UHD Graphics]  subgroup=32  basic=1  vote=1  ballot=1  shuffle=1\r"
+      ]
+    }
+  ]
+}
