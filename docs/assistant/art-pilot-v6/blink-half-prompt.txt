@@ -1,0 +1,8 @@
+Use case: identity-preserve
+Asset type: offline chibi assistant animation keyframe PNG
+Input image 1 is the edit target and sole identity reference, not a mood reference.
+Primary request: edit ONLY both eyelids to produce one gentle HALF-CLOSED blink keyframe, eyelids lowered over the top HALF of both amber irises. The lower halves of the irises remain visible. It is a blink in progress, not a smile or sleepy expression. Keep the exact original character, pixel placement, face outline, hair and yellow streak, round amber eye design when reopened, mouth, black/gold headset, jacket, white shirt, shorts, hands hanging naturally down, and boots. Keep everything outside the small eye area unchanged.
+Composition: exactly the same square canvas, character center and foot baseline as the input. Full figure has at least 20% transparent margin on every side. Body, feet and hair must not move or change size.
+Style: copy the supplied original chibi illustration, line weight and colors; do not redesign, simplify or make the head smaller. Natural gently lowered upper eyelids; open lower half of the eyes, visible amber iris, no smiling squint, no cheeks changing.
+Backdrop: genuine transparent alpha, no colored backdrop, checkerboard, floor, shadows or glow.
+No extra objects, text, watermark, extra limbs, cropped feet, distorted hands, semi-transparent duplicate outlines, or white halos. This is a precise edit, not a new character illustration.

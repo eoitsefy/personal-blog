@@ -8,7 +8,7 @@ import { FormEvent, useEffect, useId, useRef, useState } from "react";
 import { ASSISTANT_GREETINGS, parseAssistantAnswer, pickAssistantGreeting, type AssistantAnswer } from "@/lib/assistant/ui";
 import styles from "./assistant-panel.module.css";
 import { CHARACTER_ACTIONS, CHARACTER_STAGE, PLAYFUL_ACTIONS, type CharacterAction } from "@/lib/assistant/character";
-import { DRAWING_SEQUENCES, NEUTRAL_DRAWING, drawingKey, drawingPose, drawingSample } from "@/lib/assistant/frame-timeline";
+import { DRAWING_SEQUENCES, NEUTRAL_DRAWING, drawingDuration, drawingKey, drawingPose, drawingSample } from "@/lib/assistant/frame-timeline";
 
 type Settings = { enabled: boolean; maxQuestionChars: number };
 type Turn = { question: string; result: AssistantAnswer };
@@ -22,7 +22,7 @@ function Character({ action = "idle", small = false, animate = true, active = tr
   useEffect(() => {
     const element = sheet.current;
     if (!element || failed) return;
-    const context = element.getContext("2d");
+    const context = element.getContext("2d", { willReadFrequently: true });
     if (!context) return;
     let disposed = false, tick = 0, revision = 0;
     const reduced = matchMedia("(prefers-reduced-motion: reduce)");
@@ -51,7 +51,7 @@ function Character({ action = "idle", small = false, animate = true, active = tr
       playing = next;
       const config = CHARACTER_ACTIONS[next];
       // Constant opacity is a seekable clock, never a whole-character movement.
-      animation = element!.animate([{ opacity: 1 }, { opacity: 1 }], { duration: config.duration, iterations: config.loop ? Infinity : 1, fill: "none" });
+      animation = element!.animate([{ opacity: 1 }, { opacity: 1 }], { duration: drawingDuration(next), iterations: config.loop ? Infinity : 1, fill: "none" });
       if (!config.loop) animation.onfinish = () => play("idle");
       draw(next, 0);
     }
@@ -104,7 +104,8 @@ function Character({ action = "idle", small = false, animate = true, active = tr
           }
           const pose = drawingPose(drawing), frame = document.createElement("canvas");
           frame.width = frame.height = pixels;
-          const ctx = frame.getContext("2d")!; ctx.scale(ratio, ratio);
+          const ctx = frame.getContext("2d", { willReadFrequently: true })!; ctx.scale(ratio, ratio);
+          ctx.imageSmoothingQuality = "high";
           ctx.drawImage(images.get(pose.src)!, pose.x, pose.y, pose.width, pose.height, pose.left, pose.top, pose.drawWidth, pose.drawHeight);
           nextPoses.set(drawingKey(drawing), frame);
         }
@@ -122,7 +123,7 @@ function Character({ action = "idle", small = false, animate = true, active = tr
     return () => { disposed = true; cancelAnimationFrame(tick); if (animation) { animation.onfinish = null; animation.cancel(); } reduced.removeEventListener("change", refresh); document.removeEventListener("visibilitychange", refresh); window.removeEventListener("resize", prepare); };
   }, [action, active, animate, failed, playId]);
   // Draw registered pose rectangles, never translate the character viewport.
-  return <span className={styles.character} data-action={action} data-engine="frames" data-character-version="original-inbetweens-v5" aria-hidden="true">
+  return <span className={styles.character} data-action={action} data-engine="frames" data-character-version="original-pilot-v6" aria-hidden="true">
     {failed ? <Image className={styles.fallbackCharacter} src="/assistant/chibi-idle-v3.png" alt="" width={1024} height={1536} sizes={small ? "180px" : "400px"} /> :
       <canvas ref={sheet} className={styles.spriteSheet} width={CHARACTER_STAGE.size} height={CHARACTER_STAGE.size} />}
   </span>;

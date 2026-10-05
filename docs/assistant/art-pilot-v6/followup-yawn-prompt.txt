@@ -1,0 +1,10 @@
+Use case: identity-preserve
+Asset type: original blog mascot yawn keyframe sheet, transparent PNG master
+Input image 1: edit target and only character identity reference, neutral full figure.
+Primary request: create four closely spaced expression keyframes for a gentle sleepy yawn, in a regular 2 by 2 sheet. Each cell has the exact same figure scale, front-facing camera, centred boot anchor and 20% clear margins. Change only the eyelids and mouth; both arms stay naturally hanging down exactly as in the reference. This is a small expression-only yawn, not a hand-to-mouth gesture.
+Cell 1 top-left: eyelids slightly lowered, lips part very slightly.
+Cell 2 top-right: eyelids halfway lowered, small vertical oval yawn mouth.
+Cell 3 bottom-left: eyes gently closed, modest open oval mouth, not a giant dark void.
+Cell 4 bottom-right: eyes opening halfway, mouth closing to a very small oval.
+Constraints: do not redraw the hairstyle, face silhouette, head size, headset, hair ornament, jacket, white shirt, shorts, boots, skin palette, line weights or shadows. Do not move the figure or head, stretch the body or change arm pose. Fine original amber-eye details are important. No text, cell labels, grid lines, background, shadow below boots or watermarks. Genuinely transparent alpha around the figures.
+Avoid: different character, face drift, doubled outlines, translucent body, extra limbs, cropped hair or feet, halos, white matte, realistic rendering, exaggerated mouth, cheek blush, stickers.

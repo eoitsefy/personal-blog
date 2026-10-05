@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "status": "REJECTED_ART",
+  "releaseAllowed": false,
+  "ownerApproved": false,
+  "reviewer": "Codex primary visual inspection; not an independent professional artist or human-owner acceptance",
+  "artScopeSha256": "af77d4732e74cac1ad62bec0435b2a38d0da17d80be767faaba10075e21b64ba",
+  "reviewedFrames": { "blink": 17, "wave": 61 },
+  "evidence": ["blink-all-000-dark.png", "blink-detail-000.png", "blink-detail-016.png", "wave-all-000-dark.png", "wave-all-016-dark.png", "wave-all-032-dark.png", "wave-all-048-dark.png", "wave-detail-000.png", "wave-detail-016.png", "wave-detail-032.png", "wave-detail-048.png"],
+  "actions": {
+    "blink": {
+      "status": "INITIAL_VISUAL_PASS_OWNER_PREVIEW_PENDING",
+      "criticalIssues": [],
+      "notes": ["Head, headset, mouth, costume and feet remain exact reference pixels outside the eye ROIs.", "Closure and reopening are legible; no duplicate eye contour or opaque fringe found in reviewed frames.", "Original artwork and eyelid textures remain slightly soft when enlarged; no pixel-perfect redraw claimed.", "15 fps preferred for the lightweight pilot; no production approval."]
+    },
+    "wave": {
+      "status": "REJECTED",
+      "criticalIssues": [{ "frames": [3,4,5,14,15,16,17,43,44,45,55,56,57], "kind": "grey-transparent-hand-and-double-contours", "severity": "BLOCKING", "description": "Hand and sleeve fade, blur or split during lifting/opening/recovery; fixed feet and static identity do not waive this failure." }],
+      "notes": ["Raw generated static-region drift was rejected; only isolated action pixels used.", "05 excluded for hair collision; 06 redundant, reverse lift keys used for recovery.", "Higher fps does not repair interpolated anatomy or alpha.", "Separate color and alpha motion fields are a suspected contributor, not proven sole cause.", "Next free iteration needs smaller anatomical keyframe gaps and alpha propagation coupled to the color motion field, then a full repeat review."]
+    }
+  }
+}

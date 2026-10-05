@@ -1,0 +1,30 @@
+{
+  "status": "offline-only-not-approved",
+  "stage": {
+    "width": 768,
+    "height": 768,
+    "safetyInset": 0.2,
+    "anchor": {
+      "x": 384,
+      "y": 608
+    }
+  },
+  "original": {
+    "file": "public/assistant/chibi-idle-v4.png",
+    "sha256": "586873ef3390d5b4df1b698cb185088508cd03292a24c4915e16993b186266d5",
+    "pose": 0,
+    "crop": {
+      "left": 44,
+      "top": 23,
+      "width": 239,
+      "height": 380
+    },
+    "scale": 1.2
+  },
+  "reference": "reference/neutral.png",
+  "registration": {
+    "left": 236,
+    "top": 157
+  },
+  "method": "Single uniform resample of original full-figure pose; no layered renderer"
+}

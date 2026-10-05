@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "acceptedDate": "2026-10-05",
+  "authorization": "可行。将这两个动作直接部署，并跟进其他动作制作",
+  "scope": ["blink", "wave"],
+  "artScopeSha256": "af77d4732e74cac1ad62bec0435b2a38d0da17d80be767faaba10075e21b64ba",
+  "decision": "OWNER_ACCEPTED_WITH_KNOWN_ART_DEFECTS",
+  "acknowledgedIssues": ["wave grey translucent hands and double contours in lifting, opening and recovery"],
+  "changesVisualReviewResult": false,
+  "requiresTechnicalChecks": true,
+  "authorizesFutureUnreviewedActions": false
+}

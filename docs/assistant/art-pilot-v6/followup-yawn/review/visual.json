@@ -1,0 +1,13 @@
+{
+  "status": "INITIAL_VISUAL_PASS_NOT_RUNTIME",
+  "rgbaScopeSha256": "a4e9067dcf227ef3922a1de6396ce74eca0bb128d0486acce566412eb2228c6e",
+  "reviewer": "Codex primary visual inspection; not independent professional art or owner approval",
+  "reviewedFrames": 21,
+  "evidence": ["all-light.png", "all-dark.png", "face-0.png", "face-12.png"],
+  "previousIssue": "First mouth ROI carried generated chin lines; narrowed mouth ROI and repeated RIFE and all-frame review",
+  "criticalIssues": [],
+  "notes": ["Face outline, hair, headset, body and boots remain exact original pixels", "Gentle mouth opening and eyelid closure/reopening legible; no double chin contour in final inspected contact sheets", "Small expression-only yawn with arms down, not the reusable hand-to-mouth yawn template", "Some painted eyelid texture remains soft when enlarged"],
+  "browserAcceptance": "pending",
+  "ownerApproved": false,
+  "deploymentAllowed": false
+}
