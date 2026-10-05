@@ -1,0 +1,26 @@
+{
+  "date": "2026-10-05",
+  "approximateTotalRecoveredGiB": 1.3,
+  "afterCleanupFreeGiB": 8.25,
+  "afterAuthoringFreeGiB": 8.18,
+  "targets": [
+    "Windows user npm-cache/_cacache",
+    "this checkout .next/cache"
+  ],
+  "preserved": [
+    "personal files",
+    "source and tracked assets",
+    "node_modules and linked targets",
+    ".next/dev",
+    "credentials",
+    "pagefile and system settings"
+  ],
+  "notes": [
+    "First pass removed npm content cache, then refused the full .next root because it contains junctions.",
+    "Final script preflights all existing exact allowlisted cache targets before deleting any; only .next/cache was removed in the successful second pass.",
+    "The detailed second-pass report records 385589248 recovered filesystem bytes and 384920315 cache-file bytes; it does not include the earlier npm removal."
+  ],
+  "detailedSecondPassReport": "D:/CodexTools/assistant-animation/reports/disk-recovery-20261005-040121.json",
+  "comfyRunning": false,
+  "productionChanged": false
+}

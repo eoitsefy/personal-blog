@@ -1,0 +1,21 @@
+<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>挥手离线审查</title><style>body{margin:0;background:#f4f1e9;color:#292929;font:16px/1.6 system-ui}main{max-width:850px;margin:auto;padding:24px}button,select,input{font:inherit}button,select{min-height:44px;margin:4px;padding:4px 12px}label{display:inline-flex;align-items:center;gap:8px;white-space:nowrap}canvas{display:block;width:min(100%,500px);height:auto;margin:auto}body.dark{background:#181e25;color:#eee}p{max-width:700px}input{width:min(95%,600px)}</style>
+<main><h1>挥手离线审查</h1><p>两组33帧样片均拒收，不能发布。原头脸和脚部固定；新增三张姿态，插值帧不计作独立绘制。</p>
+<label>补帧方式 <select id="mode"><option value="matte-frames">单绿幕补帧</option><option value="frames">RGB与alpha分开补帧</option></select></label>
+<button id="play">播放</button><button id="back">上一帧</button><button id="next">下一帧</button><button id="theme">浅深底</button>
+<label>速度 <select id="speed"><option value="1">15fps</option><option value=".5">半速</option></select></label>
+<canvas width="768" height="768" aria-label="完整人物动作预览"></canvas><input id="seek" type="range" min="0" max="32" value="0" aria-label="帧序号"><output id="index">0</output>
+<p>建议逐帧查看6/26号抬臂中段，以及张掌段指尖。帧数提高不能消除残影；两个旧样片的确认不适用于本组。</p></main>
+<script>
+const canvas=document.querySelector('canvas'),ctx=canvas.getContext('2d',{willReadFrequently:true}),frames={},seek=document.querySelector('#seek'),label=document.querySelector('#index');
+let current=0,playing=false,tick=0,start=0,visited=[],cycles=0;const reduced=matchMedia('(prefers-reduced-motion: reduce)');
+async function load(){for(const mode of ['frames','matte-frames']){frames[mode]=await Promise.all(Array.from({length:33},(_,i)=>new Promise((ok,fail)=>{const im=new Image();im.onload=()=>ok(im);im.onerror=fail;im.src=mode+'/'+String(i).padStart(3,'0')+'.png';})));}draw(0);window.ready=true;}
+function draw(i){current=i;seek.value=i;label.value=i;ctx.clearRect(0,0,768,768);ctx.drawImage(frames[document.querySelector('#mode').value][i],0,0);visited.push(i);}
+function stop(){playing=false;cancelAnimationFrame(tick);document.querySelector('#play').textContent='播放';}
+function animate(t){if(!playing)return;const elapsed=(t-start)*Number(document.querySelector('#speed').value),within=elapsed%3000;cycles=Math.floor(elapsed/3000);draw(Math.min(32,Math.floor(within/67)));tick=requestAnimationFrame(animate);}
+document.querySelector('#play').onclick=()=>{if(playing){stop();return;}if(reduced.matches)return;playing=true;start=performance.now();document.querySelector('#play').textContent='暂停';tick=requestAnimationFrame(animate);};
+document.querySelector('#next').onclick=()=>{stop();draw((current+1)%33);};document.querySelector('#back').onclick=()=>{stop();draw((current+32)%33);};
+seek.oninput=()=>{stop();draw(Number(seek.value));};document.querySelector('#mode').onchange=()=>{stop();draw(current);};document.querySelector('#theme').onclick=()=>document.body.classList.toggle('dark');
+reduced.addEventListener('change',()=>{if(reduced.matches)stop();});document.addEventListener('visibilitychange',()=>{if(document.hidden)stop();});
+window.review={draw,stop,state:()=>({current,playing,visited,cycles}),reset:()=>{visited=[];cycles=0;},pixels:()=>Array.from(ctx.getImageData(0,0,768,768).data)};load();
+</script></html>

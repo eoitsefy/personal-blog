@@ -1,0 +1,37 @@
+{
+  "date": "2026-10-05T08:51:05.293Z",
+  "status": "FUNCTIONAL_PREVIEW_ONLY",
+  "artAccepted": false,
+  "releaseAllowed": false,
+  "sourceFrameScopeSha256": "9b94250edb733d60838455d9df690642e41c58f4359880b15d59bc1cf5d9b606",
+  "results": [
+    {
+      "mode": "matte-frames",
+      "count": 33,
+      "staticRegionFailures": [],
+      "maxColorDifference": 0,
+      "colorTolerance": "One premultiplied quantum ceil(255/alpha); exact alpha; raw PNG bytes tested separately with zero tolerance",
+      "normalObservedFrames": 33,
+      "halfObservedFrames": 33,
+      "normalFullCycles": 1,
+      "halfFullCycles": 1,
+      "reducedMotionPaused": true
+    },
+    {
+      "mode": "frames",
+      "count": 33,
+      "staticRegionFailures": [],
+      "maxColorDifference": 0,
+      "colorTolerance": "One premultiplied quantum ceil(255/alpha); exact alpha; raw PNG bytes tested separately with zero tolerance",
+      "normalObservedFrames": 33,
+      "halfObservedFrames": 33,
+      "normalFullCycles": 1,
+      "halfFullCycles": 1,
+      "reducedMotionPaused": true
+    }
+  ],
+  "mobileOverflow": false,
+  "errors": [],
+  "externalRequests": [],
+  "productionChanged": false
+}
