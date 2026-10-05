@@ -1,0 +1,59 @@
+{
+  "version": 1,
+  "date": "2026-10-05",
+  "status": "REJECTED",
+  "artScopeSha256": "118e30095d714afa216a48e83176c6d05063964105774f6c16505103c020806d",
+  "reviewer": "Codex visual inspection",
+  "releaseAllowed": false,
+  "interpolationAllowed": false,
+  "scope": "Four still PNG keyframes only; no full animation, playback or production acceptance",
+  "reviewedFiles": [
+    "review/keys-light.png",
+    "review/keys-dark.png",
+    "review/arm-light.png",
+    "review/arm-dark.png"
+  ],
+  "checks": [
+    {
+      "name": "Original identity and static regions",
+      "status": "PASS",
+      "note": "Head, face, hair, headset, torso centre and boots remain original after pixel protection; this does not approve the unprotected generated source images."
+    },
+    {
+      "name": "Skin opacity",
+      "status": "PASS_FOR_KEYS_ONLY",
+      "note": "Selected palms have opaque peach interiors on both backgrounds; numeric translucent-skin ratios are under 5%. This is not a guarantee for later optical-flow frames."
+    },
+    {
+      "name": "Canvas and feet",
+      "status": "PASS",
+      "note": "768 square, shared registration, 20% margins and original feet preserved."
+    },
+    {
+      "name": "Shoulder and sleeve connection",
+      "status": "REJECTED",
+      "note": "Prep sleeve contour and gold stripe meet the preserved collar with an abrupt break; peak sleeve stripe connection also remains visually awkward at close range. Enlarging and feathering the mask reduced the detached appearance but did not meet the strict art gate."
+    },
+    {
+      "name": "Motion readiness",
+      "status": "NOT_TESTED",
+      "note": "Only three new poses exist. Hand-opening transitions and the gesture at the peak still need intermediate key poses before interpolation. No 15 fps animation or browser playback was reviewed."
+    }
+  ],
+  "requiredNextSteps": [
+    "Correct prep and peak shoulder contours without changing the original face or feet.",
+    "Add an intermediate opening-palm pose to reduce fist-to-open-hand changes.",
+    "Review revised PNGs on light and dark backgrounds; bind a new art hash.",
+    "Only then propagate and inspect every RGB/alpha frame, normal/half-speed playback and shared neutral endpoints."
+  ],
+  "resourceState": {
+    "systemDiskFreeGiB": 7,
+    "freePhysicalMemoryGiB": 9.2,
+    "comfyStarted": false,
+    "minimumSystemDiskFreeGiB": 8,
+    "minimumFreePhysicalMemoryGiB": 4
+  },
+  "deepSeekCallsThisTurn": 0,
+  "extraImageApi": false,
+  "productionChanged": false
+}

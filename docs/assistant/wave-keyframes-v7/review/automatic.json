@@ -1,0 +1,200 @@
+{
+  "status": "PENDING_VISUAL_REVIEW",
+  "releaseAllowed": false,
+  "newGeneratedPoses": 3,
+  "sharedScale": 0.6124401913875598,
+  "canvas": {
+    "width": 768,
+    "height": 768,
+    "safetyInset": 0.2,
+    "anchor": {
+      "x": 384,
+      "y": 608
+    }
+  },
+  "neutralRgbaSha256": "904955e408f76c7bce86176bc63385c381b696f56f6671302218a6b32cc960e5",
+  "method": "shared scale plus sole registration; only moving-arm region is replaced in baked whole-frame PNG",
+  "originalHeadTorsoAndFeetProtected": true,
+  "gpuUsed": false,
+  "interpolationRun": false,
+  "poses": [
+    {
+      "name": "prep",
+      "sourceSha256": "b8bd627372365dd3f1be6d09992890b85ecc70c701ccc808c632239922c4d41f",
+      "rgbaSha256": "ea50b2d85451da0f6319a8d264c13325969b014890a5248bdcc5f949510471e8",
+      "sourceAnchor": {
+        "x": 633,
+        "y": 1016
+      },
+      "translation": {
+        "left": -4,
+        "top": -14
+      },
+      "polygon": [
+        [
+          266,
+          398
+        ],
+        [
+          319,
+          398
+        ],
+        [
+          332,
+          527
+        ],
+        [
+          270,
+          527
+        ],
+        [
+          260,
+          470
+        ]
+      ],
+      "handInspectionBox": [
+        283,
+        474,
+        48,
+        39
+      ],
+      "bounds": [
+        240,
+        162,
+        519,
+        609
+      ],
+      "outsideChanges": 0,
+      "footChanges": 0,
+      "safeMargins": true,
+      "headSkinOverlapBeforeProtection": 0,
+      "skinOpaque": 485,
+      "skinTranslucent": 1,
+      "skinTranslucentRatio": 0.00205761316872428,
+      "passed": true
+    },
+    {
+      "name": "return",
+      "sourceSha256": "80311be882f364d70e3c3d6ef4ce03ac425e40a92238c0415c6ddb96062bb61d",
+      "rgbaSha256": "2d8c460e8f0d1633afde37e1bf6d864982e82ef37ef6a7a3ebb87ef23e81fbcd",
+      "sourceAnchor": {
+        "x": 629,
+        "y": 997
+      },
+      "translation": {
+        "left": -1,
+        "top": -3
+      },
+      "polygon": [
+        [
+          257,
+          398
+        ],
+        [
+          319,
+          398
+        ],
+        [
+          334,
+          527
+        ],
+        [
+          272,
+          527
+        ],
+        [
+          253,
+          465
+        ]
+      ],
+      "handInspectionBox": [
+        270,
+        409,
+        48,
+        43
+      ],
+      "bounds": [
+        240,
+        162,
+        519,
+        609
+      ],
+      "outsideChanges": 0,
+      "footChanges": 0,
+      "safeMargins": true,
+      "headSkinOverlapBeforeProtection": 0,
+      "skinOpaque": 637,
+      "skinTranslucent": 7,
+      "skinTranslucentRatio": 0.010869565217391304,
+      "passed": true
+    },
+    {
+      "name": "peak",
+      "sourceSha256": "0fcb1bff5f4d0f1284918e9b3b97e7ff200941c5e2053c6ea468526ab47929bc",
+      "rgbaSha256": "e100dfd0b0112ab6fb965172b95280943208b53d629ac518d327092dfdaff384",
+      "sourceAnchor": {
+        "x": 629.5,
+        "y": 998
+      },
+      "translation": {
+        "left": -2,
+        "top": -3
+      },
+      "polygon": [
+        [
+          220,
+          350
+        ],
+        [
+          287,
+          350
+        ],
+        [
+          290,
+          391
+        ],
+        [
+          319,
+          398
+        ],
+        [
+          334,
+          527
+        ],
+        [
+          272,
+          527
+        ],
+        [
+          259,
+          463
+        ],
+        [
+          227,
+          411
+        ]
+      ],
+      "handInspectionBox": [
+        229,
+        351,
+        62,
+        54
+      ],
+      "bounds": [
+        237,
+        162,
+        519,
+        609
+      ],
+      "outsideChanges": 0,
+      "footChanges": 0,
+      "safeMargins": true,
+      "headSkinOverlapBeforeProtection": 0,
+      "skinOpaque": 986,
+      "skinTranslucent": 14,
+      "skinTranslucentRatio": 0.014,
+      "passed": true
+    }
+  ],
+  "artScopeSha256": "118e30095d714afa216a48e83176c6d05063964105774f6c16505103c020806d"
+}
