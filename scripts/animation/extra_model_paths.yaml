@@ -1,0 +1,6 @@
+assistant_animation:
+    base_path: D:/CodexTools/assistant-animation/models/
+    checkpoints: checkpoints
+    controlnet: controlnet
+    clip_vision: clip_vision
+    ipadapter: ipadapter

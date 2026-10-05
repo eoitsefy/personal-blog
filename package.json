@@ -15,6 +15,7 @@
     "lint": "eslint",
     "typecheck": "next typegen && tsc --noEmit --incremental false",
     "test": "node scripts/run-unit-tests.mjs",
+    "animation:workbench": "node --import tsx scripts/animation-workbench.mjs",
     "test:integration": "node scripts/run-integration-tests.mjs"
   },
   "dependencies": {

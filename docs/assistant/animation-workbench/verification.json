@@ -1,0 +1,18 @@
+{
+  "date": "2026-10-05",
+  "scope": "local tool installation; production unchanged",
+  "downloadHashes": "all installation archives and five safe weights verified",
+  "gpu": "NVIDIA GeForce RTX 2070 8 GiB",
+  "comfyVersion": "0.38.0",
+  "pythonVersion": "3.13.14",
+  "torchVersion": "2.14.0+cu130",
+  "listener": "127.0.0.1:8188 only",
+  "basicInference": { "passed": true, "elapsedMs": 11939, "syntheticOnly": true },
+  "jointIpAdapterAndTwoControlNets": { "passed": true, "elapsedMs": 17802, "syntheticOnly": true },
+  "deepseekPlanning": { "passed": true, "requests": 1, "model": "deepseek-flash", "inputTokens": 248, "outputTokens": 525, "subsequentTasksUsedCache": true },
+  "resourceSafety": { "observedLowSystemDiskGiB": 0.8, "afterManagedServerStoppedGiB": 6.9, "minimumSystemDiskGiB": 8, "minimumFreeRamGiB": 4, "startupRefusalTestPassed": true },
+  "finalServerState": "stopped; do not start before sufficient system disk and RAM are available",
+  "newCharacterArtCreated": false,
+  "newProductionDeployment": false,
+  "artApproved": false
+}
