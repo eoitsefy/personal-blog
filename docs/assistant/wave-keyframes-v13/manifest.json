@@ -1,0 +1,254 @@
+{
+  "schemaVersion": 1,
+  "id": "wave-v13",
+  "action": "wave",
+  "reference": {
+    "file": "docs/assistant/wave-keyframes-v8/reference/neutral-clean.png",
+    "sha256": "5a12d3aec74704c6ae4360159e1cdcda98fc35b6b43abeccc06cf4d87765bbe0"
+  },
+  "editableMask": {
+    "file": "docs/assistant/wave-keyframes-v13/editable-mask.png",
+    "sha256": "008f5140f9abb2d3104e21f5f8e04293f4b9d309d212e50590f3ff4561a1cca5"
+  },
+  "keys": [
+    {
+      "id": "pose-00",
+      "file": "docs/assistant/wave-keyframes-v13/keys/000.png",
+      "sha256": "5a12d3aec74704c6ae4360159e1cdcda98fc35b6b43abeccc06cf4d87765bbe0",
+      "provenance": {
+        "kind": "reference"
+      }
+    },
+    {
+      "id": "pose-01",
+      "file": "docs/assistant/wave-keyframes-v13/keys/001.png",
+      "sha256": "055856ae88ba69ec176ebf4b3bb81ababa3dfe00a681646d7e729a3bcc70a4df",
+      "provenance": {
+        "kind": "image-edited-frame",
+        "parentFrameScopeSha256": "21167c671bfbf29737b1c939bb50061890ddc612e66772b11c8514c71717dd68",
+        "parentFrameIndex": 1,
+        "editSourceSha256": "ecfa4e25c47636123fda0b54cbe61bd8ef6230e036ba788ad419f5fb127fc206"
+      }
+    },
+    {
+      "id": "pose-02",
+      "file": "docs/assistant/wave-keyframes-v13/keys/002.png",
+      "sha256": "6592b622cdb04bb05128168cde2603915ea8e2f555e597497f0b97de755d7c3a",
+      "provenance": {
+        "kind": "interpolated-frame",
+        "parentFrameScopeSha256": "21167c671bfbf29737b1c939bb50061890ddc612e66772b11c8514c71717dd68",
+        "parentFrameIndex": 2
+      }
+    },
+    {
+      "id": "pose-03",
+      "file": "docs/assistant/wave-keyframes-v13/keys/003.png",
+      "sha256": "21a281c6d822ad65d13fc5695e87d7013463a353559dcf1f96dc790918f7135d",
+      "provenance": {
+        "kind": "authored-keyframe"
+      }
+    },
+    {
+      "id": "pose-04",
+      "file": "docs/assistant/wave-keyframes-v13/keys/004.png",
+      "sha256": "171e528c7314d750d00583ed40da2e160c176c96d33e97b41db9c8fd739bce15",
+      "provenance": {
+        "kind": "interpolated-frame",
+        "parentFrameScopeSha256": "21167c671bfbf29737b1c939bb50061890ddc612e66772b11c8514c71717dd68",
+        "parentFrameIndex": 4
+      }
+    },
+    {
+      "id": "pose-05",
+      "file": "docs/assistant/wave-keyframes-v13/keys/005.png",
+      "sha256": "7ef951cf94e81af5ac3e7805eab43b3eaf52d6277e4e31cabaf172af2c21af18",
+      "provenance": {
+        "kind": "interpolated-frame",
+        "parentFrameScopeSha256": "21167c671bfbf29737b1c939bb50061890ddc612e66772b11c8514c71717dd68",
+        "parentFrameIndex": 5
+      }
+    },
+    {
+      "id": "pose-06",
+      "file": "docs/assistant/wave-keyframes-v13/keys/006.png",
+      "sha256": "39f5bcb5bf4eb60a2cf09cbf098017acdcea657a636a4e70cf600a7bd4355edf",
+      "provenance": {
+        "kind": "authored-keyframe"
+      }
+    },
+    {
+      "id": "pose-07",
+      "file": "docs/assistant/wave-keyframes-v13/keys/007.png",
+      "sha256": "c7afaddb4b3181d3714c82e74e3d27486e9861461d09ec25bf8f3b48e36a87cc",
+      "provenance": {
+        "kind": "image-edited-frame",
+        "parentFrameScopeSha256": "21167c671bfbf29737b1c939bb50061890ddc612e66772b11c8514c71717dd68",
+        "parentFrameIndex": 7,
+        "editSourceSha256": "124d9f3b13464fa5b21544a60c5b6a8b228ff7128be9c133a415afee818163e4"
+      }
+    },
+    {
+      "id": "pose-08",
+      "file": "docs/assistant/wave-keyframes-v13/keys/008.png",
+      "sha256": "349acfe94f8acbc8bac654adcd3c1ceb5ffef62c9e452d87354bfa1b5994d9ca",
+      "provenance": {
+        "kind": "image-edited-frame",
+        "parentFrameScopeSha256": "21167c671bfbf29737b1c939bb50061890ddc612e66772b11c8514c71717dd68",
+        "parentFrameIndex": 8,
+        "editSourceSha256": "939874f47f4962302748423b3cc33dd555d94295af7b347f1158a642add8d0b9"
+      }
+    },
+    {
+      "id": "pose-09",
+      "file": "docs/assistant/wave-keyframes-v13/keys/009.png",
+      "sha256": "2e942c89302256101d96f9ae6692e54e56360667b4f77e78152eeac259bb1a84",
+      "provenance": {
+        "kind": "authored-keyframe"
+      }
+    },
+    {
+      "id": "pose-10",
+      "file": "docs/assistant/wave-keyframes-v13/keys/010.png",
+      "sha256": "5e48f9821c230a8ea5575f88da058e1895c99514cb908c2159194d0ec0631d7d",
+      "provenance": {
+        "kind": "interpolated-frame",
+        "parentFrameScopeSha256": "21167c671bfbf29737b1c939bb50061890ddc612e66772b11c8514c71717dd68",
+        "parentFrameIndex": 10
+      }
+    },
+    {
+      "id": "pose-11",
+      "file": "docs/assistant/wave-keyframes-v13/keys/011.png",
+      "sha256": "ec3746567df257bc2c644aba0f3acb97449ffab1e80bdc09a79a80044cafd279",
+      "provenance": {
+        "kind": "interpolated-frame",
+        "parentFrameScopeSha256": "21167c671bfbf29737b1c939bb50061890ddc612e66772b11c8514c71717dd68",
+        "parentFrameIndex": 11
+      }
+    },
+    {
+      "id": "pose-12",
+      "file": "docs/assistant/wave-keyframes-v13/keys/012.png",
+      "sha256": "ea3263dafd86939b25bcbaa83a00fd8167196a3e70dbb2e1f07c3f5c1f6e0419",
+      "provenance": {
+        "kind": "authored-keyframe"
+      }
+    },
+    {
+      "id": "pose-13",
+      "file": "docs/assistant/wave-keyframes-v13/keys/013.png",
+      "sha256": "29d25b9409eaaf0cc7136923ef3697ebd2f6821678589ae030e3bf669aba5bd4",
+      "provenance": {
+        "kind": "interpolated-frame",
+        "parentFrameScopeSha256": "21167c671bfbf29737b1c939bb50061890ddc612e66772b11c8514c71717dd68",
+        "parentFrameIndex": 13
+      }
+    },
+    {
+      "id": "pose-14",
+      "file": "docs/assistant/wave-keyframes-v13/keys/014.png",
+      "sha256": "a4cab19a653e005d19923c27a49077d92b164b2a8c407602da2df977fefec0d3",
+      "provenance": {
+        "kind": "image-edited-frame",
+        "parentFrameScopeSha256": "21167c671bfbf29737b1c939bb50061890ddc612e66772b11c8514c71717dd68",
+        "parentFrameIndex": 14,
+        "editSourceSha256": "e351878f63ac0dd6bcf6ba0f3a95bf67eea6553a90f3c2fca798476b3d1ea77a"
+      }
+    },
+    {
+      "id": "pose-15",
+      "file": "docs/assistant/wave-keyframes-v13/keys/015.png",
+      "sha256": "5b7b173b91a97fca211dd4f589566a59ff1ecb50edd5766fecea3505471db67d",
+      "provenance": {
+        "kind": "authored-keyframe"
+      }
+    },
+    {
+      "id": "pose-16",
+      "file": "docs/assistant/wave-keyframes-v13/keys/016.png",
+      "sha256": "900efc52034d26cec30d7a4a91dd0ff71e1bf3cd2ee9021fa5f3001a00294f78",
+      "provenance": {
+        "kind": "image-edited-frame",
+        "parentFrameScopeSha256": "21167c671bfbf29737b1c939bb50061890ddc612e66772b11c8514c71717dd68",
+        "parentFrameIndex": 16,
+        "editSourceSha256": "d7183a1f48fded77fe549357af77d9574c5509cba9176e54463e1ace3d534fe0"
+      }
+    },
+    {
+      "id": "pose-17",
+      "file": "docs/assistant/wave-keyframes-v13/keys/017.png",
+      "sha256": "495c4a1c49cedc964d5631cf9d76844f8d3592b81cf3fd886cda7e12535e99a3",
+      "provenance": {
+        "kind": "image-edited-frame",
+        "parentFrameScopeSha256": "21167c671bfbf29737b1c939bb50061890ddc612e66772b11c8514c71717dd68",
+        "parentFrameIndex": 17,
+        "editSourceSha256": "c0ffa3180b293d8e00baf422c86311f176ecf8154da8dc1c5e81276d0591a12b"
+      }
+    },
+    {
+      "id": "pose-18",
+      "file": "docs/assistant/wave-keyframes-v13/keys/018.png",
+      "sha256": "266fc3591cb790e79f3ccacdfc3489c7f60c0425eb8c5eb26e84b35d1d39bbd1",
+      "provenance": {
+        "kind": "authored-keyframe"
+      }
+    }
+  ],
+  "canvas": {
+    "width": 768,
+    "height": 768,
+    "safetyInset": 0.2
+  },
+  "motion": {
+    "sequence": [
+      "pose-00",
+      "pose-01",
+      "pose-02",
+      "pose-03",
+      "pose-04",
+      "pose-05",
+      "pose-06",
+      "pose-07",
+      "pose-08",
+      "pose-09",
+      "pose-10",
+      "pose-11",
+      "pose-12",
+      "pose-13",
+      "pose-14",
+      "pose-15",
+      "pose-16",
+      "pose-17",
+      "pose-18",
+      "pose-17",
+      "pose-16",
+      "pose-15",
+      "pose-14",
+      "pose-13",
+      "pose-12",
+      "pose-11",
+      "pose-10",
+      "pose-09",
+      "pose-08",
+      "pose-07",
+      "pose-06",
+      "pose-05",
+      "pose-04",
+      "pose-03",
+      "pose-02",
+      "pose-01",
+      "pose-00"
+    ],
+    "stepsPerInterval": 1,
+    "fps": 15,
+    "loopDurationMs": 3000
+  },
+  "interpolation": {
+    "method": "hold",
+    "gpu": 1
+  },
+  "review": {
+    "keyApproval": "docs/assistant/wave-keyframes-v13/review/key-approval.json",
+    "finalApproval": "docs/assistant/wave-keyframes-v13/review/final-approval.json"
+  }
+}

@@ -1,0 +1,91 @@
+{
+  "schemaVersion": 1,
+  "verifiedOn": "2026-10-05",
+  "scope": "local-only; not a production dependency",
+  "toolRoot": "D:/CodexTools/assistant-animation",
+  "tools": [
+    {
+      "name": "ComfyUI Windows portable NVIDIA",
+      "version": "0.38.0",
+      "source": "https://github.com/Comfy-Org/ComfyUI/releases/download/v0.38.0/ComfyUI_windows_portable_nvidia.7z",
+      "bytes": 1994326521,
+      "sha256": "8f137eac345707fd7e42bcf8e29377415243011ca15522a86aed6c77331fbd56",
+      "runtime": { "python": "3.13.14", "torch": "2.14.0+cu130", "gpu": "NVIDIA GeForce RTX 2070 8 GiB" }
+    },
+    {
+      "name": "Krita portable",
+      "version": "5.3.4",
+      "source": "https://download.kde.org/stable/krita/5.3.4/krita-x64-5.3.4.zip",
+      "bytes": 227868616,
+      "sha256": "4bf5b51100b30fa68edd12b995932b82f8a0080ef115b5461941fa2d186d126c",
+      "windowsSignature": "Valid"
+    },
+    {
+      "name": "ComfyUI IPAdapter Plus",
+      "version": "2.0.0",
+      "revision": "a0f451a5113cf9becb0847b92884cb10cbdec0ef",
+      "source": "https://codeload.github.com/cubiq/ComfyUI_IPAdapter_plus/zip/a0f451a5113cf9becb0847b92884cb10cbdec0ef",
+      "bytes": 306422,
+      "sha256": "c6c49c82aa65cb96b93bdf9f9b547f9c95310a2668a7a9aaa0285cccf4590347",
+      "upstreamStatus": "maintenance-only; test before updating"
+    },
+    {
+      "name": "RIFE NCNN Vulkan",
+      "version": "20221029 model v4.6",
+      "source": "https://github.com/nihui/rife-ncnn-vulkan/releases/tag/20221029",
+      "copiedFrom": "existing locally verified art-pilot tool",
+      "exeSha256": "4b970319db2814c82b15fceed8193151560a676a9eb63f20d4877be77b98f44f",
+      "modelBinSha256": "f334ed2260149ce0188a6dcf049844e8b0cdd912e01cbcfb63553157d2508958",
+      "modelParamSha256": "28df14d57a225725ee5386f52eba422488450d37c9f40800ed4f62e8ba846692",
+      "alphaLimitation": "RGB-only; alpha propagation and art review are independent gates"
+    },
+    {
+      "name": "7zr",
+      "version": "26.03",
+      "source": "https://github.com/ip7z/7zip/releases/download/26.03/7zr.exe",
+      "bytes": 602624,
+      "sha256": "ad4c82fadcbdf93c03b4fc440f300509c7d60c5c2f4d183e35d9d70d6957037d"
+    }
+  ],
+  "models": [
+    {
+      "file": "checkpoints/v1-5-pruned-emaonly.safetensors",
+      "source": "https://huggingface.co/stable-diffusion-v1-5/stable-diffusion-v1-5/resolve/451f4fe16113bff5a5d2269ed5ad43b0592e9a14/v1-5-pruned-emaonly.safetensors",
+      "bytes": 4265146304,
+      "sha256": "6ce0161689b3853acaa03779ec93eafe75a02f4ced659bee03f50797806fa2fa"
+    },
+    {
+      "file": "controlnet/control_v11p_sd15_openpose_fp16.safetensors",
+      "source": "https://huggingface.co/comfyanonymous/ControlNet-v1-1_fp16_safetensors/resolve/ab830a51c5c573a5b85bfdbaa3ae0ab7e1baf5f7/control_v11p_sd15_openpose_fp16.safetensors",
+      "bytes": 722601100,
+      "sha256": "4003c1da17b0e4ba444e02140e1c0d83bb24b79e4dcfd613c3a554d38f0f89c7"
+    },
+    {
+      "file": "controlnet/control_v11p_sd15_lineart_fp16.safetensors",
+      "source": "https://huggingface.co/comfyanonymous/ControlNet-v1-1_fp16_safetensors/resolve/ab830a51c5c573a5b85bfdbaa3ae0ab7e1baf5f7/control_v11p_sd15_lineart_fp16.safetensors",
+      "bytes": 722601100,
+      "sha256": "10559106d1bb8196298b7a81565ede9279295d2b2df15165b9dbe189994def56"
+    },
+    {
+      "file": "ipadapter/ip-adapter-plus_sd15.safetensors",
+      "source": "https://huggingface.co/h94/IP-Adapter/resolve/018e402774aeeddd60609b4ecdb7e298259dc729/models/ip-adapter-plus_sd15.safetensors",
+      "bytes": 98183288,
+      "sha256": "a1c250be40455cc61a43da1201ec3f1edaea71214865fb47f57927e06cbe4996"
+    },
+    {
+      "file": "clip_vision/CLIP-ViT-H-14-laion2B-s32B-b79K.safetensors",
+      "source": "https://huggingface.co/h94/IP-Adapter/resolve/018e402774aeeddd60609b4ecdb7e298259dc729/models/image_encoder/model.safetensors",
+      "bytes": 2528373448,
+      "sha256": "6ca9667da1ca9e0b0f75e46bb030f7e011f44f86cbfb8d5a36590fcd7507b030"
+    }
+  ],
+  "deepseek": {
+    "endpoint": "https://api.deepseek.com/chat/completions",
+    "model": "deepseek-flash",
+    "thinking": "disabled",
+    "maxOutputTokens": 1024,
+    "dailyAttemptLimit": 4,
+    "automaticRetries": 0,
+    "role": "text planning only; no image rendering, executable commands or art approval"
+  }
+}

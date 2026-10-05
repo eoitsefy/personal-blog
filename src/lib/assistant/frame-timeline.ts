@@ -4,17 +4,19 @@ import { REGISTERED_SHEETS } from "./registered-sheets";
 import { PILOT_SHEETS } from "./pilot-sheets";
 
 export const RUNTIME_SHEETS = { ...REGISTERED_SHEETS, ...PILOT_SHEETS };
+export const CHARACTER_FRAME_VERSION = "original-pilot-v6-wave-reviewed-v16";
 type Sheet = keyof typeof RUNTIME_SHEETS;
 export type Drawing = { sheet: Sheet; frame: number };
 export const NEUTRAL_DRAWING: Drawing = { sheet: "pilot-blink", frame: 0 };
 const range = (sheet: Sheet, first: number, last: number): Drawing[] =>
   Array.from({ length: last - first + 1 }, (_, i) => ({ sheet, frame: first + i }));
-// Whole figures: v6 idle/wave are selected RIFE sample frames, NOT independently
-// drawn poses. Other actions keep the selected v5 drawings and motion briefs.
+// Whole figures: v6 idle remains owner-accepted; wave v16 retains all 37 reviewed
+// slots with explicit source provenance, NOT 37 independently drawn poses.
+// Other actions keep the selected v5 drawings and motion briefs.
 // Every action starts/ends on the exact same canonical original-derived neutral.
 export const DRAWING_SEQUENCES: Record<CharacterAction, readonly Drawing[]> = {
   idle: [NEUTRAL_DRAWING, ...range("pilot-blink", 1, 7), NEUTRAL_DRAWING],
-  wave: [NEUTRAL_DRAWING, ...range("pilot-wave", 1, 29), NEUTRAL_DRAWING],
+  wave: [NEUTRAL_DRAWING, ...range("pilot-wave", 1, 35), NEUTRAL_DRAWING],
   nod: [NEUTRAL_DRAWING, ...range("nod", 0, 11), NEUTRAL_DRAWING],
   thinking: [NEUTRAL_DRAWING, ...range("thinking", 0, 13), ...range("thinking-recovery", 0, 11), NEUTRAL_DRAWING],
   bow: [NEUTRAL_DRAWING, ...range("bow", 0, 17), NEUTRAL_DRAWING],

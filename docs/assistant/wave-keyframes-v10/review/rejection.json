@@ -1,0 +1,11 @@
+{
+  "status": "REJECTED_ART_AND_TECHNICAL",
+  "releaseAllowed": false,
+  "productionChanged": false,
+  "rawFrameScopeSha256": "b293dc3d204df41b988dba3a57695e94dd0b9f4e9597fe9126225bd0901ffade",
+  "issues": [
+    "Frame 7 fist enters protected torso and gets truncated at x346; cannot release.",
+    "Frame 1 contains 8 detached generated pixels and fails unchanged technical threshold."
+  ],
+  "nextCandidate": "wave-v11 retains neutral pixels outside actual arm/hand and uses shoulder-anchored local sleeve alignment."
+}

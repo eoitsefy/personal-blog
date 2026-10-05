@@ -1,0 +1,71 @@
+{
+  "schemaVersion": 1,
+  "calls": 9,
+  "extraPaidApiCalls": 0,
+  "items": [
+    {
+      "id": "001",
+      "source": "C:/Users/Administrator/.codex/generated_images/019f6678-3f85-7643-88a8-361bd51c2ee0/exec-b3d5279f-366b-4a3a-bf42-e57e3f3b2701.png",
+      "prompt": "Use case: precise-object-edit. Repair this exact transparent animation frame of the black-and-gold chibi mascot. Change ONLY the viewer-left bent arm and hand edge. It is the start of raising a hand; both hands are still near the sides. KEEP EXACTLY its existing pose, hand position, closed relaxed fist shape, body size, character identity and framing. Remove the blurry gray doubled line and ghost cuff around the viewer-left wrist/sleeve, replacing it with a single sharp black sleeve silhouette and continuous narrow gold piping, joined naturally to the solid opaque peach hand. Remove all translucent anatomy/cloth ghosts, not normal antialiasing at the outer edge. Preserve exact head/hair/eyes/headphones, torso/right arm, shorts, legs, boot anchors, camera and transparent safe margins. Do not raise the hand to the face, do not redesign or move the character. No labels, no glow, no shadows on the backdrop. Output ONE full-body PNG-like frame, transparent background.",
+      "method": "built-in imagegen",
+      "status": "SELECTED_REGION_RELEASED_IN_V16"
+    },
+    {
+      "id": "007",
+      "source": "C:/Users/Administrator/.codex/generated_images/019f6678-3f85-7643-88a8-361bd51c2ee0/exec-796ebc95-4ff2-4936-92c7-3f1282e8259c.png",
+      "prompt": "Edit image 1, a single existing animation frame of an original black-and-gold chibi blog assistant. Images 2 and 3 are adjacent poses solely for identity, sleeve construction and motion continuity. Repair ONLY the character's right arm on the viewer LEFT between the shoulder and fist. Image 1 is a flawed in-between with gray duplicated sleeve contours. Draw one clean, connected black sleeve with its thin continuous gold piping and one cuff attached to a solid peach closed fist, with the fist center at approximately (304,452) on the original 768 square canvas. This is one third of the way from image 2's low closed fist toward image 3's lifted fist. Remove ALL old lower sleeve/fist contours and translucent ghosts; the hand must be clearly opaque and the sleeve has a single crisp silhouette. Do not add extra fingers, rotate the torso, move the head, change facial expression, alter hair, body, costume or proportions. Match the exact flat shaded original style, fine dark outline and gold trim. Preserve all other pixels and the exact image framing, character size, foot anchor, camera and transparent 20 percent safe margin. Output just this one full-body frame on transparent background. No sheet, no labels, no blur, no glow, no whole-character translation.",
+      "method": "built-in imagegen",
+      "status": "REJECTED_POSITION_DRIFT",
+      "note": "Raw positioning drift was rejected; only its arm region after constrained offline registration and cloth restoration was selected in v16."
+    },
+    {
+      "id": "008",
+      "source": "C:/Users/Administrator/.codex/generated_images/019f6678-3f85-7643-88a8-361bd51c2ee0/exec-33785275-fcb7-4fdb-ab57-dfe47060854d.png",
+      "prompt": "Repair image 1 ONLY in the arm on the viewer LEFT: this is the chibi character's RIGHT arm raising for a greeting. Keep its existing lifted closed-fist pose, but REMOVE the duplicated translucent lower sleeve edge and old cuff ghost. The fist should be between the low fist in image 2 and the high fist in image 3, much closer to the high one: at lower chest height, slightly below the pendant and a little to the left of it. Target fist center (296,443) on 768x768 source, not the low waist pose. A small opaque peach closed fist; one black cuff directly attached to the wrist; one bent black hoodie sleeve with a crisp gold trim line from shoulder to elbow, no doubled outline, no dangling lower sleeve, no gray ghost. Preserve exact character identity, head, eyes, hair, costume, torso, other arm, shorts, legs and feet, scale, camera, baseline and full canvas with 20 percent margin. Retain the original dark-and-gold flat shaded chibi illustration, not redesign. No extra fingers, no blur, no glow, no added shadows on transparent background, no labels. Output ONE entire full-body frame with transparency.",
+      "method": "built-in imagegen",
+      "status": "REJECTED_POSITION_DRIFT"
+    },
+    {
+      "id": "008-exact",
+      "source": "C:/Users/Administrator/.codex/generated_images/019f6678-3f85-7643-88a8-361bd51c2ee0/exec-0aff2537-a909-4d4b-ab48-fefcc6956721.png",
+      "prompt": "Surgical cleanup of this exact existing transparent animation frame. DO NOT move any anatomy or change the pose. Do not move the fist even slightly. Keep its exact hand position, closed-fist gesture, shape, width, size, direction and opaque outline. The ONLY edit is to clean the gray overlapping ghost lines around the character's viewer-left black bent sleeve and its cuff: replace the doubled fuzzy edge with ONE clean thin black outer line and ONE thin gold trim. Clean the gray translucent extra cuff below the fist so the wrist and cuff form one solid continuous connection. All non-arm pixels, the face/head/hair, body, legs/feet, exact character size, full square canvas and original transparent margins are unchanged. This is the same black/gold chibi with golden eyes and headphones; do not reinterpret or redesign. No new gesture, no new fingers, no motion blur, no gray ghost, no white halo, no labels. Output a single entire full-body frame on transparent background.",
+      "method": "built-in imagegen",
+      "status": "SELECTED_REGION_RELEASED_IN_V16"
+    },
+    {
+      "id": "014",
+      "source": "C:/Users/Administrator/.codex/generated_images/019f6678-3f85-7643-88a8-361bd51c2ee0/exec-12020df4-b040-4f6d-a5dc-f7ebe7eb406f.png",
+      "prompt": "Surgical image cleanup, precise-object-edit. Keep this EXACT full-body chibi frame and pose unchanged. Only repair the viewer-left hand (the character's right hand) and adjacent cuff. This small palm is beginning to open at lower cheek height; keep its exact position, rotation, size and finger gesture. Remove the gray translucent overlapping finger and palm silhouettes: draw one small solid opaque peach palm with five anatomically clear digits, four progressively opening fingers and one thumb. Match the original delicate dark outline, simple peach shading and chibi hand size. The wrist must connect continuously to one black cuff; remove any gray ghost below or around it without changing the bent arm pose. Preserve exact head, face, eyes, hair/headset, other arm, body/costume/legs/boots, canvas size, foot baseline and transparent margin. Do NOT spread the hand into a larger high waving pose. No extra digits, no motion blur, no white/gray halo, no labels. Output one full-body frame on a transparent background, same composition.",
+      "method": "built-in imagegen",
+      "status": "REJECTED_OPENING_CONTINUITY_V15_REPLACED_IN_V16"
+    },
+    {
+      "id": "016",
+      "source": "C:/Users/Administrator/.codex/generated_images/019f6678-3f85-7643-88a8-361bd51c2ee0/exec-9d10b0c5-7d2e-490e-b7f4-988849e53484.png",
+      "prompt": "Use case: precise-object-edit. Clean up this existing transparent full-body animation frame WITHOUT CHANGING THE POSE OR PLACEMENT. Change ONLY the small raised open hand on the viewer LEFT and its cuff edge. Preserve exactly the current palm center, rotation, shape and size. Redraw one clean opaque peach palm with exactly four slender chibi fingers plus one thumb, no duplicate gray/translucent fingers; keep the progressive-open greeting gesture and crisp dark outline. Remove the gray finger ghosts and doubled palm contour, replacing them with clean simple peach fill and subtle original shading. Keep one connected black cuff immediately at wrist with thin continuous gold piping, no ghost sleeve. All other character anatomy, exact head/face/hair/headphones, costume, body, still arm, shorts and boots, full canvas, safe margins and anchor remain identical. Don't enlarge the hand or lift it higher; do not move the character. No motion blur, no glow, no text. One entire full-body frame with transparent background.",
+      "method": "built-in imagegen",
+      "status": "SELECTED_REGION_RELEASED_IN_V16"
+    },
+    {
+      "id": "017",
+      "source": "C:/Users/Administrator/.codex/generated_images/019f6678-3f85-7643-88a8-361bd51c2ee0/exec-d6ef73d4-d5c0-433c-b0f1-1cda57db2f4c.png",
+      "prompt": "Use case: precise-object-edit. Repair ONLY the raised viewer-left palm and adjacent cuff in this exact transparent full-body chibi animation frame. Keep the EXACT hand placement, palm rotation, finger gesture, hand size and arm silhouette. Remove the doubled gray finger outline and the translucent old finger/palm shapes, and draw one small opaque peach palm, exactly four opening fingers and one thumb, with the original thin crisp dark line and subtle peach shading. One natural wrist joined to a single black cuff and continuous gold trim; no ghost cuff or shadow duplicate. Do not move, enlarge or reshape the head, face, hair/headphones, body, other arm, clothes, shorts, boots, scale, baseline or transparent square framing. Preserve the same original black and gold chibi identity. No new gesture, no additional fingers, no motion blur, no gray/white halo, no labels. Output ONE full-body frame on transparency.",
+      "method": "built-in imagegen",
+      "status": "SELECTED_REGION_RELEASED_IN_V16"
+    },
+    {
+      "id": "007-lift",
+      "source": "C:/Users/Administrator/.codex/generated_images/019f6678-3f85-7643-88a8-361bd51c2ee0/exec-732fe151-b8c2-47df-a43b-71ccb65c61b8.png",
+      "prompt": "Edit only the viewer-left bent arm and fist of this chibi. Lift the closed fist very slightly, by about HALF ITS OWN HEIGHT, and a quarter of its width toward the viewer left; it should be just below the lower tip of the gold pendant, not as high as the collar. Bend the forearm naturally to connect the raised fist to the existing shoulder. Keep the shoulder in place, one clean sleeve, single gold trim and opaque peach closed fist with original size. This is a small incremental lift for an in-between animation frame, not a new raised-hand gesture. Do not move head/face/hair/body/other arm/feet or change the character scale/canvas/identity. Clean crisp original black and gold chibi style, same thin outline and shading, no ghosts, no fuzzy cuff, no extra fingers. One whole-body image on transparent background with exactly the same framing and safe margins.",
+      "method": "built-in imagegen",
+      "status": "REJECTED_POSITION_DRIFT"
+    },
+    {
+      "id": "007-new",
+      "source": "C:/Users/Administrator/.codex/generated_images/019f6678-3f85-7643-88a8-361bd51c2ee0/exec-d952963b-b32a-454b-8b1b-c1891751650d.png",
+      "prompt": "Use case: precise-object-edit. Make a SMALL change only to the viewer-left arm of this exact chibi: bend the elbow slightly more and raise the closed fist until its center is just BELOW the bottom of the gold pendant on the white shirt, not near the face. This is the next small pose in lifting his hand. The fist stays in front of the black sleeve, on the left side of his chest, same closed fist size; move it slightly upward and slightly toward viewer left. Draw a single continuous black sleeve with narrow gold trim, one cuff attached naturally to the solid peach closed fist, no duplicate outlines or translucent shadows. Preserve exact original face, hairstyle and headset, torso, costume, other hand, legs, boots, character size, camera, full transparent margins. Do not turn the fist into an open palm; do not lift it as high as the collar; do not move the rest of the body. Match exact original linework/shading. Output one full-body frame on transparent background.",
+      "method": "built-in imagegen",
+      "status": "REJECTED_PROTECTED_TORSO_CLIPPING"
+    }
+  ]
+}

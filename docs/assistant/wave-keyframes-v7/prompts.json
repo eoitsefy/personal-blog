@@ -1,0 +1,58 @@
+{
+  "mode": "built-in imagegen reference editing",
+  "transparentBackground": true,
+  "toolCalls": 5,
+  "extraImageApi": false,
+  "deepSeekCallsThisTurn": 0,
+  "cachedMotionPlan": "D:/CodexTools/assistant-animation/jobs/wave/plan.json",
+  "characterReference": "reference/neutral.png",
+  "entries": [
+    {
+      "name": "prep",
+      "prompt": "Use case: identity-preserve. Asset type: one complete-body PNG keyframe for a chibi blog assistant. Input Image 1 is the exact edit target and identity anchor, not merely a style reference. Preserve its full square canvas, character scale, frontal view, fixed feet, every feature of the original face, huge round amber eyes, black hair with the same golden streak and hair tuft, headset, black/gold hoodie, white shirt, black shorts and black/gold boots. Retain generous empty margins, at least 20 percent, and the same boot baseline. Keep the head, torso, hips, legs, feet and the arm on SCREEN RIGHT unchanged; edit ONLY the arm on SCREEN LEFT (character's right arm) into the described small wave pose. Crisp opaque peach skin with clean dark outline; no gray, semi-transparent or duplicated hands. One anatomically coherent sleeve, elbow, wrist and hand, no extra limb, no second contour. Match the original chibi hand scale, never a large realistic hand. Keep the original slight closed-mouth smile, no eye or mouth change. Fixed camera, no leaning, no bouncing, no horizontal whole-body movement, no costume change. No text, labels, shadow, props or watermark. Genuine transparent alpha background, not a white rectangle or a checkerboard. Output one single complete character image, not a sheet or separate body parts.\nPose: early upward preparation. The upper arm on SCREEN LEFT lifts only slightly. Bend that elbow softly; bring the small relaxed closed hand to lower chest/waist height. This is a gentle preparatory pose between both-arms-down and a raised wave. Preserve original shoulder position and keep the elbow visibly connected. Palm/fingers mostly relaxed, do not open a fan of fingers at this low stage.",
+      "referencedImages": [
+        "reference/neutral.png"
+      ],
+      "output": "generated/rejected/prep-initial.png",
+      "decision": "REJECTED_POSE_TOO_HIGH"
+    },
+    {
+      "name": "peak",
+      "prompt": "Use case: identity-preserve. Asset type: one complete-body PNG keyframe for a chibi blog assistant. Input Image 1 is the exact edit target and identity anchor, not merely a style reference. Preserve its full square canvas, character scale, frontal view, fixed feet, every feature of the original face, huge round amber eyes, black hair with the same golden streak and hair tuft, headset, black/gold hoodie, white shirt, black shorts and black/gold boots. Retain generous empty margins, at least 20 percent, and the same boot baseline. Keep the head, torso, hips, legs, feet and the arm on SCREEN RIGHT unchanged; edit ONLY the arm on SCREEN LEFT (character's right arm) into the described small wave pose. Crisp opaque peach skin with clean dark outline; no gray, semi-transparent or duplicated hands. One anatomically coherent sleeve, elbow, wrist and hand, no extra limb, no second contour. Match the original chibi hand scale, never a large realistic hand. Keep the original slight closed-mouth smile, no eye or mouth change. Fixed camera, no leaning, no bouncing, no horizontal whole-body movement, no costume change. No text, labels, shadow, props or watermark. Genuine transparent alpha background, not a white rectangle or a checkerboard. Output one single complete character image, not a sheet or separate body parts.\nPose: the peak of a small welcoming wave. SCREEN LEFT elbow bent naturally, forearm lifted, open little palm beside and OUTSIDE the SCREEN LEFT edge of the hair at cheek height, palm facing the viewer. Exactly one small palm, a thumb and four compact fingers, distinct clean opaque contours. The raised hand must not overlap or hide the hair/face. Wrist almost upright, only a tiny outward tilt. Upper arm and jacket shoulder stay attached and plausible.",
+      "referencedImages": [
+        "reference/neutral.png"
+      ],
+      "output": "generated/rejected/peak-initial.png",
+      "decision": "REJECTED_HAND_TOO_CLOSE_TO_HAIR"
+    },
+    {
+      "name": "return",
+      "prompt": "Use case: identity-preserve. Asset type: one complete-body PNG keyframe for a chibi blog assistant. Input Image 1 is the exact edit target and identity anchor, not merely a style reference. Preserve its full square canvas, character scale, frontal view, fixed feet, every feature of the original face, huge round amber eyes, black hair with the same golden streak and hair tuft, headset, black/gold hoodie, white shirt, black shorts and black/gold boots. Retain generous empty margins, at least 20 percent, and the same boot baseline. Keep the head, torso, hips, legs, feet and the arm on SCREEN RIGHT unchanged; edit ONLY the arm on SCREEN LEFT (character's right arm) into the described small wave pose. Crisp opaque peach skin with clean dark outline; no gray, semi-transparent or duplicated hands. One anatomically coherent sleeve, elbow, wrist and hand, no extra limb, no second contour. Match the original chibi hand scale, never a large realistic hand. Keep the original slight closed-mouth smile, no eye or mouth change. Fixed camera, no leaning, no bouncing, no horizontal whole-body movement, no costume change. No text, labels, shadow, props or watermark. Genuine transparent alpha background, not a white rectangle or a checkerboard. Output one single complete character image, not a sheet or separate body parts.\nPose: a lowering intermediate AFTER a wave. SCREEN LEFT upper arm is returning toward its original resting angle, elbow still gently bent. The hand is near mid-torso height, slightly lower than a raised hand and relaxed with fingers softly curved together. Forearm is descending diagonally without crossing the central zipper. This is halfway from the cheek-height peak toward both-arms-down, NOT another raised wave. Preserve connected elbow and original shoulder.",
+      "referencedImages": [
+        "reference/neutral.png"
+      ],
+      "output": "generated/return.png",
+      "decision": "SELECTED_FOR_BAKE"
+    },
+    {
+      "name": "prep-b",
+      "prompt": "Use case: precise-object-edit. Image 1 is the edit target: correct ONLY the arm on SCREEN LEFT. Image 2 is the original identity reference. The little fist is currently too high, near the shoulder. Lower this SCREEN LEFT hand to the GOLD JACKET POCKET / LOWER ABDOMEN LEVEL, immediately above the shorts, approximately 9 percent of canvas height LOWER than its current position. Upper arm nearly down, elbow bent only slightly, forearm gently angled inward, one small relaxed hand. This must be an EARLY preparatory pose only slightly above both-arms-down, not a cheek-height or shoulder-height gesture. Keep shoulder attached. Keep the SCREEN RIGHT arm, entire head/hair/face/headset/torso/legs/feet unchanged from Image 1; fixed camera, original body scale and same canvas, no body shift, no larger head or outfit redesign. Original huge round amber eyes and black/gold costume. Complete body with clear margins. Genuine transparent background preserved. One opaque peach hand with a crisp single dark outline, no gray translucency, extra fingers, double contours, missing limb, text, border, shadow or watermark.",
+      "referencedImages": [
+        "generated/rejected/prep-initial.png",
+        "reference/neutral.png"
+      ],
+      "output": "generated/prep.png",
+      "decision": "SELECTED_FOR_BAKE"
+    },
+    {
+      "name": "peak-b",
+      "prompt": "Use case: precise-object-edit. Image 1 is the edit target; Image 2 is the original identity reference. Correct ONLY the raised waving arm on SCREEN LEFT: move the small open hand and forearm farther outward to SCREEN LEFT so ALL fingers, thumb and the palm lie OUTSIDE the hair silhouette, leaving a clearly visible transparent gap of about 15 pixels between fingertips and hair at this image's scale. Hand stays near cheek height, not above the head. Preserve compact chibi hand scale, palm facing viewer, one thumb and four compact fingers. Maintain natural bent elbow and sleeve attached to its original shoulder; adjust the arm pose to achieve this gap without moving the body. Keep all head/hair/face/headset details, SCREEN RIGHT arm, torso, shorts, legs and boots unchanged from Image 1. Fixed canvas/camera/character scale/foot baseline, at least 20 percent clear margins, no leaning. Genuine transparent alpha background. Opaque warm peach skin, dark single contour, no grey or translucent hand, duplicated fingers, extra arm, costume redesign, text, labels, border, shadow or watermark.",
+      "referencedImages": [
+        "generated/rejected/peak-initial.png",
+        "reference/neutral.png"
+      ],
+      "output": "generated/peak.png",
+      "decision": "SELECTED_FOR_BAKE"
+    }
+  ]
+}

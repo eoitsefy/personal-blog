@@ -1,0 +1,66 @@
+{
+  "version": 1,
+  "date": "2026-10-05",
+  "mode": "builtin image generation with reference edits",
+  "note": "Five tool outputs, three selected new pose drawings. Shared registration and original pixel protection are deterministic postprocessing, not new AI frames.",
+  "requests": [
+    {
+      "name": "prep",
+      "prompt": "Use case: precise-object-edit. Asset type: one complete-body transparent PNG animation keyframe. Image 1 is the exact edit target. Image 2 is the original neutral identity anchor. Keep the square canvas, frontal camera, original character size, head/face/hair/gold streak/headset, huge round amber eyes, closed-mouth slight smile, white shirt, black/gold hoodie, shorts, boots, all feet and SCREEN RIGHT arm absolutely unchanged. Keep the original feet baseline and generous twenty-percent transparent margins. No body translation, lean, bounce, scale or costume change. Genuine transparent alpha, no background rectangle, no shadows, no labels or watermarks. Only the SCREEN LEFT moving arm and its jacket shoulder may change. One continuous coherent cloth sleeve connected naturally beneath the collar; clean dark outer contour, original thin gold trim, no cutoff, gap, stripe jump, detached sleeve, duplicated contour, extra arm or gray translucent skin. Compact opaque peach chibi hand, not a large realistic hand.\nPrimary request: repair ONLY the jacket SHOULDER CONNECTION on SCREEN LEFT. The low early-preparation fist and forearm pose are correct: hand at jacket pocket/lower abdomen, just above shorts, elbow softly bent, upper arm almost down. Retain this low hand pose, with no fist moving to the chest. Smoothly join the top of this sleeve into the original shoulder immediately under the hood/collar, preserving one anatomically plausible shoulder and one uninterrupted narrow gold edge. Remove the abrupt gold-line break and geometric notch near the collar. Keep sleeve bulk modest and original, no enlarged muscles. Rest of image unchanged.",
+      "referencedImagePaths": [
+        "docs/assistant/wave-keyframes-v7/keys/01-prep.png",
+        "docs/assistant/wave-keyframes-v7/reference/neutral-clean.png"
+      ],
+      "transparentBackground": true,
+      "resultFile": "generated/prep.png",
+      "selected": true,
+      "note": "Selected after shared registration and static pixel protection"
+    },
+    {
+      "name": "peak",
+      "prompt": "Use case: precise-object-edit. Asset type: one complete-body transparent PNG animation keyframe. Image 1 is the exact edit target. Image 2 is the original neutral identity anchor. Keep the square canvas, frontal camera, original character size, head/face/hair/gold streak/headset, huge round amber eyes, closed-mouth slight smile, white shirt, black/gold hoodie, shorts, boots, all feet and SCREEN RIGHT arm absolutely unchanged. Keep the original feet baseline and generous twenty-percent transparent margins. No body translation, lean, bounce, scale or costume change. Genuine transparent alpha, no background rectangle, no shadows, no labels or watermarks. Only the SCREEN LEFT moving arm and its jacket shoulder may change. One continuous coherent cloth sleeve connected naturally beneath the collar; clean dark outer contour, original thin gold trim, no cutoff, gap, stripe jump, detached sleeve, duplicated contour, extra arm or gray translucent skin. Compact opaque peach chibi hand, not a large realistic hand.\nPrimary request: repair ONLY the jacket SHOULDER CONNECTION on SCREEN LEFT. Retain the existing cheek-height open-palm wave; all fingertips and thumb stay OUTSIDE the hair silhouette with a visible transparent gap. One palm, one thumb and four compact fingers, warm fully opaque skin. Correct the sleeve so its upper cloth line and narrow gold trim flow naturally into the original shoulder below the collar. No extra gold branch, sudden stripe discontinuity or pasted-on upper arm. Keep the bent elbow attached and the hand size/position unchanged. Do not change the collar shape, head or opposite arm.",
+      "referencedImagePaths": [
+        "docs/assistant/wave-keyframes-v7/keys/03-peak.png",
+        "docs/assistant/wave-keyframes-v7/reference/neutral-clean.png"
+      ],
+      "transparentBackground": true,
+      "resultFile": "generated/peak-initial.png",
+      "selected": false,
+      "note": "Rejected: character scale enlarged; retained as audit source"
+    },
+    {
+      "name": "opening",
+      "prompt": "Use case: precise-object-edit. Asset type: one complete-body transparent PNG animation keyframe. Image 1 is the exact edit target. Image 2 is the original neutral identity anchor. Keep the square canvas, frontal camera, original character size, head/face/hair/gold streak/headset, huge round amber eyes, closed-mouth slight smile, white shirt, black/gold hoodie, shorts, boots, all feet and SCREEN RIGHT arm absolutely unchanged. Keep the original feet baseline and generous twenty-percent transparent margins. No body translation, lean, bounce, scale or costume change. Genuine transparent alpha, no background rectangle, no shadows, no labels or watermarks. Only the SCREEN LEFT moving arm and its jacket shoulder may change. One continuous coherent cloth sleeve connected naturally beneath the collar; clean dark outer contour, original thin gold trim, no cutoff, gap, stripe jump, detached sleeve, duplicated contour, extra arm or gray translucent skin. Compact opaque peach chibi hand, not a large realistic hand.\nPrimary request: one new INTERMEDIATE opening-palm pose just before the cheek-height peak wave. SCREEN LEFT elbow gently bent and attached; hand a little higher than the current chest-level fist but still below cheek level, just OUTSIDE the left edge of the head. Turn the palm toward the viewer and gently unfurl compact fingers about halfway: thumb visible, fingers softly curved and partly separated, NOT a closed fist and NOT the fully extended waving peak. Forearm inclines up/outward with a modest elbow lift, no hand crossing the zipper. Smoothly connect the sleeve under the original collar with one uninterrupted narrow gold trim. Match the original compact hand size and clothing proportions.",
+      "referencedImagePaths": [
+        "docs/assistant/wave-keyframes-v7/keys/02-middle.png",
+        "docs/assistant/wave-keyframes-v7/reference/neutral-clean.png"
+      ],
+      "transparentBackground": true,
+      "resultFile": "generated/opening-initial.png",
+      "selected": false,
+      "note": "Rejected: registered hand overlaps original hair; retained as audit source"
+    },
+    {
+      "name": "peak-revision",
+      "prompt": "Use case: precise-object-edit. Image 1 is the EXACT edit target; Image 2 the original neutral identity. Single square transparent complete-body PNG. Make ONLY a SMALL RETOUCH to the SCREEN LEFT sleeve SHOULDER of Image 1: connect the black cloth and narrow gold trim smoothly to the existing collar, remove abrupt notch and gold branch. Do NOT redraw or enlarge the character. Preserve the exact framing, position and scale from Image 1: character height occupies about 58 percent of the square canvas, top of hair at 21 percent canvas height, bottom of boots at 79 percent, feet centred at 50 percent canvas width. Keep at least 20 percent empty transparent margin at top and bottom, never fill the canvas with a larger character. Head, face, huge amber eyes, hair/tuft/gold streak, headset, collar, white shirt, opposite arm, shorts, legs and boots must remain unchanged. Keep the SAME little open hand and bent forearm from Image 1; compact palm with thumb and four short fingers at cheek height OUTSIDE the hair, transparent gap. One continuous sleeve with natural gold trim. Opaque warm peach skin, single clean dark contours, no doubled limb, pale halo, translucency, pose change, body lean, text, shadows or watermark. Preserve genuine transparent alpha.",
+      "referencedImagePaths": [
+        "docs/assistant/wave-keyframes-v7/keys/03-peak.png",
+        "docs/assistant/wave-keyframes-v7/reference/neutral-clean.png"
+      ],
+      "transparentBackground": true,
+      "resultFile": "generated/peak.png",
+      "selected": true
+    },
+    {
+      "name": "opening-revision",
+      "prompt": "Use case: precise-object-edit. Image 1 is the exact edit target; Image 2 the original identity reference. Make one precise pose adjustment ONLY: move the partly-opening SCREEN LEFT hand and wrist OUTWARD to the left by about TWO percent of the full square canvas width, keeping its current height BELOW the full cheek-height wave. Maintain the curved partly separated fingers, thumb, compact chibi hand and palm facing viewer; do not change to a fist or a fully open high palm. Leave a clearly visible transparent gap of at least 20 source pixels between EVERY fingertip/thumb and the hair silhouette. Adjust the attached forearm naturally to this small outward hand change, smoothly connected sleeve under the same collar with one narrow gold trim. Keep the entire head/face/huge round amber eyes/hair/gold streak/headset/collar/torso/opposite arm/shorts/legs/boots unchanged from Image 1. EXACT same camera, character scale, canvas and foot positions: hair starts at about 21 percent canvas height, soles at about 79 percent, character height about 58 percent; at least 20 percent transparent top/bottom margins. Do not enlarge, lean or translate the whole body. True transparent alpha. One opaque peach hand with single dark contour; no extra limb, disconnected sleeve, doubled contours, gray translucency, hair flecks, pale fringe, labels, shadow or watermark.",
+      "referencedImagePaths": [
+        "docs/assistant/wave-keyframes-v8/generated/opening-initial.png",
+        "docs/assistant/wave-keyframes-v8/reference/neutral-clean.png"
+      ],
+      "transparentBackground": true,
+      "resultFile": "generated/opening.png",
+      "selected": true
+    }
+  ]
+}

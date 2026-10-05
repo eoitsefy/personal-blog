@@ -1,0 +1,8 @@
+{
+  "status": "REJECTED_ART",
+  "releaseAllowed": false,
+  "productionChanged": false,
+  "rawFrameScopeSha256": "3c40738a842e7565fe2926d5a7758a680a3ad6e1b5dcaefda37d7c328db29315",
+  "issues": ["Original cloth patch copied from a bent-arm source also copied a fragment of its hand at frames 7/29."],
+  "nextCandidate": "wave-v14 uses original neutral cloth source without any hand in the selected rectangle, x325..345 y454..479."
+}

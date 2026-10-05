@@ -8,11 +8,11 @@ function findTests(directory) {
   return readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {
     const resolved = path.join(directory, entry.name);
     if (entry.isDirectory()) return findTests(resolved);
-    return entry.isFile() && entry.name.endsWith(".test.ts") ? [resolved] : [];
+    return entry.isFile() && /\.test\.(ts|mjs)$/.test(entry.name) ? [resolved] : [];
   });
 }
 
-const tests = findTests(path.join(root, "src", "lib"));
+const tests = [...findTests(path.join(root, "src", "lib")), ...findTests(path.join(root, "scripts", "animation"))];
 
 const result = spawnSync(
   process.execPath,

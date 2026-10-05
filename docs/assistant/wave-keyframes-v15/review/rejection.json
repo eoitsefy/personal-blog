@@ -1,0 +1,13 @@
+{
+  "status": "REJECTED",
+  "releaseAllowed": false,
+  "productionChanged": false,
+  "reviewer": "Independent motion_art_review agent and root",
+  "manifestScopeSha256": "aca43c82d0fff6a71ca00af9decc9653066189f397ad216f45f7ef5a47a5987b",
+  "keyScopeSha256": "f94fd3fd34aa1478b90354693b374931c37d906ba2274402ecf284bfaaf1d7fa",
+  "frameScopeSha256": "ce1db3f2335f58f7d1d8564ce3484d45c83d1417d7f672569014b1086e23d66c",
+  "reason": "Actual normal and half-speed playback reveals 13->14->15->16 opening/closing/opening of the palm. Reverse 20->21->22->23 repeats the continuity defect. Static key approval and browser technical success cannot authorize release.",
+  "requiredRepair": "Repair only pose 14 and mirrored 22 into a moderately opening palm between 13 and original authored pose 15; preserve wrist, other poses and timing.",
+  "actualPlaybackEvidence": "D:/CodexTools/assistant-animation/art-review-v15/sample-timing.json",
+  "actualPlaybackContactSheet": "D:/CodexTools/assistant-animation/art-review-v15/dark-half-hand-segment.png"
+}

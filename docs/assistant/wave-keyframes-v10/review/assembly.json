@@ -1,0 +1,102 @@
+{
+  "status": "PENDING_ART_REVIEW",
+  "releaseAllowed": false,
+  "generatedOutputs": 9,
+  "selectedImageEdits": 6,
+  "rejectedPositionVariants": [
+    "007",
+    "007-lift",
+    "008"
+  ],
+  "preparedKeys": 19,
+  "originalReference": 1,
+  "originalAuthoredKeys": 6,
+  "retainedInterpolatedKeys": 6,
+  "frames": 37,
+  "fps": 15,
+  "periodMs": 3000,
+  "reverseReuse": "frame[36-i] exactly equals frame[i]",
+  "parentFrameScopeSha256": "21167c671bfbf29737b1c939bb50061890ddc612e66772b11c8514c71717dd68",
+  "rawFrameScopeSha256": "b293dc3d204df41b988dba3a57695e94dd0b9f4e9597fe9126225bd0901ffade",
+  "poses": [
+    {
+      "frame": 1,
+      "source": "001",
+      "registration": {
+        "x": -1,
+        "y": -3
+      },
+      "handCentre": [
+        309.3481116584565,
+        481.1067323481117
+      ],
+      "changedStatic": 0
+    },
+    {
+      "frame": 7,
+      "source": "007-new",
+      "registration": {
+        "x": -1,
+        "y": -2
+      },
+      "handCentre": [
+        317.3936507936508,
+        448.28253968253966
+      ],
+      "changedStatic": 0
+    },
+    {
+      "frame": 8,
+      "source": "008-exact",
+      "registration": {
+        "x": -1,
+        "y": -2
+      },
+      "handCentre": [
+        303.18518518518516,
+        439.88641975308644
+      ],
+      "changedStatic": 0
+    },
+    {
+      "frame": 14,
+      "source": "014",
+      "registration": {
+        "x": -1,
+        "y": -2
+      },
+      "handCentre": [
+        285.58092485549133,
+        415.8400770712909
+      ],
+      "changedStatic": 0
+    },
+    {
+      "frame": 16,
+      "source": "016",
+      "registration": {
+        "x": -1,
+        "y": -3
+      },
+      "handCentre": [
+        277.31662688941924,
+        405.45425616547334
+      ],
+      "changedStatic": 0
+    },
+    {
+      "frame": 17,
+      "source": "017",
+      "registration": {
+        "x": -1,
+        "y": -3
+      },
+      "handCentre": [
+        275.2013366750209,
+        400.48036758563074
+      ],
+      "changedStatic": 0
+    }
+  ],
+  "productionChanged": false
+}

@@ -5,3 +5,9 @@ Dockerfile text eol=lf
 *.yaml text eol=lf
 *.py text eol=lf
 *.conf.example text eol=lf
+# Hash-bound offline animation code and approval bytes must survive Windows
+# checkout without CRLF changing the reviewed engine or final-approval digest.
+scripts/animation/pipeline.mjs text eol=lf
+scripts/publish-reviewed-wave.mjs text eol=lf
+docs/assistant/**/review/*-approval.json text eol=lf
+docs/assistant/**/runtime-manifest.json text eol=lf

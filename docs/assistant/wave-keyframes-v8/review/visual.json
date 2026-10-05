@@ -1,0 +1,95 @@
+{
+  "version": 1,
+  "date": "2026-10-05",
+  "status": "REJECTED",
+  "reviewer": "Codex direct whole-frame and enlarged-arm inspection",
+  "releaseAllowed": false,
+  "productionChanged": false,
+  "sourceKeyScopeSha256": "e1de5abe510bf53fadea5d5cac2e777a0a8ad2ebacd554eae1f3ffa7f3a54937",
+  "attempts": [
+    {
+      "method": "RGB and separate alpha",
+      "frameScopeSha256": "b380e25956e087f8970e8dbdbc5d1709e0f4bff60eecf09dab8b42fec173d7a9",
+      "technicalRejectedFrames": [
+        11,
+        14,
+        21,
+        31
+      ],
+      "visualRejectedExamples": [
+        6,
+        10,
+        11,
+        14,
+        21,
+        26
+      ],
+      "note": "Visible gray duplicate sleeve/hand contours in the lift and return; finger edges are translucent. The skin heuristic misses some sleeve ghosts."
+    },
+    {
+      "method": "Single green matte and reference palette",
+      "frameScopeSha256": "9b94250edb733d60838455d9df690642e41c58f4359880b15d59bc1cf5d9b606",
+      "technicalRejectedFrames": [
+        1,
+        2,
+        5,
+        6,
+        10,
+        11,
+        15,
+        17,
+        19,
+        21,
+        22,
+        26,
+        27,
+        30,
+        31
+      ],
+      "visualRejectedExamples": [
+        6,
+        26
+      ],
+      "note": "Finger-gray artifacts look reduced compared with the first attempt, but a residual lower forearm remains in the rise/return. Palette fitting still makes substantial skin regions partly transparent; this is not an accepted replacement."
+    }
+  ],
+  "reviewedFiles": [
+    "review/frames-arm-light.png",
+    "review/frames-arm-dark.png",
+    "review/matte-frames-arm-light.png",
+    "review/matte-frames-arm-dark.png",
+    "review/matte-frames-whole-light.png",
+    "review/matte-frames-whole-dark.png"
+  ],
+  "checks": [
+    {
+      "name": "Five source poses",
+      "status": "APPROVED_FOR_INTERPOLATION_ONLY",
+      "note": "Separate key-only permission does not approve optical-flow results."
+    },
+    {
+      "name": "Head, torso centre and soles",
+      "status": "PASS",
+      "note": "Raw PNG tests preserve original static-region bytes in every frame, with fixed 768px canvas and 20% margins. Browser decoding is checked separately."
+    },
+    {
+      "name": "Alpha and single contours",
+      "status": "REJECTED",
+      "note": "Both complete sequences retain visible or measured artifacts."
+    },
+    {
+      "name": "Complete art acceptance",
+      "status": "REJECTED",
+      "note": "No release even if preview controls or numeric static-region tests pass."
+    }
+  ],
+  "nextSteps": [
+    "Add a real intermediate pose between waist preparation and chest-level fist, reducing the largest arm displacement.",
+    "Add a more gradual fist-to-open-palm pose if needed; do not use higher frame rates as a substitute.",
+    "Validate shared optical flow and alpha recovery; palette fitting alone is insufficient.",
+    "Bind a new ordered pixel scope and repeat all light/dark frame and normal/half-speed checks before runtime integration."
+  ],
+  "deepSeekCallsThisTurn": 0,
+  "extraImageApi": false,
+  "original84PngChanged": false
+}

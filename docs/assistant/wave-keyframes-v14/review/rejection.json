@@ -1,0 +1,8 @@
+{
+  "status": "REJECTED_ART",
+  "releaseAllowed": false,
+  "productionChanged": false,
+  "rawFrameScopeSha256": "17c342d1c505d4f59f09b5cd66e83deef84047477207b883ee0e368967bb000e",
+  "issues": ["Independent review found remaining isolated gold stripe fragment at x318..324 y460..467 on frames 7/29."],
+  "nextCandidate": "wave-v15 restores only opaque gold fragment pixels in the identified cloth rectangle; no hand/sleeve-edge changes."
+}

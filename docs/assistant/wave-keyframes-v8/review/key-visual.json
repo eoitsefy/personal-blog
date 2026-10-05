@@ -1,0 +1,47 @@
+{
+  "version": 1,
+  "date": "2026-10-05",
+  "status": "APPROVED_FOR_INTERPOLATION_ONLY",
+  "artScopeSha256": "e1de5abe510bf53fadea5d5cac2e777a0a8ad2ebacd554eae1f3ffa7f3a54937",
+  "reviewer": "Codex direct visual inspection",
+  "releaseAllowed": false,
+  "interpolationAllowed": true,
+  "scope": "Five still PNG poses only; full animation and production are not approved",
+  "reviewedFiles": [
+    "review/keys-light.png",
+    "review/keys-dark.png",
+    "review/arm-light.png",
+    "review/arm-dark.png"
+  ],
+  "checks": [
+    {
+      "name": "Identity and fixed regions",
+      "status": "PASS",
+      "note": "Original full head, body centre and feet preserved; full-frame rendering, not a runtime layered rig."
+    },
+    {
+      "name": "Shoulder and sleeve",
+      "status": "PASS_FOR_KEYS_ONLY",
+      "note": "Sleeve is connected under the collar with continuous trim; v7 prep/peak breaks corrected."
+    },
+    {
+      "name": "Palm and hair gap",
+      "status": "PASS_FOR_KEYS_ONLY",
+      "note": "Selected opening/peak hand contours are outside original hair; opaque peach interiors on both backgrounds."
+    },
+    {
+      "name": "Motion",
+      "status": "NOT_TESTED",
+      "note": "Optical flow may still introduce translucency, double outlines or shape drift. Every resulting frame and playback must pass a separate gate."
+    }
+  ],
+  "newIndependentPoses": 3,
+  "reusedPoses": [
+    "original neutral",
+    "v7 middle"
+  ],
+  "generatedOutputs": 5,
+  "rejectedGeneratedOutputs": 2,
+  "deepSeekCallsThisTurn": 0,
+  "productionChanged": false
+}

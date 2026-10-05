@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "status": "REJECTED",
+  "reviewer": "Independent motion_art_review agent plus root inspection",
+  "reviewedAt": "2026-10-05T10:00:00Z",
+  "manifestScopeSha256": "d06d3e31712b6c0edaf197fced75b148efc4dc0e396f539736206612b057a051",
+  "keyScopeSha256": "0aa0cf4bb3beadc235ac4430a41b5879c6dbba36c6aa281feb3ec5482df96a41",
+  "frameScopeSha256": "21167c671bfbf29737b1c939bb50061890ddc612e66772b11c8514c71717dd68",
+  "releaseAllowed": false,
+  "productionChanged": false,
+  "reviewedContactSheets": ["whole-light.png", "whole-dark.png", "arm-light.png", "arm-dark.png"],
+  "reviewedSingleFrames": [1, 7, 8, 14, 16, 17, 22, 28, 29, 35],
+  "blockingFindings": [
+    {"frames": [7, 29], "issue": "Gray old outline beside the gold outer sleeve."},
+    {"frames": [8, 28], "issue": "Repeated gray edge at fist/cuff; frame 28 is especially visible."},
+    {"frames": [14, 16, 17, 22], "issue": "Overlapping gray finger lines; frame 17 has an unclear hand silhouette."},
+    {"frames": [1, 35], "issue": "Blurred transition edges; keep the corresponding technical rejection."}
+  ],
+  "improvements": [
+    "Two real bridge poses reduce the previous whole lower-arm ghost.",
+    "Original head, body center and feet remain pixel-identical in the protected static area.",
+    "Seven key poses are approved for interpolation only, not final release."
+  ],
+  "limits": [
+    "Connected opaque sleeve ghosts can evade skin-alpha, component and silhouette-area metrics.",
+    "Browser playback success is not visual art approval.",
+    "The sequence is raise-hand greeting and return, not a side-to-side wrist wave."
+  ]
+}
