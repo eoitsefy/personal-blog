@@ -4,12 +4,12 @@
 
 ## 统一可执行流水线
 
-入口是 `scripts/animation-pipeline.mjs`，不需要启动ComfyUI，不调用DeepSeek或图像API，也不会部署。输入必须是已制作好的完整透明PNG关键姿态、原中立图、允许修改区域的透明蒙版，以及固定时序的 `manifest.json`。当前批准的执行适配器只有 `rife-rgba` 和 `hold`；后者是保持关键姿态的诊断/测试模式，不是新增流畅中间帧。
+入口是 `scripts/animation-pipeline.mjs`，不需要启动ComfyUI，不调用DeepSeek或图像API，也不会部署。输入必须是已制作好的完整透明PNG姿态和过程图、原中立图、允许修改区域的透明蒙版，以及固定时序的 `manifest.json`。执行适配器只有 `rife-rgba` 和 `hold`；前者调用本地 RIFE，后者按批准顺序保留已制作的完整过程 PNG，可用于经全帧审查的素材包，但不生成新中间姿态。
 
 | 阶段 | 执行内容 | 必须保留的界限 |
 | --- | --- | --- |
 | doctor / prepare | 源PNG摘要/尺寸、原中立、静区/20%留白、系统盘/内存检查 | 技术准备不等于关键图美术通过 |
-| interpolate | 独立关键图许可后，本地固定版本RIFE输出完整PNG | 中间帧不能当作独立绘制数量 |
+| interpolate | 独立关键图许可后，RIFE 补帧或 hold 排列既有完整 PNG | 中间帧、重复槽不能当作独立绘制数量 |
 | check | 重新读取全部实际帧，核对数量/时序/关键节点/静区/alpha/组件 | 指标不能发现所有黑袖残影和手型错误 |
 | preview | 正常/半速实际整轮、源PNG与画布、暂停/减少动态/手机宽度 | 允许拒收动画的诊断预览，不放行发布 |
 | package | 重查技术、完整播放记录、最终全帧美术许可；无损WebP解码核对 | 仅产出本机离线文件，不自动部署 |
@@ -22,13 +22,13 @@
 
 ```powershell
 cd 'C:\Users\Administrator\Documents\Codex\2026-07-15\github-plugin-github-openai-curated-remote-4\work\personal-blog'
-$manifest = 'docs/assistant/wave-keyframes-v9/manifest.json'
+$manifest = 'docs/assistant/wave-keyframes-v16/manifest.json'
 $env:ANIMATION_TOOL_ROOT = 'D:\CodexTools\assistant-animation'
 npm run animation:pipeline -- doctor $manifest
 npm run animation:pipeline -- prepare $manifest
 ```
 
-关键图须由独立视觉审查给出仅限补帧的摘要许可，命令行不会生成或自动批准。已冻结的v9可以直接复用其关键图许可；不要重新运行v9专用来源准备脚本覆盖已审查图。
+关键图须由独立视觉审查给出仅限补帧的摘要许可，命令行不会生成或自动批准。已冻结的 v16 只能在当前来源和摘要不变时复用自己的许可；不要重新运行专用准备脚本覆盖已审查图，也不能借用 v9–v15 许可。
 
 ```powershell
 npm run animation:pipeline -- interpolate $manifest
@@ -36,7 +36,7 @@ npm run animation:pipeline -- check $manifest
 npm run animation:pipeline -- status $manifest
 ```
 
-当前v9的 `check` 必须非零退出，因为技术和美术仍拒收；不是部署异常，也不能强行改成成功。诊断预览先从仓库解析Playwright；如仓库没有它，在本机显式配置已有运行时的包解析锚点（必须是本地目录下的 `package.json` 路径，文件本身不要求存在；不在manifest内指定可执行模块）：
+v16 已通过当前技术和完整美术门禁；历史 v9 的 `check` 仍应非零退出，不能强行改成成功。诊断预览先从仓库解析Playwright；如仓库没有它，在本机显式配置已有运行时的包解析锚点（必须是本地目录下的 `package.json` 路径，文件本身不要求存在；不在manifest内指定可执行模块）：
 
 ```powershell
 $env:ANIMATION_PLAYWRIGHT_PACKAGE_JSON = 'C:\Users\Administrator\.cache\codex-runtimes\codex-primary-runtime\dependencies\node\package.json'
@@ -47,7 +47,7 @@ node scripts/view-animation-review.mjs $manifest
 
 预览入口打印临时 `http://127.0.0.1:端口`，浏览器打开后可查看正常/半速、暂停和深浅背景；Ctrl+C关闭。只服务绑定摘要的HTML和PNG，不开放目录、其他仓库文件或生成API。直接双击 `preview.html` 不等价于运行预览。自动浏览器命令默认关闭其临时服务，手工查看才使用最后一个命令。
 
-所有技术、完整播放和最终美术审查通过后才可打包，v9尚不具备这些条件：
+所有技术、完整播放和最终美术审查通过后才可打包；v16 具备当前范围的许可，v9–v15 的拒收历史不变：
 
 ```powershell
 npm run animation:pipeline -- package $manifest --dry-run
@@ -58,13 +58,32 @@ npm run animation:pipeline -- run $manifest --dry-run
 
 `--dry-run`只读取/校验输入并展示任务范围，不出图、不启动浏览器、不审批、不写文件。浏览器channel只允许本机白名单；缺少依赖/浏览器时须先补齐，不宣称预览已通过。几何测试素材已实际完成浏览器和WebP打包/解码，五张PNG合并为三编码帧，两个计数分别保存；不将它作为人物发布许可。
 
-### 当前人物优化和还需制作的部分
+### v16 已交付、发布导出与生产验收
+
+v16 已通过独立全帧美术复审、37 张实际 PNG 技术检查及正常/半速播放。19 张准备图分项为 1 张参考、6 张关键姿态、6 张图像修绘、6 张插值，按 37 槽、15 fps、3 秒播放，不称为 37 张独立绘制。本轮共 10 次内置 imagegen 调用，最终选用 6 个修绘来源，DeepSeek 调用为零；制作与拒收记录留在各版本，v10–v15 许可不能借给 v16。
+
+每张输入可声明 `provenance.kind` 为 `reference`、`authored-keyframe`、`interpolated-frame` 或 `image-edited-frame`。衍生图必须保存 `parentFrameScopeSha256` 和 `parentFrameIndex`，修绘还需 `editSourceSha256`；未声明的旧图计为 `unspecifiedFrames`。来源计数随 manifest 摘要绑定，不把 `keys.length` 当成独立绘制数。
+
+`scripts/publish-reviewed-wave.mjs` 接受 manifest 参数，在重新读取实际帧、技术报告、完整播放和最终美术审批后才导出。当前契约锁定原 768px 画布、19 张准备图和 37 槽；任何未审批、陈旧或拒收范围均失败，不产出公开资源。
+
+```powershell
+# 校验真实门禁，不导出公开图集。
+node scripts/publish-reviewed-wave.mjs $manifest --check
+# 批准后导出版本化图集；不部署。
+node scripts/publish-reviewed-wave.mjs $manifest
+```
+
+v16 静态无损图集沿用固定裁剪框 `180,153,366,460`，6 列 7 排、2196×3220。37 帧逐行复制 RGBA，不逐帧缩放/自动裁切；编码后回读全部 42 格，核对可见 RGBA、alpha 与 5 格透明空白。`runtime-manifest.json` 保存实际来源、来源分项计数、审批、执行器/导出器及资源摘要；当前资源为 2348922 字节，SHA-256 `6a33ac3c97b25c127ca05a7d8aaa594830019a156c2bf5ce3089079c6c2e43aa`。播放源帧范围为 `e5d9c3c2d8f54edc05288bb52e407ee9d5c4488cd8e204c23bc6dfc1f3534add`。PNG/WebP 审查使用 67ms 步进和 588ms 中立末段，应用使用精确 15fps 与 600ms 中立末段，两者均为 3 秒。
+
+本次只替换挥手，其他六动作及原 84 张 PNG 不改。185/185 本地测试零跳过（含实际浏览器与 WebP 回读）、lint、typecheck、无数据库 UI 预览构建通过；完整 CI `37307635788` 的 PostgreSQL 集成、生产构建及 Linux 容器检查通过。应用于 2026-10-05 20:25:25（中国时间）部署至 `6904a9b`，本地及生产四宽度各 159 个动作时间点通过，无 AI 请求。服务器原字节校验、HTTPS、数据库/Redis 健康、环境/Nginx/上传 ACL 不变检查通过；回滚及生产证据在 `docs/assistant/wave-keyframes-v16/review/production-deployment.json`。更换角色须重新制作与审查自己的整帧来源，并适配不同画布/裁剪契约，流程见 `13_ASSISTANT_CHARACTER_WORKFLOW.md`。
+
+### v9 优化和拒收历史
 
 v9本轮新增两张真实过渡姿态，七关键图经审查可补帧，37帧RIFE约15fps样片的正常/半速浏览器检查通过。但全帧美术仍发现袖口灰边、手指叠线；技术拒收1/14/16/17/22/35。`docs/assistant/wave-keyframes-v9/review/visual.json`保留明确拒收及实际帧摘要，没有最终许可，没有新生产接入。
 
 多agent复审推动了两次边界修正：皮肤透明度指标增加全alpha/孤立组件测量，但仍承认连接黑袖残影会漏检；打包不能信任单个PASSED标签，必须核对实际PNG与完整播放记录。关键图许可与最终动画许可从结构上分离。175项单元测试零跳过通过，包含真实几何浏览器和WebP回读，lint/差异检查通过；真实v9打包正确拒绝。审查证据见新包 `review/pipeline-audit.json`。离线共享RGBA变形实验虽然保证同一颜色/alpha采样坐标，仍出现遮挡折叠，24过程帧拒收；`try-shared-wave-warp.mjs`仅为孤立实验，不是流水线适配器。
 
-后续先修握拳到张掌的真实手型过程及准备到胸前的更小跨度姿态，再重新逐帧审查，不降低阈值、删坏帧、复制许可或只增加fps。任意单图自动绑定、自动关键图修绘/抠图、美术自动放行、LoRA训练、EbSynth/ToonCrafter整链仍未完成；当前可流水执行的是**经过素材制作和关键图审查之后**的离线阶段。
+上述为 v9 当时的拒收结论；后续 v16 修整和独立许可见上节，不改写历史。不降低阈值、删坏帧、复制许可或只增加 fps。任意单图自动绑定、自动关键图修绘/抠图、美术自动放行、LoRA 训练、EbSynth/ToonCrafter 整链仍未完成；当前可流水执行的是经过素材制作和关键图审查之后的离线阶段。
 
 ## 已安装工具
 
@@ -135,13 +154,13 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass `
 2. 输出在 `jobs\动作名\plan.json` 和 `keyframe-workflow.api.json`。后者是 API 格式的固定参数模板，不会自动提交执行。用 Krita 准备同一 768px 画布的 `reference-neutral.png`、`动作名-pose.png`、`动作名-lineart.png`，在 ComfyUI 输入目录或 UI 中选择。参考图采用不透明纯色背景；OpenPose 输入必须为正确骨架引导图，不能把普通人物图当骨架。线稿引导须对应该关键姿态；本轮没有安装自动姿态/线稿预处理节点。
 3. 模板固定原角色描述、基础模型、seed、IPAdapter 0.7、OpenPose 0.85、Lineart 0.9、20 步和 img2img denoise 0.3。这些是初始参数，不是身份一致性的保证。先制作少量关键帧，必要时人工修正；不要为每一中间帧重新随机文生图。大姿态变化可能需分段准备来源关键帧，不盲目提高 denoise。
 4. 每个关键帧对照原版看眼睛、头身比、服装、肢体数、手型和遮挡。任一明显形变即退回修图，DeepSeek 文本不能替代视觉检查。
-5. 关键帧通过后使用现有 RIFE/PNG 工具传播中间过程。RGB 与 alpha 必须一致；旧挥手的灰色手掌和双轮廓仍是未解决问题。RIFE 不会自动纠正坏关键帧，不能只用高帧率掩盖重影。
-6. ComfyUI 绘图输出默认是 RGB PNG，不等同于透明 PNG。抠图、去色溢、静区像素保护、固定裁剪和脚底对齐后，检查全部浅/深底帧、放大边缘、半速/正常速循环、首尾中立。现有 v6 审查和摘要绑定流程继续使用。
+5. 关键图通过后，可用本地 RIFE 传播过程，或用 hold 保留已经制作/修整的完整 PNG。RGB 与 alpha 必须一致，所有实际过程仍需审查；RIFE 不会自动纠正坏关键图。旧生产 v6 的灰色手掌和双轮廓记录不改写，不能只用高帧率掩盖重影。
+6. ComfyUI 绘图输出默认是 RGB PNG，不等同于透明 PNG。抠图、去色溢、静区像素保护、固定裁剪和脚底对齐后，检查全部浅/深底帧、放大边缘、半速/正常速循环、首尾中立。新素材的关键图许可、实际帧范围和最终许可分别绑定摘要，不复用旧 v6 所有者特定确认。
 7. 仅在新素材技术、美术与真实浏览器播放通过后，才接入图集和生产播放器。`plan.json` 始终标为 `DRAFT_REQUIRES_ART_REVIEW`，`renderAllowed` 和 `deployAllowed` 为 false；本地计划不是发布授权。
 
 目前没有安装或执行 LoRA 训练、EbSynth、ToonCrafter 或自动全流程抠图。已用内置 imagegen 制作少量挥手候选，未用本地联合流程生成新人物；通用 SD1.5 不保证直接复制原角色。换新角色可复用动作过程、参数模板和检查流程，但仍需自己的参考图、引导图与完整视觉验收。
 
-## 当前挥手制作进度
+## v8 挥手制作历史
 
 旧 `wave-keyframes-v7` 肩部接缝拒收记录保留；新包为 `docs/assistant/wave-keyframes-v8/`。本轮内置imagegen五次参考编辑，选用三张新姿态并复用原中立/v7胸前姿态，保留两张拒收来源及实际提示词。肩线与展开手掌初审通过，关键帧许可只绑定五张图的像素摘要，没有新增DeepSeek调用，也未运行ComfyUI人物制图。
 
