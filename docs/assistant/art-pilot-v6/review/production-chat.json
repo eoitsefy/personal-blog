@@ -1,0 +1,63 @@
+{
+  "accepted": true,
+  "testedAt": "2026-10-05T05:46:03.884Z",
+  "origin": "https://eastherphil.cn",
+  "realChat": {
+    "passed": true,
+    "mode": "conversation",
+    "inputTokens": 0,
+    "outputTokens": 0
+  },
+  "reducedMotion": true,
+  "results": [
+    {
+      "width": 1280,
+      "mascot": true,
+      "neutralIdle": true,
+      "selectedFrameActions": true,
+      "localWelcomeNoQuery": true,
+      "focusAndEscape": true,
+      "pauseAndNod": true,
+      "assistantPage": true,
+      "noOverflow": true,
+      "noMicrophone": true
+    },
+    {
+      "width": 768,
+      "mascot": true,
+      "neutralIdle": true,
+      "selectedFrameActions": true,
+      "localWelcomeNoQuery": true,
+      "focusAndEscape": true,
+      "pauseAndNod": true,
+      "assistantPage": true,
+      "noOverflow": true,
+      "noMicrophone": true
+    },
+    {
+      "width": 390,
+      "mascot": true,
+      "neutralIdle": true,
+      "selectedFrameActions": true,
+      "localWelcomeNoQuery": true,
+      "focusAndEscape": true,
+      "pauseAndNod": true,
+      "assistantPage": true,
+      "noOverflow": true,
+      "noMicrophone": true
+    },
+    {
+      "width": 320,
+      "mascot": true,
+      "neutralIdle": true,
+      "selectedFrameActions": true,
+      "localWelcomeNoQuery": true,
+      "focusAndEscape": true,
+      "pauseAndNod": true,
+      "assistantPage": true,
+      "noOverflow": true,
+      "noMicrophone": true
+    }
+  ],
+  "pageErrors": 0
+}

@@ -1,0 +1,31 @@
+{
+  "accepted": true,
+  "testedAt": "2026-10-05T05:45:33.749Z",
+  "zoomIsEmulated": true,
+  "results": [
+    {
+      "zoomEmulation": 1,
+      "navAndChatReadable": true,
+      "noOverflow": true,
+      "noAiRequests": true
+    },
+    {
+      "zoomEmulation": 0.9,
+      "navAndChatReadable": true,
+      "noOverflow": true,
+      "noAiRequests": true
+    },
+    {
+      "zoomEmulation": 0.8,
+      "navAndChatReadable": true,
+      "noOverflow": true,
+      "noAiRequests": true
+    },
+    {
+      "zoomEmulation": 2,
+      "navAndChatReadable": true,
+      "noOverflow": true,
+      "noAiRequests": true
+    }
+  ]
+}
