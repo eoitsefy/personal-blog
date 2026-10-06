@@ -51,19 +51,19 @@ test("v6 static atlas tiles are lossless fixed crops of the accepted 15 fps samp
 });
 
 test("left-collar release retains the v16 wave and legacy timings with native blink samples", () => {
-  assert.equal(CHARACTER_FRAME_VERSION, "original-left-collar-release-v1");
+  assert.equal(CHARACTER_FRAME_VERSION, "original-left-collar-blink-refined-v1");
   assert.deepEqual(NEUTRAL_DRAWING, { sheet: "pilot-blink", frame: 0 });
   assert.equal(PILOT_SHEETS["pilot-blink"].src, "/assistant/chibi-blink-pilot-v6.webp");
   assert.equal(PILOT_SHEETS["pilot-wave"].src, "/assistant/chibi-wave-reviewed-v16.webp");
   assert.equal(PILOT_SHEETS["pilot-wave"].poses.length, 37);
   assert.equal(PILOT_SHEETS["pilot-wave"].width, 2196); assert.equal(PILOT_SHEETS["pilot-wave"].height, 3220);
   assert.equal(LEFT_COLLAR_SHEETS["pilot-blink"].src, "/assistant/chibi-idle-left-collar-v4.webp");
-  assert.equal(DRAWING_SEQUENCES.idle.length, 67); assert.equal(DRAWING_SEQUENCES.wave.length, 37);
+  assert.equal(DRAWING_SEQUENCES.idle.length, 68); assert.equal(DRAWING_SEQUENCES.wave.length, 37);
   assert.deepEqual(DRAWING_SEQUENCES.wave.slice(1, -1), Array.from({ length: 35 }, (_, i) => ({ sheet: "pilot-wave", frame: i + 1 })));
   assert.equal(drawingDuration("idle"), 4000); assert.equal(drawingDuration("wave"), 3000);
   assert.ok(Math.abs(drawingTimes("wave").at(-1)! - 2400) < 1e-8);
   assert.deepEqual(Object.fromEntries(Object.entries(DRAWING_SEQUENCES).map(([action, frames]) => [action, frames.length])),
-    { idle: 67, wave: 37, nod: 14, thinking: 28, bow: 20, cheer: 17, yawn: 34 });
+    { idle: 68, wave: 37, nod: 14, thinking: 28, bow: 20, cheer: 17, yawn: 34 });
 });
 
 test("v16 runtime atlas is hash-bound to full approved PNGs, provenance and strict final art/browser gates", async () => {

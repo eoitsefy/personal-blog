@@ -1,0 +1,1391 @@
+{
+  "role": "independent-timing-and-pixel-audit",
+  "candidateManifest": "C:\\Users\\Administrator\\Documents\\Codex\\2026-07-15\\github-plugin-github-openai-curated-remote-4\\work\\personal-blog\\docs\\assistant\\blink-refinement-draft-v4\\candidate.json",
+  "status": "PASS_QUANTITATIVE",
+  "artReview": "Separate art review is mandatory; numeric PASS is not publication authorization.",
+  "assetScopeSha256": "dd9aeaca59d82381931d9a350ea8e7e64285fb7c64b828fb1f234b0840403338",
+  "frameScopeSha256": "69ecc2a035fcfab6f6e74924200854d158b9dac3bd475cc6a4bb3b09b7a6a0bf",
+  "metrics": {
+    "alphaChanged": 0,
+    "nonEyeRgbChanged": 0,
+    "atlasAlphaChanged": 0,
+    "atlasVisibleRgbChanged": 0,
+    "measuredEyePixels": 5759,
+    "open": {
+      "ink40": 1163,
+      "dark70": 1592
+    },
+    "parentMaximumMeanRgbDelta": 32.2634,
+    "candidateMaximumMeanRgbDelta": 28.3198,
+    "edges": [
+      {
+        "frame": 37,
+        "parentInk40": 1242,
+        "candidateInk40": 936,
+        "candidateInkOvershootPct": -19.52,
+        "candidateDarkOvershootPct": -12.12
+      },
+      {
+        "frame": 48,
+        "parentInk40": 1297,
+        "candidateInk40": 1063,
+        "candidateInkOvershootPct": -8.6,
+        "candidateDarkOvershootPct": -6.16
+      }
+    ],
+    "closed": [
+      {
+        "frame": 41,
+        "parent": {
+          "ink40": 307,
+          "dark70": 511
+        },
+        "candidate": {
+          "ink40": 25,
+          "dark70": 324
+        },
+        "darkPixelReductionPct": 36.59
+      },
+      {
+        "frame": 42,
+        "parent": {
+          "ink40": 307,
+          "dark70": 511
+        },
+        "candidate": {
+          "ink40": 25,
+          "dark70": 324
+        },
+        "darkPixelReductionPct": 36.59
+      },
+      {
+        "frame": 43,
+        "parent": {
+          "ink40": 307,
+          "dark70": 511
+        },
+        "candidate": {
+          "ink40": 25,
+          "dark70": 324
+        },
+        "darkPixelReductionPct": 36.59
+      }
+    ],
+    "timing": [
+      33.3333,
+      33.3333
+    ]
+  },
+  "checks": {
+    "all68ActualPngAndParentHashesVerified": true,
+    "allAlphaChannelsIdentical": true,
+    "allNonEyeRgbChannelsIdentical": true,
+    "atlasVisibleRgbAndAlphaExact": true,
+    "keptAssetsSha256Identical": true,
+    "edgeInkAtMostTwoPercentAboveOriginal": true,
+    "adjacentEyeDifferenceNotWorseThanParent": true,
+    "refinedClosedDarkAreaReducedByAtLeastThirtyPercent": true,
+    "frame48And49Each33Point3333ms": true,
+    "exactNeutralLoop": true
+  },
+  "adjacentEyeDifferences": [
+    {
+      "from": 34,
+      "to": 36,
+      "intervalMs": 66.6667,
+      "parent": {
+        "meanRgbDelta": 0,
+        "changedOver40": 0
+      },
+      "candidate": {
+        "meanRgbDelta": 0,
+        "changedOver40": 0
+      }
+    },
+    {
+      "from": 36,
+      "to": 37,
+      "intervalMs": 33.3333,
+      "parent": {
+        "meanRgbDelta": 11.8353,
+        "changedOver40": 436
+      },
+      "candidate": {
+        "meanRgbDelta": 8.7769,
+        "changedOver40": 366
+      }
+    },
+    {
+      "from": 37,
+      "to": 38,
+      "intervalMs": 33.3333,
+      "parent": {
+        "meanRgbDelta": 29.8911,
+        "changedOver40": 1085
+      },
+      "candidate": {
+        "meanRgbDelta": 28.3198,
+        "changedOver40": 1087
+      }
+    },
+    {
+      "from": 38,
+      "to": 39,
+      "intervalMs": 33.3333,
+      "parent": {
+        "meanRgbDelta": 32.2634,
+        "changedOver40": 1198
+      },
+      "candidate": {
+        "meanRgbDelta": 25.2045,
+        "changedOver40": 947
+      }
+    },
+    {
+      "from": 39,
+      "to": 40,
+      "intervalMs": 33.3333,
+      "parent": {
+        "meanRgbDelta": 26.4187,
+        "changedOver40": 1071
+      },
+      "candidate": {
+        "meanRgbDelta": 20.1542,
+        "changedOver40": 920
+      }
+    },
+    {
+      "from": 40,
+      "to": 41,
+      "intervalMs": 33.3333,
+      "parent": {
+        "meanRgbDelta": 15.8709,
+        "changedOver40": 619
+      },
+      "candidate": {
+        "meanRgbDelta": 10.0791,
+        "changedOver40": 455
+      }
+    },
+    {
+      "from": 41,
+      "to": 42,
+      "intervalMs": 33.3333,
+      "parent": {
+        "meanRgbDelta": 0,
+        "changedOver40": 0
+      },
+      "candidate": {
+        "meanRgbDelta": 0,
+        "changedOver40": 0
+      }
+    },
+    {
+      "from": 42,
+      "to": 43,
+      "intervalMs": 33.3333,
+      "parent": {
+        "meanRgbDelta": 0,
+        "changedOver40": 0
+      },
+      "candidate": {
+        "meanRgbDelta": 0,
+        "changedOver40": 0
+      }
+    },
+    {
+      "from": 43,
+      "to": 44,
+      "intervalMs": 33.3333,
+      "parent": {
+        "meanRgbDelta": 11.6654,
+        "changedOver40": 492
+      },
+      "candidate": {
+        "meanRgbDelta": 8.733,
+        "changedOver40": 395
+      }
+    },
+    {
+      "from": 44,
+      "to": 45,
+      "intervalMs": 33.3333,
+      "parent": {
+        "meanRgbDelta": 22.6744,
+        "changedOver40": 897
+      },
+      "candidate": {
+        "meanRgbDelta": 14.4396,
+        "changedOver40": 660
+      }
+    },
+    {
+      "from": 45,
+      "to": 46,
+      "intervalMs": 33.3333,
+      "parent": {
+        "meanRgbDelta": 27.3906,
+        "changedOver40": 1065
+      },
+      "candidate": {
+        "meanRgbDelta": 22.0796,
+        "changedOver40": 855
+      }
+    },
+    {
+      "from": 46,
+      "to": 47,
+      "intervalMs": 33.3333,
+      "parent": {
+        "meanRgbDelta": 27.7654,
+        "changedOver40": 974
+      },
+      "candidate": {
+        "meanRgbDelta": 21.7292,
+        "changedOver40": 812
+      }
+    },
+    {
+      "from": 47,
+      "to": 48,
+      "intervalMs": 33.3333,
+      "parent": {
+        "meanRgbDelta": 24.2019,
+        "changedOver40": 881
+      },
+      "candidate": {
+        "meanRgbDelta": 26.5833,
+        "changedOver40": 936
+      }
+    },
+    {
+      "from": 48,
+      "to": 49,
+      "intervalMs": 33.3333,
+      "parent": {
+        "meanRgbDelta": 9.7113,
+        "changedOver40": 323
+      },
+      "candidate": {
+        "meanRgbDelta": 4.174,
+        "changedOver40": 175
+      }
+    },
+    {
+      "from": 49,
+      "to": 50,
+      "intervalMs": 33.3333,
+      "parent": {
+        "meanRgbDelta": 0,
+        "changedOver40": 0
+      },
+      "candidate": {
+        "meanRgbDelta": 0,
+        "changedOver40": 0
+      }
+    },
+    {
+      "from": 50,
+      "to": 52,
+      "intervalMs": 66.6667,
+      "parent": {
+        "meanRgbDelta": 0,
+        "changedOver40": 0
+      },
+      "candidate": {
+        "meanRgbDelta": 0,
+        "changedOver40": 0
+      }
+    }
+  ],
+  "frameMetrics": [
+    {
+      "frame": 0,
+      "changedRgbChannels": 0,
+      "before": {
+        "ink40": 1163,
+        "dark70": 1592
+      },
+      "after": {
+        "ink40": 1163,
+        "dark70": 1592
+      },
+      "eyeDifferenceFromParent": {
+        "meanRgbDelta": 0,
+        "changedOver40": 0
+      }
+    },
+    {
+      "frame": 2,
+      "changedRgbChannels": 0,
+      "before": {
+        "ink40": 1163,
+        "dark70": 1592
+      },
+      "after": {
+        "ink40": 1163,
+        "dark70": 1592
+      },
+      "eyeDifferenceFromParent": {
+        "meanRgbDelta": 0,
+        "changedOver40": 0
+      }
+    },
+    {
+      "frame": 4,
+      "changedRgbChannels": 0,
+      "before": {
+        "ink40": 1163,
+        "dark70": 1592
+      },
+      "after": {
+        "ink40": 1163,
+        "dark70": 1592
+      },
+      "eyeDifferenceFromParent": {
+        "meanRgbDelta": 0,
+        "changedOver40": 0
+      }
+    },
+    {
+      "frame": 6,
+      "changedRgbChannels": 0,
+      "before": {
+        "ink40": 1163,
+        "dark70": 1592
+      },
+      "after": {
+        "ink40": 1163,
+        "dark70": 1592
+      },
+      "eyeDifferenceFromParent": {
+        "meanRgbDelta": 0,
+        "changedOver40": 0
+      }
+    },
+    {
+      "frame": 8,
+      "changedRgbChannels": 0,
+      "before": {
+        "ink40": 1163,
+        "dark70": 1592
+      },
+      "after": {
+        "ink40": 1163,
+        "dark70": 1592
+      },
+      "eyeDifferenceFromParent": {
+        "meanRgbDelta": 0,
+        "changedOver40": 0
+      }
+    },
+    {
+      "frame": 10,
+      "changedRgbChannels": 0,
+      "before": {
+        "ink40": 1163,
+        "dark70": 1592
+      },
+      "after": {
+        "ink40": 1163,
+        "dark70": 1592
+      },
+      "eyeDifferenceFromParent": {
+        "meanRgbDelta": 0,
+        "changedOver40": 0
+      }
+    },
+    {
+      "frame": 12,
+      "changedRgbChannels": 0,
+      "before": {
+        "ink40": 1163,
+        "dark70": 1592
+      },
+      "after": {
+        "ink40": 1163,
+        "dark70": 1592
+      },
+      "eyeDifferenceFromParent": {
+        "meanRgbDelta": 0,
+        "changedOver40": 0
+      }
+    },
+    {
+      "frame": 14,
+      "changedRgbChannels": 0,
+      "before": {
+        "ink40": 1163,
+        "dark70": 1592
+      },
+      "after": {
+        "ink40": 1163,
+        "dark70": 1592
+      },
+      "eyeDifferenceFromParent": {
+        "meanRgbDelta": 0,
+        "changedOver40": 0
+      }
+    },
+    {
+      "frame": 16,
+      "changedRgbChannels": 0,
+      "before": {
+        "ink40": 1163,
+        "dark70": 1592
+      },
+      "after": {
+        "ink40": 1163,
+        "dark70": 1592
+      },
+      "eyeDifferenceFromParent": {
+        "meanRgbDelta": 0,
+        "changedOver40": 0
+      }
+    },
+    {
+      "frame": 18,
+      "changedRgbChannels": 0,
+      "before": {
+        "ink40": 1163,
+        "dark70": 1592
+      },
+      "after": {
+        "ink40": 1163,
+        "dark70": 1592
+      },
+      "eyeDifferenceFromParent": {
+        "meanRgbDelta": 0,
+        "changedOver40": 0
+      }
+    },
+    {
+      "frame": 20,
+      "changedRgbChannels": 0,
+      "before": {
+        "ink40": 1163,
+        "dark70": 1592
+      },
+      "after": {
+        "ink40": 1163,
+        "dark70": 1592
+      },
+      "eyeDifferenceFromParent": {
+        "meanRgbDelta": 0,
+        "changedOver40": 0
+      }
+    },
+    {
+      "frame": 22,
+      "changedRgbChannels": 0,
+      "before": {
+        "ink40": 1163,
+        "dark70": 1592
+      },
+      "after": {
+        "ink40": 1163,
+        "dark70": 1592
+      },
+      "eyeDifferenceFromParent": {
+        "meanRgbDelta": 0,
+        "changedOver40": 0
+      }
+    },
+    {
+      "frame": 24,
+      "changedRgbChannels": 0,
+      "before": {
+        "ink40": 1163,
+        "dark70": 1592
+      },
+      "after": {
+        "ink40": 1163,
+        "dark70": 1592
+      },
+      "eyeDifferenceFromParent": {
+        "meanRgbDelta": 0,
+        "changedOver40": 0
+      }
+    },
+    {
+      "frame": 26,
+      "changedRgbChannels": 0,
+      "before": {
+        "ink40": 1163,
+        "dark70": 1592
+      },
+      "after": {
+        "ink40": 1163,
+        "dark70": 1592
+      },
+      "eyeDifferenceFromParent": {
+        "meanRgbDelta": 0,
+        "changedOver40": 0
+      }
+    },
+    {
+      "frame": 28,
+      "changedRgbChannels": 0,
+      "before": {
+        "ink40": 1163,
+        "dark70": 1592
+      },
+      "after": {
+        "ink40": 1163,
+        "dark70": 1592
+      },
+      "eyeDifferenceFromParent": {
+        "meanRgbDelta": 0,
+        "changedOver40": 0
+      }
+    },
+    {
+      "frame": 30,
+      "changedRgbChannels": 0,
+      "before": {
+        "ink40": 1163,
+        "dark70": 1592
+      },
+      "after": {
+        "ink40": 1163,
+        "dark70": 1592
+      },
+      "eyeDifferenceFromParent": {
+        "meanRgbDelta": 0,
+        "changedOver40": 0
+      }
+    },
+    {
+      "frame": 32,
+      "changedRgbChannels": 0,
+      "before": {
+        "ink40": 1163,
+        "dark70": 1592
+      },
+      "after": {
+        "ink40": 1163,
+        "dark70": 1592
+      },
+      "eyeDifferenceFromParent": {
+        "meanRgbDelta": 0,
+        "changedOver40": 0
+      }
+    },
+    {
+      "frame": 34,
+      "changedRgbChannels": 0,
+      "before": {
+        "ink40": 1163,
+        "dark70": 1592
+      },
+      "after": {
+        "ink40": 1163,
+        "dark70": 1592
+      },
+      "eyeDifferenceFromParent": {
+        "meanRgbDelta": 0,
+        "changedOver40": 0
+      }
+    },
+    {
+      "frame": 36,
+      "changedRgbChannels": 0,
+      "before": {
+        "ink40": 1163,
+        "dark70": 1592
+      },
+      "after": {
+        "ink40": 1163,
+        "dark70": 1592
+      },
+      "eyeDifferenceFromParent": {
+        "meanRgbDelta": 0,
+        "changedOver40": 0
+      }
+    },
+    {
+      "frame": 37,
+      "changedRgbChannels": 6352,
+      "before": {
+        "ink40": 1242,
+        "dark70": 1635
+      },
+      "after": {
+        "ink40": 936,
+        "dark70": 1399
+      },
+      "eyeDifferenceFromParent": {
+        "meanRgbDelta": 8.2914,
+        "changedOver40": 374
+      }
+    },
+    {
+      "frame": 38,
+      "changedRgbChannels": 2395,
+      "before": {
+        "ink40": 769,
+        "dark70": 1118
+      },
+      "after": {
+        "ink40": 547,
+        "dark70": 913
+      },
+      "eyeDifferenceFromParent": {
+        "meanRgbDelta": 7.9061,
+        "changedOver40": 380
+      }
+    },
+    {
+      "frame": 39,
+      "changedRgbChannels": 2011,
+      "before": {
+        "ink40": 425,
+        "dark70": 623
+      },
+      "after": {
+        "ink40": 42,
+        "dark70": 418
+      },
+      "eyeDifferenceFromParent": {
+        "meanRgbDelta": 7.0326,
+        "changedOver40": 328
+      }
+    },
+    {
+      "frame": 40,
+      "changedRgbChannels": 5331,
+      "before": {
+        "ink40": 333,
+        "dark70": 537
+      },
+      "after": {
+        "ink40": 25,
+        "dark70": 346
+      },
+      "eyeDifferenceFromParent": {
+        "meanRgbDelta": 8.8183,
+        "changedOver40": 396
+      }
+    },
+    {
+      "frame": 41,
+      "changedRgbChannels": 4390,
+      "before": {
+        "ink40": 307,
+        "dark70": 511
+      },
+      "after": {
+        "ink40": 25,
+        "dark70": 324
+      },
+      "eyeDifferenceFromParent": {
+        "meanRgbDelta": 6.8973,
+        "changedOver40": 306
+      }
+    },
+    {
+      "frame": 42,
+      "changedRgbChannels": 4390,
+      "before": {
+        "ink40": 307,
+        "dark70": 511
+      },
+      "after": {
+        "ink40": 25,
+        "dark70": 324
+      },
+      "eyeDifferenceFromParent": {
+        "meanRgbDelta": 6.8973,
+        "changedOver40": 306
+      }
+    },
+    {
+      "frame": 43,
+      "changedRgbChannels": 4390,
+      "before": {
+        "ink40": 307,
+        "dark70": 511
+      },
+      "after": {
+        "ink40": 25,
+        "dark70": 324
+      },
+      "eyeDifferenceFromParent": {
+        "meanRgbDelta": 6.8973,
+        "changedOver40": 306
+      }
+    },
+    {
+      "frame": 44,
+      "changedRgbChannels": 5077,
+      "before": {
+        "ink40": 326,
+        "dark70": 528
+      },
+      "after": {
+        "ink40": 25,
+        "dark70": 336
+      },
+      "eyeDifferenceFromParent": {
+        "meanRgbDelta": 8.2077,
+        "changedOver40": 383
+      }
+    },
+    {
+      "frame": 45,
+      "changedRgbChannels": 6387,
+      "before": {
+        "ink40": 390,
+        "dark70": 581
+      },
+      "after": {
+        "ink40": 28,
+        "dark70": 373
+      },
+      "eyeDifferenceFromParent": {
+        "meanRgbDelta": 8.5879,
+        "changedOver40": 320
+      }
+    },
+    {
+      "frame": 46,
+      "changedRgbChannels": 2156,
+      "before": {
+        "ink40": 541,
+        "dark70": 788
+      },
+      "after": {
+        "ink40": 128,
+        "dark70": 600
+      },
+      "eyeDifferenceFromParent": {
+        "meanRgbDelta": 7.5721,
+        "changedOver40": 358
+      }
+    },
+    {
+      "frame": 47,
+      "changedRgbChannels": 2559,
+      "before": {
+        "ink40": 980,
+        "dark70": 1334
+      },
+      "after": {
+        "ink40": 717,
+        "dark70": 1089
+      },
+      "eyeDifferenceFromParent": {
+        "meanRgbDelta": 8.4094,
+        "changedOver40": 382
+      }
+    },
+    {
+      "frame": 48,
+      "changedRgbChannels": 6390,
+      "before": {
+        "ink40": 1297,
+        "dark70": 1698
+      },
+      "after": {
+        "ink40": 1063,
+        "dark70": 1494
+      },
+      "eyeDifferenceFromParent": {
+        "meanRgbDelta": 8.0969,
+        "changedOver40": 335
+      }
+    },
+    {
+      "frame": 49,
+      "changedRgbChannels": 0,
+      "before": {
+        "ink40": 1163,
+        "dark70": 1592
+      },
+      "after": {
+        "ink40": 1163,
+        "dark70": 1592
+      },
+      "eyeDifferenceFromParent": {
+        "meanRgbDelta": 0,
+        "changedOver40": 0
+      }
+    },
+    {
+      "frame": 50,
+      "changedRgbChannels": 0,
+      "before": {
+        "ink40": 1163,
+        "dark70": 1592
+      },
+      "after": {
+        "ink40": 1163,
+        "dark70": 1592
+      },
+      "eyeDifferenceFromParent": {
+        "meanRgbDelta": 0,
+        "changedOver40": 0
+      }
+    },
+    {
+      "frame": 52,
+      "changedRgbChannels": 0,
+      "before": {
+        "ink40": 1163,
+        "dark70": 1592
+      },
+      "after": {
+        "ink40": 1163,
+        "dark70": 1592
+      },
+      "eyeDifferenceFromParent": {
+        "meanRgbDelta": 0,
+        "changedOver40": 0
+      }
+    },
+    {
+      "frame": 54,
+      "changedRgbChannels": 0,
+      "before": {
+        "ink40": 1163,
+        "dark70": 1592
+      },
+      "after": {
+        "ink40": 1163,
+        "dark70": 1592
+      },
+      "eyeDifferenceFromParent": {
+        "meanRgbDelta": 0,
+        "changedOver40": 0
+      }
+    },
+    {
+      "frame": 56,
+      "changedRgbChannels": 0,
+      "before": {
+        "ink40": 1163,
+        "dark70": 1592
+      },
+      "after": {
+        "ink40": 1163,
+        "dark70": 1592
+      },
+      "eyeDifferenceFromParent": {
+        "meanRgbDelta": 0,
+        "changedOver40": 0
+      }
+    },
+    {
+      "frame": 58,
+      "changedRgbChannels": 0,
+      "before": {
+        "ink40": 1163,
+        "dark70": 1592
+      },
+      "after": {
+        "ink40": 1163,
+        "dark70": 1592
+      },
+      "eyeDifferenceFromParent": {
+        "meanRgbDelta": 0,
+        "changedOver40": 0
+      }
+    },
+    {
+      "frame": 60,
+      "changedRgbChannels": 0,
+      "before": {
+        "ink40": 1163,
+        "dark70": 1592
+      },
+      "after": {
+        "ink40": 1163,
+        "dark70": 1592
+      },
+      "eyeDifferenceFromParent": {
+        "meanRgbDelta": 0,
+        "changedOver40": 0
+      }
+    },
+    {
+      "frame": 62,
+      "changedRgbChannels": 0,
+      "before": {
+        "ink40": 1163,
+        "dark70": 1592
+      },
+      "after": {
+        "ink40": 1163,
+        "dark70": 1592
+      },
+      "eyeDifferenceFromParent": {
+        "meanRgbDelta": 0,
+        "changedOver40": 0
+      }
+    },
+    {
+      "frame": 64,
+      "changedRgbChannels": 0,
+      "before": {
+        "ink40": 1163,
+        "dark70": 1592
+      },
+      "after": {
+        "ink40": 1163,
+        "dark70": 1592
+      },
+      "eyeDifferenceFromParent": {
+        "meanRgbDelta": 0,
+        "changedOver40": 0
+      }
+    },
+    {
+      "frame": 66,
+      "changedRgbChannels": 0,
+      "before": {
+        "ink40": 1163,
+        "dark70": 1592
+      },
+      "after": {
+        "ink40": 1163,
+        "dark70": 1592
+      },
+      "eyeDifferenceFromParent": {
+        "meanRgbDelta": 0,
+        "changedOver40": 0
+      }
+    },
+    {
+      "frame": 68,
+      "changedRgbChannels": 0,
+      "before": {
+        "ink40": 1163,
+        "dark70": 1592
+      },
+      "after": {
+        "ink40": 1163,
+        "dark70": 1592
+      },
+      "eyeDifferenceFromParent": {
+        "meanRgbDelta": 0,
+        "changedOver40": 0
+      }
+    },
+    {
+      "frame": 70,
+      "changedRgbChannels": 0,
+      "before": {
+        "ink40": 1163,
+        "dark70": 1592
+      },
+      "after": {
+        "ink40": 1163,
+        "dark70": 1592
+      },
+      "eyeDifferenceFromParent": {
+        "meanRgbDelta": 0,
+        "changedOver40": 0
+      }
+    },
+    {
+      "frame": 72,
+      "changedRgbChannels": 0,
+      "before": {
+        "ink40": 1163,
+        "dark70": 1592
+      },
+      "after": {
+        "ink40": 1163,
+        "dark70": 1592
+      },
+      "eyeDifferenceFromParent": {
+        "meanRgbDelta": 0,
+        "changedOver40": 0
+      }
+    },
+    {
+      "frame": 74,
+      "changedRgbChannels": 0,
+      "before": {
+        "ink40": 1163,
+        "dark70": 1592
+      },
+      "after": {
+        "ink40": 1163,
+        "dark70": 1592
+      },
+      "eyeDifferenceFromParent": {
+        "meanRgbDelta": 0,
+        "changedOver40": 0
+      }
+    },
+    {
+      "frame": 76,
+      "changedRgbChannels": 0,
+      "before": {
+        "ink40": 1163,
+        "dark70": 1592
+      },
+      "after": {
+        "ink40": 1163,
+        "dark70": 1592
+      },
+      "eyeDifferenceFromParent": {
+        "meanRgbDelta": 0,
+        "changedOver40": 0
+      }
+    },
+    {
+      "frame": 78,
+      "changedRgbChannels": 0,
+      "before": {
+        "ink40": 1163,
+        "dark70": 1592
+      },
+      "after": {
+        "ink40": 1163,
+        "dark70": 1592
+      },
+      "eyeDifferenceFromParent": {
+        "meanRgbDelta": 0,
+        "changedOver40": 0
+      }
+    },
+    {
+      "frame": 80,
+      "changedRgbChannels": 0,
+      "before": {
+        "ink40": 1163,
+        "dark70": 1592
+      },
+      "after": {
+        "ink40": 1163,
+        "dark70": 1592
+      },
+      "eyeDifferenceFromParent": {
+        "meanRgbDelta": 0,
+        "changedOver40": 0
+      }
+    },
+    {
+      "frame": 82,
+      "changedRgbChannels": 0,
+      "before": {
+        "ink40": 1163,
+        "dark70": 1592
+      },
+      "after": {
+        "ink40": 1163,
+        "dark70": 1592
+      },
+      "eyeDifferenceFromParent": {
+        "meanRgbDelta": 0,
+        "changedOver40": 0
+      }
+    },
+    {
+      "frame": 84,
+      "changedRgbChannels": 0,
+      "before": {
+        "ink40": 1163,
+        "dark70": 1592
+      },
+      "after": {
+        "ink40": 1163,
+        "dark70": 1592
+      },
+      "eyeDifferenceFromParent": {
+        "meanRgbDelta": 0,
+        "changedOver40": 0
+      }
+    },
+    {
+      "frame": 86,
+      "changedRgbChannels": 0,
+      "before": {
+        "ink40": 1163,
+        "dark70": 1592
+      },
+      "after": {
+        "ink40": 1163,
+        "dark70": 1592
+      },
+      "eyeDifferenceFromParent": {
+        "meanRgbDelta": 0,
+        "changedOver40": 0
+      }
+    },
+    {
+      "frame": 88,
+      "changedRgbChannels": 0,
+      "before": {
+        "ink40": 1163,
+        "dark70": 1592
+      },
+      "after": {
+        "ink40": 1163,
+        "dark70": 1592
+      },
+      "eyeDifferenceFromParent": {
+        "meanRgbDelta": 0,
+        "changedOver40": 0
+      }
+    },
+    {
+      "frame": 90,
+      "changedRgbChannels": 0,
+      "before": {
+        "ink40": 1163,
+        "dark70": 1592
+      },
+      "after": {
+        "ink40": 1163,
+        "dark70": 1592
+      },
+      "eyeDifferenceFromParent": {
+        "meanRgbDelta": 0,
+        "changedOver40": 0
+      }
+    },
+    {
+      "frame": 92,
+      "changedRgbChannels": 0,
+      "before": {
+        "ink40": 1163,
+        "dark70": 1592
+      },
+      "after": {
+        "ink40": 1163,
+        "dark70": 1592
+      },
+      "eyeDifferenceFromParent": {
+        "meanRgbDelta": 0,
+        "changedOver40": 0
+      }
+    },
+    {
+      "frame": 94,
+      "changedRgbChannels": 0,
+      "before": {
+        "ink40": 1163,
+        "dark70": 1592
+      },
+      "after": {
+        "ink40": 1163,
+        "dark70": 1592
+      },
+      "eyeDifferenceFromParent": {
+        "meanRgbDelta": 0,
+        "changedOver40": 0
+      }
+    },
+    {
+      "frame": 96,
+      "changedRgbChannels": 0,
+      "before": {
+        "ink40": 1163,
+        "dark70": 1592
+      },
+      "after": {
+        "ink40": 1163,
+        "dark70": 1592
+      },
+      "eyeDifferenceFromParent": {
+        "meanRgbDelta": 0,
+        "changedOver40": 0
+      }
+    },
+    {
+      "frame": 98,
+      "changedRgbChannels": 0,
+      "before": {
+        "ink40": 1163,
+        "dark70": 1592
+      },
+      "after": {
+        "ink40": 1163,
+        "dark70": 1592
+      },
+      "eyeDifferenceFromParent": {
+        "meanRgbDelta": 0,
+        "changedOver40": 0
+      }
+    },
+    {
+      "frame": 100,
+      "changedRgbChannels": 0,
+      "before": {
+        "ink40": 1163,
+        "dark70": 1592
+      },
+      "after": {
+        "ink40": 1163,
+        "dark70": 1592
+      },
+      "eyeDifferenceFromParent": {
+        "meanRgbDelta": 0,
+        "changedOver40": 0
+      }
+    },
+    {
+      "frame": 102,
+      "changedRgbChannels": 0,
+      "before": {
+        "ink40": 1163,
+        "dark70": 1592
+      },
+      "after": {
+        "ink40": 1163,
+        "dark70": 1592
+      },
+      "eyeDifferenceFromParent": {
+        "meanRgbDelta": 0,
+        "changedOver40": 0
+      }
+    },
+    {
+      "frame": 104,
+      "changedRgbChannels": 0,
+      "before": {
+        "ink40": 1163,
+        "dark70": 1592
+      },
+      "after": {
+        "ink40": 1163,
+        "dark70": 1592
+      },
+      "eyeDifferenceFromParent": {
+        "meanRgbDelta": 0,
+        "changedOver40": 0
+      }
+    },
+    {
+      "frame": 106,
+      "changedRgbChannels": 0,
+      "before": {
+        "ink40": 1163,
+        "dark70": 1592
+      },
+      "after": {
+        "ink40": 1163,
+        "dark70": 1592
+      },
+      "eyeDifferenceFromParent": {
+        "meanRgbDelta": 0,
+        "changedOver40": 0
+      }
+    },
+    {
+      "frame": 108,
+      "changedRgbChannels": 0,
+      "before": {
+        "ink40": 1163,
+        "dark70": 1592
+      },
+      "after": {
+        "ink40": 1163,
+        "dark70": 1592
+      },
+      "eyeDifferenceFromParent": {
+        "meanRgbDelta": 0,
+        "changedOver40": 0
+      }
+    },
+    {
+      "frame": 110,
+      "changedRgbChannels": 0,
+      "before": {
+        "ink40": 1163,
+        "dark70": 1592
+      },
+      "after": {
+        "ink40": 1163,
+        "dark70": 1592
+      },
+      "eyeDifferenceFromParent": {
+        "meanRgbDelta": 0,
+        "changedOver40": 0
+      }
+    },
+    {
+      "frame": 112,
+      "changedRgbChannels": 0,
+      "before": {
+        "ink40": 1163,
+        "dark70": 1592
+      },
+      "after": {
+        "ink40": 1163,
+        "dark70": 1592
+      },
+      "eyeDifferenceFromParent": {
+        "meanRgbDelta": 0,
+        "changedOver40": 0
+      }
+    },
+    {
+      "frame": 114,
+      "changedRgbChannels": 0,
+      "before": {
+        "ink40": 1163,
+        "dark70": 1592
+      },
+      "after": {
+        "ink40": 1163,
+        "dark70": 1592
+      },
+      "eyeDifferenceFromParent": {
+        "meanRgbDelta": 0,
+        "changedOver40": 0
+      }
+    },
+    {
+      "frame": 116,
+      "changedRgbChannels": 0,
+      "before": {
+        "ink40": 1163,
+        "dark70": 1592
+      },
+      "after": {
+        "ink40": 1163,
+        "dark70": 1592
+      },
+      "eyeDifferenceFromParent": {
+        "meanRgbDelta": 0,
+        "changedOver40": 0
+      }
+    },
+    {
+      "frame": 118,
+      "changedRgbChannels": 0,
+      "before": {
+        "ink40": 1163,
+        "dark70": 1592
+      },
+      "after": {
+        "ink40": 1163,
+        "dark70": 1592
+      },
+      "eyeDifferenceFromParent": {
+        "meanRgbDelta": 0,
+        "changedOver40": 0
+      }
+    },
+    {
+      "frame": 120,
+      "changedRgbChannels": 0,
+      "before": {
+        "ink40": 1163,
+        "dark70": 1592
+      },
+      "after": {
+        "ink40": 1163,
+        "dark70": 1592
+      },
+      "eyeDifferenceFromParent": {
+        "meanRgbDelta": 0,
+        "changedOver40": 0
+      }
+    }
+  ]
+}

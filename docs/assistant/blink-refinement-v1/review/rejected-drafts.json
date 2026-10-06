@@ -1,0 +1,9 @@
+{
+  "published": false,
+  "drafts": [
+    {"version": "draft-v1", "assetSha256": "6cf2613351fdf70297fb2eae1b262d09047beebc87a596fae3336a05eac7edeb", "status": "REJECTED", "reason": "Root visual inspection found pale/disappearing edge ink."},
+    {"version": "draft-v2", "assetSha256": "ab76da941bc06e2e842cf2d04c503b83055ef4199cb9f930824f3414b81977c5", "status": "REJECTED", "reason": "Independent art review found thick uniform arcs at37/48 despite quantitative pass."},
+    {"version": "draft-v3", "assetSha256": "0acf8a123afd104b3f12cdb09fb0056c44b38dc1652656703dc0de788f4fd318", "status": "REJECTED", "reason": "Independent art review found a grey old-eyelid arc at47; adjacent37-38 mean33.4119 exceeded frozen32.2634 baseline."}
+  ],
+  "notes": "Contact sheets retained here; full rejected candidates remain local and were never published. Final v4 pixels are frozen separately under blink-refinement-v1."
+}

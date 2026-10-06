@@ -19,7 +19,7 @@ test("selected whole-figure timelines share an exact original neutral, excluding
       if (pose.sheet === "yawn") assert.ok(pose.frame < 20, "Abrupt hand drop is replaced by recovery drawings");
     }
   }
-  assert.equal(sources.size, 204); // Drawing addresses, not independently drawn poses.
+  assert.equal(sources.size, 205); // Drawing addresses, not independently drawn poses.
 });
 
 test("breath uses 15 fps and blink uses 30 fps without geometric blends", () => {

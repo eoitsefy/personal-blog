@@ -1,0 +1,33 @@
+{
+  "status": "APPROVED_SCOPED_EYE_REFINEMENT",
+  "assetScopeSha256": "dd9aeaca59d82381931d9a350ea8e7e64285fb7c64b828fb1f234b0840403338",
+  "frameScopeSha256": "69ecc2a035fcfab6f6e74924200854d158b9dac3bd475cc6a4bb3b09b7a6a0bf",
+  "scope": ["12 eye-aperture-only finished PNGs", "restored registered reopening sample49", "68-slot idle atlas and218 runtime timepoints"],
+  "futureVersionsAuthorized": false,
+  "nativeRigReleased": false,
+  "legacyBodyArtReapproved": false,
+  "reviewers": [
+    {
+      "name": "blink_art_audit",
+      "status": "PASS",
+      "assetScopeSha256": "dd9aeaca59d82381931d9a350ea8e7e64285fb7c64b828fb1f234b0840403338",
+      "method": "Independent static review of light/dark eye sheets, boundary whole figures at actual display scale, and actual browser canvas contact sheets. No claim of watching a runtime video.",
+      "findings": "Closed line is thin,37/48 have no conspicuous heavy flash;47 grey old contour removed;40-44 have no iris sliver. Very faint antialiasing/blending at2x is nonblocking at actual scale."
+    },
+    {
+      "name": "blink_timing_audit",
+      "status": "PASS",
+      "assetScopeSha256": "dd9aeaca59d82381931d9a350ea8e7e64285fb7c64b828fb1f234b0840403338",
+      "method": "Independent source PNG,mask,alpha,atlas pixel and timeline audit, with unchanged quantitative thresholds.",
+      "findings": "Max adjacent eye mean28.3198 vs parent32.2634;closed dark area324 vs511;48/49 hold33.333ms each;non-eye RGBA and alpha differences0. Not every adjacent difference decreased."
+    },
+    {
+      "name": "blink_release_audit",
+      "status": "PASS",
+      "assetScopeSha256": "dd9aeaca59d82381931d9a350ea8e7e64285fb7c64b828fb1f234b0840403338",
+      "method": "Independent frozen-pack technical execution and actual browser report/byte-hash inspection. Empty playback and broken fallback evidence vulnerabilities were found and fixed before approval.",
+      "findings": "Four widths218 timepoints;all nine atlases match received bytes;fallback decoded and original PNG hash verified;three normal and one half-speed loop each include36-50,including49. Scope does not approve future versions or native rig."
+    }
+  ],
+  "primaryReview": "Checked actual light/dark eye and browser-rendered frames; preserved all non-eye pixels and historical reviews. Full tests,CI and production remain separate verification steps."
+}

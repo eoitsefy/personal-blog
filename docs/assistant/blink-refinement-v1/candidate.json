@@ -1,0 +1,2104 @@
+{
+  "version": 1,
+  "status": "AWAITING_INDEPENDENT_REVIEW",
+  "parent": "left-collar-release-v1",
+  "asset": {
+    "src": "/assistant/chibi-idle-blink-refined-v1.webp",
+    "width": 2196,
+    "height": 5520,
+    "bytes": 4615062,
+    "sha256": "4c4af5f206d67366e76eeff7a57eecea37b43302564601e3051a04f7a68ceeb3"
+  },
+  "keptAssets": {
+    "pilot-wave": {
+      "src": "/assistant/chibi-pilot-wave-left-collar-v5.webp",
+      "width": 2196,
+      "height": 3220,
+      "scale": 0.4614695340501792,
+      "frames": 37,
+      "bytes": 2353218,
+      "sha256": "3bbc44959ce5c0da993bec62409e1db4f590dffe98e6518de3c5f145756d6e8c",
+      "sourceSrc": "/assistant/chibi-wave-reviewed-v16.webp",
+      "sourceSha256": "6a33ac3c97b25c127ca05a7d8aaa594830019a156c2bf5ce3089079c6c2e43aa",
+      "placements": [
+        {
+          "index": 0,
+          "left": 250,
+          "top": 254,
+          "width": 13,
+          "height": 37,
+          "necklineShift": 0
+        },
+        {
+          "index": 1,
+          "left": 616,
+          "top": 254,
+          "width": 13,
+          "height": 37,
+          "necklineShift": 0
+        },
+        {
+          "index": 2,
+          "left": 982,
+          "top": 254,
+          "width": 13,
+          "height": 37,
+          "necklineShift": 0
+        },
+        {
+          "index": 3,
+          "left": 1348,
+          "top": 254,
+          "width": 13,
+          "height": 37,
+          "necklineShift": 0
+        },
+        {
+          "index": 4,
+          "left": 1714,
+          "top": 254,
+          "width": 13,
+          "height": 37,
+          "necklineShift": 0
+        },
+        {
+          "index": 5,
+          "left": 2080,
+          "top": 254,
+          "width": 13,
+          "height": 37,
+          "necklineShift": 0
+        },
+        {
+          "index": 6,
+          "left": 250,
+          "top": 714,
+          "width": 13,
+          "height": 37,
+          "necklineShift": 0
+        },
+        {
+          "index": 7,
+          "left": 616,
+          "top": 714,
+          "width": 13,
+          "height": 37,
+          "necklineShift": 0
+        },
+        {
+          "index": 8,
+          "left": 982,
+          "top": 714,
+          "width": 13,
+          "height": 37,
+          "necklineShift": 0
+        },
+        {
+          "index": 9,
+          "left": 1348,
+          "top": 714,
+          "width": 13,
+          "height": 37,
+          "necklineShift": 0
+        },
+        {
+          "index": 10,
+          "left": 1714,
+          "top": 714,
+          "width": 13,
+          "height": 37,
+          "necklineShift": 0
+        },
+        {
+          "index": 11,
+          "left": 2080,
+          "top": 714,
+          "width": 13,
+          "height": 37,
+          "necklineShift": 0
+        },
+        {
+          "index": 12,
+          "left": 250,
+          "top": 1174,
+          "width": 13,
+          "height": 37,
+          "necklineShift": 0
+        },
+        {
+          "index": 13,
+          "left": 616,
+          "top": 1174,
+          "width": 13,
+          "height": 37,
+          "necklineShift": 0
+        },
+        {
+          "index": 14,
+          "left": 982,
+          "top": 1174,
+          "width": 13,
+          "height": 37,
+          "necklineShift": 0
+        },
+        {
+          "index": 15,
+          "left": 1348,
+          "top": 1174,
+          "width": 13,
+          "height": 37,
+          "necklineShift": 0
+        },
+        {
+          "index": 16,
+          "left": 1714,
+          "top": 1174,
+          "width": 13,
+          "height": 37,
+          "necklineShift": 0
+        },
+        {
+          "index": 17,
+          "left": 2080,
+          "top": 1174,
+          "width": 13,
+          "height": 37,
+          "necklineShift": 0
+        },
+        {
+          "index": 18,
+          "left": 250,
+          "top": 1634,
+          "width": 13,
+          "height": 37,
+          "necklineShift": 0
+        },
+        {
+          "index": 19,
+          "left": 616,
+          "top": 1634,
+          "width": 13,
+          "height": 37,
+          "necklineShift": 0
+        },
+        {
+          "index": 20,
+          "left": 982,
+          "top": 1634,
+          "width": 13,
+          "height": 37,
+          "necklineShift": 0
+        },
+        {
+          "index": 21,
+          "left": 1348,
+          "top": 1634,
+          "width": 13,
+          "height": 37,
+          "necklineShift": 0
+        },
+        {
+          "index": 22,
+          "left": 1714,
+          "top": 1634,
+          "width": 13,
+          "height": 37,
+          "necklineShift": 0
+        },
+        {
+          "index": 23,
+          "left": 2080,
+          "top": 1634,
+          "width": 13,
+          "height": 37,
+          "necklineShift": 0
+        },
+        {
+          "index": 24,
+          "left": 250,
+          "top": 2094,
+          "width": 13,
+          "height": 37,
+          "necklineShift": 0
+        },
+        {
+          "index": 25,
+          "left": 616,
+          "top": 2094,
+          "width": 13,
+          "height": 37,
+          "necklineShift": 0
+        },
+        {
+          "index": 26,
+          "left": 982,
+          "top": 2094,
+          "width": 13,
+          "height": 37,
+          "necklineShift": 0
+        },
+        {
+          "index": 27,
+          "left": 1348,
+          "top": 2094,
+          "width": 13,
+          "height": 37,
+          "necklineShift": 0
+        },
+        {
+          "index": 28,
+          "left": 1714,
+          "top": 2094,
+          "width": 13,
+          "height": 37,
+          "necklineShift": 0
+        },
+        {
+          "index": 29,
+          "left": 2080,
+          "top": 2094,
+          "width": 13,
+          "height": 37,
+          "necklineShift": 0
+        },
+        {
+          "index": 30,
+          "left": 250,
+          "top": 2554,
+          "width": 13,
+          "height": 37,
+          "necklineShift": 0
+        },
+        {
+          "index": 31,
+          "left": 616,
+          "top": 2554,
+          "width": 13,
+          "height": 37,
+          "necklineShift": 0
+        },
+        {
+          "index": 32,
+          "left": 982,
+          "top": 2554,
+          "width": 13,
+          "height": 37,
+          "necklineShift": 0
+        },
+        {
+          "index": 33,
+          "left": 1348,
+          "top": 2554,
+          "width": 13,
+          "height": 37,
+          "necklineShift": 0
+        },
+        {
+          "index": 34,
+          "left": 1714,
+          "top": 2554,
+          "width": 13,
+          "height": 37,
+          "necklineShift": 0
+        },
+        {
+          "index": 35,
+          "left": 2080,
+          "top": 2554,
+          "width": 13,
+          "height": 37,
+          "necklineShift": 0
+        },
+        {
+          "index": 36,
+          "left": 250,
+          "top": 3014,
+          "width": 13,
+          "height": 37,
+          "necklineShift": 0
+        }
+      ]
+    },
+    "nod": {
+      "src": "/assistant/chibi-nod-left-collar-v5.webp",
+      "width": 1448,
+      "height": 1086,
+      "scale": 0.5902578796561605,
+      "frames": 12,
+      "bytes": 928832,
+      "sha256": "91030a3348a780d04af6778bef463c73216ca4b0dae216bb2822ca3e671408f0",
+      "sourceSrc": "/assistant/chibi-nod-inbetweens-v5.png",
+      "sourceSha256": "f44fceceb5362ac61cd24ac6d2c8e848150f20821de0f7738bd174aab5a83136",
+      "placements": [
+        {
+          "index": 0,
+          "left": 259,
+          "top": 211,
+          "width": 10,
+          "height": 29,
+          "necklineShift": 0
+        },
+        {
+          "index": 1,
+          "left": 594,
+          "top": 212,
+          "width": 10,
+          "height": 29,
+          "necklineShift": 0.7818100358422938
+        },
+        {
+          "index": 2,
+          "left": 928,
+          "top": 212,
+          "width": 10,
+          "height": 29,
+          "necklineShift": 1.5636200716845876
+        },
+        {
+          "index": 3,
+          "left": 1263,
+          "top": 214,
+          "width": 10,
+          "height": 29,
+          "necklineShift": 3.127240143369175
+        },
+        {
+          "index": 4,
+          "left": 259,
+          "top": 577,
+          "width": 10,
+          "height": 29,
+          "necklineShift": 4.690860215053763
+        },
+        {
+          "index": 5,
+          "left": 595,
+          "top": 577,
+          "width": 10,
+          "height": 29,
+          "necklineShift": 6.25448028673835
+        },
+        {
+          "index": 6,
+          "left": 928,
+          "top": 578,
+          "width": 10,
+          "height": 29,
+          "necklineShift": 7.818100358422938
+        },
+        {
+          "index": 7,
+          "left": 1263,
+          "top": 577,
+          "width": 10,
+          "height": 29,
+          "necklineShift": 6.25448028673835
+        },
+        {
+          "index": 8,
+          "left": 258,
+          "top": 917,
+          "width": 10,
+          "height": 29,
+          "necklineShift": 4.690860215053763
+        },
+        {
+          "index": 9,
+          "left": 594,
+          "top": 915,
+          "width": 10,
+          "height": 29,
+          "necklineShift": 3.127240143369175
+        },
+        {
+          "index": 10,
+          "left": 928,
+          "top": 913,
+          "width": 10,
+          "height": 29,
+          "necklineShift": 1.5636200716845876
+        },
+        {
+          "index": 11,
+          "left": 1262,
+          "top": 912,
+          "width": 10,
+          "height": 29,
+          "necklineShift": 0
+        }
+      ]
+    },
+    "thinking": {
+      "src": "/assistant/chibi-thinking-left-collar-v5.webp",
+      "width": 1254,
+      "height": 1254,
+      "scale": 0.6776315789473685,
+      "frames": 24,
+      "bytes": 1548212,
+      "sha256": "769d6800ebaf9f49e467601555f3ccfee5b5852ae9b74f67ea052439125e18f0",
+      "sourceSrc": "/assistant/chibi-thinking-inbetweens-v5.png",
+      "sourceSha256": "d6da7c84afb14f1f95bcb66e7b1ec729073a7aa36d91841b864c521d515de4e2",
+      "placements": [
+        {
+          "index": 0,
+          "left": 144,
+          "top": 187,
+          "width": 9,
+          "height": 25,
+          "necklineShift": 0
+        },
+        {
+          "index": 1,
+          "left": 349,
+          "top": 187,
+          "width": 9,
+          "height": 25,
+          "necklineShift": 0
+        },
+        {
+          "index": 2,
+          "left": 554,
+          "top": 187,
+          "width": 9,
+          "height": 25,
+          "necklineShift": 0
+        },
+        {
+          "index": 3,
+          "left": 760,
+          "top": 187,
+          "width": 9,
+          "height": 25,
+          "necklineShift": 0
+        },
+        {
+          "index": 4,
+          "left": 969,
+          "top": 187,
+          "width": 9,
+          "height": 25,
+          "necklineShift": 0
+        },
+        {
+          "index": 5,
+          "left": 1177,
+          "top": 188,
+          "width": 9,
+          "height": 25,
+          "necklineShift": 0.6810035842293907
+        },
+        {
+          "index": 6,
+          "left": 144,
+          "top": 505,
+          "width": 9,
+          "height": 25,
+          "necklineShift": 0.6810035842293907
+        },
+        {
+          "index": 7,
+          "left": 349,
+          "top": 505,
+          "width": 9,
+          "height": 25,
+          "necklineShift": 1.3620071684587813
+        },
+        {
+          "index": 8,
+          "left": 554,
+          "top": 506,
+          "width": 9,
+          "height": 25,
+          "necklineShift": 2.043010752688172
+        },
+        {
+          "index": 9,
+          "left": 760,
+          "top": 506,
+          "width": 9,
+          "height": 25,
+          "necklineShift": 2.043010752688172
+        },
+        {
+          "index": 10,
+          "left": 968,
+          "top": 506,
+          "width": 9,
+          "height": 25,
+          "necklineShift": 2.043010752688172
+        },
+        {
+          "index": 11,
+          "left": 1177,
+          "top": 506,
+          "width": 9,
+          "height": 25,
+          "necklineShift": 2.043010752688172
+        },
+        {
+          "index": 12,
+          "left": 145,
+          "top": 822,
+          "width": 9,
+          "height": 25,
+          "necklineShift": 2.043010752688172
+        },
+        {
+          "index": 13,
+          "left": 349,
+          "top": 820,
+          "width": 9,
+          "height": 25,
+          "necklineShift": 1.3620071684587813
+        },
+        {
+          "index": 14,
+          "left": 554,
+          "top": 819,
+          "width": 9,
+          "height": 25,
+          "necklineShift": 0
+        },
+        {
+          "index": 15,
+          "left": 761,
+          "top": 819,
+          "width": 9,
+          "height": 25,
+          "necklineShift": 0
+        },
+        {
+          "index": 16,
+          "left": 968,
+          "top": 819,
+          "width": 9,
+          "height": 25,
+          "necklineShift": 0
+        },
+        {
+          "index": 17,
+          "left": 1178,
+          "top": 820,
+          "width": 9,
+          "height": 25,
+          "necklineShift": 0
+        },
+        {
+          "index": 18,
+          "left": 145,
+          "top": 1115,
+          "width": 9,
+          "height": 25,
+          "necklineShift": 0
+        },
+        {
+          "index": 19,
+          "left": 349,
+          "top": 1115,
+          "width": 9,
+          "height": 25,
+          "necklineShift": 0
+        },
+        {
+          "index": 20,
+          "left": 554,
+          "top": 1115,
+          "width": 9,
+          "height": 25,
+          "necklineShift": 0
+        },
+        {
+          "index": 21,
+          "left": 761,
+          "top": 1115,
+          "width": 9,
+          "height": 25,
+          "necklineShift": 0
+        },
+        {
+          "index": 22,
+          "left": 970,
+          "top": 1115,
+          "width": 9,
+          "height": 25,
+          "necklineShift": 0
+        },
+        {
+          "index": 23,
+          "left": 1177,
+          "top": 1115,
+          "width": 9,
+          "height": 25,
+          "necklineShift": 0
+        }
+      ]
+    },
+    "thinking-recovery": {
+      "src": "/assistant/chibi-thinking-recovery-left-collar-v5.webp",
+      "width": 1448,
+      "height": 1086,
+      "scale": 0.5852272727272727,
+      "frames": 12,
+      "bytes": 1022634,
+      "sha256": "af22821609bc800ef37ca405c0d7d201aeffa7cb3135b10c705732519cd500cd",
+      "sourceSrc": "/assistant/chibi-thinking-recovery-inbetweens-v5.png",
+      "sourceSha256": "08dfcf4685b267a2f620371f41bd4a9714775cf40b771363704a0ab07e947fef",
+      "placements": [
+        {
+          "index": 0,
+          "left": 275,
+          "top": 205,
+          "width": 10,
+          "height": 29,
+          "necklineShift": 1.5770609318996416
+        },
+        {
+          "index": 1,
+          "left": 599,
+          "top": 205,
+          "width": 10,
+          "height": 29,
+          "necklineShift": 1.5770609318996416
+        },
+        {
+          "index": 2,
+          "left": 918,
+          "top": 205,
+          "width": 10,
+          "height": 29,
+          "necklineShift": 1.5770609318996416
+        },
+        {
+          "index": 3,
+          "left": 1240,
+          "top": 204,
+          "width": 10,
+          "height": 29,
+          "necklineShift": 0.7885304659498208
+        },
+        {
+          "index": 4,
+          "left": 279,
+          "top": 564,
+          "width": 10,
+          "height": 29,
+          "necklineShift": 0.7885304659498208
+        },
+        {
+          "index": 5,
+          "left": 604,
+          "top": 564,
+          "width": 10,
+          "height": 29,
+          "necklineShift": 0.7885304659498208
+        },
+        {
+          "index": 6,
+          "left": 920,
+          "top": 565,
+          "width": 10,
+          "height": 29,
+          "necklineShift": 0.7885304659498208
+        },
+        {
+          "index": 7,
+          "left": 1241,
+          "top": 564,
+          "width": 10,
+          "height": 29,
+          "necklineShift": 0
+        },
+        {
+          "index": 8,
+          "left": 276,
+          "top": 925,
+          "width": 10,
+          "height": 29,
+          "necklineShift": 0
+        },
+        {
+          "index": 9,
+          "left": 603,
+          "top": 925,
+          "width": 10,
+          "height": 29,
+          "necklineShift": 0
+        },
+        {
+          "index": 10,
+          "left": 918,
+          "top": 926,
+          "width": 10,
+          "height": 29,
+          "necklineShift": 0
+        },
+        {
+          "index": 11,
+          "left": 1241,
+          "top": 925,
+          "width": 10,
+          "height": 29,
+          "necklineShift": 0
+        }
+      ]
+    },
+    "bow": {
+      "src": "/assistant/chibi-bow-left-collar-v5.webp",
+      "width": 1774,
+      "height": 887,
+      "scale": 0.71280276816609,
+      "frames": 18,
+      "bytes": 1053340,
+      "sha256": "a5e71f2aa9d779fcf0bda11d933e6fd6ff601643fa209e9daac939bc2677de9a",
+      "sourceSrc": "/assistant/chibi-bow-inbetweens-v5.png",
+      "sourceSha256": "4b28d3944567a8628e3f6a17bebfe5d5ba678da143b6b0fbf1a972719b3153a1",
+      "placements": [
+        {
+          "index": 0,
+          "left": 199,
+          "top": 174,
+          "width": 8,
+          "height": 24,
+          "necklineShift": 0
+        },
+        {
+          "index": 1,
+          "left": 495,
+          "top": 175,
+          "width": 8,
+          "height": 24,
+          "necklineShift": 1.2948028673835124
+        },
+        {
+          "index": 2,
+          "left": 789,
+          "top": 178,
+          "width": 8,
+          "height": 24,
+          "necklineShift": 3.884408602150537
+        },
+        {
+          "index": 3,
+          "left": 1073,
+          "top": 180,
+          "width": 8,
+          "height": 24,
+          "necklineShift": 5.826612903225806
+        },
+        {
+          "index": 4,
+          "left": 1362,
+          "top": 182,
+          "width": 8,
+          "height": 24,
+          "necklineShift": 8.41621863799283
+        },
+        {
+          "index": 5,
+          "left": 1649,
+          "top": 186,
+          "width": 8,
+          "height": 24,
+          "necklineShift": 12.300627240143367
+        },
+        {
+          "index": 6,
+          "left": 200,
+          "top": 485,
+          "width": 8,
+          "height": 24,
+          "necklineShift": 18.12724014336917
+        },
+        {
+          "index": 7,
+          "left": 496,
+          "top": 491,
+          "width": 8,
+          "height": 24,
+          "necklineShift": 22.659050179211466
+        },
+        {
+          "index": 8,
+          "left": 789,
+          "top": 496,
+          "width": 8,
+          "height": 24,
+          "necklineShift": 27.838261648745515
+        },
+        {
+          "index": 9,
+          "left": 1074,
+          "top": 498,
+          "width": 8,
+          "height": 24,
+          "necklineShift": 29.780465949820783
+        },
+        {
+          "index": 10,
+          "left": 1365,
+          "top": 494,
+          "width": 8,
+          "height": 24,
+          "necklineShift": 25.896057347670247
+        },
+        {
+          "index": 11,
+          "left": 1648,
+          "top": 489,
+          "width": 8,
+          "height": 24,
+          "necklineShift": 21.364247311827953
+        },
+        {
+          "index": 12,
+          "left": 201,
+          "top": 766,
+          "width": 8,
+          "height": 24,
+          "necklineShift": 16.185035842293903
+        },
+        {
+          "index": 13,
+          "left": 496,
+          "top": 760,
+          "width": 8,
+          "height": 24,
+          "necklineShift": 10.358422939068099
+        },
+        {
+          "index": 14,
+          "left": 789,
+          "top": 756,
+          "width": 8,
+          "height": 24,
+          "necklineShift": 6.474014336917562
+        },
+        {
+          "index": 15,
+          "left": 1076,
+          "top": 753,
+          "width": 8,
+          "height": 24,
+          "necklineShift": 3.237007168458781
+        },
+        {
+          "index": 16,
+          "left": 1363,
+          "top": 751,
+          "width": 8,
+          "height": 24,
+          "necklineShift": 1.2948028673835124
+        },
+        {
+          "index": 17,
+          "left": 1648,
+          "top": 750,
+          "width": 8,
+          "height": 24,
+          "necklineShift": 0
+        }
+      ]
+    },
+    "cheer": {
+      "src": "/assistant/chibi-cheer-left-collar-v5.webp",
+      "width": 1254,
+      "height": 1254,
+      "scale": 0.555256064690027,
+      "frames": 15,
+      "bytes": 1314886,
+      "sha256": "da4cf1a72b35c35eb25fd8ea40d25e3f8653332282c54f34e0d0e6871045971f",
+      "sourceSrc": "/assistant/chibi-cheer-inbetweens-v5.png",
+      "sourceSha256": "276419aed2f97762b113264143965a384b237ecef76fb724ea6f7f66e289ea8f",
+      "placements": [
+        {
+          "index": 0,
+          "left": 194,
+          "top": 235,
+          "width": 11,
+          "height": 31,
+          "necklineShift": 0
+        },
+        {
+          "index": 1,
+          "left": 431,
+          "top": 235,
+          "width": 11,
+          "height": 31,
+          "necklineShift": 0
+        },
+        {
+          "index": 2,
+          "left": 672,
+          "top": 235,
+          "width": 11,
+          "height": 31,
+          "necklineShift": 0
+        },
+        {
+          "index": 3,
+          "left": 918,
+          "top": 235,
+          "width": 11,
+          "height": 31,
+          "necklineShift": 0
+        },
+        {
+          "index": 4,
+          "left": 1168,
+          "top": 235,
+          "width": 11,
+          "height": 31,
+          "necklineShift": 0
+        },
+        {
+          "index": 5,
+          "left": 192,
+          "top": 637,
+          "width": 11,
+          "height": 31,
+          "necklineShift": 0
+        },
+        {
+          "index": 6,
+          "left": 435,
+          "top": 637,
+          "width": 11,
+          "height": 31,
+          "necklineShift": 0
+        },
+        {
+          "index": 7,
+          "left": 673,
+          "top": 637,
+          "width": 11,
+          "height": 31,
+          "necklineShift": 0
+        },
+        {
+          "index": 8,
+          "left": 919,
+          "top": 637,
+          "width": 11,
+          "height": 31,
+          "necklineShift": 0
+        },
+        {
+          "index": 9,
+          "left": 1168,
+          "top": 637,
+          "width": 11,
+          "height": 31,
+          "necklineShift": 0
+        },
+        {
+          "index": 10,
+          "left": 193,
+          "top": 1038,
+          "width": 11,
+          "height": 31,
+          "necklineShift": 0
+        },
+        {
+          "index": 11,
+          "left": 434,
+          "top": 1038,
+          "width": 11,
+          "height": 31,
+          "necklineShift": 0
+        },
+        {
+          "index": 12,
+          "left": 671,
+          "top": 1038,
+          "width": 11,
+          "height": 31,
+          "necklineShift": 0
+        },
+        {
+          "index": 13,
+          "left": 919,
+          "top": 1038,
+          "width": 11,
+          "height": 31,
+          "necklineShift": 0
+        },
+        {
+          "index": 14,
+          "left": 1167,
+          "top": 1038,
+          "width": 11,
+          "height": 31,
+          "necklineShift": 0
+        }
+      ]
+    },
+    "yawn": {
+      "src": "/assistant/chibi-yawn-left-collar-v5.webp",
+      "width": 1236,
+      "height": 1272,
+      "scale": 0.762962962962963,
+      "frames": 24,
+      "bytes": 1347802,
+      "sha256": "94d1ef212414b1ac68c5514beef40f4bbc80c919bb85205fe768f2617aaeb0bb",
+      "sourceSrc": "/assistant/chibi-yawn-inbetweens-v5.png",
+      "sourceSha256": "71c7728528e974bd46ef2c4c2c1ac3faec1a2374e2925775b46a70d42f11c4a8",
+      "placements": [
+        {
+          "index": 0,
+          "left": 146,
+          "top": 158,
+          "width": 8,
+          "height": 22,
+          "necklineShift": 0
+        },
+        {
+          "index": 1,
+          "left": 344,
+          "top": 158,
+          "width": 8,
+          "height": 22,
+          "necklineShift": 0
+        },
+        {
+          "index": 2,
+          "left": 542,
+          "top": 158,
+          "width": 8,
+          "height": 22,
+          "necklineShift": 0
+        },
+        {
+          "index": 3,
+          "left": 741,
+          "top": 158,
+          "width": 8,
+          "height": 22,
+          "necklineShift": 0
+        },
+        {
+          "index": 4,
+          "left": 941,
+          "top": 159,
+          "width": 8,
+          "height": 22,
+          "necklineShift": 0.6048387096774194
+        },
+        {
+          "index": 5,
+          "left": 1141,
+          "top": 160,
+          "width": 8,
+          "height": 22,
+          "necklineShift": 1.2096774193548387
+        },
+        {
+          "index": 6,
+          "left": 146,
+          "top": 435,
+          "width": 8,
+          "height": 22,
+          "necklineShift": 1.814516129032258
+        },
+        {
+          "index": 7,
+          "left": 345,
+          "top": 436,
+          "width": 8,
+          "height": 22,
+          "necklineShift": 2.4193548387096775
+        },
+        {
+          "index": 8,
+          "left": 545,
+          "top": 436,
+          "width": 8,
+          "height": 22,
+          "necklineShift": 3.024193548387097
+        },
+        {
+          "index": 9,
+          "left": 744,
+          "top": 437,
+          "width": 8,
+          "height": 22,
+          "necklineShift": 3.629032258064516
+        },
+        {
+          "index": 10,
+          "left": 944,
+          "top": 437,
+          "width": 8,
+          "height": 22,
+          "necklineShift": 3.629032258064516
+        },
+        {
+          "index": 11,
+          "left": 1142,
+          "top": 437,
+          "width": 8,
+          "height": 22,
+          "necklineShift": 3.629032258064516
+        },
+        {
+          "index": 12,
+          "left": 148,
+          "top": 711,
+          "width": 8,
+          "height": 22,
+          "necklineShift": 3.629032258064516
+        },
+        {
+          "index": 13,
+          "left": 346,
+          "top": 711,
+          "width": 8,
+          "height": 22,
+          "necklineShift": 3.629032258064516
+        },
+        {
+          "index": 14,
+          "left": 546,
+          "top": 711,
+          "width": 8,
+          "height": 22,
+          "necklineShift": 3.629032258064516
+        },
+        {
+          "index": 15,
+          "left": 745,
+          "top": 711,
+          "width": 8,
+          "height": 22,
+          "necklineShift": 3.629032258064516
+        },
+        {
+          "index": 16,
+          "left": 946,
+          "top": 710,
+          "width": 8,
+          "height": 22,
+          "necklineShift": 3.024193548387097
+        },
+        {
+          "index": 17,
+          "left": 1143,
+          "top": 710,
+          "width": 8,
+          "height": 22,
+          "necklineShift": 2.4193548387096775
+        },
+        {
+          "index": 18,
+          "left": 148,
+          "top": 984,
+          "width": 8,
+          "height": 22,
+          "necklineShift": 1.814516129032258
+        },
+        {
+          "index": 19,
+          "left": 346,
+          "top": 984,
+          "width": 8,
+          "height": 22,
+          "necklineShift": 1.2096774193548387
+        },
+        {
+          "index": 20,
+          "left": 544,
+          "top": 982,
+          "width": 8,
+          "height": 22,
+          "necklineShift": 0
+        },
+        {
+          "index": 21,
+          "left": 742,
+          "top": 982,
+          "width": 8,
+          "height": 22,
+          "necklineShift": 0
+        },
+        {
+          "index": 22,
+          "left": 942,
+          "top": 982,
+          "width": 8,
+          "height": 22,
+          "necklineShift": 0
+        },
+        {
+          "index": 23,
+          "left": 1142,
+          "top": 982,
+          "width": 8,
+          "height": 22,
+          "necklineShift": 0
+        }
+      ]
+    },
+    "yawn-recovery": {
+      "src": "/assistant/chibi-yawn-recovery-left-collar-v5.webp",
+      "width": 1254,
+      "height": 1254,
+      "scale": 0.5435356200527705,
+      "frames": 12,
+      "bytes": 1121176,
+      "sha256": "058c571e639f5706cf22784efae174b3fba6cc4a1b17c4d22f6f0cbf6bcd708c",
+      "sourceSrc": "/assistant/chibi-yawn-recovery-inbetweens-v5.png",
+      "sourceSha256": "d01ac335b8037a947e721d51397af49984705902824541511e5dacbf6024334c",
+      "placements": [
+        {
+          "index": 0,
+          "left": 208,
+          "top": 235,
+          "width": 11,
+          "height": 31,
+          "necklineShift": 1.6980286738351253
+        },
+        {
+          "index": 1,
+          "left": 522,
+          "top": 235,
+          "width": 11,
+          "height": 31,
+          "necklineShift": 1.6980286738351253
+        },
+        {
+          "index": 2,
+          "left": 835,
+          "top": 234,
+          "width": 11,
+          "height": 31,
+          "necklineShift": 0.8490143369175627
+        },
+        {
+          "index": 3,
+          "left": 1149,
+          "top": 234,
+          "width": 11,
+          "height": 31,
+          "necklineShift": 0.8490143369175627
+        },
+        {
+          "index": 4,
+          "left": 208,
+          "top": 652,
+          "width": 11,
+          "height": 31,
+          "necklineShift": 0.8490143369175627
+        },
+        {
+          "index": 5,
+          "left": 522,
+          "top": 651,
+          "width": 11,
+          "height": 31,
+          "necklineShift": 0
+        },
+        {
+          "index": 6,
+          "left": 835,
+          "top": 651,
+          "width": 11,
+          "height": 31,
+          "necklineShift": 0
+        },
+        {
+          "index": 7,
+          "left": 1149,
+          "top": 651,
+          "width": 11,
+          "height": 31,
+          "necklineShift": 0
+        },
+        {
+          "index": 8,
+          "left": 208,
+          "top": 1069,
+          "width": 11,
+          "height": 31,
+          "necklineShift": 0
+        },
+        {
+          "index": 9,
+          "left": 522,
+          "top": 1069,
+          "width": 11,
+          "height": 31,
+          "necklineShift": 0
+        },
+        {
+          "index": 10,
+          "left": 835,
+          "top": 1069,
+          "width": 11,
+          "height": 31,
+          "necklineShift": 0
+        },
+        {
+          "index": 11,
+          "left": 1149,
+          "top": 1069,
+          "width": 11,
+          "height": 31,
+          "necklineShift": 0
+        }
+      ]
+    },
+    "fallback": {
+      "src": "/assistant/chibi-neutral-left-collar-v4.png",
+      "sha256": "9d102b3251940dbd3e1a8e2c8437b5fd719b0312bdff674329b2ee6e9337d091",
+      "bytes": 218526
+    }
+  },
+  "frames": [
+    {
+      "frame": 0,
+      "sourcePath": "docs/assistant/left-collar-release-v1/frames/idle/000.png",
+      "sourceSha256": "9d102b3251940dbd3e1a8e2c8437b5fd719b0312bdff674329b2ee6e9337d091",
+      "outputPath": "docs/assistant/left-collar-release-v1/frames/idle/000.png",
+      "sha256": "9d102b3251940dbd3e1a8e2c8437b5fd719b0312bdff674329b2ee6e9337d091"
+    },
+    {
+      "frame": 2,
+      "sourcePath": "docs/assistant/left-collar-release-v1/frames/idle/002.png",
+      "sourceSha256": "9d102b3251940dbd3e1a8e2c8437b5fd719b0312bdff674329b2ee6e9337d091",
+      "outputPath": "docs/assistant/left-collar-release-v1/frames/idle/002.png",
+      "sha256": "9d102b3251940dbd3e1a8e2c8437b5fd719b0312bdff674329b2ee6e9337d091"
+    },
+    {
+      "frame": 4,
+      "sourcePath": "docs/assistant/left-collar-release-v1/frames/idle/004.png",
+      "sourceSha256": "942f062e7430f4f0543f7467b52a1340647ea2732b7148c085b9da0e56118539",
+      "outputPath": "docs/assistant/left-collar-release-v1/frames/idle/004.png",
+      "sha256": "942f062e7430f4f0543f7467b52a1340647ea2732b7148c085b9da0e56118539"
+    },
+    {
+      "frame": 6,
+      "sourcePath": "docs/assistant/left-collar-release-v1/frames/idle/006.png",
+      "sourceSha256": "0a84b4d8245bc1efb50dffe8834157a674883a4cf40d66be8c8fe486f335f3d5",
+      "outputPath": "docs/assistant/left-collar-release-v1/frames/idle/006.png",
+      "sha256": "0a84b4d8245bc1efb50dffe8834157a674883a4cf40d66be8c8fe486f335f3d5"
+    },
+    {
+      "frame": 8,
+      "sourcePath": "docs/assistant/left-collar-release-v1/frames/idle/008.png",
+      "sourceSha256": "2cff9164aa0818e965fb78a1cabcdaa76b848e2c47105f7c263965cb713173a2",
+      "outputPath": "docs/assistant/left-collar-release-v1/frames/idle/008.png",
+      "sha256": "2cff9164aa0818e965fb78a1cabcdaa76b848e2c47105f7c263965cb713173a2"
+    },
+    {
+      "frame": 10,
+      "sourcePath": "docs/assistant/left-collar-release-v1/frames/idle/010.png",
+      "sourceSha256": "3ee9f5803617349ab9d844b5089e673862ac113a2e46fdab10f007ca03ba6cfa",
+      "outputPath": "docs/assistant/left-collar-release-v1/frames/idle/010.png",
+      "sha256": "3ee9f5803617349ab9d844b5089e673862ac113a2e46fdab10f007ca03ba6cfa"
+    },
+    {
+      "frame": 12,
+      "sourcePath": "docs/assistant/left-collar-release-v1/frames/idle/012.png",
+      "sourceSha256": "e5a5d98109897cf12413f1e1301a33964201fcddd25c7a9d3ec8a9257e83afd9",
+      "outputPath": "docs/assistant/left-collar-release-v1/frames/idle/012.png",
+      "sha256": "e5a5d98109897cf12413f1e1301a33964201fcddd25c7a9d3ec8a9257e83afd9"
+    },
+    {
+      "frame": 14,
+      "sourcePath": "docs/assistant/left-collar-release-v1/frames/idle/014.png",
+      "sourceSha256": "4515833b7e2e9e9683169b34f994d12cd99b5dba8561d14defd252440a7653b6",
+      "outputPath": "docs/assistant/left-collar-release-v1/frames/idle/014.png",
+      "sha256": "4515833b7e2e9e9683169b34f994d12cd99b5dba8561d14defd252440a7653b6"
+    },
+    {
+      "frame": 16,
+      "sourcePath": "docs/assistant/left-collar-release-v1/frames/idle/016.png",
+      "sourceSha256": "e04acba72fa809c641f782726942838f7a31ef79cf0c4105db8cd4dd6cb97a52",
+      "outputPath": "docs/assistant/left-collar-release-v1/frames/idle/016.png",
+      "sha256": "e04acba72fa809c641f782726942838f7a31ef79cf0c4105db8cd4dd6cb97a52"
+    },
+    {
+      "frame": 18,
+      "sourcePath": "docs/assistant/left-collar-release-v1/frames/idle/018.png",
+      "sourceSha256": "ef6622b7dec84ac9953e35ebda79cfafce567a671c650064c3bdd57ec0ae476f",
+      "outputPath": "docs/assistant/left-collar-release-v1/frames/idle/018.png",
+      "sha256": "ef6622b7dec84ac9953e35ebda79cfafce567a671c650064c3bdd57ec0ae476f"
+    },
+    {
+      "frame": 20,
+      "sourcePath": "docs/assistant/left-collar-release-v1/frames/idle/020.png",
+      "sourceSha256": "3f70606e7fed7da6880a2a782c03513419a0a6f0534200c770bb6ccda2791dc2",
+      "outputPath": "docs/assistant/left-collar-release-v1/frames/idle/020.png",
+      "sha256": "3f70606e7fed7da6880a2a782c03513419a0a6f0534200c770bb6ccda2791dc2"
+    },
+    {
+      "frame": 22,
+      "sourcePath": "docs/assistant/left-collar-release-v1/frames/idle/022.png",
+      "sourceSha256": "4f9d07b1abf519043b0df3b3018c00685459c8a999ab7448523b36fa146074df",
+      "outputPath": "docs/assistant/left-collar-release-v1/frames/idle/022.png",
+      "sha256": "4f9d07b1abf519043b0df3b3018c00685459c8a999ab7448523b36fa146074df"
+    },
+    {
+      "frame": 24,
+      "sourcePath": "docs/assistant/left-collar-release-v1/frames/idle/024.png",
+      "sourceSha256": "0164f15f77b2b50b2d5ffb012902ddeb8f5df0075011eec02457566ef6d90785",
+      "outputPath": "docs/assistant/left-collar-release-v1/frames/idle/024.png",
+      "sha256": "0164f15f77b2b50b2d5ffb012902ddeb8f5df0075011eec02457566ef6d90785"
+    },
+    {
+      "frame": 26,
+      "sourcePath": "docs/assistant/left-collar-release-v1/frames/idle/026.png",
+      "sourceSha256": "35168652aea6e640cdf2b6ee46205e438fd91d6402b2d6a65bbf1785b0ea174b",
+      "outputPath": "docs/assistant/left-collar-release-v1/frames/idle/026.png",
+      "sha256": "35168652aea6e640cdf2b6ee46205e438fd91d6402b2d6a65bbf1785b0ea174b"
+    },
+    {
+      "frame": 28,
+      "sourcePath": "docs/assistant/left-collar-release-v1/frames/idle/028.png",
+      "sourceSha256": "de87f1528ee8a6b3ed9844725a743fe3005f03bbcba3eb51493122c085f7af13",
+      "outputPath": "docs/assistant/left-collar-release-v1/frames/idle/028.png",
+      "sha256": "de87f1528ee8a6b3ed9844725a743fe3005f03bbcba3eb51493122c085f7af13"
+    },
+    {
+      "frame": 30,
+      "sourcePath": "docs/assistant/left-collar-release-v1/frames/idle/030.png",
+      "sourceSha256": "7c14056b6bc6eb966b60b4f832e0261880501d58b6fea26b055b3c2f0fe5b55c",
+      "outputPath": "docs/assistant/left-collar-release-v1/frames/idle/030.png",
+      "sha256": "7c14056b6bc6eb966b60b4f832e0261880501d58b6fea26b055b3c2f0fe5b55c"
+    },
+    {
+      "frame": 32,
+      "sourcePath": "docs/assistant/left-collar-release-v1/frames/idle/032.png",
+      "sourceSha256": "895146df940fe311e6296663dcd2cffca600762a88518502db8d1b71cdd84643",
+      "outputPath": "docs/assistant/left-collar-release-v1/frames/idle/032.png",
+      "sha256": "895146df940fe311e6296663dcd2cffca600762a88518502db8d1b71cdd84643"
+    },
+    {
+      "frame": 34,
+      "sourcePath": "docs/assistant/left-collar-release-v1/frames/idle/034.png",
+      "sourceSha256": "83fbbe90c64cd082247f89a307e0cce604261ab2bf89364bc672aa33ecbd77c8",
+      "outputPath": "docs/assistant/left-collar-release-v1/frames/idle/034.png",
+      "sha256": "83fbbe90c64cd082247f89a307e0cce604261ab2bf89364bc672aa33ecbd77c8"
+    },
+    {
+      "frame": 36,
+      "sourcePath": "docs/assistant/left-collar-release-v1/frames/idle/036.png",
+      "sourceSha256": "ef8fc5e93c192973fefd827fbe178a78946c10c6985d03b9b77a14fa7b2ef934",
+      "outputPath": "docs/assistant/left-collar-release-v1/frames/idle/036.png",
+      "sha256": "ef8fc5e93c192973fefd827fbe178a78946c10c6985d03b9b77a14fa7b2ef934"
+    },
+    {
+      "frame": 37,
+      "sourcePath": "docs/assistant/left-collar-release-v1/frames/idle/037.png",
+      "sourceSha256": "dfa3e2f253959c0f889632a84ddcb89cfd4798f0398c0ad926e5f78329b297c5",
+      "outputPath": "docs/assistant/blink-refinement-v1/frames/037.png",
+      "sha256": "f3b96f068456f0e6fd59cfba045b5d09c5c805b34963b22645394f74eaac70d9"
+    },
+    {
+      "frame": 38,
+      "sourcePath": "docs/assistant/left-collar-release-v1/frames/idle/038.png",
+      "sourceSha256": "06f490c500e2f1f2c3950e057db807cb5c2e3b79ac42a4af7d884583b2cca9b8",
+      "outputPath": "docs/assistant/blink-refinement-v1/frames/038.png",
+      "sha256": "44870a339c565550aa7662692ba97993be9674ee1d982dfdff32e77ffeb3ff6c"
+    },
+    {
+      "frame": 39,
+      "sourcePath": "docs/assistant/left-collar-release-v1/frames/idle/039.png",
+      "sourceSha256": "5ff1135cb0a205cff284f75ee012b97df4c9bc1609fe000bef267027cfcf7afc",
+      "outputPath": "docs/assistant/blink-refinement-v1/frames/039.png",
+      "sha256": "370086ada131b7e78f363a10653ba16d033c4efead04d4a1bb856a551257e133"
+    },
+    {
+      "frame": 40,
+      "sourcePath": "docs/assistant/left-collar-release-v1/frames/idle/040.png",
+      "sourceSha256": "62acf9a675a80166a44d83f1b94474465d8e5c4d6d32a48847884cf50824a843",
+      "outputPath": "docs/assistant/blink-refinement-v1/frames/040.png",
+      "sha256": "c7ffccb50c6feda256c1f2ebb0071822520ac8c80fd821d6e900e808c3c3bb16"
+    },
+    {
+      "frame": 41,
+      "sourcePath": "docs/assistant/left-collar-release-v1/frames/idle/041.png",
+      "sourceSha256": "2c9f702e42cbd6a62d1853476cfd8449a13b2906886e8ecb797da5058d97169e",
+      "outputPath": "docs/assistant/blink-refinement-v1/frames/041.png",
+      "sha256": "bc63b2c41a749d66158cbf03beff46443ec9a12a073d7bcd19de32bd03285993"
+    },
+    {
+      "frame": 42,
+      "sourcePath": "docs/assistant/left-collar-release-v1/frames/idle/042.png",
+      "sourceSha256": "dc8f2ea3a5fc4066a68e43c0f4eac48c9f29c08905b66b57a4aa2a02d3a4b023",
+      "outputPath": "docs/assistant/blink-refinement-v1/frames/042.png",
+      "sha256": "9c9f6e78a0f6c9281a95d462cea2c3ce6759dfad739229df0b952ed4ff5fa7ad"
+    },
+    {
+      "frame": 43,
+      "sourcePath": "docs/assistant/left-collar-release-v1/frames/idle/043.png",
+      "sourceSha256": "ae0f58996e5db32a979574608b6b2b392bd8c328e0692371a22740b40a413b84",
+      "outputPath": "docs/assistant/blink-refinement-v1/frames/043.png",
+      "sha256": "ed97066b1a5dfa002cb15a08f48676924076ff1ed80251ca73bab615bf40f2af"
+    },
+    {
+      "frame": 44,
+      "sourcePath": "docs/assistant/left-collar-release-v1/frames/idle/044.png",
+      "sourceSha256": "ace8de5e844c65c0a4084d613f068aae070b72a57696edfdcb560b5cdb5e50b9",
+      "outputPath": "docs/assistant/blink-refinement-v1/frames/044.png",
+      "sha256": "3533287022983ec0f38b157275f1c46e751655584041936e1ebe70c3f0a7bf53"
+    },
+    {
+      "frame": 45,
+      "sourcePath": "docs/assistant/left-collar-release-v1/frames/idle/045.png",
+      "sourceSha256": "bbc2b42fb4c013aabb397c5c0dea1a4b2b0f20c24a477d89b81cfa6d7999166f",
+      "outputPath": "docs/assistant/blink-refinement-v1/frames/045.png",
+      "sha256": "eb696445c7b2fea7d35f35842c0c5ca084ebdd818877f7cabfaa5ce3bf360711"
+    },
+    {
+      "frame": 46,
+      "sourcePath": "docs/assistant/left-collar-release-v1/frames/idle/046.png",
+      "sourceSha256": "a6303a0167165860e2d7ddb675121d6e418b8cb54d0a288da9655e4de7ba16e5",
+      "outputPath": "docs/assistant/blink-refinement-v1/frames/046.png",
+      "sha256": "c7612840cffb4501b5ab62deceb10e1dc3168e3a1810c178874e6f1f32be6dab"
+    },
+    {
+      "frame": 47,
+      "sourcePath": "docs/assistant/left-collar-release-v1/frames/idle/047.png",
+      "sourceSha256": "0b312bc4e3b3ca44314795069e25de0bce51f5e37b05159aaecca70df12155ed",
+      "outputPath": "docs/assistant/blink-refinement-v1/frames/047.png",
+      "sha256": "f41675bfa8a0fef540b91d460e3ce471c4c548b977ec9fb3bd66594dc4be1f67"
+    },
+    {
+      "frame": 48,
+      "sourcePath": "docs/assistant/left-collar-release-v1/frames/idle/048.png",
+      "sourceSha256": "40ab5f89c5e407b0f0eb4713b03963ed17def76338c0c2a01a92c835c770356a",
+      "outputPath": "docs/assistant/blink-refinement-v1/frames/048.png",
+      "sha256": "7a14e406e83595a34776a80cbe2bc6cfe47db4de72c82e75919fbdb49704d41b"
+    },
+    {
+      "frame": 49,
+      "sourcePath": "docs/assistant/blink-refinement-v1/source/049.png",
+      "sourceSha256": "e7cf825cb93fd169776761f8ef20580b4345dafd0076ce3cb4c4d2ba0e6a75c8",
+      "outputPath": "docs/assistant/blink-refinement-v1/source/049.png",
+      "sha256": "e7cf825cb93fd169776761f8ef20580b4345dafd0076ce3cb4c4d2ba0e6a75c8"
+    },
+    {
+      "frame": 50,
+      "sourcePath": "docs/assistant/left-collar-release-v1/frames/idle/050.png",
+      "sourceSha256": "f1016b444565eeb87d781965419dd8c72adbc08fd29019e3c2c92bf1e0946a36",
+      "outputPath": "docs/assistant/left-collar-release-v1/frames/idle/050.png",
+      "sha256": "f1016b444565eeb87d781965419dd8c72adbc08fd29019e3c2c92bf1e0946a36"
+    },
+    {
+      "frame": 52,
+      "sourcePath": "docs/assistant/left-collar-release-v1/frames/idle/052.png",
+      "sourceSha256": "6d520498555c48da15375311696312c159f3aa773d1c78c932726366d3bdd2fa",
+      "outputPath": "docs/assistant/left-collar-release-v1/frames/idle/052.png",
+      "sha256": "6d520498555c48da15375311696312c159f3aa773d1c78c932726366d3bdd2fa"
+    },
+    {
+      "frame": 54,
+      "sourcePath": "docs/assistant/left-collar-release-v1/frames/idle/054.png",
+      "sourceSha256": "cf6bec7006be807c8623320e778193d585b8cfdf162cd09f5a36a9a5c94dcb07",
+      "outputPath": "docs/assistant/left-collar-release-v1/frames/idle/054.png",
+      "sha256": "cf6bec7006be807c8623320e778193d585b8cfdf162cd09f5a36a9a5c94dcb07"
+    },
+    {
+      "frame": 56,
+      "sourcePath": "docs/assistant/left-collar-release-v1/frames/idle/056.png",
+      "sourceSha256": "b30884f6b9283e6fba8721cd2a9e03c10f8a7143fe23471567c11c59dcdfa1e3",
+      "outputPath": "docs/assistant/left-collar-release-v1/frames/idle/056.png",
+      "sha256": "b30884f6b9283e6fba8721cd2a9e03c10f8a7143fe23471567c11c59dcdfa1e3"
+    },
+    {
+      "frame": 58,
+      "sourcePath": "docs/assistant/left-collar-release-v1/frames/idle/058.png",
+      "sourceSha256": "b868d146432ddd74c20f300322a420036516963f78ada2d1cf347ef0e28a0f23",
+      "outputPath": "docs/assistant/left-collar-release-v1/frames/idle/058.png",
+      "sha256": "b868d146432ddd74c20f300322a420036516963f78ada2d1cf347ef0e28a0f23"
+    },
+    {
+      "frame": 60,
+      "sourcePath": "docs/assistant/left-collar-release-v1/frames/idle/060.png",
+      "sourceSha256": "c0c02826ff6cd24aea3418ef781c6bcdb6fdbf7043b0ced815a239274318483a",
+      "outputPath": "docs/assistant/left-collar-release-v1/frames/idle/060.png",
+      "sha256": "c0c02826ff6cd24aea3418ef781c6bcdb6fdbf7043b0ced815a239274318483a"
+    },
+    {
+      "frame": 62,
+      "sourcePath": "docs/assistant/left-collar-release-v1/frames/idle/062.png",
+      "sourceSha256": "b868d146432ddd74c20f300322a420036516963f78ada2d1cf347ef0e28a0f23",
+      "outputPath": "docs/assistant/left-collar-release-v1/frames/idle/062.png",
+      "sha256": "b868d146432ddd74c20f300322a420036516963f78ada2d1cf347ef0e28a0f23"
+    },
+    {
+      "frame": 64,
+      "sourcePath": "docs/assistant/left-collar-release-v1/frames/idle/064.png",
+      "sourceSha256": "b30884f6b9283e6fba8721cd2a9e03c10f8a7143fe23471567c11c59dcdfa1e3",
+      "outputPath": "docs/assistant/left-collar-release-v1/frames/idle/064.png",
+      "sha256": "b30884f6b9283e6fba8721cd2a9e03c10f8a7143fe23471567c11c59dcdfa1e3"
+    },
+    {
+      "frame": 66,
+      "sourcePath": "docs/assistant/left-collar-release-v1/frames/idle/066.png",
+      "sourceSha256": "cf6bec7006be807c8623320e778193d585b8cfdf162cd09f5a36a9a5c94dcb07",
+      "outputPath": "docs/assistant/left-collar-release-v1/frames/idle/066.png",
+      "sha256": "cf6bec7006be807c8623320e778193d585b8cfdf162cd09f5a36a9a5c94dcb07"
+    },
+    {
+      "frame": 68,
+      "sourcePath": "docs/assistant/left-collar-release-v1/frames/idle/068.png",
+      "sourceSha256": "6d520498555c48da15375311696312c159f3aa773d1c78c932726366d3bdd2fa",
+      "outputPath": "docs/assistant/left-collar-release-v1/frames/idle/068.png",
+      "sha256": "6d520498555c48da15375311696312c159f3aa773d1c78c932726366d3bdd2fa"
+    },
+    {
+      "frame": 70,
+      "sourcePath": "docs/assistant/left-collar-release-v1/frames/idle/070.png",
+      "sourceSha256": "f1016b444565eeb87d781965419dd8c72adbc08fd29019e3c2c92bf1e0946a36",
+      "outputPath": "docs/assistant/left-collar-release-v1/frames/idle/070.png",
+      "sha256": "f1016b444565eeb87d781965419dd8c72adbc08fd29019e3c2c92bf1e0946a36"
+    },
+    {
+      "frame": 72,
+      "sourcePath": "docs/assistant/left-collar-release-v1/frames/idle/072.png",
+      "sourceSha256": "55351a225f2a8e05763a5472e8d0d2eec50c5b7e75558fdb48ee4532688052f1",
+      "outputPath": "docs/assistant/left-collar-release-v1/frames/idle/072.png",
+      "sha256": "55351a225f2a8e05763a5472e8d0d2eec50c5b7e75558fdb48ee4532688052f1"
+    },
+    {
+      "frame": 74,
+      "sourcePath": "docs/assistant/left-collar-release-v1/frames/idle/074.png",
+      "sourceSha256": "6f4eea2232f4fa74a30a0224978bfa614a5452c1a0e35af5daaebb79fb44f13a",
+      "outputPath": "docs/assistant/left-collar-release-v1/frames/idle/074.png",
+      "sha256": "6f4eea2232f4fa74a30a0224978bfa614a5452c1a0e35af5daaebb79fb44f13a"
+    },
+    {
+      "frame": 76,
+      "sourcePath": "docs/assistant/left-collar-release-v1/frames/idle/076.png",
+      "sourceSha256": "d4434716c6c415e13143ce328722a330fa3079212d57b89c6e95a4ef22a6f732",
+      "outputPath": "docs/assistant/left-collar-release-v1/frames/idle/076.png",
+      "sha256": "d4434716c6c415e13143ce328722a330fa3079212d57b89c6e95a4ef22a6f732"
+    },
+    {
+      "frame": 78,
+      "sourcePath": "docs/assistant/left-collar-release-v1/frames/idle/078.png",
+      "sourceSha256": "abe5255dcee2ded0c6fa06a1bf3ad544bdf3dcff5d7208dc602d178185d07527",
+      "outputPath": "docs/assistant/left-collar-release-v1/frames/idle/078.png",
+      "sha256": "abe5255dcee2ded0c6fa06a1bf3ad544bdf3dcff5d7208dc602d178185d07527"
+    },
+    {
+      "frame": 80,
+      "sourcePath": "docs/assistant/left-collar-release-v1/frames/idle/080.png",
+      "sourceSha256": "134c65f76fc7fd151471aa4d5c35f1e320a58761d1909c53a8b3903e33fd965c",
+      "outputPath": "docs/assistant/left-collar-release-v1/frames/idle/080.png",
+      "sha256": "134c65f76fc7fd151471aa4d5c35f1e320a58761d1909c53a8b3903e33fd965c"
+    },
+    {
+      "frame": 82,
+      "sourcePath": "docs/assistant/left-collar-release-v1/frames/idle/082.png",
+      "sourceSha256": "a52aac34ab0d809afdc9651fee4f7959eed072688252c0b202d075831d23af80",
+      "outputPath": "docs/assistant/left-collar-release-v1/frames/idle/082.png",
+      "sha256": "a52aac34ab0d809afdc9651fee4f7959eed072688252c0b202d075831d23af80"
+    },
+    {
+      "frame": 84,
+      "sourcePath": "docs/assistant/left-collar-release-v1/frames/idle/084.png",
+      "sourceSha256": "ef8fc5e93c192973fefd827fbe178a78946c10c6985d03b9b77a14fa7b2ef934",
+      "outputPath": "docs/assistant/left-collar-release-v1/frames/idle/084.png",
+      "sha256": "ef8fc5e93c192973fefd827fbe178a78946c10c6985d03b9b77a14fa7b2ef934"
+    },
+    {
+      "frame": 86,
+      "sourcePath": "docs/assistant/left-collar-release-v1/frames/idle/086.png",
+      "sourceSha256": "83fbbe90c64cd082247f89a307e0cce604261ab2bf89364bc672aa33ecbd77c8",
+      "outputPath": "docs/assistant/left-collar-release-v1/frames/idle/086.png",
+      "sha256": "83fbbe90c64cd082247f89a307e0cce604261ab2bf89364bc672aa33ecbd77c8"
+    },
+    {
+      "frame": 88,
+      "sourcePath": "docs/assistant/left-collar-release-v1/frames/idle/088.png",
+      "sourceSha256": "895146df940fe311e6296663dcd2cffca600762a88518502db8d1b71cdd84643",
+      "outputPath": "docs/assistant/left-collar-release-v1/frames/idle/088.png",
+      "sha256": "895146df940fe311e6296663dcd2cffca600762a88518502db8d1b71cdd84643"
+    },
+    {
+      "frame": 90,
+      "sourcePath": "docs/assistant/left-collar-release-v1/frames/idle/090.png",
+      "sourceSha256": "7c14056b6bc6eb966b60b4f832e0261880501d58b6fea26b055b3c2f0fe5b55c",
+      "outputPath": "docs/assistant/left-collar-release-v1/frames/idle/090.png",
+      "sha256": "7c14056b6bc6eb966b60b4f832e0261880501d58b6fea26b055b3c2f0fe5b55c"
+    },
+    {
+      "frame": 92,
+      "sourcePath": "docs/assistant/left-collar-release-v1/frames/idle/092.png",
+      "sourceSha256": "de87f1528ee8a6b3ed9844725a743fe3005f03bbcba3eb51493122c085f7af13",
+      "outputPath": "docs/assistant/left-collar-release-v1/frames/idle/092.png",
+      "sha256": "de87f1528ee8a6b3ed9844725a743fe3005f03bbcba3eb51493122c085f7af13"
+    },
+    {
+      "frame": 94,
+      "sourcePath": "docs/assistant/left-collar-release-v1/frames/idle/094.png",
+      "sourceSha256": "35168652aea6e640cdf2b6ee46205e438fd91d6402b2d6a65bbf1785b0ea174b",
+      "outputPath": "docs/assistant/left-collar-release-v1/frames/idle/094.png",
+      "sha256": "35168652aea6e640cdf2b6ee46205e438fd91d6402b2d6a65bbf1785b0ea174b"
+    },
+    {
+      "frame": 96,
+      "sourcePath": "docs/assistant/left-collar-release-v1/frames/idle/096.png",
+      "sourceSha256": "0164f15f77b2b50b2d5ffb012902ddeb8f5df0075011eec02457566ef6d90785",
+      "outputPath": "docs/assistant/left-collar-release-v1/frames/idle/096.png",
+      "sha256": "0164f15f77b2b50b2d5ffb012902ddeb8f5df0075011eec02457566ef6d90785"
+    },
+    {
+      "frame": 98,
+      "sourcePath": "docs/assistant/left-collar-release-v1/frames/idle/098.png",
+      "sourceSha256": "4f9d07b1abf519043b0df3b3018c00685459c8a999ab7448523b36fa146074df",
+      "outputPath": "docs/assistant/left-collar-release-v1/frames/idle/098.png",
+      "sha256": "4f9d07b1abf519043b0df3b3018c00685459c8a999ab7448523b36fa146074df"
+    },
+    {
+      "frame": 100,
+      "sourcePath": "docs/assistant/left-collar-release-v1/frames/idle/100.png",
+      "sourceSha256": "3f70606e7fed7da6880a2a782c03513419a0a6f0534200c770bb6ccda2791dc2",
+      "outputPath": "docs/assistant/left-collar-release-v1/frames/idle/100.png",
+      "sha256": "3f70606e7fed7da6880a2a782c03513419a0a6f0534200c770bb6ccda2791dc2"
+    },
+    {
+      "frame": 102,
+      "sourcePath": "docs/assistant/left-collar-release-v1/frames/idle/102.png",
+      "sourceSha256": "ef6622b7dec84ac9953e35ebda79cfafce567a671c650064c3bdd57ec0ae476f",
+      "outputPath": "docs/assistant/left-collar-release-v1/frames/idle/102.png",
+      "sha256": "ef6622b7dec84ac9953e35ebda79cfafce567a671c650064c3bdd57ec0ae476f"
+    },
+    {
+      "frame": 104,
+      "sourcePath": "docs/assistant/left-collar-release-v1/frames/idle/104.png",
+      "sourceSha256": "e04acba72fa809c641f782726942838f7a31ef79cf0c4105db8cd4dd6cb97a52",
+      "outputPath": "docs/assistant/left-collar-release-v1/frames/idle/104.png",
+      "sha256": "e04acba72fa809c641f782726942838f7a31ef79cf0c4105db8cd4dd6cb97a52"
+    },
+    {
+      "frame": 106,
+      "sourcePath": "docs/assistant/left-collar-release-v1/frames/idle/106.png",
+      "sourceSha256": "4515833b7e2e9e9683169b34f994d12cd99b5dba8561d14defd252440a7653b6",
+      "outputPath": "docs/assistant/left-collar-release-v1/frames/idle/106.png",
+      "sha256": "4515833b7e2e9e9683169b34f994d12cd99b5dba8561d14defd252440a7653b6"
+    },
+    {
+      "frame": 108,
+      "sourcePath": "docs/assistant/left-collar-release-v1/frames/idle/108.png",
+      "sourceSha256": "e5a5d98109897cf12413f1e1301a33964201fcddd25c7a9d3ec8a9257e83afd9",
+      "outputPath": "docs/assistant/left-collar-release-v1/frames/idle/108.png",
+      "sha256": "e5a5d98109897cf12413f1e1301a33964201fcddd25c7a9d3ec8a9257e83afd9"
+    },
+    {
+      "frame": 110,
+      "sourcePath": "docs/assistant/left-collar-release-v1/frames/idle/110.png",
+      "sourceSha256": "3ee9f5803617349ab9d844b5089e673862ac113a2e46fdab10f007ca03ba6cfa",
+      "outputPath": "docs/assistant/left-collar-release-v1/frames/idle/110.png",
+      "sha256": "3ee9f5803617349ab9d844b5089e673862ac113a2e46fdab10f007ca03ba6cfa"
+    },
+    {
+      "frame": 112,
+      "sourcePath": "docs/assistant/left-collar-release-v1/frames/idle/112.png",
+      "sourceSha256": "2cff9164aa0818e965fb78a1cabcdaa76b848e2c47105f7c263965cb713173a2",
+      "outputPath": "docs/assistant/left-collar-release-v1/frames/idle/112.png",
+      "sha256": "2cff9164aa0818e965fb78a1cabcdaa76b848e2c47105f7c263965cb713173a2"
+    },
+    {
+      "frame": 114,
+      "sourcePath": "docs/assistant/left-collar-release-v1/frames/idle/114.png",
+      "sourceSha256": "0a84b4d8245bc1efb50dffe8834157a674883a4cf40d66be8c8fe486f335f3d5",
+      "outputPath": "docs/assistant/left-collar-release-v1/frames/idle/114.png",
+      "sha256": "0a84b4d8245bc1efb50dffe8834157a674883a4cf40d66be8c8fe486f335f3d5"
+    },
+    {
+      "frame": 116,
+      "sourcePath": "docs/assistant/left-collar-release-v1/frames/idle/116.png",
+      "sourceSha256": "942f062e7430f4f0543f7467b52a1340647ea2732b7148c085b9da0e56118539",
+      "outputPath": "docs/assistant/left-collar-release-v1/frames/idle/116.png",
+      "sha256": "942f062e7430f4f0543f7467b52a1340647ea2732b7148c085b9da0e56118539"
+    },
+    {
+      "frame": 118,
+      "sourcePath": "docs/assistant/left-collar-release-v1/frames/idle/118.png",
+      "sourceSha256": "9d102b3251940dbd3e1a8e2c8437b5fd719b0312bdff674329b2ee6e9337d091",
+      "outputPath": "docs/assistant/left-collar-release-v1/frames/idle/118.png",
+      "sha256": "9d102b3251940dbd3e1a8e2c8437b5fd719b0312bdff674329b2ee6e9337d091"
+    },
+    {
+      "frame": 120,
+      "sourcePath": "docs/assistant/left-collar-release-v1/frames/idle/120.png",
+      "sourceSha256": "9d102b3251940dbd3e1a8e2c8437b5fd719b0312bdff674329b2ee6e9337d091",
+      "outputPath": "docs/assistant/left-collar-release-v1/frames/idle/120.png",
+      "sha256": "9d102b3251940dbd3e1a8e2c8437b5fd719b0312bdff674329b2ee6e9337d091"
+    }
+  ],
+  "eyePolygons": [
+    [
+      [
+        308,
+        334
+      ],
+      [
+        313,
+        321
+      ],
+      [
+        325,
+        312
+      ],
+      [
+        352,
+        313
+      ],
+      [
+        371,
+        330
+      ],
+      [
+        373,
+        354
+      ],
+      [
+        365,
+        364
+      ],
+      [
+        338,
+        368
+      ],
+      [
+        312,
+        352
+      ]
+    ],
+    [
+      [
+        394,
+        326
+      ],
+      [
+        400,
+        311
+      ],
+      [
+        413,
+        303
+      ],
+      [
+        438,
+        303
+      ],
+      [
+        456,
+        319
+      ],
+      [
+        458,
+        348
+      ],
+      [
+        448,
+        356
+      ],
+      [
+        425,
+        362
+      ],
+      [
+        398,
+        346
+      ]
+    ]
+  ],
+  "indices": [
+    0,
+    2,
+    4,
+    6,
+    8,
+    10,
+    12,
+    14,
+    16,
+    18,
+    20,
+    22,
+    24,
+    26,
+    28,
+    30,
+    32,
+    34,
+    36,
+    37,
+    38,
+    39,
+    40,
+    41,
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50,
+    52,
+    54,
+    56,
+    58,
+    60,
+    62,
+    64,
+    66,
+    68,
+    70,
+    72,
+    74,
+    76,
+    78,
+    80,
+    82,
+    84,
+    86,
+    88,
+    90,
+    92,
+    94,
+    96,
+    98,
+    100,
+    102,
+    104,
+    106,
+    108,
+    110,
+    112,
+    114,
+    116,
+    118,
+    120
+  ],
+  "times": [
+    0,
+    66.66666666666667,
+    133.33333333333334,
+    200,
+    266.6666666666667,
+    333.3333333333333,
+    400,
+    466.6666666666667,
+    533.3333333333334,
+    600,
+    666.6666666666666,
+    733.3333333333334,
+    800,
+    866.6666666666666,
+    933.3333333333334,
+    1000,
+    1066.6666666666667,
+    1133.3333333333333,
+    1200,
+    1233.3333333333333,
+    1266.6666666666667,
+    1300,
+    1333.3333333333333,
+    1366.6666666666667,
+    1400,
+    1433.3333333333333,
+    1466.6666666666667,
+    1500,
+    1533.3333333333333,
+    1566.6666666666667,
+    1600,
+    1633.3333333333333,
+    1666.6666666666667,
+    1733.3333333333333,
+    1800,
+    1866.6666666666667,
+    1933.3333333333333,
+    2000,
+    2066.6666666666665,
+    2133.3333333333335,
+    2200,
+    2266.6666666666665,
+    2333.3333333333335,
+    2400,
+    2466.6666666666665,
+    2533.3333333333335,
+    2600,
+    2666.6666666666665,
+    2733.3333333333335,
+    2800,
+    2866.6666666666665,
+    2933.3333333333335,
+    3000,
+    3066.6666666666665,
+    3133.3333333333335,
+    3200,
+    3266.6666666666665,
+    3333.3333333333335,
+    3400,
+    3466.6666666666665,
+    3533.3333333333335,
+    3600,
+    3666.6666666666665,
+    3733.3333333333335,
+    3800,
+    3866.6666666666665,
+    3933.3333333333335,
+    3966.6666666666665
+  ],
+  "rect": {
+    "left": 180,
+    "top": 153,
+    "width": 366,
+    "height": 460
+  },
+  "scale": 0.4614695340501792,
+  "frameScopeSha256": "69ecc2a035fcfab6f6e74924200854d158b9dac3bd475cc6a4bb3b09b7a6a0bf",
+  "generatorSha256": "be42d0f073f4e324fb96af61534f1a1122439392dd8f0426afc814d020673346",
+  "eyeModuleSha256": "985eb336703c29a9dc34acd7c74b59bc0e5638c34e64c86e33af5178cd8455e2",
+  "codeHashFormat": "UTF-8-LF",
+  "toolVersions": {
+    "aom": "3.15.1",
+    "archive": "3.8.9",
+    "cairo": "1.18.6",
+    "cgif": "0.5.4",
+    "exif": "0.6.26",
+    "expat": "2.8.5",
+    "ffi": "3.8.0",
+    "fontconfig": "2.18.3",
+    "freetype": "2.14.3",
+    "fribidi": "1.0.17",
+    "glib": "2.90.0",
+    "harfbuzz": "14.5.0",
+    "heif": "1.23.5",
+    "highway": "1.4.0",
+    "imagequant": "2.4.1",
+    "lcms": "2.19.1",
+    "mozjpeg": "0826579",
+    "pango": "1.58.2",
+    "pixman": "0.46.4",
+    "png": "1.6.58",
+    "proxy-libintl": "0.5",
+    "rsvg": "2.63.2",
+    "tiff": "4.7.2",
+    "uhdr": "2.0.2",
+    "vips": "8.18.7",
+    "webp": "1.6.0",
+    "xml2": "2.15.4",
+    "zlib-ng": "2.3.3",
+    "sharp": "0.35.5"
+  },
+  "lockfileSha256": "9cb33079fff744bf0a6ee17e304da5c16347a7f08674a77d7ba48e7dee0bf269",
+  "originalNeutralSha256": "5a12d3aec74704c6ae4360159e1cdcda98fc35b6b43abeccc06cf4d87765bbe0",
+  "skinBackfillSha256": "dac1ec262fab64daccb3d1c1fc804359b46354f72b4e71e1131b38b38732a76c",
+  "closedStyle": {
+    "width": 1.9999999999999998,
+    "opacity": 1,
+    "color": "#49352c"
+  },
+  "nativeRigReleased": false,
+  "deployAllowed": false,
+  "assetScopeSha256": "dd9aeaca59d82381931d9a350ea8e7e64285fb7c64b828fb1f234b0840403338"
+}

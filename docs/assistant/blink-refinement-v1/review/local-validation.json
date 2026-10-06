@@ -1,0 +1,15 @@
+{
+  "status": "PASSED_LOCAL",
+  "assetScopeSha256": "dd9aeaca59d82381931d9a350ea8e7e64285fb7c64b828fb1f234b0840403338",
+  "frameScopeSha256": "69ecc2a035fcfab6f6e74924200854d158b9dac3bd475cc6a4bb3b09b7a6a0bf",
+  "unitTests": {"tests": 191, "pass": 191, "fail": 0, "skipped": 0, "optionalOfflineBrowserIncluded": true},
+  "lint": "PASS",
+  "typecheck": "PASS",
+  "uiPreviewProductionBuildWebpack": "PASS",
+  "scopedReleaseGate": "PASS",
+  "readability": {"status": "PASS", "zoomEmulation": [1, 0.9, 0.8, 2], "mobileWidths": [390, 320], "providerMocked": true},
+  "actualBrowser": "browser-local.json",
+  "databaseIntegration": "Separate GitHub CI job, not run against production by local tests.",
+  "noAIRequests": true,
+  "environmentNote": "Existing C-to-D dependency junction prevents C-drive Next dev resolution. Production preview build and final browser checks used the physical D-drive validation copy. Preview build completed with the existing empty-DATABASE_URL admin prerender diagnostic; real PostgreSQL validation remains a separate CI gate."
+}

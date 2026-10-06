@@ -6,10 +6,17 @@ import {createHash} from 'node:crypto';
 import {CHARACTER_ACTIONS} from '../src/lib/assistant/character.ts';
 import {CHARACTER_FRAME_VERSION,DRAWING_SEQUENCES,NEUTRAL_DRAWING,isPilotAction,drawingKey,drawingTimes,FRAME_BLEND_MS} from '../src/lib/assistant/frame-timeline.ts';
 const base=process.env.TEST_BASE_URL || 'http://127.0.0.1:3220';
+const manifest=JSON.parse(await readFile('docs/assistant/blink-refinement-v1/candidate.json','utf8'));
+const assets=[manifest.asset,...Object.values(manifest.keptAssets)];
+const expectedHashes=new Map(assets.map(a=>[a.src,a.sha256]));
+const hash=b=>createHash('sha256').update(b).digest('hex');
+const assetScopeSha256=hash(assets.map(a=>a.src+':'+a.sha256).sort().join('\n'));
+const expectedPoses=Object.values(DRAWING_SEQUENCES).reduce((n,seq)=>n+seq.length,0);
 if(!['localhost','127.0.0.1','eastherphil.cn'].includes(new URL(base).hostname))throw Error('Unexpected target');
 const {chromium}=createRequire(import.meta.url)(process.env.PLAYWRIGHT_MODULE || 'C:/Users/Administrator/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright');
 const browser=await chromium.launch({headless:true,channel:'msedge'}),results=[],errors=[];
-const output='.tool-tmp/chibi-integration';await mkdir(output,{recursive:true});
+const output=process.env.CHARACTER_REPORT_DIR || '.tool-tmp/chibi-integration';await mkdir(output,{recursive:true});
+const playback=[];
 async function seek(canvas,time){
  await canvas.evaluate((el,t)=>{const a=el.getAnimations()[0];a.pause();a.currentTime=t;},time);
  await canvas.evaluate(()=>new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r))));
@@ -28,7 +35,13 @@ async function seek(canvas,time){
 try{
  for(const [width,dpr] of [[1280,1],[768,1],[390,2],[320,2]]){
   const context=await browser.newContext({viewport:{width,height:844},deviceScaleFactor:dpr}),page=await context.newPage();
-  page.on('pageerror',e=>errors.push(e.message));const requested=new Set(),rigRequests=[];let queries=0;
+  page.on('pageerror',e=>errors.push(e.message));const requested=new Set(),rigRequests=[],responseChecks=[],received=new Set();let queries=0;
+  page.on('response',response=>{const p=new URL(response.url()).pathname;if(expectedHashes.has(p))responseChecks.push((async()=>{
+   // A revalidated 304 reuses a body verified earlier in this same context;
+   // it must never authorize a resource whose first 200 response was not hashed.
+   if(response.status()===304){assert.ok(received.has(p),'Unverified cached artwork: '+p);return;}
+   assert.equal(response.status(),200);assert.equal(hash(await response.body()),expectedHashes.get(p),'Browser received unapproved artwork: '+p);received.add(p);
+  })().catch(e=>{errors.push(e.message);}));});
   page.on('request',r=>{const p=new URL(r.url()).pathname;if(/chibi-.*\.(png|webp)$/.test(p))requested.add(p);if(/rig-.*\.png$/.test(p))rigRequests.push(p);if(p==='/api/assistant/query')queries++;});
   await page.goto(base);await page.waitForSelector('[data-action] canvas[data-ready=true]');
   const floating=page.locator('[data-action]').first();assert.equal(await floating.evaluate(el=>getComputedStyle(el).transform),'none');
@@ -37,9 +50,22 @@ try{
   const dialog=page.getByRole('dialog',{name:'小助手',exact:true}),character=dialog.locator('[data-action]'),canvas=character.locator('canvas');
   await page.waitForSelector('dialog canvas[data-ready=true]');
   assert.equal(await character.getAttribute('data-character-version'),CHARACTER_FRAME_VERSION);
-  assert.deepEqual([...requested].sort(),['/assistant/chibi-idle-left-collar-v4.webp']);
+  assert.deepEqual([...requested].sort(),[manifest.asset.src]);
   await canvas.evaluate(el=>{el.dataset.instance='persistent-canvas';});
   const box=await character.boundingBox(),neutral=await seek(canvas,0),gallery=[];let checked=0,maxDrift=0;
+  if(width===1280){
+   // Run the actual animation clock, in addition to deterministic per-pose seeks.
+   for(const [rate,loops]of[[1,3],[.5,1]]){
+    const observed=await canvas.evaluate(async(el,{rate,loops})=>{
+     const a=el.getAnimations()[0];a.playbackRate=rate;a.currentTime=0;a.play();
+     const changes=[];let previous='',last=performance.now(),maxPaintGap=0;
+     await new Promise(resolve=>{function sample(now){maxPaintGap=Math.max(maxPaintGap,now-last);last=now;const time=Number(a.currentTime??0),pose=el.dataset.pose;if(pose!==previous){changes.push({time,pose});previous=pose;}if(time>=loops*4000){a.pause();resolve();}else requestAnimationFrame(sample);}requestAnimationFrame(sample);});
+     return{rate,loops,maxPaintGap,stopTime:Number(a.currentTime),changes};
+    },{rate,loops});
+    for(let cycle=0;cycle<loops;cycle++)for(let i=0;i<manifest.indices.length;i++)if(manifest.indices[i]>=36&&manifest.indices[i]<=50)assert.ok(observed.changes.some(p=>p.time>=cycle*4000&&p.time<(cycle+1)*4000&&p.pose===`pilot-blink:${i}`),'Real playback skipped a blink sample');
+    playback.push(observed);
+   }
+  }
   for(const action of Object.keys(DRAWING_SEQUENCES)){
    if(action!=='idle')await dialog.getByRole('button',{name:`播放${CHARACTER_ACTIONS[action].label}动作`}).click();
    await page.waitForSelector(`dialog canvas[data-ready=true][data-loaded-action=${action}]`);
@@ -75,11 +101,14 @@ try{
     for(const dark of [false,true]){await review.evaluate(d=>document.body.classList.toggle('dark',d),dark);await review.locator('.grid').screenshot({path:`${output}/${action}-${dark?'dark':'light'}.png`});}
    }await review.close();
   }
-  results.push({width,dpr,poses:checked,sharedNeutral:true,persistentCanvas:true,maxBootMidpointDrift:maxDrift,fixedViewport:true,hiDpi:true});await context.close();
+  await Promise.all(responseChecks);assert.equal(checked,expectedPoses);
+  for(const p of requested)assert.ok(expectedHashes.has(p),'Unreviewed character resource requested: '+p);
+  assert.deepEqual([...received].sort(),assets.filter(a=>!a.src.endsWith('.png')).map(a=>a.src).sort());
+  results.push({width,dpr,poses:checked,sharedNeutral:true,persistentCanvas:true,maxBootMidpointDrift:maxDrift,fixedViewport:true,hiDpi:true,actualAssetHashesVerified:true,resourceSha256:Object.fromEntries([...received].sort().map(p=>[p,expectedHashes.get(p)]))});await context.close();
  }
  const reduced=await browser.newContext({viewport:{width:390,height:844},reducedMotion:'reduce'}),page=await reduced.newPage();await page.goto(base+'/assistant');await page.waitForSelector('canvas[data-ready=true]');assert.equal(await page.locator('canvas').evaluate(el=>el.getAnimations().length),0);assert.equal(await page.locator('canvas').getAttribute('data-pose'),drawingKey(NEUTRAL_DRAWING));await reduced.close();
- const fallback=await browser.newContext();await fallback.route('**/assistant/chibi-idle-left-collar-v4.webp',r=>r.abort());const f=await fallback.newPage();await f.goto(base+'/assistant');await f.waitForSelector('img[src*="chibi-neutral-left-collar-v4"]');await fallback.close();
- const manifest=JSON.parse(await readFile('docs/assistant/left-collar-release-v1/atlas-candidate.json','utf8'));
- const assetScopeSha256=createHash('sha256').update(Object.values(manifest.assets).map(a=>a.src+':'+a.sha256).sort().join('\n')).digest('hex');
- assert.deepEqual(errors,[]);const report={accepted:true,characterVersion:CHARACTER_FRAME_VERSION,assetScopeSha256,noAIRequests:true,reducedMotion:true,fallback:true,bitmapCacheLimit:8,results};await writeFile(`${output}/report.json`,JSON.stringify(report,null,2));console.log(JSON.stringify(report,null,2));
+ const fallback=await browser.newContext();await fallback.route('**'+manifest.asset.src,r=>r.abort());const f=await fallback.newPage();await f.goto(base+'/assistant');await f.waitForSelector('img[src*="chibi-neutral-left-collar-v4"]');
+ await f.locator('img[src*="chibi-neutral-left-collar-v4"]').evaluate(async img=>{await img.decode();if(!(img.naturalWidth>0&&img.naturalWidth===img.naturalHeight))throw Error('Fallback artwork did not decode');});
+ const fallbackResponse=await fallback.request.get(base+manifest.keptAssets.fallback.src);assert.equal(fallbackResponse.status(),200);const fallbackSha256=hash(await fallbackResponse.body());assert.equal(fallbackSha256,manifest.keptAssets.fallback.sha256);await fallback.close();
+ assert.deepEqual(errors,[]);const report={accepted:true,characterVersion:CHARACTER_FRAME_VERSION,assetScopeSha256,frameScopeSha256:manifest.frameScopeSha256,noAIRequests:true,reducedMotion:true,fallback:true,fallbackDecoded:true,fallbackSha256,bitmapCacheLimit:8,actualAssetHashesVerified:true,playback,results};await writeFile(`${output}/report.json`,JSON.stringify(report,null,2));console.log(JSON.stringify({...report,playback:playback.map(p=>({...p,changes:p.changes.length}))},null,2));
 }finally{await browser.close();}
