@@ -1,0 +1,13 @@
+{
+  "verifiedAt": "2026-10-06T14:41:40Z",
+  "assetScopeSha256": "75d21dc6bc6b943adb1c9e44e6808c8e4b9f0f933b9c8e2e76aa0bb4638de8c0",
+  "environment": "Physical D-drive index snapshot; Node 24.19.0; headless Microsoft Edge",
+  "unitTests": {"total": 188, "passed": 188, "failed": 0, "skipped": 0, "offlineBrowserEnabled": true},
+  "lint": "PASSED",
+  "typecheck": "PASSED",
+  "build": {"status": "PASSED", "compiler": "webpack", "mode": "database-free UI preview"},
+  "readability": {"status": "PASSED", "desktopZoomEmulation": [1, 0.9, 0.8, 2], "mobileWidths": [390, 320], "overflow": false, "fallback": true, "providerMocked": true},
+  "finalResourceGate": "PASSED",
+  "nativeEyeRigReleased": false,
+  "notes": "The preview build does not validate PostgreSQL or a real mobile device. Explicit Playwright fallback was configured for the optional offline browser test; no path-security checks were relaxed. Production verification is separate."
+}

@@ -96,9 +96,9 @@ try {
   }
   const context=await browser.newContext({viewport:{width:390,height:844}});
   await context.route('**/assistant/rig-*.png',r=>r.abort());
-  await context.route('**/assistant/chibi-blink-pilot-v6.webp',r=>r.abort());
+  await context.route('**/assistant/chibi-idle-left-collar-v4.webp',r=>r.abort());
   const page=await context.newPage();await page.goto(base+'/assistant');
-  await page.waitForFunction(()=>document.querySelector('[data-action] img')?.getAttribute('src')?.includes('chibi-idle-v3'));
+  await page.waitForFunction(()=>document.querySelector('[data-action] img')?.getAttribute('src')?.includes('chibi-neutral-left-collar-v4'));
   await context.close();
   assert.deepEqual(errors,[]);console.log(JSON.stringify({accepted:true,mockedProvider:true,staticFallback:true,results},null,2));
 } finally {await browser.close();}

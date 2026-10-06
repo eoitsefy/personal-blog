@@ -4,6 +4,7 @@ import { readFile } from "node:fs/promises";
 import test from "node:test";
 import sharp from "sharp";
 import { PILOT_SHEETS } from "./pilot-sheets";
+import { LEFT_COLLAR_SHEETS } from "./left-collar-sheets";
 import { CHARACTER_FRAME_VERSION, drawingDuration, drawingTimes, DRAWING_SEQUENCES, NEUTRAL_DRAWING } from "./frame-timeline";
 
 const hash = (bytes: Uint8Array | string) => createHash("sha256").update(bytes).digest("hex");
@@ -49,19 +50,20 @@ test("v6 static atlas tiles are lossless fixed crops of the accepted 15 fps samp
   }
 });
 
-test("v16 wave retains all 37 original-neutral-ended slots while old blink and other action timing stay intact", () => {
-  assert.equal(CHARACTER_FRAME_VERSION, "original-pilot-v6-wave-reviewed-v16");
+test("left-collar release retains the v16 wave and legacy timings with native blink samples", () => {
+  assert.equal(CHARACTER_FRAME_VERSION, "original-left-collar-release-v1");
   assert.deepEqual(NEUTRAL_DRAWING, { sheet: "pilot-blink", frame: 0 });
   assert.equal(PILOT_SHEETS["pilot-blink"].src, "/assistant/chibi-blink-pilot-v6.webp");
   assert.equal(PILOT_SHEETS["pilot-wave"].src, "/assistant/chibi-wave-reviewed-v16.webp");
   assert.equal(PILOT_SHEETS["pilot-wave"].poses.length, 37);
   assert.equal(PILOT_SHEETS["pilot-wave"].width, 2196); assert.equal(PILOT_SHEETS["pilot-wave"].height, 3220);
-  assert.equal(DRAWING_SEQUENCES.idle.length, 9); assert.equal(DRAWING_SEQUENCES.wave.length, 37);
+  assert.equal(LEFT_COLLAR_SHEETS["pilot-blink"].src, "/assistant/chibi-idle-left-collar-v4.webp");
+  assert.equal(DRAWING_SEQUENCES.idle.length, 67); assert.equal(DRAWING_SEQUENCES.wave.length, 37);
   assert.deepEqual(DRAWING_SEQUENCES.wave.slice(1, -1), Array.from({ length: 35 }, (_, i) => ({ sheet: "pilot-wave", frame: i + 1 })));
   assert.equal(drawingDuration("idle"), 4000); assert.equal(drawingDuration("wave"), 3000);
   assert.ok(Math.abs(drawingTimes("wave").at(-1)! - 2400) < 1e-8);
   assert.deepEqual(Object.fromEntries(Object.entries(DRAWING_SEQUENCES).map(([action, frames]) => [action, frames.length])),
-    { idle: 9, wave: 37, nod: 14, thinking: 28, bow: 20, cheer: 17, yawn: 34 });
+    { idle: 67, wave: 37, nod: 14, thinking: 28, bow: 20, cheer: 17, yawn: 34 });
 });
 
 test("v16 runtime atlas is hash-bound to full approved PNGs, provenance and strict final art/browser gates", async () => {

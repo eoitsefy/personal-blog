@@ -1,0 +1,1498 @@
+{
+  "version": 1,
+  "status": "AWAITING_VISUAL_AND_BROWSER_REVIEW",
+  "assets": {
+    "pilot-blink": {
+      "src": "/assistant/chibi-idle-left-collar-v4.webp",
+      "width": 2196,
+      "height": 5520,
+      "columns": 6,
+      "frames": 67,
+      "sourceIndices": [
+        0,
+        2,
+        4,
+        6,
+        8,
+        10,
+        12,
+        14,
+        16,
+        18,
+        20,
+        22,
+        24,
+        26,
+        28,
+        30,
+        32,
+        34,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        50,
+        52,
+        54,
+        56,
+        58,
+        60,
+        62,
+        64,
+        66,
+        68,
+        70,
+        72,
+        74,
+        76,
+        78,
+        80,
+        82,
+        84,
+        86,
+        88,
+        90,
+        92,
+        94,
+        96,
+        98,
+        100,
+        102,
+        104,
+        106,
+        108,
+        110,
+        112,
+        114,
+        116,
+        118,
+        120
+      ],
+      "scale": 0.4614695340501792,
+      "sha256": "c18744854367503ed07a483f892e9d4bfe23c3ce32bdea2064054e6edec26ff3",
+      "bytes": 4539028
+    },
+    "pilot-wave": {
+      "src": "/assistant/chibi-pilot-wave-left-collar-v5.webp",
+      "width": 2196,
+      "height": 3220,
+      "scale": 0.4614695340501792,
+      "frames": 37,
+      "bytes": 2353218,
+      "sha256": "3bbc44959ce5c0da993bec62409e1db4f590dffe98e6518de3c5f145756d6e8c",
+      "sourceSrc": "/assistant/chibi-wave-reviewed-v16.webp",
+      "sourceSha256": "6a33ac3c97b25c127ca05a7d8aaa594830019a156c2bf5ce3089079c6c2e43aa",
+      "placements": [
+        {
+          "index": 0,
+          "left": 250,
+          "top": 254,
+          "width": 13,
+          "height": 37,
+          "necklineShift": 0
+        },
+        {
+          "index": 1,
+          "left": 616,
+          "top": 254,
+          "width": 13,
+          "height": 37,
+          "necklineShift": 0
+        },
+        {
+          "index": 2,
+          "left": 982,
+          "top": 254,
+          "width": 13,
+          "height": 37,
+          "necklineShift": 0
+        },
+        {
+          "index": 3,
+          "left": 1348,
+          "top": 254,
+          "width": 13,
+          "height": 37,
+          "necklineShift": 0
+        },
+        {
+          "index": 4,
+          "left": 1714,
+          "top": 254,
+          "width": 13,
+          "height": 37,
+          "necklineShift": 0
+        },
+        {
+          "index": 5,
+          "left": 2080,
+          "top": 254,
+          "width": 13,
+          "height": 37,
+          "necklineShift": 0
+        },
+        {
+          "index": 6,
+          "left": 250,
+          "top": 714,
+          "width": 13,
+          "height": 37,
+          "necklineShift": 0
+        },
+        {
+          "index": 7,
+          "left": 616,
+          "top": 714,
+          "width": 13,
+          "height": 37,
+          "necklineShift": 0
+        },
+        {
+          "index": 8,
+          "left": 982,
+          "top": 714,
+          "width": 13,
+          "height": 37,
+          "necklineShift": 0
+        },
+        {
+          "index": 9,
+          "left": 1348,
+          "top": 714,
+          "width": 13,
+          "height": 37,
+          "necklineShift": 0
+        },
+        {
+          "index": 10,
+          "left": 1714,
+          "top": 714,
+          "width": 13,
+          "height": 37,
+          "necklineShift": 0
+        },
+        {
+          "index": 11,
+          "left": 2080,
+          "top": 714,
+          "width": 13,
+          "height": 37,
+          "necklineShift": 0
+        },
+        {
+          "index": 12,
+          "left": 250,
+          "top": 1174,
+          "width": 13,
+          "height": 37,
+          "necklineShift": 0
+        },
+        {
+          "index": 13,
+          "left": 616,
+          "top": 1174,
+          "width": 13,
+          "height": 37,
+          "necklineShift": 0
+        },
+        {
+          "index": 14,
+          "left": 982,
+          "top": 1174,
+          "width": 13,
+          "height": 37,
+          "necklineShift": 0
+        },
+        {
+          "index": 15,
+          "left": 1348,
+          "top": 1174,
+          "width": 13,
+          "height": 37,
+          "necklineShift": 0
+        },
+        {
+          "index": 16,
+          "left": 1714,
+          "top": 1174,
+          "width": 13,
+          "height": 37,
+          "necklineShift": 0
+        },
+        {
+          "index": 17,
+          "left": 2080,
+          "top": 1174,
+          "width": 13,
+          "height": 37,
+          "necklineShift": 0
+        },
+        {
+          "index": 18,
+          "left": 250,
+          "top": 1634,
+          "width": 13,
+          "height": 37,
+          "necklineShift": 0
+        },
+        {
+          "index": 19,
+          "left": 616,
+          "top": 1634,
+          "width": 13,
+          "height": 37,
+          "necklineShift": 0
+        },
+        {
+          "index": 20,
+          "left": 982,
+          "top": 1634,
+          "width": 13,
+          "height": 37,
+          "necklineShift": 0
+        },
+        {
+          "index": 21,
+          "left": 1348,
+          "top": 1634,
+          "width": 13,
+          "height": 37,
+          "necklineShift": 0
+        },
+        {
+          "index": 22,
+          "left": 1714,
+          "top": 1634,
+          "width": 13,
+          "height": 37,
+          "necklineShift": 0
+        },
+        {
+          "index": 23,
+          "left": 2080,
+          "top": 1634,
+          "width": 13,
+          "height": 37,
+          "necklineShift": 0
+        },
+        {
+          "index": 24,
+          "left": 250,
+          "top": 2094,
+          "width": 13,
+          "height": 37,
+          "necklineShift": 0
+        },
+        {
+          "index": 25,
+          "left": 616,
+          "top": 2094,
+          "width": 13,
+          "height": 37,
+          "necklineShift": 0
+        },
+        {
+          "index": 26,
+          "left": 982,
+          "top": 2094,
+          "width": 13,
+          "height": 37,
+          "necklineShift": 0
+        },
+        {
+          "index": 27,
+          "left": 1348,
+          "top": 2094,
+          "width": 13,
+          "height": 37,
+          "necklineShift": 0
+        },
+        {
+          "index": 28,
+          "left": 1714,
+          "top": 2094,
+          "width": 13,
+          "height": 37,
+          "necklineShift": 0
+        },
+        {
+          "index": 29,
+          "left": 2080,
+          "top": 2094,
+          "width": 13,
+          "height": 37,
+          "necklineShift": 0
+        },
+        {
+          "index": 30,
+          "left": 250,
+          "top": 2554,
+          "width": 13,
+          "height": 37,
+          "necklineShift": 0
+        },
+        {
+          "index": 31,
+          "left": 616,
+          "top": 2554,
+          "width": 13,
+          "height": 37,
+          "necklineShift": 0
+        },
+        {
+          "index": 32,
+          "left": 982,
+          "top": 2554,
+          "width": 13,
+          "height": 37,
+          "necklineShift": 0
+        },
+        {
+          "index": 33,
+          "left": 1348,
+          "top": 2554,
+          "width": 13,
+          "height": 37,
+          "necklineShift": 0
+        },
+        {
+          "index": 34,
+          "left": 1714,
+          "top": 2554,
+          "width": 13,
+          "height": 37,
+          "necklineShift": 0
+        },
+        {
+          "index": 35,
+          "left": 2080,
+          "top": 2554,
+          "width": 13,
+          "height": 37,
+          "necklineShift": 0
+        },
+        {
+          "index": 36,
+          "left": 250,
+          "top": 3014,
+          "width": 13,
+          "height": 37,
+          "necklineShift": 0
+        }
+      ]
+    },
+    "nod": {
+      "src": "/assistant/chibi-nod-left-collar-v5.webp",
+      "width": 1448,
+      "height": 1086,
+      "scale": 0.5902578796561605,
+      "frames": 12,
+      "bytes": 928832,
+      "sha256": "91030a3348a780d04af6778bef463c73216ca4b0dae216bb2822ca3e671408f0",
+      "sourceSrc": "/assistant/chibi-nod-inbetweens-v5.png",
+      "sourceSha256": "f44fceceb5362ac61cd24ac6d2c8e848150f20821de0f7738bd174aab5a83136",
+      "placements": [
+        {
+          "index": 0,
+          "left": 259,
+          "top": 211,
+          "width": 10,
+          "height": 29,
+          "necklineShift": 0
+        },
+        {
+          "index": 1,
+          "left": 594,
+          "top": 212,
+          "width": 10,
+          "height": 29,
+          "necklineShift": 0.7818100358422938
+        },
+        {
+          "index": 2,
+          "left": 928,
+          "top": 212,
+          "width": 10,
+          "height": 29,
+          "necklineShift": 1.5636200716845876
+        },
+        {
+          "index": 3,
+          "left": 1263,
+          "top": 214,
+          "width": 10,
+          "height": 29,
+          "necklineShift": 3.127240143369175
+        },
+        {
+          "index": 4,
+          "left": 259,
+          "top": 577,
+          "width": 10,
+          "height": 29,
+          "necklineShift": 4.690860215053763
+        },
+        {
+          "index": 5,
+          "left": 595,
+          "top": 577,
+          "width": 10,
+          "height": 29,
+          "necklineShift": 6.25448028673835
+        },
+        {
+          "index": 6,
+          "left": 928,
+          "top": 578,
+          "width": 10,
+          "height": 29,
+          "necklineShift": 7.818100358422938
+        },
+        {
+          "index": 7,
+          "left": 1263,
+          "top": 577,
+          "width": 10,
+          "height": 29,
+          "necklineShift": 6.25448028673835
+        },
+        {
+          "index": 8,
+          "left": 258,
+          "top": 917,
+          "width": 10,
+          "height": 29,
+          "necklineShift": 4.690860215053763
+        },
+        {
+          "index": 9,
+          "left": 594,
+          "top": 915,
+          "width": 10,
+          "height": 29,
+          "necklineShift": 3.127240143369175
+        },
+        {
+          "index": 10,
+          "left": 928,
+          "top": 913,
+          "width": 10,
+          "height": 29,
+          "necklineShift": 1.5636200716845876
+        },
+        {
+          "index": 11,
+          "left": 1262,
+          "top": 912,
+          "width": 10,
+          "height": 29,
+          "necklineShift": 0
+        }
+      ]
+    },
+    "thinking": {
+      "src": "/assistant/chibi-thinking-left-collar-v5.webp",
+      "width": 1254,
+      "height": 1254,
+      "scale": 0.6776315789473685,
+      "frames": 24,
+      "bytes": 1548212,
+      "sha256": "769d6800ebaf9f49e467601555f3ccfee5b5852ae9b74f67ea052439125e18f0",
+      "sourceSrc": "/assistant/chibi-thinking-inbetweens-v5.png",
+      "sourceSha256": "d6da7c84afb14f1f95bcb66e7b1ec729073a7aa36d91841b864c521d515de4e2",
+      "placements": [
+        {
+          "index": 0,
+          "left": 144,
+          "top": 187,
+          "width": 9,
+          "height": 25,
+          "necklineShift": 0
+        },
+        {
+          "index": 1,
+          "left": 349,
+          "top": 187,
+          "width": 9,
+          "height": 25,
+          "necklineShift": 0
+        },
+        {
+          "index": 2,
+          "left": 554,
+          "top": 187,
+          "width": 9,
+          "height": 25,
+          "necklineShift": 0
+        },
+        {
+          "index": 3,
+          "left": 760,
+          "top": 187,
+          "width": 9,
+          "height": 25,
+          "necklineShift": 0
+        },
+        {
+          "index": 4,
+          "left": 969,
+          "top": 187,
+          "width": 9,
+          "height": 25,
+          "necklineShift": 0
+        },
+        {
+          "index": 5,
+          "left": 1177,
+          "top": 188,
+          "width": 9,
+          "height": 25,
+          "necklineShift": 0.6810035842293907
+        },
+        {
+          "index": 6,
+          "left": 144,
+          "top": 505,
+          "width": 9,
+          "height": 25,
+          "necklineShift": 0.6810035842293907
+        },
+        {
+          "index": 7,
+          "left": 349,
+          "top": 505,
+          "width": 9,
+          "height": 25,
+          "necklineShift": 1.3620071684587813
+        },
+        {
+          "index": 8,
+          "left": 554,
+          "top": 506,
+          "width": 9,
+          "height": 25,
+          "necklineShift": 2.043010752688172
+        },
+        {
+          "index": 9,
+          "left": 760,
+          "top": 506,
+          "width": 9,
+          "height": 25,
+          "necklineShift": 2.043010752688172
+        },
+        {
+          "index": 10,
+          "left": 968,
+          "top": 506,
+          "width": 9,
+          "height": 25,
+          "necklineShift": 2.043010752688172
+        },
+        {
+          "index": 11,
+          "left": 1177,
+          "top": 506,
+          "width": 9,
+          "height": 25,
+          "necklineShift": 2.043010752688172
+        },
+        {
+          "index": 12,
+          "left": 145,
+          "top": 822,
+          "width": 9,
+          "height": 25,
+          "necklineShift": 2.043010752688172
+        },
+        {
+          "index": 13,
+          "left": 349,
+          "top": 820,
+          "width": 9,
+          "height": 25,
+          "necklineShift": 1.3620071684587813
+        },
+        {
+          "index": 14,
+          "left": 554,
+          "top": 819,
+          "width": 9,
+          "height": 25,
+          "necklineShift": 0
+        },
+        {
+          "index": 15,
+          "left": 761,
+          "top": 819,
+          "width": 9,
+          "height": 25,
+          "necklineShift": 0
+        },
+        {
+          "index": 16,
+          "left": 968,
+          "top": 819,
+          "width": 9,
+          "height": 25,
+          "necklineShift": 0
+        },
+        {
+          "index": 17,
+          "left": 1178,
+          "top": 820,
+          "width": 9,
+          "height": 25,
+          "necklineShift": 0
+        },
+        {
+          "index": 18,
+          "left": 145,
+          "top": 1115,
+          "width": 9,
+          "height": 25,
+          "necklineShift": 0
+        },
+        {
+          "index": 19,
+          "left": 349,
+          "top": 1115,
+          "width": 9,
+          "height": 25,
+          "necklineShift": 0
+        },
+        {
+          "index": 20,
+          "left": 554,
+          "top": 1115,
+          "width": 9,
+          "height": 25,
+          "necklineShift": 0
+        },
+        {
+          "index": 21,
+          "left": 761,
+          "top": 1115,
+          "width": 9,
+          "height": 25,
+          "necklineShift": 0
+        },
+        {
+          "index": 22,
+          "left": 970,
+          "top": 1115,
+          "width": 9,
+          "height": 25,
+          "necklineShift": 0
+        },
+        {
+          "index": 23,
+          "left": 1177,
+          "top": 1115,
+          "width": 9,
+          "height": 25,
+          "necklineShift": 0
+        }
+      ]
+    },
+    "thinking-recovery": {
+      "src": "/assistant/chibi-thinking-recovery-left-collar-v5.webp",
+      "width": 1448,
+      "height": 1086,
+      "scale": 0.5852272727272727,
+      "frames": 12,
+      "bytes": 1022634,
+      "sha256": "af22821609bc800ef37ca405c0d7d201aeffa7cb3135b10c705732519cd500cd",
+      "sourceSrc": "/assistant/chibi-thinking-recovery-inbetweens-v5.png",
+      "sourceSha256": "08dfcf4685b267a2f620371f41bd4a9714775cf40b771363704a0ab07e947fef",
+      "placements": [
+        {
+          "index": 0,
+          "left": 275,
+          "top": 205,
+          "width": 10,
+          "height": 29,
+          "necklineShift": 1.5770609318996416
+        },
+        {
+          "index": 1,
+          "left": 599,
+          "top": 205,
+          "width": 10,
+          "height": 29,
+          "necklineShift": 1.5770609318996416
+        },
+        {
+          "index": 2,
+          "left": 918,
+          "top": 205,
+          "width": 10,
+          "height": 29,
+          "necklineShift": 1.5770609318996416
+        },
+        {
+          "index": 3,
+          "left": 1240,
+          "top": 204,
+          "width": 10,
+          "height": 29,
+          "necklineShift": 0.7885304659498208
+        },
+        {
+          "index": 4,
+          "left": 279,
+          "top": 564,
+          "width": 10,
+          "height": 29,
+          "necklineShift": 0.7885304659498208
+        },
+        {
+          "index": 5,
+          "left": 604,
+          "top": 564,
+          "width": 10,
+          "height": 29,
+          "necklineShift": 0.7885304659498208
+        },
+        {
+          "index": 6,
+          "left": 920,
+          "top": 565,
+          "width": 10,
+          "height": 29,
+          "necklineShift": 0.7885304659498208
+        },
+        {
+          "index": 7,
+          "left": 1241,
+          "top": 564,
+          "width": 10,
+          "height": 29,
+          "necklineShift": 0
+        },
+        {
+          "index": 8,
+          "left": 276,
+          "top": 925,
+          "width": 10,
+          "height": 29,
+          "necklineShift": 0
+        },
+        {
+          "index": 9,
+          "left": 603,
+          "top": 925,
+          "width": 10,
+          "height": 29,
+          "necklineShift": 0
+        },
+        {
+          "index": 10,
+          "left": 918,
+          "top": 926,
+          "width": 10,
+          "height": 29,
+          "necklineShift": 0
+        },
+        {
+          "index": 11,
+          "left": 1241,
+          "top": 925,
+          "width": 10,
+          "height": 29,
+          "necklineShift": 0
+        }
+      ]
+    },
+    "bow": {
+      "src": "/assistant/chibi-bow-left-collar-v5.webp",
+      "width": 1774,
+      "height": 887,
+      "scale": 0.71280276816609,
+      "frames": 18,
+      "bytes": 1053340,
+      "sha256": "a5e71f2aa9d779fcf0bda11d933e6fd6ff601643fa209e9daac939bc2677de9a",
+      "sourceSrc": "/assistant/chibi-bow-inbetweens-v5.png",
+      "sourceSha256": "4b28d3944567a8628e3f6a17bebfe5d5ba678da143b6b0fbf1a972719b3153a1",
+      "placements": [
+        {
+          "index": 0,
+          "left": 199,
+          "top": 174,
+          "width": 8,
+          "height": 24,
+          "necklineShift": 0
+        },
+        {
+          "index": 1,
+          "left": 495,
+          "top": 175,
+          "width": 8,
+          "height": 24,
+          "necklineShift": 1.2948028673835124
+        },
+        {
+          "index": 2,
+          "left": 789,
+          "top": 178,
+          "width": 8,
+          "height": 24,
+          "necklineShift": 3.884408602150537
+        },
+        {
+          "index": 3,
+          "left": 1073,
+          "top": 180,
+          "width": 8,
+          "height": 24,
+          "necklineShift": 5.826612903225806
+        },
+        {
+          "index": 4,
+          "left": 1362,
+          "top": 182,
+          "width": 8,
+          "height": 24,
+          "necklineShift": 8.41621863799283
+        },
+        {
+          "index": 5,
+          "left": 1649,
+          "top": 186,
+          "width": 8,
+          "height": 24,
+          "necklineShift": 12.300627240143367
+        },
+        {
+          "index": 6,
+          "left": 200,
+          "top": 485,
+          "width": 8,
+          "height": 24,
+          "necklineShift": 18.12724014336917
+        },
+        {
+          "index": 7,
+          "left": 496,
+          "top": 491,
+          "width": 8,
+          "height": 24,
+          "necklineShift": 22.659050179211466
+        },
+        {
+          "index": 8,
+          "left": 789,
+          "top": 496,
+          "width": 8,
+          "height": 24,
+          "necklineShift": 27.838261648745515
+        },
+        {
+          "index": 9,
+          "left": 1074,
+          "top": 498,
+          "width": 8,
+          "height": 24,
+          "necklineShift": 29.780465949820783
+        },
+        {
+          "index": 10,
+          "left": 1365,
+          "top": 494,
+          "width": 8,
+          "height": 24,
+          "necklineShift": 25.896057347670247
+        },
+        {
+          "index": 11,
+          "left": 1648,
+          "top": 489,
+          "width": 8,
+          "height": 24,
+          "necklineShift": 21.364247311827953
+        },
+        {
+          "index": 12,
+          "left": 201,
+          "top": 766,
+          "width": 8,
+          "height": 24,
+          "necklineShift": 16.185035842293903
+        },
+        {
+          "index": 13,
+          "left": 496,
+          "top": 760,
+          "width": 8,
+          "height": 24,
+          "necklineShift": 10.358422939068099
+        },
+        {
+          "index": 14,
+          "left": 789,
+          "top": 756,
+          "width": 8,
+          "height": 24,
+          "necklineShift": 6.474014336917562
+        },
+        {
+          "index": 15,
+          "left": 1076,
+          "top": 753,
+          "width": 8,
+          "height": 24,
+          "necklineShift": 3.237007168458781
+        },
+        {
+          "index": 16,
+          "left": 1363,
+          "top": 751,
+          "width": 8,
+          "height": 24,
+          "necklineShift": 1.2948028673835124
+        },
+        {
+          "index": 17,
+          "left": 1648,
+          "top": 750,
+          "width": 8,
+          "height": 24,
+          "necklineShift": 0
+        }
+      ]
+    },
+    "cheer": {
+      "src": "/assistant/chibi-cheer-left-collar-v5.webp",
+      "width": 1254,
+      "height": 1254,
+      "scale": 0.555256064690027,
+      "frames": 15,
+      "bytes": 1314886,
+      "sha256": "da4cf1a72b35c35eb25fd8ea40d25e3f8653332282c54f34e0d0e6871045971f",
+      "sourceSrc": "/assistant/chibi-cheer-inbetweens-v5.png",
+      "sourceSha256": "276419aed2f97762b113264143965a384b237ecef76fb724ea6f7f66e289ea8f",
+      "placements": [
+        {
+          "index": 0,
+          "left": 194,
+          "top": 235,
+          "width": 11,
+          "height": 31,
+          "necklineShift": 0
+        },
+        {
+          "index": 1,
+          "left": 431,
+          "top": 235,
+          "width": 11,
+          "height": 31,
+          "necklineShift": 0
+        },
+        {
+          "index": 2,
+          "left": 672,
+          "top": 235,
+          "width": 11,
+          "height": 31,
+          "necklineShift": 0
+        },
+        {
+          "index": 3,
+          "left": 918,
+          "top": 235,
+          "width": 11,
+          "height": 31,
+          "necklineShift": 0
+        },
+        {
+          "index": 4,
+          "left": 1168,
+          "top": 235,
+          "width": 11,
+          "height": 31,
+          "necklineShift": 0
+        },
+        {
+          "index": 5,
+          "left": 192,
+          "top": 637,
+          "width": 11,
+          "height": 31,
+          "necklineShift": 0
+        },
+        {
+          "index": 6,
+          "left": 435,
+          "top": 637,
+          "width": 11,
+          "height": 31,
+          "necklineShift": 0
+        },
+        {
+          "index": 7,
+          "left": 673,
+          "top": 637,
+          "width": 11,
+          "height": 31,
+          "necklineShift": 0
+        },
+        {
+          "index": 8,
+          "left": 919,
+          "top": 637,
+          "width": 11,
+          "height": 31,
+          "necklineShift": 0
+        },
+        {
+          "index": 9,
+          "left": 1168,
+          "top": 637,
+          "width": 11,
+          "height": 31,
+          "necklineShift": 0
+        },
+        {
+          "index": 10,
+          "left": 193,
+          "top": 1038,
+          "width": 11,
+          "height": 31,
+          "necklineShift": 0
+        },
+        {
+          "index": 11,
+          "left": 434,
+          "top": 1038,
+          "width": 11,
+          "height": 31,
+          "necklineShift": 0
+        },
+        {
+          "index": 12,
+          "left": 671,
+          "top": 1038,
+          "width": 11,
+          "height": 31,
+          "necklineShift": 0
+        },
+        {
+          "index": 13,
+          "left": 919,
+          "top": 1038,
+          "width": 11,
+          "height": 31,
+          "necklineShift": 0
+        },
+        {
+          "index": 14,
+          "left": 1167,
+          "top": 1038,
+          "width": 11,
+          "height": 31,
+          "necklineShift": 0
+        }
+      ]
+    },
+    "yawn": {
+      "src": "/assistant/chibi-yawn-left-collar-v5.webp",
+      "width": 1236,
+      "height": 1272,
+      "scale": 0.762962962962963,
+      "frames": 24,
+      "bytes": 1347802,
+      "sha256": "94d1ef212414b1ac68c5514beef40f4bbc80c919bb85205fe768f2617aaeb0bb",
+      "sourceSrc": "/assistant/chibi-yawn-inbetweens-v5.png",
+      "sourceSha256": "71c7728528e974bd46ef2c4c2c1ac3faec1a2374e2925775b46a70d42f11c4a8",
+      "placements": [
+        {
+          "index": 0,
+          "left": 146,
+          "top": 158,
+          "width": 8,
+          "height": 22,
+          "necklineShift": 0
+        },
+        {
+          "index": 1,
+          "left": 344,
+          "top": 158,
+          "width": 8,
+          "height": 22,
+          "necklineShift": 0
+        },
+        {
+          "index": 2,
+          "left": 542,
+          "top": 158,
+          "width": 8,
+          "height": 22,
+          "necklineShift": 0
+        },
+        {
+          "index": 3,
+          "left": 741,
+          "top": 158,
+          "width": 8,
+          "height": 22,
+          "necklineShift": 0
+        },
+        {
+          "index": 4,
+          "left": 941,
+          "top": 159,
+          "width": 8,
+          "height": 22,
+          "necklineShift": 0.6048387096774194
+        },
+        {
+          "index": 5,
+          "left": 1141,
+          "top": 160,
+          "width": 8,
+          "height": 22,
+          "necklineShift": 1.2096774193548387
+        },
+        {
+          "index": 6,
+          "left": 146,
+          "top": 435,
+          "width": 8,
+          "height": 22,
+          "necklineShift": 1.814516129032258
+        },
+        {
+          "index": 7,
+          "left": 345,
+          "top": 436,
+          "width": 8,
+          "height": 22,
+          "necklineShift": 2.4193548387096775
+        },
+        {
+          "index": 8,
+          "left": 545,
+          "top": 436,
+          "width": 8,
+          "height": 22,
+          "necklineShift": 3.024193548387097
+        },
+        {
+          "index": 9,
+          "left": 744,
+          "top": 437,
+          "width": 8,
+          "height": 22,
+          "necklineShift": 3.629032258064516
+        },
+        {
+          "index": 10,
+          "left": 944,
+          "top": 437,
+          "width": 8,
+          "height": 22,
+          "necklineShift": 3.629032258064516
+        },
+        {
+          "index": 11,
+          "left": 1142,
+          "top": 437,
+          "width": 8,
+          "height": 22,
+          "necklineShift": 3.629032258064516
+        },
+        {
+          "index": 12,
+          "left": 148,
+          "top": 711,
+          "width": 8,
+          "height": 22,
+          "necklineShift": 3.629032258064516
+        },
+        {
+          "index": 13,
+          "left": 346,
+          "top": 711,
+          "width": 8,
+          "height": 22,
+          "necklineShift": 3.629032258064516
+        },
+        {
+          "index": 14,
+          "left": 546,
+          "top": 711,
+          "width": 8,
+          "height": 22,
+          "necklineShift": 3.629032258064516
+        },
+        {
+          "index": 15,
+          "left": 745,
+          "top": 711,
+          "width": 8,
+          "height": 22,
+          "necklineShift": 3.629032258064516
+        },
+        {
+          "index": 16,
+          "left": 946,
+          "top": 710,
+          "width": 8,
+          "height": 22,
+          "necklineShift": 3.024193548387097
+        },
+        {
+          "index": 17,
+          "left": 1143,
+          "top": 710,
+          "width": 8,
+          "height": 22,
+          "necklineShift": 2.4193548387096775
+        },
+        {
+          "index": 18,
+          "left": 148,
+          "top": 984,
+          "width": 8,
+          "height": 22,
+          "necklineShift": 1.814516129032258
+        },
+        {
+          "index": 19,
+          "left": 346,
+          "top": 984,
+          "width": 8,
+          "height": 22,
+          "necklineShift": 1.2096774193548387
+        },
+        {
+          "index": 20,
+          "left": 544,
+          "top": 982,
+          "width": 8,
+          "height": 22,
+          "necklineShift": 0
+        },
+        {
+          "index": 21,
+          "left": 742,
+          "top": 982,
+          "width": 8,
+          "height": 22,
+          "necklineShift": 0
+        },
+        {
+          "index": 22,
+          "left": 942,
+          "top": 982,
+          "width": 8,
+          "height": 22,
+          "necklineShift": 0
+        },
+        {
+          "index": 23,
+          "left": 1142,
+          "top": 982,
+          "width": 8,
+          "height": 22,
+          "necklineShift": 0
+        }
+      ]
+    },
+    "yawn-recovery": {
+      "src": "/assistant/chibi-yawn-recovery-left-collar-v5.webp",
+      "width": 1254,
+      "height": 1254,
+      "scale": 0.5435356200527705,
+      "frames": 12,
+      "bytes": 1121176,
+      "sha256": "058c571e639f5706cf22784efae174b3fba6cc4a1b17c4d22f6f0cbf6bcd708c",
+      "sourceSrc": "/assistant/chibi-yawn-recovery-inbetweens-v5.png",
+      "sourceSha256": "d01ac335b8037a947e721d51397af49984705902824541511e5dacbf6024334c",
+      "placements": [
+        {
+          "index": 0,
+          "left": 208,
+          "top": 235,
+          "width": 11,
+          "height": 31,
+          "necklineShift": 1.6980286738351253
+        },
+        {
+          "index": 1,
+          "left": 522,
+          "top": 235,
+          "width": 11,
+          "height": 31,
+          "necklineShift": 1.6980286738351253
+        },
+        {
+          "index": 2,
+          "left": 835,
+          "top": 234,
+          "width": 11,
+          "height": 31,
+          "necklineShift": 0.8490143369175627
+        },
+        {
+          "index": 3,
+          "left": 1149,
+          "top": 234,
+          "width": 11,
+          "height": 31,
+          "necklineShift": 0.8490143369175627
+        },
+        {
+          "index": 4,
+          "left": 208,
+          "top": 652,
+          "width": 11,
+          "height": 31,
+          "necklineShift": 0.8490143369175627
+        },
+        {
+          "index": 5,
+          "left": 522,
+          "top": 651,
+          "width": 11,
+          "height": 31,
+          "necklineShift": 0
+        },
+        {
+          "index": 6,
+          "left": 835,
+          "top": 651,
+          "width": 11,
+          "height": 31,
+          "necklineShift": 0
+        },
+        {
+          "index": 7,
+          "left": 1149,
+          "top": 651,
+          "width": 11,
+          "height": 31,
+          "necklineShift": 0
+        },
+        {
+          "index": 8,
+          "left": 208,
+          "top": 1069,
+          "width": 11,
+          "height": 31,
+          "necklineShift": 0
+        },
+        {
+          "index": 9,
+          "left": 522,
+          "top": 1069,
+          "width": 11,
+          "height": 31,
+          "necklineShift": 0
+        },
+        {
+          "index": 10,
+          "left": 835,
+          "top": 1069,
+          "width": 11,
+          "height": 31,
+          "necklineShift": 0
+        },
+        {
+          "index": 11,
+          "left": 1149,
+          "top": 1069,
+          "width": 11,
+          "height": 31,
+          "necklineShift": 0
+        }
+      ]
+    },
+    "fallback": {
+      "src": "/assistant/chibi-neutral-left-collar-v4.png",
+      "sha256": "9d102b3251940dbd3e1a8e2c8437b5fd719b0312bdff674329b2ee6e9337d091",
+      "bytes": 218526
+    }
+  },
+  "idleTimes": [
+    0,
+    66.66666666666667,
+    133.33333333333334,
+    200,
+    266.6666666666667,
+    333.3333333333333,
+    400,
+    466.6666666666667,
+    533.3333333333334,
+    600,
+    666.6666666666666,
+    733.3333333333334,
+    800,
+    866.6666666666666,
+    933.3333333333334,
+    1000,
+    1066.6666666666667,
+    1133.3333333333333,
+    1200,
+    1233.3333333333333,
+    1266.6666666666667,
+    1300,
+    1333.3333333333333,
+    1366.6666666666667,
+    1400,
+    1433.3333333333333,
+    1466.6666666666667,
+    1500,
+    1533.3333333333333,
+    1566.6666666666667,
+    1600,
+    1666.6666666666667,
+    1733.3333333333333,
+    1800,
+    1866.6666666666667,
+    1933.3333333333333,
+    2000,
+    2066.6666666666665,
+    2133.3333333333335,
+    2200,
+    2266.6666666666665,
+    2333.3333333333335,
+    2400,
+    2466.6666666666665,
+    2533.3333333333335,
+    2600,
+    2666.6666666666665,
+    2733.3333333333335,
+    2800,
+    2866.6666666666665,
+    2933.3333333333335,
+    3000,
+    3066.6666666666665,
+    3133.3333333333335,
+    3200,
+    3266.6666666666665,
+    3333.3333333333335,
+    3400,
+    3466.6666666666665,
+    3533.3333333333335,
+    3600,
+    3666.6666666666665,
+    3733.3333333333335,
+    3800,
+    3866.6666666666665,
+    3933.3333333333335,
+    3966.6666666666665
+  ],
+  "nativeSourceScopeSha256": "0c70c5a3d1cb49887ad62135fee0e5d6b2eacf6d230235afda4aeccc5faedc84",
+  "finishedScopeSha256": "2182b7fc8239c9695ed20654db22b214d39081654df211da4c2cad7d2538523a",
+  "productionChanged": false
+}

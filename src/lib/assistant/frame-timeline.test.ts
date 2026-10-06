@@ -19,10 +19,10 @@ test("selected whole-figure timelines share an exact original neutral, excluding
       if (pose.sheet === "yawn") assert.ok(pose.frame < 20, "Abrupt hand drop is replaced by recovery drawings");
     }
   }
-  assert.equal(sources.size, 146); // Drawing addresses, not a claim of independently drawn or unique pixels.
+  assert.equal(sources.size, 204); // Drawing addresses, not independently drawn poses.
 });
 
-test("real drawing changes use 15 fps spacing with explicit neutral holds and short non-geometric blends", () => {
+test("breath uses 15 fps and blink uses 30 fps without geometric blends", () => {
   assert.equal(FRAME_INTERVAL_MS, 1000 / 15);
   assert.ok(FRAME_BLEND_MS < FRAME_INTERVAL_MS / 2);
   for (const action of Object.keys(DRAWING_SEQUENCES) as CharacterAction[]) {
@@ -30,7 +30,10 @@ test("real drawing changes use 15 fps spacing with explicit neutral holds and sh
     assert.equal(times[0], 0); assert.ok(times.at(-1)! < duration);
     for (let i = 1; i < times.length; i++) {
       assert.ok(times[i] > times[i - 1]);
-      if (i > 1) assert.ok(Math.abs(times[i] - times[i - 1] - FRAME_INTERVAL_MS) < 1e-8);
+      if (i > 1) {
+        const delta = times[i] - times[i - 1];
+        assert.ok(Math.abs(delta - FRAME_INTERVAL_MS) < 1e-8 || (action === "idle" && Math.abs(delta - 1000 / 30) < 1e-8));
+      }
       const start = times[i];
       assert.deepEqual(drawingSample(action, start + FRAME_BLEND_MS).to, DRAWING_SEQUENCES[action][i]);
       if (isPilotAction(action)) {

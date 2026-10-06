@@ -1,0 +1,12 @@
+{
+  "status": "APPROVED_SCOPED_FINISH",
+  "assetScopeSha256": "75d21dc6bc6b943adb1c9e44e6808c8e4b9f0f933b9c8e2e76aa0bb4638de8c0",
+  "finishedScopeSha256": "2182b7fc8239c9695ed20654db22b214d39081654df211da4c2cad7d2538523a",
+  "nativeSourceScopeSha256": "0c70c5a3d1cb49887ad62135fee0e5d6b2eacf6d230235afda4aeccc5faedc84",
+  "scope": ["eye-aperture raster finish", "vertical anatomical-left collar nameplate", "legacy pose accessory placement"],
+  "nativeIntermediateRig": "REJECTED_RETAINED",
+  "legacyBodyArtReapproved": false,
+  "futureVersionsAuthorized": false,
+  "checks": ["open eye identity retained", "no duplicate upper contour", "synchronized closed-eye timing", "iris texture not warped", "no nameplate over cheek in deep bow", "vertical nameplate in all existing actions", "light and dark backgrounds inspected"],
+  "notes": "v1/v2 finish candidates and v3/v4 fixed-position legacy badge candidates remain offline. New native v7 files are preserved, but the browser uses finished full-frame PNGs, not a claimed production-ready Cubism eye rig. Browser and deployment checks are separate gates."
+}

@@ -8,7 +8,7 @@ import { FormEvent, useEffect, useId, useRef, useState } from "react";
 import { ASSISTANT_GREETINGS, parseAssistantAnswer, pickAssistantGreeting, type AssistantAnswer } from "@/lib/assistant/ui";
 import styles from "./assistant-panel.module.css";
 import { CHARACTER_ACTIONS, CHARACTER_STAGE, PLAYFUL_ACTIONS, type CharacterAction } from "@/lib/assistant/character";
-import { CHARACTER_FRAME_VERSION, DRAWING_SEQUENCES, NEUTRAL_DRAWING, drawingDuration, drawingKey, drawingPose, drawingSample } from "@/lib/assistant/frame-timeline";
+import { CHARACTER_FRAME_VERSION, DRAWING_SEQUENCES, NEUTRAL_DRAWING, drawingDuration, drawingKey, drawingPose, drawingSample, type Drawing } from "@/lib/assistant/frame-timeline";
 
 type Settings = { enabled: boolean; maxQuestionChars: number };
 type Turn = { question: string; result: AssistantAnswer };
@@ -29,9 +29,29 @@ function Character({ action = "idle", small = false, animate = true, active = tr
     let animation: Animation | undefined;
     let playing: CharacterAction = action;
     let poses = new Map<string, HTMLCanvasElement>();
+    let images = new Map<string, HTMLImageElement>();
+    function rasterize(drawing: Drawing) {
+      const key = drawingKey(drawing), existing = poses.get(key);
+      if (existing) { poses.delete(key); poses.set(key, existing); return existing; }
+      const pose = drawingPose(drawing), source = images.get(pose.src);
+      if (!source) return undefined;
+      const frame = document.createElement("canvas"); frame.width = frame.height = element!.width;
+      const ctx = frame.getContext("2d", { willReadFrequently: true })!, ratio = frame.width / CHARACTER_STAGE.size;
+      ctx.scale(ratio, ratio); ctx.imageSmoothingQuality = "high";
+      ctx.drawImage(source, pose.x, pose.y, pose.width, pose.height, pose.left, pose.top, pose.drawWidth, pose.drawHeight);
+      poses.set(key, frame);
+      // Native samples increase pose count, not the bitmap memory budget.
+      // Retain at most eight display-size canvases plus the source atlases.
+      while (poses.size > 8) {
+        const oldest = [...poses.keys()].find(k => k !== drawingKey(NEUTRAL_DRAWING));
+        if (oldest) poses.delete(oldest); else break;
+      }
+      element!.dataset.cachedPoses = String(poses.size);
+      return frame;
+    }
     function draw(next: CharacterAction, time: number) {
       const sample = drawingSample(next, time);
-      const from = poses.get(drawingKey(sample.from)), to = poses.get(drawingKey(sample.to));
+      const from = rasterize(sample.from), to = rasterize(sample.to);
       if (!from || !to) return;
       context!.clearRect(0, 0, element!.width, element!.height);
       // Add premultiplied colours: shared body pixels stay opaque during blends.
@@ -91,27 +111,15 @@ function Character({ action = "idle", small = false, animate = true, active = tr
     async function prepare() {
       const current = ++revision;
       try {
-        const images = new Map(await Promise.all([...sources].map(async src => [src, await load(src)] as const)));
+        const loaded = new Map(await Promise.all([...sources].map(async src => [src, await load(src)] as const)));
         if (disposed || current !== revision) return;
         // Rasterize at the displayed device-pixel size: no second enlargement
         // of a low-resolution crop and no per-pose changes to the viewport.
         const pixels = Math.round(Math.min(3, Math.max(.5, element!.getBoundingClientRect().width * devicePixelRatio / CHARACTER_STAGE.size)) * CHARACTER_STAGE.size);
-        const ratio = pixels / CHARACTER_STAGE.size, nextPoses = new Map<string, HTMLCanvasElement>();
-        for (const drawing of drawings) {
-          if (drawingKey(drawing) === drawingKey(NEUTRAL_DRAWING) && neutralFrame.current?.width === pixels) {
-            nextPoses.set(drawingKey(drawing), neutralFrame.current);
-            continue;
-          }
-          const pose = drawingPose(drawing), frame = document.createElement("canvas");
-          frame.width = frame.height = pixels;
-          const ctx = frame.getContext("2d", { willReadFrequently: true })!; ctx.scale(ratio, ratio);
-          ctx.imageSmoothingQuality = "high";
-          ctx.drawImage(images.get(pose.src)!, pose.x, pose.y, pose.width, pose.height, pose.left, pose.top, pose.drawWidth, pose.drawHeight);
-          nextPoses.set(drawingKey(drawing), frame);
-        }
-        poses = nextPoses;
+        images = loaded; poses = new Map();
+        if (neutralFrame.current?.width === pixels) poses.set(drawingKey(NEUTRAL_DRAWING), neutralFrame.current);
         if (element!.width !== pixels) element!.width = element!.height = pixels;
-        neutralFrame.current = poses.get(drawingKey(NEUTRAL_DRAWING))!;
+        neutralFrame.current = rasterize(NEUTRAL_DRAWING)!;
         element!.dataset.ready = "true"; element!.dataset.loadedAction = action;
         element!.dataset.frameCount = String(DRAWING_SEQUENCES[action].length);
         refresh();
@@ -124,7 +132,7 @@ function Character({ action = "idle", small = false, animate = true, active = tr
   }, [action, active, animate, failed, playId]);
   // Draw registered pose rectangles, never translate the character viewport.
   return <span className={styles.character} data-action={action} data-engine="frames" data-character-version={CHARACTER_FRAME_VERSION} aria-hidden="true">
-    {failed ? <Image className={styles.fallbackCharacter} src="/assistant/chibi-idle-v3.png" alt="" width={1024} height={1536} sizes={small ? "180px" : "400px"} /> :
+    {failed ? <Image className={styles.fallbackCharacter} src="/assistant/chibi-neutral-left-collar-v4.png" alt="" width={768} height={768} sizes={small ? "180px" : "400px"} /> :
       <canvas ref={sheet} className={styles.spriteSheet} width={CHARACTER_STAGE.size} height={CHARACTER_STAGE.size} />}
   </span>;
 }

@@ -2,20 +2,21 @@ import { CHARACTER_ACTIONS, CHARACTER_STAGE, type CharacterAction } from "./char
 import { MOTION_AUTHORING_FPS } from "./motion";
 import { REGISTERED_SHEETS } from "./registered-sheets";
 import { PILOT_SHEETS } from "./pilot-sheets";
+import { LEFT_COLLAR_SHEETS, IDLE_DRAWING_TIMES } from "./left-collar-sheets";
 
-export const RUNTIME_SHEETS = { ...REGISTERED_SHEETS, ...PILOT_SHEETS };
-export const CHARACTER_FRAME_VERSION = "original-pilot-v6-wave-reviewed-v16";
+export const RUNTIME_SHEETS = { ...REGISTERED_SHEETS, ...PILOT_SHEETS, ...LEFT_COLLAR_SHEETS };
+export const CHARACTER_FRAME_VERSION = "original-left-collar-release-v1";
 type Sheet = keyof typeof RUNTIME_SHEETS;
 export type Drawing = { sheet: Sheet; frame: number };
 export const NEUTRAL_DRAWING: Drawing = { sheet: "pilot-blink", frame: 0 };
 const range = (sheet: Sheet, first: number, last: number): Drawing[] =>
   Array.from({ length: last - first + 1 }, (_, i) => ({ sheet, frame: first + i }));
-// Whole figures: v6 idle remains owner-accepted; wave v16 retains all 37 reviewed
-// slots with explicit source provenance, NOT 37 independently drawn poses.
-// Other actions keep the selected v5 drawings and motion briefs.
+// Whole figures: native torso exports with an eye-only contour finish. Breath
+// uses 15 fps, with 30 fps samples around the blink. Legacy actions only gain
+// the left-collar accessory; their original art history is not re-approved.
 // Every action starts/ends on the exact same canonical original-derived neutral.
 export const DRAWING_SEQUENCES: Record<CharacterAction, readonly Drawing[]> = {
-  idle: [NEUTRAL_DRAWING, ...range("pilot-blink", 1, 7), NEUTRAL_DRAWING],
+  idle: [NEUTRAL_DRAWING, ...range("pilot-blink", 1, 65), NEUTRAL_DRAWING],
   wave: [NEUTRAL_DRAWING, ...range("pilot-wave", 1, 35), NEUTRAL_DRAWING],
   nod: [NEUTRAL_DRAWING, ...range("nod", 0, 11), NEUTRAL_DRAWING],
   thinking: [NEUTRAL_DRAWING, ...range("thinking", 0, 13), ...range("thinking-recovery", 0, 11), NEUTRAL_DRAWING],
@@ -40,9 +41,10 @@ export function drawingPose(drawing: Drawing) {
     drawWidth: width * sheet.scale, drawHeight: height * sheet.scale };
 }
 export function drawingTimes(action: CharacterAction) {
+  if (action === "idle") return IDLE_DRAWING_TIMES;
   // Neutral resting holds are intentional, not counted as newly drawn poses.
   return DRAWING_SEQUENCES[action].map((_, index) => index === 0 ? 0 :
-    action === "idle" ? drawingDuration(action) - (DRAWING_SEQUENCES.idle.length - index) * FRAME_INTERVAL_MS : index * FRAME_INTERVAL_MS);
+    index * FRAME_INTERVAL_MS);
 }
 export function drawingSample(action: CharacterAction, elapsed: number) {
   const config = CHARACTER_ACTIONS[action], sequence = DRAWING_SEQUENCES[action];

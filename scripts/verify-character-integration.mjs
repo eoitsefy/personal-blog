@@ -1,7 +1,8 @@
 // node --import tsx scripts/verify-character-integration.mjs; no AI or microphone.
 import assert from 'node:assert/strict';
 import {createRequire} from 'node:module';
-import {mkdir,writeFile} from 'node:fs/promises';
+import {mkdir,writeFile,readFile} from 'node:fs/promises';
+import {createHash} from 'node:crypto';
 import {CHARACTER_ACTIONS} from '../src/lib/assistant/character.ts';
 import {CHARACTER_FRAME_VERSION,DRAWING_SEQUENCES,NEUTRAL_DRAWING,isPilotAction,drawingKey,drawingTimes,FRAME_BLEND_MS} from '../src/lib/assistant/frame-timeline.ts';
 const base=process.env.TEST_BASE_URL || 'http://127.0.0.1:3220';
@@ -36,7 +37,7 @@ try{
   const dialog=page.getByRole('dialog',{name:'小助手',exact:true}),character=dialog.locator('[data-action]'),canvas=character.locator('canvas');
   await page.waitForSelector('dialog canvas[data-ready=true]');
   assert.equal(await character.getAttribute('data-character-version'),CHARACTER_FRAME_VERSION);
-  assert.deepEqual([...requested].sort(),['/assistant/chibi-blink-pilot-v6.webp']);
+  assert.deepEqual([...requested].sort(),['/assistant/chibi-idle-left-collar-v4.webp']);
   await canvas.evaluate(el=>{el.dataset.instance='persistent-canvas';});
   const box=await character.boundingBox(),neutral=await seek(canvas,0),gallery=[];let checked=0,maxDrift=0;
   for(const action of Object.keys(DRAWING_SEQUENCES)){
@@ -47,6 +48,7 @@ try{
    const times=drawingTimes(action),seen=[];
    for(let i=0;i<times.length;i++){
     const p=await seek(canvas,times[i]+FRAME_BLEND_MS+1);seen.push(p.pose);checked++;
+    assert.ok(Number(await canvas.getAttribute('data-cached-poses'))<=8,'Display bitmap cache exceeds mobile budget');
     assert.ok(p.top>=7 && p.bottom<=217 && p.left>=8 && p.right<=216,`${action}/${i}: clipped or adjacent art ${JSON.stringify({...p,image:undefined})}`);
     maxDrift=Math.max(maxDrift,Math.abs(p.footCentre-112));assert.ok(Math.abs(p.footCentre-112)<=1.25,`${action}/${i}: boot midpoint drift (${p.footCentre})`);
     assert.deepEqual(await character.boundingBox(),box);
@@ -76,6 +78,8 @@ try{
   results.push({width,dpr,poses:checked,sharedNeutral:true,persistentCanvas:true,maxBootMidpointDrift:maxDrift,fixedViewport:true,hiDpi:true});await context.close();
  }
  const reduced=await browser.newContext({viewport:{width:390,height:844},reducedMotion:'reduce'}),page=await reduced.newPage();await page.goto(base+'/assistant');await page.waitForSelector('canvas[data-ready=true]');assert.equal(await page.locator('canvas').evaluate(el=>el.getAnimations().length),0);assert.equal(await page.locator('canvas').getAttribute('data-pose'),drawingKey(NEUTRAL_DRAWING));await reduced.close();
- const fallback=await browser.newContext();await fallback.route('**/assistant/chibi-blink-pilot-v6.webp',r=>r.abort());const f=await fallback.newPage();await f.goto(base+'/assistant');await f.waitForSelector('img[src*="chibi-idle-v3"]');await fallback.close();
- assert.deepEqual(errors,[]);const report={accepted:true,noAIRequests:true,reducedMotion:true,fallback:true,results};await writeFile(`${output}/report.json`,JSON.stringify(report,null,2));console.log(JSON.stringify(report,null,2));
+ const fallback=await browser.newContext();await fallback.route('**/assistant/chibi-idle-left-collar-v4.webp',r=>r.abort());const f=await fallback.newPage();await f.goto(base+'/assistant');await f.waitForSelector('img[src*="chibi-neutral-left-collar-v4"]');await fallback.close();
+ const manifest=JSON.parse(await readFile('docs/assistant/left-collar-release-v1/atlas-candidate.json','utf8'));
+ const assetScopeSha256=createHash('sha256').update(Object.values(manifest.assets).map(a=>a.src+':'+a.sha256).sort().join('\n')).digest('hex');
+ assert.deepEqual(errors,[]);const report={accepted:true,characterVersion:CHARACTER_FRAME_VERSION,assetScopeSha256,noAIRequests:true,reducedMotion:true,fallback:true,bitmapCacheLimit:8,results};await writeFile(`${output}/report.json`,JSON.stringify(report,null,2));console.log(JSON.stringify(report,null,2));
 }finally{await browser.close();}
