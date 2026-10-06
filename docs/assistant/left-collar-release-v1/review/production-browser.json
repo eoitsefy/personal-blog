@@ -1,0 +1,55 @@
+{
+  "accepted": true,
+  "characterVersion": "original-left-collar-release-v1",
+  "assetScopeSha256": "75d21dc6bc6b943adb1c9e44e6808c8e4b9f0f933b9c8e2e76aa0bb4638de8c0",
+  "noAIRequests": true,
+  "reducedMotion": true,
+  "fallback": true,
+  "bitmapCacheLimit": 8,
+  "results": [
+    {
+      "width": 1280,
+      "dpr": 1,
+      "poses": 217,
+      "sharedNeutral": true,
+      "persistentCanvas": true,
+      "maxBootMidpointDrift": 0.7000000000000028,
+      "fixedViewport": true,
+      "hiDpi": true
+    },
+    {
+      "width": 768,
+      "dpr": 1,
+      "poses": 217,
+      "sharedNeutral": true,
+      "persistentCanvas": true,
+      "maxBootMidpointDrift": 0.7000000000000028,
+      "fixedViewport": true,
+      "hiDpi": true
+    },
+    {
+      "width": 390,
+      "dpr": 2,
+      "poses": 217,
+      "sharedNeutral": true,
+      "persistentCanvas": true,
+      "maxBootMidpointDrift": 0.9333333333333371,
+      "fixedViewport": true,
+      "hiDpi": true
+    },
+    {
+      "width": 320,
+      "dpr": 2,
+      "poses": 217,
+      "sharedNeutral": true,
+      "persistentCanvas": true,
+      "maxBootMidpointDrift": 0.9333333333333371,
+      "fixedViewport": true,
+      "hiDpi": true
+    }
+  ],
+  "target": "https://eastherphil.cn",
+  "deployedCommit": "a7cc91a3ea0e4ae4d74ba824f6adeb968cb48fb1",
+  "verifiedAt": "2026-10-06T14:49:52Z",
+  "realMobileDeviceTested": false
+}
