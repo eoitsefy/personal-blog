@@ -1,0 +1,10 @@
+{
+  "status": "SUCCESS",
+  "commit": "eb9ba74a65bdacc81e369519ea1ee0d73655f1ec",
+  "runId": 37493193874,
+  "url": "https://github.com/eoitsefy/personal-blog/actions/runs/37493193874",
+  "validationJobId": 112370937723,
+  "checks": ["production dependency audit", "operations script validation", "privacy-safe Nginx tests", "Docker Compose configuration", "unit tests", "PostgreSQL integration", "lint", "typecheck", "production build", "Linux container build", "production container runtime"],
+  "localOptionalBrowser": "The separately opt-in offline browser test ran locally with191/191 and zero skips; CI does not opt in to that local browser test.",
+  "scope": "Application commit only. Documentation-only acceptance commits do not change the deployed image."
+}
