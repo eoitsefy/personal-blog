@@ -7,7 +7,7 @@ import {KLING_WAVE_SHEETS} from "./kling-wave-sheets";
 import {DRAWING_SEQUENCES, RUNTIME_SHEETS, drawingDuration, drawingSample, drawingTimes, NEUTRAL_DRAWING} from "./frame-timeline";
 const hash = (bytes: Uint8Array | string) => createHash("sha256").update(bytes).digest("hex");
 
-test("only the owner-accepted wave uses Kling; the bow-like nod trial is not released", async () => {
+test("the historical v1 wave-only approval and resources remain immutable", async () => {
   const m = JSON.parse(await readFile("docs/assistant/kling-wave-v1/manifest.json", "utf8"));
   assert.deepEqual(m.ownerAcceptance.scope, ["wave"]);
   assert.equal(m.ownerAcceptance.otherActionsAuthorized, false);
@@ -42,7 +42,7 @@ test("native 24fps timing has exact canonical endpoints and no inter-frame ghost
 });
 
 test("compressed static atlas has hash-bound frames, transparent gutters and AI source provenance", async () => {
-  const m = JSON.parse(await readFile("docs/assistant/kling-wave-v1/manifest.json", "utf8"));
+  const m = JSON.parse(await readFile("docs/assistant/kling-gestures-v2/manifest.json", "utf8"));
   const sheet = KLING_WAVE_SHEETS["kling-wave"], bytes = await readFile("public"+sheet.src);
   const metadata = await sharp(bytes).metadata();
   assert.equal(metadata.width, sheet.width); assert.equal(metadata.height, sheet.height);
@@ -56,9 +56,9 @@ test("compressed static atlas has hash-bound frames, transparent gutters and AI 
       const start=((y+row)*sheet.width+x)*4;
       data.copy(tile,row*244*4,start,start+244*4);
     }
-    assert.equal(hash(tile), m.frames[i].tileRgbaSha256);
+    assert.equal(hash(tile), m.clips.wave.frames[i].tileRgbaSha256);
     for(let px=0;px<244;px++)for(const py of [0,307])assert.equal(tile[(py*244+px)*4+3],0);
     for(let py=0;py<308;py++)for(const px of [0,243])assert.equal(tile[(py*244+px)*4+3],0);
   }
-  assert.equal(hash(m.frames.map((f:{tileRgbaSha256:string})=>f.tileRgbaSha256).join("")),m.frameScopeSha256);
+  assert.equal(hash(bytes),m.assets.wave.sha256);
 });

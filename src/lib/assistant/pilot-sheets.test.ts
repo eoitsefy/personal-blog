@@ -50,8 +50,8 @@ test("v6 static atlas tiles are lossless fixed crops of the accepted 15 fps samp
   }
 });
 
-test("left-collar release retains historical assets and changes only the accepted wave timeline", () => {
-  assert.equal(CHARACTER_FRAME_VERSION, "original-left-collar-kling-wave-v1");
+test("left-collar release retains historical assets and changes only the accepted gesture timelines", () => {
+  assert.equal(CHARACTER_FRAME_VERSION, "original-left-collar-kling-gestures-v2");
   assert.deepEqual(NEUTRAL_DRAWING, { sheet: "pilot-blink", frame: 0 });
   assert.equal(PILOT_SHEETS["pilot-blink"].src, "/assistant/chibi-blink-pilot-v6.webp");
   assert.equal(PILOT_SHEETS["pilot-wave"].src, "/assistant/chibi-wave-reviewed-v16.webp");
@@ -63,7 +63,7 @@ test("left-collar release retains historical assets and changes only the accepte
   assert.equal(drawingDuration("idle"), 4000); assert.equal(drawingDuration("wave"), 121 / 24 * 1000);
   assert.equal(drawingTimes("wave").at(-1), 5000);
   assert.deepEqual(Object.fromEntries(Object.entries(DRAWING_SEQUENCES).map(([action, frames]) => [action, frames.length])),
-    { idle: 68, wave: 121, nod: 14, thinking: 28, bow: 20, cheer: 17, yawn: 34 });
+    { idle: 68, wave: 121, nod: 14, thinking: 28, bow: 73, cheer: 17, yawn: 34 });
 });
 
 test("v16 runtime atlas is hash-bound to full approved PNGs, provenance and strict final art/browser gates", async () => {

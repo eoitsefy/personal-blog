@@ -1,0 +1,42 @@
+{
+  "status": "OWNER_ACCEPTED_AND_TECHNICAL_GATES_PASSED",
+  "characterVersion": "original-left-collar-kling-gestures-v2",
+  "assetScopeSha256": "23bcc770f4ecc4601eb2eb60d8823f9aed5ab3b204acd6bb6bb58d4b0da191c3",
+  "frameScopeSha256": "acbe82df7a5cce875cc3db019b1b7311bd83008d457fa415c966caf3bde26dcc",
+  "ownerScope": ["wave-palm-correction", "bow"],
+  "ownerMessages": ["修正挥手动作中掌心显示过白，然后将鞠躬致谢动作上线", "允许局部肤色校正"],
+  "otherGeneratedSamplesReleased": false,
+  "visualReview": {
+    "scope": "Whole-sequence light/dark contact overviews for wave and bow; actual browser canvas overviews and 320px dialog; native raised-palm frame 48 before/after correction.",
+    "notClaimed": "Not a full-resolution manual inspection of every frame, not an independent reviewer approval, and not physical-device delivery of every 24fps sample.",
+    "armsRemainConnected": true,
+    "paletteCorrection": "54 whole-frame PNGs: bounded palm-side warm RGB correction only; exact alpha and all pixels outside the mask preserved before WebP encoding.",
+    "compressionDisclosure": "Quality-92 RGB compression may change small color values outside the correction mask; alpha remains exact. Per-action opaque RGB mean error is bounded by 3 levels.",
+    "noGeometryWarpOrLayerCompositing": true,
+    "noAdjacentSpriteLeak": true,
+    "knownAcceptedVariation": "Original owner-accepted wave retains its short provider-generated blink. Bow reuses the previously rejected nod trial under the explicitly authorized meaning thanks, not head-only nod.",
+    "bowTiming": "Consecutive source indices 24 through 96 at 24fps; surplus neutral lead/tail removed; runtime endpoints are the canonical original-derived resting pose."
+  },
+  "tests": {
+    "trackedUnitTestsPlusNewGestureTest": {"total": 197, "passed": 196, "skipped": 1, "failed": 0},
+    "unrelatedExperimentDisclosure": "The untracked local Cubism ownership trial has an existing frozen-source hash mismatch; it was not included in the release or changed to make this release pass.",
+    "targetedLint": "passed",
+    "typecheck": "passed",
+    "isolatedWebpackBuild": "passed; no production database connection; existing missing-DATABASE_URL admin prerender diagnostic retained and disclosed",
+    "browserReport": "browser-local/report.json",
+    "browserWidths": [1280, 768, 390, 320],
+    "posesPerWidth": 355,
+    "maximumBootMidpointDriftStagePixels": 0.9333333333333371,
+    "bitmapCacheLimit": 8,
+    "reducedMotionPauseAndFallback": true,
+    "modelQueriesMade": 0
+  },
+  "workflow": [
+    "Retain original video bytes, embedded AIGC identifiers and losslessly decoded original PNG sequences.",
+    "Use prepare-kling-matte.py --action nod for the authorized bow source; the black-matte algorithm is source-specific and does not approve a new character.",
+    "Use correct-kling-palm.py only after explicit palette-edit authorization; preserve all alpha, geometry and outside-mask PNG pixels.",
+    "Use package-kling-gestures.mjs: fixed crop and uniform scale, immutable hash-bound static atlases, native 24fps, no interpolation or limb composites.",
+    "Verify every runtime pose and actual asset hash in the browser, then back up and replace only the application container. Retain database, uploads, credentials, proxy and the rollback image.",
+    "A new source, palette mask, crop or packaging result invalidates the old visual and browser approval scopes."
+  ]
+}

@@ -13,7 +13,7 @@ export const CHARACTER_MOTION_TEMPLATES = {
     stages: ["正面中立", "下巴稍低", "低头5度", "低头10度", "低头15度", "低头18度", "保持低头、柔和闭眼", "抬至15度", "抬至10度", "抬至5度", "接近中立", "正面中立"] },
   thinking: { label: "思考", duration: 2400, loop: true, offsets: actionTimes,
     stages: ["双臂下垂", "前臂稍抬", "抬起前臂", "弯肘", "指尖至胸前", "指尖接近下巴", "触碰下巴", "托腮思考", "手离开下巴", "前臂降至中段", "手臂接近垂下", "双臂下垂"] },
-  bow: { label: "鞠躬", duration: 2000, loop: false, offsets: actionTimes,
+  bow: { label: "鞠躬致谢", duration: 2000, loop: false, offsets: actionTimes,
     stages: ["直立中立", "上身前倾3度", "前倾6度", "前倾9度", "前倾12度", "前倾15度", "前倾18度", "起身至15度", "起身至12度", "起身至9度", "起身至4度", "直立中立"] },
   cheer: { label: "开心", duration: 1800, loop: false, offsets: actionTimes,
     stages: ["双臂下垂", "双肘稍弯", "前臂稍抬", "双手至腰前", "双手至胸下", "小拳头至胸前", "微笑轻抬双手", "柔和笑眼", "放松微笑、手开始落下", "前臂至腰前", "双手接近垂下", "下垂中立微笑"] },

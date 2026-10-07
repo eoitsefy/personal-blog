@@ -1,7 +1,7 @@
 """Offline whole-frame matte; needs Pillow, NumPy and SciPy, no generation API.
 
 Usage: python scripts/animation/prepare-kling-matte.py <external sample folder>
-Expects the hash-bound original and 121 losslessly extracted wave PNGs.
+Expects the hash-bound original and 121 losslessly extracted PNGs.
 Never edits the original video, parts of the figure, or any production asset.
 """
 from pathlib import Path
@@ -45,14 +45,20 @@ def matte(source):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("sample_folder")
+    parser.add_argument("--action", choices=["wave", "nod"], default="wave")
     args = parser.parse_args()
     folder = Path(args.sample_folder).resolve(strict=True)
-    digest = hashlib.sha256((folder / "wave-original.mp4").read_bytes()).hexdigest()
-    assert digest == "0f1495e856a10445ef705c57bb4faf974925a1b5868b0184a6aaa3218c6b911e"
-    out = folder / "wave-cutouts-v1"
+    action = args.action
+    digest = hashlib.sha256((folder / f"{action}-original.mp4").read_bytes()).hexdigest()
+    expected = {
+        "wave": "0f1495e856a10445ef705c57bb4faf974925a1b5868b0184a6aaa3218c6b911e",
+        "nod": "c334cc0ee91d374304b7d87a16c892b1fbd9180008d9aa95855ddf80cdc16384",
+    }
+    assert digest == expected[action], "Unapproved source clip"
+    out = folder / f"{action}-cutouts-v1"
     out.mkdir(exist_ok=True)
     for i in range(121):
-        source = folder / "wave-frames" / f"frame-{i+1:03d}.png"
+        source = folder / f"{action}-frames" / f"frame-{i+1:03d}.png"
         image = Image.open(source)
         assert image.size == (960, 960)
         target = out / f"{i:03d}.png"
@@ -62,7 +68,7 @@ def main():
             assert np.array_equal(np.array(Image.open(target)), np.array(result)), target
         else:
             result.save(target)
-    print("121 whole-frame cutouts ready; source video unchanged")
+    print(f"121 {action} whole-frame cutouts ready; source video unchanged")
 
 
 if __name__ == "__main__":

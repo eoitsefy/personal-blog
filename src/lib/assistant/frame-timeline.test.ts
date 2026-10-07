@@ -19,7 +19,7 @@ test("selected whole-figure timelines share an exact original neutral, excluding
       if (pose.sheet === "yawn") assert.ok(pose.frame < 20, "Abrupt hand drop is replaced by recovery drawings");
     }
   }
-  assert.equal(sources.size, 289); // Drawing addresses, not independently drawn poses.
+  assert.equal(sources.size, 342); // Drawing addresses, not independently drawn poses.
 });
 
 test("breath uses 15 fps and blink uses 30 fps without geometric blends", () => {
@@ -32,7 +32,7 @@ test("breath uses 15 fps and blink uses 30 fps without geometric blends", () => 
       assert.ok(times[i] > times[i - 1]);
       if (i > 1) {
         const delta = times[i] - times[i - 1];
-        assert.ok(Math.abs(delta - (action === "wave" ? 1000 / 24 : FRAME_INTERVAL_MS)) < 1e-8 || (action === "idle" && Math.abs(delta - 1000 / 30) < 1e-8));
+        assert.ok(Math.abs(delta - (action === "wave" || action === "bow" ? 1000 / 24 : FRAME_INTERVAL_MS)) < 1e-8 || (action === "idle" && Math.abs(delta - 1000 / 30) < 1e-8));
       }
       const start = times[i];
       assert.deepEqual(drawingSample(action, start + FRAME_BLEND_MS).to, DRAWING_SEQUENCES[action][i]);
@@ -57,12 +57,12 @@ test("selected crops retain edge padding without redefining the solid-sole ancho
       assert.ok(Math.abs(pose.top + (anchorY - y) * sheet.scale - CHARACTER_STAGE.baseline) < 1e-8);
       // Blank gutter extents differ by atlas; actual browser alpha bounds retain
       // the unchanged 7px top / 217px bottom / fixed-sole acceptance gate.
-      assert.ok(pose.left >= 8 && pose.top >= (key === "kling-wave" ? 4 : 6) && pose.left + pose.drawWidth < 216 && pose.top + pose.drawHeight < 219);
+      assert.ok(pose.left >= 8 && pose.top >= (key.startsWith("kling-") ? 4 : 6) && pose.left + pose.drawWidth < 216 && pose.top + pose.drawHeight < 219);
       let l: number=right,r: number=x,solidBottom: number=y;
       for(let py=y;py<=bottom;py++)for(let px=x;px<=right;px++)if(data[(py*info.width+px)*4+3]>100)solidBottom=Math.max(solidBottom,py);
       const band=Math.round((solidBottom-y-1)*.13);
       for(let py=solidBottom-band+1;py<=solidBottom;py++)for(let px=x;px<=right;px++)if(data[(py*info.width+px)*4+3]>100){l=Math.min(l,px);r=Math.max(r,px);}
-      if (key === "kling-wave") {
+      if (key.startsWith("kling-")) {
         assert.ok(Math.abs(anchorY - solidBottom - 1) <= 2.5);
         assert.ok(Math.abs(anchorX - (l+r)/2) <= 1);
       } else if (!key.startsWith("pilot-")) {

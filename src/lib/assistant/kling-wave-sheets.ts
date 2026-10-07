@@ -5,7 +5,7 @@ export const KLING_WAVE_FRAME_COUNT = 121;
 export const KLING_WAVE_DRAWING_TIMES = Array.from({ length: KLING_WAVE_FRAME_COUNT }, (_, i) => i * 1000 / KLING_WAVE_FPS);
 export const KLING_WAVE_SHEETS = {
   "kling-wave": {
-    src: "/assistant/chibi-wave-kling-v1.webp",
+    src: "/assistant/chibi-wave-kling-v2.webp",
     width: 1464, height: 6468,
     scale: (0.553763440860215 / 1.2) * 1.5,
     poses: Array.from({ length: KLING_WAVE_FRAME_COUNT }, (_, i) => {
