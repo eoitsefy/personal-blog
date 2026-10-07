@@ -11,7 +11,7 @@ test('refined blink retains all source provenance, exact non-eye pixels, alpha a
 test('reopening 48/49/50 uses consecutive 30fps samples while keeping historical actions intact',async()=>{
  const m=await json('candidate.json');assert.deepEqual(m.indices,BLINK_SOURCE_INDICES);assert.deepEqual(m.times,BLINK_DRAWING_TIMES);assert.deepEqual(drawingTimes('idle'),BLINK_DRAWING_TIMES);
  assert.equal(RUNTIME_SHEETS['pilot-blink'].src,BLINK_REFINEMENT_SHEETS['pilot-blink'].src);
- assert.equal(Object.values(DRAWING_SEQUENCES).reduce((n,s)=>n+s.length,0),355);
+ assert.equal(Object.values(DRAWING_SEQUENCES).reduce((n,s)=>n+s.length,0),578);
  for(const n of[48,49])assert.ok(Math.abs(BLINK_DRAWING_TIMES[BLINK_SOURCE_INDICES.indexOf(n+1)]-BLINK_DRAWING_TIMES[BLINK_SOURCE_INDICES.indexOf(n)]-1000/30)<1e-8);
 });
 test('scoped independent reviews and actual browser bytes are required; old approvals cannot transfer',async()=>{

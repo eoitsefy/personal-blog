@@ -1,0 +1,2525 @@
+{
+  "accepted": true,
+  "characterVersion": "original-left-collar-kling-actions-v2",
+  "assetScopeSha256": "30839f3339154ff39128474bc6bb0751970fa90f3dce91d97a96018cfff19d26",
+  "frameScopeSha256": "8dcd7850670619dee1bc1cd2618865cc1740464f52b6ffd41362dc37016b36a3",
+  "noAIRequests": true,
+  "reducedMotion": true,
+  "fallback": true,
+  "fallbackDecoded": true,
+  "fallbackSha256": "9d102b3251940dbd3e1a8e2c8437b5fd719b0312bdff674329b2ee6e9337d091",
+  "bitmapCacheLimit": 8,
+  "actualAssetHashesVerified": true,
+  "playback": [
+    {
+      "rate": 1,
+      "loops": 3,
+      "maxPaintGap": 6.700000000000728,
+      "stopTime": 12000.300000000001,
+      "changes": [
+        {
+          "time": 0,
+          "pose": "pilot-blink:0"
+        },
+        {
+          "time": 69.90000000000008,
+          "pose": "pilot-blink:1"
+        },
+        {
+          "time": 136.49999999999983,
+          "pose": "pilot-blink:2"
+        },
+        {
+          "time": 203.10000000000005,
+          "pose": "pilot-blink:3"
+        },
+        {
+          "time": 269.6999999999998,
+          "pose": "pilot-blink:4"
+        },
+        {
+          "time": 336.30000000000007,
+          "pose": "pilot-blink:5"
+        },
+        {
+          "time": 402.8999999999998,
+          "pose": "pilot-blink:6"
+        },
+        {
+          "time": 469.5999999999998,
+          "pose": "pilot-blink:7"
+        },
+        {
+          "time": 536.0999999999998,
+          "pose": "pilot-blink:8"
+        },
+        {
+          "time": 602.7,
+          "pose": "pilot-blink:9"
+        },
+        {
+          "time": 669.2999999999997,
+          "pose": "pilot-blink:10"
+        },
+        {
+          "time": 735.9,
+          "pose": "pilot-blink:11"
+        },
+        {
+          "time": 802.4999999999998,
+          "pose": "pilot-blink:12"
+        },
+        {
+          "time": 869.1,
+          "pose": "pilot-blink:13"
+        },
+        {
+          "time": 935.6999999999997,
+          "pose": "pilot-blink:14"
+        },
+        {
+          "time": 1002.3,
+          "pose": "pilot-blink:15"
+        },
+        {
+          "time": 1068.8,
+          "pose": "pilot-blink:16"
+        },
+        {
+          "time": 1135.5,
+          "pose": "pilot-blink:17"
+        },
+        {
+          "time": 1202,
+          "pose": "pilot-blink:18"
+        },
+        {
+          "time": 1235.3999999999999,
+          "pose": "pilot-blink:19"
+        },
+        {
+          "time": 1268.5999999999997,
+          "pose": "pilot-blink:20"
+        },
+        {
+          "time": 1301.8999999999999,
+          "pose": "pilot-blink:21"
+        },
+        {
+          "time": 1335.2,
+          "pose": "pilot-blink:22"
+        },
+        {
+          "time": 1368.6,
+          "pose": "pilot-blink:23"
+        },
+        {
+          "time": 1401.7999999999997,
+          "pose": "pilot-blink:24"
+        },
+        {
+          "time": 1435.1,
+          "pose": "pilot-blink:25"
+        },
+        {
+          "time": 1468.3999999999999,
+          "pose": "pilot-blink:26"
+        },
+        {
+          "time": 1501.7,
+          "pose": "pilot-blink:27"
+        },
+        {
+          "time": 1534.9999999999998,
+          "pose": "pilot-blink:28"
+        },
+        {
+          "time": 1568.2999999999997,
+          "pose": "pilot-blink:29"
+        },
+        {
+          "time": 1601.6,
+          "pose": "pilot-blink:30"
+        },
+        {
+          "time": 1634.9,
+          "pose": "pilot-blink:31"
+        },
+        {
+          "time": 1668.1999999999996,
+          "pose": "pilot-blink:32"
+        },
+        {
+          "time": 1734.9,
+          "pose": "pilot-blink:33"
+        },
+        {
+          "time": 1801.3999999999996,
+          "pose": "pilot-blink:34"
+        },
+        {
+          "time": 1867.9999999999998,
+          "pose": "pilot-blink:35"
+        },
+        {
+          "time": 1934.6000000000001,
+          "pose": "pilot-blink:36"
+        },
+        {
+          "time": 2001.0999999999997,
+          "pose": "pilot-blink:37"
+        },
+        {
+          "time": 2067.7999999999997,
+          "pose": "pilot-blink:38"
+        },
+        {
+          "time": 2134.3999999999996,
+          "pose": "pilot-blink:39"
+        },
+        {
+          "time": 2200.8999999999996,
+          "pose": "pilot-blink:40"
+        },
+        {
+          "time": 2267.6000000000004,
+          "pose": "pilot-blink:41"
+        },
+        {
+          "time": 2334.1,
+          "pose": "pilot-blink:42"
+        },
+        {
+          "time": 2400.7000000000003,
+          "pose": "pilot-blink:43"
+        },
+        {
+          "time": 2467.4,
+          "pose": "pilot-blink:44"
+        },
+        {
+          "time": 2533.8999999999996,
+          "pose": "pilot-blink:45"
+        },
+        {
+          "time": 2600.5,
+          "pose": "pilot-blink:46"
+        },
+        {
+          "time": 2667.1,
+          "pose": "pilot-blink:47"
+        },
+        {
+          "time": 2733.7000000000003,
+          "pose": "pilot-blink:48"
+        },
+        {
+          "time": 2800.4,
+          "pose": "pilot-blink:49"
+        },
+        {
+          "time": 2866.8999999999996,
+          "pose": "pilot-blink:50"
+        },
+        {
+          "time": 2933.5,
+          "pose": "pilot-blink:51"
+        },
+        {
+          "time": 3003.3999999999996,
+          "pose": "pilot-blink:52"
+        },
+        {
+          "time": 3066.6999999999994,
+          "pose": "pilot-blink:53"
+        },
+        {
+          "time": 3136.6,
+          "pose": "pilot-blink:54"
+        },
+        {
+          "time": 3203.2000000000003,
+          "pose": "pilot-blink:55"
+        },
+        {
+          "time": 3269.7999999999997,
+          "pose": "pilot-blink:56"
+        },
+        {
+          "time": 3336.3,
+          "pose": "pilot-blink:57"
+        },
+        {
+          "time": 3403,
+          "pose": "pilot-blink:58"
+        },
+        {
+          "time": 3469.6000000000004,
+          "pose": "pilot-blink:59"
+        },
+        {
+          "time": 3536.1,
+          "pose": "pilot-blink:60"
+        },
+        {
+          "time": 3602.7999999999997,
+          "pose": "pilot-blink:61"
+        },
+        {
+          "time": 3669.4,
+          "pose": "pilot-blink:62"
+        },
+        {
+          "time": 3735.8999999999996,
+          "pose": "pilot-blink:63"
+        },
+        {
+          "time": 3803.2999999999997,
+          "pose": "pilot-blink:64"
+        },
+        {
+          "time": 3869.2,
+          "pose": "pilot-blink:65"
+        },
+        {
+          "time": 3935.7000000000003,
+          "pose": "pilot-blink:66"
+        },
+        {
+          "time": 3969.0999999999995,
+          "pose": "pilot-blink:0"
+        },
+        {
+          "time": 4068.899999999999,
+          "pose": "pilot-blink:1"
+        },
+        {
+          "time": 4135.5,
+          "pose": "pilot-blink:2"
+        },
+        {
+          "time": 4202.399999999999,
+          "pose": "pilot-blink:3"
+        },
+        {
+          "time": 4268.699999999999,
+          "pose": "pilot-blink:4"
+        },
+        {
+          "time": 4335.3,
+          "pose": "pilot-blink:5"
+        },
+        {
+          "time": 4401.9,
+          "pose": "pilot-blink:6"
+        },
+        {
+          "time": 4468.399999999999,
+          "pose": "pilot-blink:7"
+        },
+        {
+          "time": 4535,
+          "pose": "pilot-blink:8"
+        },
+        {
+          "time": 4601.699999999999,
+          "pose": "pilot-blink:9"
+        },
+        {
+          "time": 4668.3,
+          "pose": "pilot-blink:10"
+        },
+        {
+          "time": 4734.8,
+          "pose": "pilot-blink:11"
+        },
+        {
+          "time": 4801.499999999999,
+          "pose": "pilot-blink:12"
+        },
+        {
+          "time": 4868.1,
+          "pose": "pilot-blink:13"
+        },
+        {
+          "time": 4934.7,
+          "pose": "pilot-blink:14"
+        },
+        {
+          "time": 5001.199999999999,
+          "pose": "pilot-blink:15"
+        },
+        {
+          "time": 5067.8,
+          "pose": "pilot-blink:16"
+        },
+        {
+          "time": 5134.4,
+          "pose": "pilot-blink:17"
+        },
+        {
+          "time": 5201.1,
+          "pose": "pilot-blink:18"
+        },
+        {
+          "time": 5234.299999999999,
+          "pose": "pilot-blink:19"
+        },
+        {
+          "time": 5267.7,
+          "pose": "pilot-blink:20"
+        },
+        {
+          "time": 5301,
+          "pose": "pilot-blink:21"
+        },
+        {
+          "time": 5334.300000000001,
+          "pose": "pilot-blink:22"
+        },
+        {
+          "time": 5367.599999999999,
+          "pose": "pilot-blink:23"
+        },
+        {
+          "time": 5400.8,
+          "pose": "pilot-blink:24"
+        },
+        {
+          "time": 5434.099999999999,
+          "pose": "pilot-blink:25"
+        },
+        {
+          "time": 5467.3,
+          "pose": "pilot-blink:26"
+        },
+        {
+          "time": 5500.7,
+          "pose": "pilot-blink:27"
+        },
+        {
+          "time": 5534.000000000001,
+          "pose": "pilot-blink:28"
+        },
+        {
+          "time": 5567.299999999999,
+          "pose": "pilot-blink:29"
+        },
+        {
+          "time": 5600.6,
+          "pose": "pilot-blink:30"
+        },
+        {
+          "time": 5633.900000000001,
+          "pose": "pilot-blink:31"
+        },
+        {
+          "time": 5667.199999999999,
+          "pose": "pilot-blink:32"
+        },
+        {
+          "time": 5733.8,
+          "pose": "pilot-blink:33"
+        },
+        {
+          "time": 5800.4,
+          "pose": "pilot-blink:34"
+        },
+        {
+          "time": 5866.9000000000015,
+          "pose": "pilot-blink:35"
+        },
+        {
+          "time": 5933.6,
+          "pose": "pilot-blink:36"
+        },
+        {
+          "time": 6000.2,
+          "pose": "pilot-blink:37"
+        },
+        {
+          "time": 6066.700000000001,
+          "pose": "pilot-blink:38"
+        },
+        {
+          "time": 6136.700000000001,
+          "pose": "pilot-blink:39"
+        },
+        {
+          "time": 6203.3,
+          "pose": "pilot-blink:40"
+        },
+        {
+          "time": 6269.9,
+          "pose": "pilot-blink:41"
+        },
+        {
+          "time": 6336.4000000000015,
+          "pose": "pilot-blink:42"
+        },
+        {
+          "time": 6403.1,
+          "pose": "pilot-blink:43"
+        },
+        {
+          "time": 6469.7,
+          "pose": "pilot-blink:44"
+        },
+        {
+          "time": 6536.300000000001,
+          "pose": "pilot-blink:45"
+        },
+        {
+          "time": 6602.9,
+          "pose": "pilot-blink:46"
+        },
+        {
+          "time": 6669.500000000001,
+          "pose": "pilot-blink:47"
+        },
+        {
+          "time": 6736.000000000001,
+          "pose": "pilot-blink:48"
+        },
+        {
+          "time": 6802.6,
+          "pose": "pilot-blink:49"
+        },
+        {
+          "time": 6869.200000000001,
+          "pose": "pilot-blink:50"
+        },
+        {
+          "time": 6935.8,
+          "pose": "pilot-blink:51"
+        },
+        {
+          "time": 7002.4,
+          "pose": "pilot-blink:52"
+        },
+        {
+          "time": 7069.000000000001,
+          "pose": "pilot-blink:53"
+        },
+        {
+          "time": 7135.6,
+          "pose": "pilot-blink:54"
+        },
+        {
+          "time": 7202.2,
+          "pose": "pilot-blink:55"
+        },
+        {
+          "time": 7268.8,
+          "pose": "pilot-blink:56"
+        },
+        {
+          "time": 7335.4,
+          "pose": "pilot-blink:57"
+        },
+        {
+          "time": 7402.000000000001,
+          "pose": "pilot-blink:58"
+        },
+        {
+          "time": 7468.500000000001,
+          "pose": "pilot-blink:59"
+        },
+        {
+          "time": 7535.2,
+          "pose": "pilot-blink:60"
+        },
+        {
+          "time": 7601.700000000001,
+          "pose": "pilot-blink:61"
+        },
+        {
+          "time": 7668.3,
+          "pose": "pilot-blink:62"
+        },
+        {
+          "time": 7734.9,
+          "pose": "pilot-blink:63"
+        },
+        {
+          "time": 7801.500000000001,
+          "pose": "pilot-blink:64"
+        },
+        {
+          "time": 7868.1,
+          "pose": "pilot-blink:65"
+        },
+        {
+          "time": 7934.7,
+          "pose": "pilot-blink:66"
+        },
+        {
+          "time": 7968.099999999999,
+          "pose": "pilot-blink:0"
+        },
+        {
+          "time": 8067.9,
+          "pose": "pilot-blink:1"
+        },
+        {
+          "time": 8134.500000000001,
+          "pose": "pilot-blink:2"
+        },
+        {
+          "time": 8201.1,
+          "pose": "pilot-blink:3"
+        },
+        {
+          "time": 8267.6,
+          "pose": "pilot-blink:4"
+        },
+        {
+          "time": 8334.300000000001,
+          "pose": "pilot-blink:5"
+        },
+        {
+          "time": 8400.9,
+          "pose": "pilot-blink:6"
+        },
+        {
+          "time": 8467.500000000002,
+          "pose": "pilot-blink:7"
+        },
+        {
+          "time": 8534.1,
+          "pose": "pilot-blink:8"
+        },
+        {
+          "time": 8600.6,
+          "pose": "pilot-blink:9"
+        },
+        {
+          "time": 8667.2,
+          "pose": "pilot-blink:10"
+        },
+        {
+          "time": 8733.800000000001,
+          "pose": "pilot-blink:11"
+        },
+        {
+          "time": 8800.4,
+          "pose": "pilot-blink:12"
+        },
+        {
+          "time": 8867,
+          "pose": "pilot-blink:13"
+        },
+        {
+          "time": 8933.7,
+          "pose": "pilot-blink:14"
+        },
+        {
+          "time": 9000.199999999999,
+          "pose": "pilot-blink:15"
+        },
+        {
+          "time": 9066.800000000001,
+          "pose": "pilot-blink:16"
+        },
+        {
+          "time": 9133.4,
+          "pose": "pilot-blink:17"
+        },
+        {
+          "time": 9200.000000000002,
+          "pose": "pilot-blink:18"
+        },
+        {
+          "time": 9233.4,
+          "pose": "pilot-blink:19"
+        },
+        {
+          "time": 9270,
+          "pose": "pilot-blink:20"
+        },
+        {
+          "time": 9303.3,
+          "pose": "pilot-blink:21"
+        },
+        {
+          "time": 9336.5,
+          "pose": "pilot-blink:22"
+        },
+        {
+          "time": 9369.8,
+          "pose": "pilot-blink:23"
+        },
+        {
+          "time": 9403.2,
+          "pose": "pilot-blink:24"
+        },
+        {
+          "time": 9436.400000000001,
+          "pose": "pilot-blink:25"
+        },
+        {
+          "time": 9469.699999999999,
+          "pose": "pilot-blink:26"
+        },
+        {
+          "time": 9503,
+          "pose": "pilot-blink:27"
+        },
+        {
+          "time": 9536.300000000001,
+          "pose": "pilot-blink:28"
+        },
+        {
+          "time": 9569.599999999999,
+          "pose": "pilot-blink:29"
+        },
+        {
+          "time": 9602.9,
+          "pose": "pilot-blink:30"
+        },
+        {
+          "time": 9636.300000000001,
+          "pose": "pilot-blink:31"
+        },
+        {
+          "time": 9669.500000000002,
+          "pose": "pilot-blink:32"
+        },
+        {
+          "time": 9736.1,
+          "pose": "pilot-blink:33"
+        },
+        {
+          "time": 9802.699999999999,
+          "pose": "pilot-blink:34"
+        },
+        {
+          "time": 9869.300000000001,
+          "pose": "pilot-blink:35"
+        },
+        {
+          "time": 9935.800000000001,
+          "pose": "pilot-blink:36"
+        },
+        {
+          "time": 10002.5,
+          "pose": "pilot-blink:37"
+        },
+        {
+          "time": 10069.1,
+          "pose": "pilot-blink:38"
+        },
+        {
+          "time": 10135.7,
+          "pose": "pilot-blink:39"
+        },
+        {
+          "time": 10202.199999999999,
+          "pose": "pilot-blink:40"
+        },
+        {
+          "time": 10268.9,
+          "pose": "pilot-blink:41"
+        },
+        {
+          "time": 10335.4,
+          "pose": "pilot-blink:42"
+        },
+        {
+          "time": 10402.1,
+          "pose": "pilot-blink:43"
+        },
+        {
+          "time": 10468.7,
+          "pose": "pilot-blink:44"
+        },
+        {
+          "time": 10535.3,
+          "pose": "pilot-blink:45"
+        },
+        {
+          "time": 10601.900000000001,
+          "pose": "pilot-blink:46"
+        },
+        {
+          "time": 10668.4,
+          "pose": "pilot-blink:47"
+        },
+        {
+          "time": 10735,
+          "pose": "pilot-blink:48"
+        },
+        {
+          "time": 10801.6,
+          "pose": "pilot-blink:49"
+        },
+        {
+          "time": 10868.2,
+          "pose": "pilot-blink:50"
+        },
+        {
+          "time": 10934.800000000001,
+          "pose": "pilot-blink:51"
+        },
+        {
+          "time": 11001.4,
+          "pose": "pilot-blink:52"
+        },
+        {
+          "time": 11068,
+          "pose": "pilot-blink:53"
+        },
+        {
+          "time": 11134.6,
+          "pose": "pilot-blink:54"
+        },
+        {
+          "time": 11201.2,
+          "pose": "pilot-blink:55"
+        },
+        {
+          "time": 11267.800000000001,
+          "pose": "pilot-blink:56"
+        },
+        {
+          "time": 11334.4,
+          "pose": "pilot-blink:57"
+        },
+        {
+          "time": 11401,
+          "pose": "pilot-blink:58"
+        },
+        {
+          "time": 11467.6,
+          "pose": "pilot-blink:59"
+        },
+        {
+          "time": 11534.2,
+          "pose": "pilot-blink:60"
+        },
+        {
+          "time": 11600.8,
+          "pose": "pilot-blink:61"
+        },
+        {
+          "time": 11667.300000000001,
+          "pose": "pilot-blink:62"
+        },
+        {
+          "time": 11733.9,
+          "pose": "pilot-blink:63"
+        },
+        {
+          "time": 11800.5,
+          "pose": "pilot-blink:64"
+        },
+        {
+          "time": 11867.2,
+          "pose": "pilot-blink:65"
+        },
+        {
+          "time": 11933.7,
+          "pose": "pilot-blink:66"
+        },
+        {
+          "time": 11967,
+          "pose": "pilot-blink:0"
+        }
+      ]
+    },
+    {
+      "rate": 0.5,
+      "loops": 1,
+      "maxPaintGap": 3.7000000000007276,
+      "stopTime": 4000.5999999999995,
+      "changes": [
+        {
+          "time": 0,
+          "pose": "pilot-blink:0"
+        },
+        {
+          "time": 68.20000000000005,
+          "pose": "pilot-blink:1"
+        },
+        {
+          "time": 134.85000000000014,
+          "pose": "pilot-blink:2"
+        },
+        {
+          "time": 201.45000000000036,
+          "pose": "pilot-blink:3"
+        },
+        {
+          "time": 267.9999999999998,
+          "pose": "pilot-blink:4"
+        },
+        {
+          "time": 334.64999999999986,
+          "pose": "pilot-blink:5"
+        },
+        {
+          "time": 401.2000000000002,
+          "pose": "pilot-blink:6"
+        },
+        {
+          "time": 467.8500000000003,
+          "pose": "pilot-blink:7"
+        },
+        {
+          "time": 534.3999999999997,
+          "pose": "pilot-blink:8"
+        },
+        {
+          "time": 601,
+          "pose": "pilot-blink:9"
+        },
+        {
+          "time": 667.6000000000001,
+          "pose": "pilot-blink:10"
+        },
+        {
+          "time": 734.1999999999995,
+          "pose": "pilot-blink:11"
+        },
+        {
+          "time": 800.7999999999997,
+          "pose": "pilot-blink:12"
+        },
+        {
+          "time": 867.3499999999992,
+          "pose": "pilot-blink:13"
+        },
+        {
+          "time": 934.0000000000001,
+          "pose": "pilot-blink:14"
+        },
+        {
+          "time": 1000.5499999999996,
+          "pose": "pilot-blink:15"
+        },
+        {
+          "time": 1067.1500000000008,
+          "pose": "pilot-blink:16"
+        },
+        {
+          "time": 1133.8,
+          "pose": "pilot-blink:17"
+        },
+        {
+          "time": 1200.3499999999995,
+          "pose": "pilot-blink:18"
+        },
+        {
+          "time": 1233.6499999999999,
+          "pose": "pilot-blink:19"
+        },
+        {
+          "time": 1266.9500000000005,
+          "pose": "pilot-blink:20"
+        },
+        {
+          "time": 1300.2499999999993,
+          "pose": "pilot-blink:21"
+        },
+        {
+          "time": 1333.5499999999997,
+          "pose": "pilot-blink:22"
+        },
+        {
+          "time": 1366.8000000000004,
+          "pose": "pilot-blink:23"
+        },
+        {
+          "time": 1400.1499999999992,
+          "pose": "pilot-blink:24"
+        },
+        {
+          "time": 1433.3999999999999,
+          "pose": "pilot-blink:25"
+        },
+        {
+          "time": 1466.7500000000002,
+          "pose": "pilot-blink:26"
+        },
+        {
+          "time": 1501.7000000000005,
+          "pose": "pilot-blink:27"
+        },
+        {
+          "time": 1534.9999999999993,
+          "pose": "pilot-blink:28"
+        },
+        {
+          "time": 1568.2999999999997,
+          "pose": "pilot-blink:29"
+        },
+        {
+          "time": 1601.6000000000004,
+          "pose": "pilot-blink:30"
+        },
+        {
+          "time": 1634.8499999999992,
+          "pose": "pilot-blink:31"
+        },
+        {
+          "time": 1668.1499999999999,
+          "pose": "pilot-blink:32"
+        },
+        {
+          "time": 1734.749999999999,
+          "pose": "pilot-blink:33"
+        },
+        {
+          "time": 1801.3500000000001,
+          "pose": "pilot-blink:34"
+        },
+        {
+          "time": 1867.9499999999996,
+          "pose": "pilot-blink:35"
+        },
+        {
+          "time": 1934.5500000000006,
+          "pose": "pilot-blink:36"
+        },
+        {
+          "time": 2001.15,
+          "pose": "pilot-blink:37"
+        },
+        {
+          "time": 2067.749999999999,
+          "pose": "pilot-blink:38"
+        },
+        {
+          "time": 2134.3500000000004,
+          "pose": "pilot-blink:39"
+        },
+        {
+          "time": 2200.95,
+          "pose": "pilot-blink:40"
+        },
+        {
+          "time": 2267.499999999999,
+          "pose": "pilot-blink:41"
+        },
+        {
+          "time": 2334.1000000000004,
+          "pose": "pilot-blink:42"
+        },
+        {
+          "time": 2400.7499999999995,
+          "pose": "pilot-blink:43"
+        },
+        {
+          "time": 2467.350000000001,
+          "pose": "pilot-blink:44"
+        },
+        {
+          "time": 2533.9,
+          "pose": "pilot-blink:45"
+        },
+        {
+          "time": 2600.4999999999995,
+          "pose": "pilot-blink:46"
+        },
+        {
+          "time": 2667.1000000000004,
+          "pose": "pilot-blink:47"
+        },
+        {
+          "time": 2733.65,
+          "pose": "pilot-blink:48"
+        },
+        {
+          "time": 2800.249999999999,
+          "pose": "pilot-blink:49"
+        },
+        {
+          "time": 2866.8500000000004,
+          "pose": "pilot-blink:50"
+        },
+        {
+          "time": 2933.45,
+          "pose": "pilot-blink:51"
+        },
+        {
+          "time": 3000.100000000001,
+          "pose": "pilot-blink:52"
+        },
+        {
+          "time": 3068.35,
+          "pose": "pilot-blink:53"
+        },
+        {
+          "time": 3134.899999999999,
+          "pose": "pilot-blink:54"
+        },
+        {
+          "time": 3201.5000000000005,
+          "pose": "pilot-blink:55"
+        },
+        {
+          "time": 3268.0499999999997,
+          "pose": "pilot-blink:56"
+        },
+        {
+          "time": 3334.650000000001,
+          "pose": "pilot-blink:57"
+        },
+        {
+          "time": 3401.3,
+          "pose": "pilot-blink:58"
+        },
+        {
+          "time": 3467.899999999999,
+          "pose": "pilot-blink:59"
+        },
+        {
+          "time": 3534.4500000000007,
+          "pose": "pilot-blink:60"
+        },
+        {
+          "time": 3601.1,
+          "pose": "pilot-blink:61"
+        },
+        {
+          "time": 3667.699999999999,
+          "pose": "pilot-blink:62"
+        },
+        {
+          "time": 3734.2500000000005,
+          "pose": "pilot-blink:63"
+        },
+        {
+          "time": 3800.8499999999995,
+          "pose": "pilot-blink:64"
+        },
+        {
+          "time": 3867.5000000000005,
+          "pose": "pilot-blink:65"
+        },
+        {
+          "time": 3934.05,
+          "pose": "pilot-blink:66"
+        },
+        {
+          "time": 3967.4000000000005,
+          "pose": "pilot-blink:0"
+        }
+      ]
+    },
+    {
+      "action": "nod",
+      "rate": 1,
+      "duration": 3041.6666666666665,
+      "maxPaintGap": 3.7000000000043656,
+      "changes": [
+        {
+          "time": 0,
+          "pose": "pilot-blink:0"
+        },
+        {
+          "time": 43.2000000000059,
+          "pose": "kling-nod:1"
+        },
+        {
+          "time": 86.50000000000091,
+          "pose": "kling-nod:2"
+        },
+        {
+          "time": 126.69999999999959,
+          "pose": "kling-nod:3"
+        },
+        {
+          "time": 169.9000000000055,
+          "pose": "kling-nod:4"
+        },
+        {
+          "time": 209.80000000000132,
+          "pose": "kling-nod:5"
+        },
+        {
+          "time": 253.0000000000001,
+          "pose": "kling-nod:6"
+        },
+        {
+          "time": 292.99999999999926,
+          "pose": "kling-nod:7"
+        },
+        {
+          "time": 336.4000000000047,
+          "pose": "kling-nod:8"
+        },
+        {
+          "time": 376.2000000000043,
+          "pose": "kling-nod:9"
+        },
+        {
+          "time": 419.4999999999993,
+          "pose": "kling-nod:10"
+        },
+        {
+          "time": 459.50000000000557,
+          "pose": "kling-nod:11"
+        },
+        {
+          "time": 502.9000000000039,
+          "pose": "kling-nod:12"
+        },
+        {
+          "time": 542.900000000003,
+          "pose": "kling-nod:13"
+        },
+        {
+          "time": 586.0000000000057,
+          "pose": "kling-nod:14"
+        },
+        {
+          "time": 626.0000000000048,
+          "pose": "kling-nod:15"
+        },
+        {
+          "time": 669.2999999999997,
+          "pose": "kling-nod:16"
+        },
+        {
+          "time": 709.2000000000028,
+          "pose": "kling-nod:17"
+        },
+        {
+          "time": 752.600000000001,
+          "pose": "kling-nod:18"
+        },
+        {
+          "time": 792.500000000004,
+          "pose": "kling-nod:19"
+        },
+        {
+          "time": 835.799999999999,
+          "pose": "kling-nod:20"
+        },
+        {
+          "time": 875.7000000000019,
+          "pose": "kling-nod:21"
+        },
+        {
+          "time": 918.9000000000008,
+          "pose": "kling-nod:22"
+        },
+        {
+          "time": 959.0000000000032,
+          "pose": "kling-nod:23"
+        },
+        {
+          "time": 1002.3000000000053,
+          "pose": "kling-nod:24"
+        },
+        {
+          "time": 1042.100000000005,
+          "pose": "kling-nod:25"
+        },
+        {
+          "time": 1085.5000000000032,
+          "pose": "kling-nod:26"
+        },
+        {
+          "time": 1125.3999999999992,
+          "pose": "kling-nod:27"
+        },
+        {
+          "time": 1168.9000000000008,
+          "pose": "kling-nod:28"
+        },
+        {
+          "time": 1208.600000000004,
+          "pose": "kling-nod:29"
+        },
+        {
+          "time": 1252.0000000000025,
+          "pose": "kling-nod:30"
+        },
+        {
+          "time": 1292.0000000000016,
+          "pose": "kling-nod:31"
+        },
+        {
+          "time": 1335.2000000000003,
+          "pose": "kling-nod:32"
+        },
+        {
+          "time": 1375.1999999999996,
+          "pose": "kling-nod:33"
+        },
+        {
+          "time": 1418.4000000000055,
+          "pose": "kling-nod:34"
+        },
+        {
+          "time": 1458.500000000001,
+          "pose": "kling-nod:35"
+        },
+        {
+          "time": 1501.6000000000033,
+          "pose": "kling-nod:36"
+        },
+        {
+          "time": 1545.0000000000018,
+          "pose": "kling-nod:37"
+        },
+        {
+          "time": 1584.9000000000046,
+          "pose": "kling-nod:38"
+        },
+        {
+          "time": 1628.1999999999996,
+          "pose": "kling-nod:39"
+        },
+        {
+          "time": 1668.300000000002,
+          "pose": "kling-nod:40"
+        },
+        {
+          "time": 1711.500000000001,
+          "pose": "kling-nod:41"
+        },
+        {
+          "time": 1751.5,
+          "pose": "kling-nod:42"
+        },
+        {
+          "time": 1794.700000000006,
+          "pose": "kling-nod:43"
+        },
+        {
+          "time": 1834.8000000000013,
+          "pose": "kling-nod:44"
+        },
+        {
+          "time": 1878,
+          "pose": "kling-nod:45"
+        },
+        {
+          "time": 1917.900000000003,
+          "pose": "kling-nod:46"
+        },
+        {
+          "time": 1961.2000000000053,
+          "pose": "kling-nod:47"
+        },
+        {
+          "time": 2001.2000000000044,
+          "pose": "kling-nod:48"
+        },
+        {
+          "time": 2044.4999999999993,
+          "pose": "kling-nod:49"
+        },
+        {
+          "time": 2084.4000000000024,
+          "pose": "kling-nod:50"
+        },
+        {
+          "time": 2127.8000000000006,
+          "pose": "kling-nod:51"
+        },
+        {
+          "time": 2167.7999999999997,
+          "pose": "kling-nod:52"
+        },
+        {
+          "time": 2210.9000000000024,
+          "pose": "kling-nod:53"
+        },
+        {
+          "time": 2250.9000000000015,
+          "pose": "kling-nod:54"
+        },
+        {
+          "time": 2294.1000000000004,
+          "pose": "kling-nod:55"
+        },
+        {
+          "time": 2334.0999999999995,
+          "pose": "kling-nod:56"
+        },
+        {
+          "time": 2377.4000000000015,
+          "pose": "kling-nod:57"
+        },
+        {
+          "time": 2417.4000000000005,
+          "pose": "kling-nod:58"
+        },
+        {
+          "time": 2460.7000000000025,
+          "pose": "kling-nod:59"
+        },
+        {
+          "time": 2500.600000000006,
+          "pose": "kling-nod:60"
+        },
+        {
+          "time": 2544.000000000004,
+          "pose": "kling-nod:61"
+        },
+        {
+          "time": 2584.000000000003,
+          "pose": "kling-nod:62"
+        },
+        {
+          "time": 2627.100000000006,
+          "pose": "kling-nod:63"
+        },
+        {
+          "time": 2667.100000000005,
+          "pose": "kling-nod:64"
+        },
+        {
+          "time": 2710.500000000003,
+          "pose": "kling-nod:65"
+        },
+        {
+          "time": 2750.300000000003,
+          "pose": "kling-nod:66"
+        },
+        {
+          "time": 2793.700000000001,
+          "pose": "kling-nod:67"
+        },
+        {
+          "time": 2833.8999999999996,
+          "pose": "kling-nod:68"
+        },
+        {
+          "time": 2877.0000000000023,
+          "pose": "kling-nod:69"
+        },
+        {
+          "time": 2916.800000000002,
+          "pose": "kling-nod:70"
+        },
+        {
+          "time": 2960.100000000004,
+          "pose": "kling-nod:71"
+        },
+        {
+          "time": 3000.100000000003,
+          "pose": "pilot-blink:0"
+        },
+        {
+          "time": 0,
+          "pose": "pilot-blink:1"
+        },
+        {
+          "time": 0,
+          "pose": "pilot-blink:2"
+        }
+      ]
+    },
+    {
+      "action": "thinking",
+      "rate": 1,
+      "duration": 3041.6666666666665,
+      "maxPaintGap": 3.6000000000058208,
+      "changes": [
+        {
+          "time": 0,
+          "pose": "pilot-blink:0"
+        },
+        {
+          "time": 43.300000000002115,
+          "pose": "kling-thinking:1"
+        },
+        {
+          "time": 86.60000000000423,
+          "pose": "kling-thinking:2"
+        },
+        {
+          "time": 126.50000000000006,
+          "pose": "kling-thinking:3"
+        },
+        {
+          "time": 169.89999999999839,
+          "pose": "kling-thinking:4"
+        },
+        {
+          "time": 209.7000000000051,
+          "pose": "kling-thinking:5"
+        },
+        {
+          "time": 253.10000000000343,
+          "pose": "kling-thinking:6"
+        },
+        {
+          "time": 292.99999999999926,
+          "pose": "kling-thinking:7"
+        },
+        {
+          "time": 336.3000000000014,
+          "pose": "kling-thinking:8"
+        },
+        {
+          "time": 376.100000000001,
+          "pose": "kling-thinking:9"
+        },
+        {
+          "time": 419.4999999999993,
+          "pose": "kling-thinking:10"
+        },
+        {
+          "time": 459.40000000000225,
+          "pose": "kling-thinking:11"
+        },
+        {
+          "time": 502.8000000000006,
+          "pose": "kling-thinking:12"
+        },
+        {
+          "time": 542.7000000000035,
+          "pose": "kling-thinking:13"
+        },
+        {
+          "time": 585.9999999999985,
+          "pose": "kling-thinking:14"
+        },
+        {
+          "time": 626.100000000001,
+          "pose": "kling-thinking:15"
+        },
+        {
+          "time": 669.400000000003,
+          "pose": "kling-thinking:16"
+        },
+        {
+          "time": 709.2000000000028,
+          "pose": "kling-thinking:17"
+        },
+        {
+          "time": 752.5000000000048,
+          "pose": "kling-thinking:18"
+        },
+        {
+          "time": 792.500000000004,
+          "pose": "kling-thinking:19"
+        },
+        {
+          "time": 835.799999999999,
+          "pose": "kling-thinking:20"
+        },
+        {
+          "time": 875.9000000000015,
+          "pose": "kling-thinking:21"
+        },
+        {
+          "time": 919.0000000000041,
+          "pose": "kling-thinking:22"
+        },
+        {
+          "time": 958.8000000000036,
+          "pose": "kling-thinking:23"
+        },
+        {
+          "time": 1002.3000000000053,
+          "pose": "kling-thinking:24"
+        },
+        {
+          "time": 1042.3000000000045,
+          "pose": "kling-thinking:25"
+        },
+        {
+          "time": 1085.5000000000032,
+          "pose": "kling-thinking:26"
+        },
+        {
+          "time": 1125.5999999999985,
+          "pose": "kling-thinking:27"
+        },
+        {
+          "time": 1168.600000000005,
+          "pose": "kling-thinking:28"
+        },
+        {
+          "time": 1208.7000000000003,
+          "pose": "kling-thinking:29"
+        },
+        {
+          "time": 1252.0000000000025,
+          "pose": "kling-thinking:30"
+        },
+        {
+          "time": 1292.100000000005,
+          "pose": "kling-thinking:31"
+        },
+        {
+          "time": 1335.2000000000003,
+          "pose": "kling-thinking:32"
+        },
+        {
+          "time": 1375.1999999999996,
+          "pose": "kling-thinking:33"
+        },
+        {
+          "time": 1418.600000000005,
+          "pose": "kling-thinking:34"
+        },
+        {
+          "time": 1458.4000000000046,
+          "pose": "kling-thinking:35"
+        },
+        {
+          "time": 1501.6999999999996,
+          "pose": "kling-thinking:36"
+        },
+        {
+          "time": 1541.6999999999987,
+          "pose": "kling-thinking:37"
+        },
+        {
+          "time": 1584.9000000000046,
+          "pose": "kling-thinking:38"
+        },
+        {
+          "time": 1628.1999999999996,
+          "pose": "kling-thinking:39"
+        },
+        {
+          "time": 1668.199999999999,
+          "pose": "kling-thinking:40"
+        },
+        {
+          "time": 1711.500000000001,
+          "pose": "kling-thinking:41"
+        },
+        {
+          "time": 1751.4000000000037,
+          "pose": "kling-thinking:42"
+        },
+        {
+          "time": 1794.699999999999,
+          "pose": "kling-thinking:43"
+        },
+        {
+          "time": 1834.8000000000013,
+          "pose": "kling-thinking:44"
+        },
+        {
+          "time": 1878,
+          "pose": "kling-thinking:45"
+        },
+        {
+          "time": 1917.900000000003,
+          "pose": "kling-thinking:46"
+        },
+        {
+          "time": 1961.1000000000017,
+          "pose": "kling-thinking:47"
+        },
+        {
+          "time": 2001.3000000000006,
+          "pose": "kling-thinking:48"
+        },
+        {
+          "time": 2044.4999999999993,
+          "pose": "kling-thinking:49"
+        },
+        {
+          "time": 2084.4000000000024,
+          "pose": "kling-thinking:50"
+        },
+        {
+          "time": 2127.7000000000044,
+          "pose": "kling-thinking:51"
+        },
+        {
+          "time": 2167.6000000000004,
+          "pose": "kling-thinking:52"
+        },
+        {
+          "time": 2210.9000000000024,
+          "pose": "kling-thinking:53"
+        },
+        {
+          "time": 2250.9000000000015,
+          "pose": "kling-thinking:54"
+        },
+        {
+          "time": 2294.2000000000035,
+          "pose": "kling-thinking:55"
+        },
+        {
+          "time": 2334.0999999999995,
+          "pose": "kling-thinking:56"
+        },
+        {
+          "time": 2377.500000000005,
+          "pose": "kling-thinking:57"
+        },
+        {
+          "time": 2417.500000000004,
+          "pose": "kling-thinking:58"
+        },
+        {
+          "time": 2460.7000000000025,
+          "pose": "kling-thinking:59"
+        },
+        {
+          "time": 2500.5999999999985,
+          "pose": "kling-thinking:60"
+        },
+        {
+          "time": 2543.9000000000005,
+          "pose": "kling-thinking:61"
+        },
+        {
+          "time": 2583.8999999999996,
+          "pose": "kling-thinking:62"
+        },
+        {
+          "time": 2627.0999999999985,
+          "pose": "kling-thinking:63"
+        },
+        {
+          "time": 2667.100000000005,
+          "pose": "kling-thinking:64"
+        },
+        {
+          "time": 2710.4,
+          "pose": "kling-thinking:65"
+        },
+        {
+          "time": 2750.300000000003,
+          "pose": "kling-thinking:66"
+        },
+        {
+          "time": 2793.700000000001,
+          "pose": "kling-thinking:67"
+        },
+        {
+          "time": 2833.500000000001,
+          "pose": "kling-thinking:68"
+        },
+        {
+          "time": 2876.800000000003,
+          "pose": "kling-thinking:69"
+        },
+        {
+          "time": 2916.9000000000055,
+          "pose": "kling-thinking:70"
+        },
+        {
+          "time": 2960.100000000004,
+          "pose": "kling-thinking:71"
+        },
+        {
+          "time": 3000.1999999999994,
+          "pose": "pilot-blink:0"
+        },
+        {
+          "time": 3086.600000000004,
+          "pose": "kling-thinking:1"
+        },
+        {
+          "time": 3126.6000000000035,
+          "pose": "kling-thinking:2"
+        },
+        {
+          "time": 3166.699999999999,
+          "pose": "kling-thinking:3"
+        }
+      ]
+    },
+    {
+      "action": "cheer",
+      "rate": 1,
+      "duration": 3041.6666666666665,
+      "maxPaintGap": 3.599999999998545,
+      "changes": [
+        {
+          "time": 0,
+          "pose": "pilot-blink:0"
+        },
+        {
+          "time": 43.29999999999501,
+          "pose": "kling-cheer:1"
+        },
+        {
+          "time": 86.50000000000091,
+          "pose": "kling-cheer:2"
+        },
+        {
+          "time": 126.39999999999674,
+          "pose": "kling-cheer:3"
+        },
+        {
+          "time": 169.79999999999507,
+          "pose": "kling-cheer:4"
+        },
+        {
+          "time": 209.699999999998,
+          "pose": "kling-cheer:5"
+        },
+        {
+          "time": 253.09999999999633,
+          "pose": "kling-cheer:6"
+        },
+        {
+          "time": 293.0999999999955,
+          "pose": "kling-cheer:7"
+        },
+        {
+          "time": 336.3000000000014,
+          "pose": "kling-cheer:8"
+        },
+        {
+          "time": 376.1999999999972,
+          "pose": "kling-cheer:9"
+        },
+        {
+          "time": 419.4999999999993,
+          "pose": "kling-cheer:10"
+        },
+        {
+          "time": 459.39999999999515,
+          "pose": "kling-cheer:11"
+        },
+        {
+          "time": 502.8000000000006,
+          "pose": "kling-cheer:12"
+        },
+        {
+          "time": 542.7999999999997,
+          "pose": "kling-cheer:13"
+        },
+        {
+          "time": 585.9999999999985,
+          "pose": "kling-cheer:14"
+        },
+        {
+          "time": 625.9000000000015,
+          "pose": "kling-cheer:15"
+        },
+        {
+          "time": 669.2999999999997,
+          "pose": "kling-cheer:16"
+        },
+        {
+          "time": 709.1999999999956,
+          "pose": "kling-cheer:17"
+        },
+        {
+          "time": 752.4999999999977,
+          "pose": "kling-cheer:18"
+        },
+        {
+          "time": 792.4000000000007,
+          "pose": "kling-cheer:19"
+        },
+        {
+          "time": 835.8999999999952,
+          "pose": "kling-cheer:20"
+        },
+        {
+          "time": 875.6999999999948,
+          "pose": "kling-cheer:21"
+        },
+        {
+          "time": 919.1000000000003,
+          "pose": "kling-cheer:22"
+        },
+        {
+          "time": 958.7999999999965,
+          "pose": "kling-cheer:23"
+        },
+        {
+          "time": 1002.2999999999981,
+          "pose": "kling-cheer:24"
+        },
+        {
+          "time": 1042.2999999999975,
+          "pose": "kling-cheer:25"
+        },
+        {
+          "time": 1085.3999999999999,
+          "pose": "kling-cheer:26"
+        },
+        {
+          "time": 1125.3999999999992,
+          "pose": "kling-cheer:27"
+        },
+        {
+          "time": 1168.7000000000012,
+          "pose": "kling-cheer:28"
+        },
+        {
+          "time": 1208.7000000000003,
+          "pose": "kling-cheer:29"
+        },
+        {
+          "time": 1251.9999999999955,
+          "pose": "kling-cheer:30"
+        },
+        {
+          "time": 1291.8999999999983,
+          "pose": "kling-cheer:31"
+        },
+        {
+          "time": 1335.0999999999972,
+          "pose": "kling-cheer:32"
+        },
+        {
+          "time": 1375,
+          "pose": "kling-cheer:33"
+        },
+        {
+          "time": 1418.5999999999979,
+          "pose": "kling-cheer:34"
+        },
+        {
+          "time": 1461.7999999999965,
+          "pose": "kling-cheer:35"
+        },
+        {
+          "time": 1501.6999999999996,
+          "pose": "kling-cheer:36"
+        },
+        {
+          "time": 1544.8999999999983,
+          "pose": "kling-cheer:37"
+        },
+        {
+          "time": 1584.8000000000013,
+          "pose": "kling-cheer:38"
+        },
+        {
+          "time": 1628.2999999999959,
+          "pose": "kling-cheer:39"
+        },
+        {
+          "time": 1668.0999999999954,
+          "pose": "kling-cheer:40"
+        },
+        {
+          "time": 1711.5999999999972,
+          "pose": "kling-cheer:41"
+        },
+        {
+          "time": 1751.3000000000006,
+          "pose": "kling-cheer:42"
+        },
+        {
+          "time": 1794.5999999999956,
+          "pose": "kling-cheer:43"
+        },
+        {
+          "time": 1834.699999999998,
+          "pose": "kling-cheer:44"
+        },
+        {
+          "time": 1877.899999999997,
+          "pose": "kling-cheer:45"
+        },
+        {
+          "time": 1917.899999999996,
+          "pose": "kling-cheer:46"
+        },
+        {
+          "time": 1961.0999999999947,
+          "pose": "kling-cheer:47"
+        },
+        {
+          "time": 2001.100000000001,
+          "pose": "kling-cheer:48"
+        },
+        {
+          "time": 2044.4999999999993,
+          "pose": "kling-cheer:49"
+        },
+        {
+          "time": 2084.299999999999,
+          "pose": "kling-cheer:50"
+        },
+        {
+          "time": 2127.6000000000013,
+          "pose": "kling-cheer:51"
+        },
+        {
+          "time": 2167.499999999997,
+          "pose": "kling-cheer:52"
+        },
+        {
+          "time": 2210.799999999999,
+          "pose": "kling-cheer:53"
+        },
+        {
+          "time": 2250.7999999999984,
+          "pose": "kling-cheer:54"
+        },
+        {
+          "time": 2294.1000000000004,
+          "pose": "kling-cheer:55"
+        },
+        {
+          "time": 2333.999999999996,
+          "pose": "kling-cheer:56"
+        },
+        {
+          "time": 2377.2999999999984,
+          "pose": "kling-cheer:57"
+        },
+        {
+          "time": 2417.2999999999975,
+          "pose": "kling-cheer:58"
+        },
+        {
+          "time": 2460.4999999999964,
+          "pose": "kling-cheer:59"
+        },
+        {
+          "time": 2500.699999999995,
+          "pose": "kling-cheer:60"
+        },
+        {
+          "time": 2543.999999999997,
+          "pose": "kling-cheer:61"
+        },
+        {
+          "time": 2583.7999999999965,
+          "pose": "kling-cheer:62"
+        },
+        {
+          "time": 2627.199999999995,
+          "pose": "kling-cheer:63"
+        },
+        {
+          "time": 2667.200000000001,
+          "pose": "kling-cheer:64"
+        },
+        {
+          "time": 2710.4,
+          "pose": "kling-cheer:65"
+        },
+        {
+          "time": 2750.399999999999,
+          "pose": "kling-cheer:66"
+        },
+        {
+          "time": 2793.500000000002,
+          "pose": "kling-cheer:67"
+        },
+        {
+          "time": 2833.500000000001,
+          "pose": "kling-cheer:68"
+        },
+        {
+          "time": 2876.899999999999,
+          "pose": "kling-cheer:69"
+        },
+        {
+          "time": 2916.8999999999983,
+          "pose": "kling-cheer:70"
+        },
+        {
+          "time": 2960.000000000001,
+          "pose": "kling-cheer:71"
+        },
+        {
+          "time": 3000,
+          "pose": "pilot-blink:0"
+        },
+        {
+          "time": 0,
+          "pose": "pilot-blink:1"
+        },
+        {
+          "time": 0,
+          "pose": "pilot-blink:2"
+        }
+      ]
+    },
+    {
+      "action": "yawn",
+      "rate": 1,
+      "duration": 4041.666666666667,
+      "maxPaintGap": 3.7000000000043656,
+      "changes": [
+        {
+          "time": 0,
+          "pose": "pilot-blink:0"
+        },
+        {
+          "time": 43.199999999998795,
+          "pose": "kling-yawn:1"
+        },
+        {
+          "time": 86.59999999999712,
+          "pose": "kling-yawn:2"
+        },
+        {
+          "time": 126.69999999999959,
+          "pose": "kling-yawn:3"
+        },
+        {
+          "time": 169.89999999999839,
+          "pose": "kling-yawn:4"
+        },
+        {
+          "time": 209.80000000000132,
+          "pose": "kling-yawn:5"
+        },
+        {
+          "time": 253.09999999999633,
+          "pose": "kling-yawn:6"
+        },
+        {
+          "time": 292.90000000000305,
+          "pose": "kling-yawn:7"
+        },
+        {
+          "time": 336.3000000000014,
+          "pose": "kling-yawn:8"
+        },
+        {
+          "time": 376.1999999999972,
+          "pose": "kling-yawn:9"
+        },
+        {
+          "time": 419.4999999999993,
+          "pose": "kling-yawn:10"
+        },
+        {
+          "time": 459.40000000000225,
+          "pose": "kling-yawn:11"
+        },
+        {
+          "time": 502.8999999999968,
+          "pose": "kling-yawn:12"
+        },
+        {
+          "time": 542.6999999999964,
+          "pose": "kling-yawn:13"
+        },
+        {
+          "time": 585.9999999999985,
+          "pose": "kling-yawn:14"
+        },
+        {
+          "time": 625.9000000000015,
+          "pose": "kling-yawn:15"
+        },
+        {
+          "time": 669.2999999999997,
+          "pose": "kling-yawn:16"
+        },
+        {
+          "time": 709.2999999999989,
+          "pose": "kling-yawn:17"
+        },
+        {
+          "time": 752.4999999999977,
+          "pose": "kling-yawn:18"
+        },
+        {
+          "time": 792.4000000000007,
+          "pose": "kling-yawn:19"
+        },
+        {
+          "time": 835.799999999999,
+          "pose": "kling-yawn:20"
+        },
+        {
+          "time": 875.7000000000019,
+          "pose": "kling-yawn:21"
+        },
+        {
+          "time": 918.9999999999969,
+          "pose": "kling-yawn:22"
+        },
+        {
+          "time": 959.0999999999995,
+          "pose": "kling-yawn:23"
+        },
+        {
+          "time": 1002.2999999999981,
+          "pose": "kling-yawn:24"
+        },
+        {
+          "time": 1042.0999999999979,
+          "pose": "kling-yawn:25"
+        },
+        {
+          "time": 1085.5999999999995,
+          "pose": "kling-yawn:26"
+        },
+        {
+          "time": 1125.3999999999992,
+          "pose": "kling-yawn:27"
+        },
+        {
+          "time": 1168.7000000000012,
+          "pose": "kling-yawn:28"
+        },
+        {
+          "time": 1208.599999999997,
+          "pose": "kling-yawn:29"
+        },
+        {
+          "time": 1251.8999999999992,
+          "pose": "kling-yawn:30"
+        },
+        {
+          "time": 1291.800000000002,
+          "pose": "kling-yawn:31"
+        },
+        {
+          "time": 1335.0999999999972,
+          "pose": "kling-yawn:32"
+        },
+        {
+          "time": 1375.0999999999963,
+          "pose": "kling-yawn:33"
+        },
+        {
+          "time": 1418.3999999999983,
+          "pose": "kling-yawn:34"
+        },
+        {
+          "time": 1461.7000000000005,
+          "pose": "kling-yawn:35"
+        },
+        {
+          "time": 1501.6999999999996,
+          "pose": "kling-yawn:36"
+        },
+        {
+          "time": 1544.8999999999983,
+          "pose": "kling-yawn:37"
+        },
+        {
+          "time": 1584.8999999999976,
+          "pose": "kling-yawn:38"
+        },
+        {
+          "time": 1628.1999999999996,
+          "pose": "kling-yawn:39"
+        },
+        {
+          "time": 1668.1000000000026,
+          "pose": "kling-yawn:40"
+        },
+        {
+          "time": 1711.500000000001,
+          "pose": "kling-yawn:41"
+        },
+        {
+          "time": 1751.3000000000006,
+          "pose": "kling-yawn:42"
+        },
+        {
+          "time": 1794.8000000000022,
+          "pose": "kling-yawn:43"
+        },
+        {
+          "time": 1834.6000000000017,
+          "pose": "kling-yawn:44"
+        },
+        {
+          "time": 1878,
+          "pose": "kling-yawn:45"
+        },
+        {
+          "time": 1917.900000000003,
+          "pose": "kling-yawn:46"
+        },
+        {
+          "time": 1961.199999999998,
+          "pose": "kling-yawn:47"
+        },
+        {
+          "time": 2001.199999999997,
+          "pose": "kling-yawn:48"
+        },
+        {
+          "time": 2044.4999999999993,
+          "pose": "kling-yawn:49"
+        },
+        {
+          "time": 2084.299999999999,
+          "pose": "kling-yawn:50"
+        },
+        {
+          "time": 2127.6000000000013,
+          "pose": "kling-yawn:51"
+        },
+        {
+          "time": 2167.6000000000004,
+          "pose": "kling-yawn:52"
+        },
+        {
+          "time": 2210.799999999999,
+          "pose": "kling-yawn:53"
+        },
+        {
+          "time": 2250.7999999999984,
+          "pose": "kling-yawn:54"
+        },
+        {
+          "time": 2294.1000000000004,
+          "pose": "kling-yawn:55"
+        },
+        {
+          "time": 2334.0999999999995,
+          "pose": "kling-yawn:56"
+        },
+        {
+          "time": 2377.4000000000015,
+          "pose": "kling-yawn:57"
+        },
+        {
+          "time": 2417.2999999999975,
+          "pose": "kling-yawn:58"
+        },
+        {
+          "time": 2460.5999999999995,
+          "pose": "kling-yawn:59"
+        },
+        {
+          "time": 2500.5999999999985,
+          "pose": "kling-yawn:60"
+        },
+        {
+          "time": 2543.9000000000005,
+          "pose": "kling-yawn:61"
+        },
+        {
+          "time": 2583.7999999999965,
+          "pose": "kling-yawn:62"
+        },
+        {
+          "time": 2627.2999999999984,
+          "pose": "kling-yawn:63"
+        },
+        {
+          "time": 2667.0999999999976,
+          "pose": "kling-yawn:64"
+        },
+        {
+          "time": 2710.4,
+          "pose": "kling-yawn:65"
+        },
+        {
+          "time": 2750.399999999999,
+          "pose": "kling-yawn:66"
+        },
+        {
+          "time": 2793.5999999999976,
+          "pose": "kling-yawn:67"
+        },
+        {
+          "time": 2833.500000000001,
+          "pose": "kling-yawn:68"
+        },
+        {
+          "time": 2876.800000000003,
+          "pose": "kling-yawn:69"
+        },
+        {
+          "time": 2916.800000000002,
+          "pose": "kling-yawn:70"
+        },
+        {
+          "time": 2960.2000000000003,
+          "pose": "kling-yawn:71"
+        },
+        {
+          "time": 3000.0999999999963,
+          "pose": "kling-yawn:72"
+        },
+        {
+          "time": 3043.3999999999983,
+          "pose": "kling-yawn:73"
+        },
+        {
+          "time": 3086.599999999997,
+          "pose": "kling-yawn:74"
+        },
+        {
+          "time": 3126.5999999999963,
+          "pose": "kling-yawn:75"
+        },
+        {
+          "time": 3169.8999999999983,
+          "pose": "kling-yawn:76"
+        },
+        {
+          "time": 3209.800000000001,
+          "pose": "kling-yawn:77"
+        },
+        {
+          "time": 3253.0999999999963,
+          "pose": "kling-yawn:78"
+        },
+        {
+          "time": 3292.999999999999,
+          "pose": "kling-yawn:79"
+        },
+        {
+          "time": 3336.399999999998,
+          "pose": "kling-yawn:80"
+        },
+        {
+          "time": 3376.199999999997,
+          "pose": "kling-yawn:81"
+        },
+        {
+          "time": 3419.6000000000026,
+          "pose": "kling-yawn:82"
+        },
+        {
+          "time": 3459.699999999998,
+          "pose": "kling-yawn:83"
+        },
+        {
+          "time": 3502.899999999997,
+          "pose": "kling-yawn:84"
+        },
+        {
+          "time": 3542.7999999999997,
+          "pose": "kling-yawn:85"
+        },
+        {
+          "time": 3585.9999999999986,
+          "pose": "kling-yawn:86"
+        },
+        {
+          "time": 3625.9999999999977,
+          "pose": "kling-yawn:87"
+        },
+        {
+          "time": 3669.4000000000033,
+          "pose": "kling-yawn:88"
+        },
+        {
+          "time": 3709.2000000000025,
+          "pose": "kling-yawn:89"
+        },
+        {
+          "time": 3752.4999999999977,
+          "pose": "kling-yawn:90"
+        },
+        {
+          "time": 3792.499999999997,
+          "pose": "kling-yawn:91"
+        },
+        {
+          "time": 3835.799999999999,
+          "pose": "kling-yawn:92"
+        },
+        {
+          "time": 3875.7999999999984,
+          "pose": "kling-yawn:93"
+        },
+        {
+          "time": 3918.999999999997,
+          "pose": "kling-yawn:94"
+        },
+        {
+          "time": 3959.000000000003,
+          "pose": "kling-yawn:95"
+        },
+        {
+          "time": 4002.200000000002,
+          "pose": "pilot-blink:0"
+        },
+        {
+          "time": 0,
+          "pose": "pilot-blink:1"
+        },
+        {
+          "time": 0,
+          "pose": "pilot-blink:2"
+        }
+      ]
+    }
+  ],
+  "results": [
+    {
+      "width": 1280,
+      "dpr": 1,
+      "poses": 578,
+      "sharedNeutral": true,
+      "persistentCanvas": true,
+      "maxBootMidpointDrift": 0.7000000000000028,
+      "fixedViewport": true,
+      "hiDpi": true,
+      "actualAssetHashesVerified": true,
+      "resourceSha256": {
+        "/assistant/chibi-bow-kling-v1.webp": "2a8a642f38c2817efa843d6a8ef79f9d359e4c7264c6ccfc0d27e05b4d64b9e2",
+        "/assistant/chibi-cheer-kling-v2.webp": "8c38503ab7384907b2c48dc6148c7f420eacad164fa708657b6c5fce63c0209d",
+        "/assistant/chibi-idle-blink-refined-v1.webp": "4c4af5f206d67366e76eeff7a57eecea37b43302564601e3051a04f7a68ceeb3",
+        "/assistant/chibi-nod-kling-v1.webp": "2fdbcdc2df0499e83c32acf0c0222b34af7394418a9898ec365ccc35704a4d5b",
+        "/assistant/chibi-thinking-kling-v1.webp": "a5932fe931aa143949fec5b21fb2721ead05cdb755605e667890e2456106c0e4",
+        "/assistant/chibi-wave-kling-v2.webp": "e155d3d9a592ec786731ec902f941ddc4a909b13f5a54035625358781e8af477",
+        "/assistant/chibi-yawn-kling-v1.webp": "3ebed631f489982397fd30c7a595ba37759ff9637993afe3a35c6b313749a651"
+      }
+    },
+    {
+      "width": 768,
+      "dpr": 1,
+      "poses": 578,
+      "sharedNeutral": true,
+      "persistentCanvas": true,
+      "maxBootMidpointDrift": 0.7000000000000028,
+      "fixedViewport": true,
+      "hiDpi": true,
+      "actualAssetHashesVerified": true,
+      "resourceSha256": {
+        "/assistant/chibi-bow-kling-v1.webp": "2a8a642f38c2817efa843d6a8ef79f9d359e4c7264c6ccfc0d27e05b4d64b9e2",
+        "/assistant/chibi-cheer-kling-v2.webp": "8c38503ab7384907b2c48dc6148c7f420eacad164fa708657b6c5fce63c0209d",
+        "/assistant/chibi-idle-blink-refined-v1.webp": "4c4af5f206d67366e76eeff7a57eecea37b43302564601e3051a04f7a68ceeb3",
+        "/assistant/chibi-nod-kling-v1.webp": "2fdbcdc2df0499e83c32acf0c0222b34af7394418a9898ec365ccc35704a4d5b",
+        "/assistant/chibi-thinking-kling-v1.webp": "a5932fe931aa143949fec5b21fb2721ead05cdb755605e667890e2456106c0e4",
+        "/assistant/chibi-wave-kling-v2.webp": "e155d3d9a592ec786731ec902f941ddc4a909b13f5a54035625358781e8af477",
+        "/assistant/chibi-yawn-kling-v1.webp": "3ebed631f489982397fd30c7a595ba37759ff9637993afe3a35c6b313749a651"
+      }
+    },
+    {
+      "width": 390,
+      "dpr": 2,
+      "poses": 578,
+      "sharedNeutral": true,
+      "persistentCanvas": true,
+      "maxBootMidpointDrift": 0.9333333333333371,
+      "fixedViewport": true,
+      "hiDpi": true,
+      "actualAssetHashesVerified": true,
+      "resourceSha256": {
+        "/assistant/chibi-bow-kling-v1.webp": "2a8a642f38c2817efa843d6a8ef79f9d359e4c7264c6ccfc0d27e05b4d64b9e2",
+        "/assistant/chibi-cheer-kling-v2.webp": "8c38503ab7384907b2c48dc6148c7f420eacad164fa708657b6c5fce63c0209d",
+        "/assistant/chibi-idle-blink-refined-v1.webp": "4c4af5f206d67366e76eeff7a57eecea37b43302564601e3051a04f7a68ceeb3",
+        "/assistant/chibi-nod-kling-v1.webp": "2fdbcdc2df0499e83c32acf0c0222b34af7394418a9898ec365ccc35704a4d5b",
+        "/assistant/chibi-thinking-kling-v1.webp": "a5932fe931aa143949fec5b21fb2721ead05cdb755605e667890e2456106c0e4",
+        "/assistant/chibi-wave-kling-v2.webp": "e155d3d9a592ec786731ec902f941ddc4a909b13f5a54035625358781e8af477",
+        "/assistant/chibi-yawn-kling-v1.webp": "3ebed631f489982397fd30c7a595ba37759ff9637993afe3a35c6b313749a651"
+      }
+    },
+    {
+      "width": 320,
+      "dpr": 2,
+      "poses": 578,
+      "sharedNeutral": true,
+      "persistentCanvas": true,
+      "maxBootMidpointDrift": 0.9333333333333371,
+      "fixedViewport": true,
+      "hiDpi": true,
+      "actualAssetHashesVerified": true,
+      "resourceSha256": {
+        "/assistant/chibi-bow-kling-v1.webp": "2a8a642f38c2817efa843d6a8ef79f9d359e4c7264c6ccfc0d27e05b4d64b9e2",
+        "/assistant/chibi-cheer-kling-v2.webp": "8c38503ab7384907b2c48dc6148c7f420eacad164fa708657b6c5fce63c0209d",
+        "/assistant/chibi-idle-blink-refined-v1.webp": "4c4af5f206d67366e76eeff7a57eecea37b43302564601e3051a04f7a68ceeb3",
+        "/assistant/chibi-nod-kling-v1.webp": "2fdbcdc2df0499e83c32acf0c0222b34af7394418a9898ec365ccc35704a4d5b",
+        "/assistant/chibi-thinking-kling-v1.webp": "a5932fe931aa143949fec5b21fb2721ead05cdb755605e667890e2456106c0e4",
+        "/assistant/chibi-wave-kling-v2.webp": "e155d3d9a592ec786731ec902f941ddc4a909b13f5a54035625358781e8af477",
+        "/assistant/chibi-yawn-kling-v1.webp": "3ebed631f489982397fd30c7a595ba37759ff9637993afe3a35c6b313749a651"
+      }
+    }
+  ]
+}

@@ -4,9 +4,9 @@ import {createRequire} from 'node:module';
 import {mkdir,writeFile,readFile} from 'node:fs/promises';
 import {createHash} from 'node:crypto';
 import {CHARACTER_ACTIONS} from '../src/lib/assistant/character.ts';
-import {CHARACTER_FRAME_VERSION,DRAWING_SEQUENCES,NEUTRAL_DRAWING,isPilotAction,drawingKey,drawingTimes,FRAME_BLEND_MS} from '../src/lib/assistant/frame-timeline.ts';
+import {CHARACTER_FRAME_VERSION,DRAWING_SEQUENCES,NEUTRAL_DRAWING,isPilotAction,drawingKey,drawingTimes,drawingDuration,FRAME_BLEND_MS} from '../src/lib/assistant/frame-timeline.ts';
 const base=process.env.TEST_BASE_URL || 'http://127.0.0.1:3220';
-const manifest=JSON.parse(await readFile('docs/assistant/kling-gestures-v2/manifest.json','utf8'));
+const manifest=JSON.parse(await readFile('docs/assistant/kling-actions-v2/manifest.json','utf8'));
 const blinkManifest=JSON.parse(await readFile('docs/assistant/blink-refinement-v1/candidate.json','utf8'));
 const assets=[...Object.values(manifest.assets),...Object.values(manifest.keptAssets)];
 const expectedHashes=new Map(assets.map(a=>[a.src,a.sha256]));
@@ -84,7 +84,19 @@ try{
    assert.deepEqual(seen,DRAWING_SEQUENCES[action].map(drawingKey));
    assert.equal((await seek(canvas,times.at(-1)+FRAME_BLEND_MS+1)).alphaHash,neutral.alphaHash,'Exact neutral ending required');
    assert.ok(Math.abs((await seek(canvas,times[1]+FRAME_BLEND_MS/2)).blend-(isPilotAction(action)?1:.5))<.001);
-   if(!CHARACTER_ACTIONS[action].loop){await canvas.evaluate(el=>el.getAnimations()[0].finish());await page.waitForFunction(()=>document.querySelector('dialog canvas')?.dataset.playing==='idle');}
+   if(width===1280&&['nod','thinking','cheer','yawn'].includes(action)){
+    // Continuous native-clock diagnostics supplement exact per-slot seeks.
+    // Delivery depends on hardware; do not equate authored FPS to every device.
+    const observed=await canvas.evaluate(async(el,{duration,action})=>{
+     const a=el.getAnimations()[0];a.currentTime=0;a.playbackRate=1;a.play();
+     const changes=[];let previous='',last=performance.now(),maxPaintGap=0;
+     await new Promise(resolve=>{const end=performance.now()+duration+150;function sample(now){maxPaintGap=Math.max(maxPaintGap,now-last);last=now;const pose=el.dataset.pose;if(pose!==previous){changes.push({time:Number(a.currentTime??0),pose});previous=pose;}if(now>=end){resolve();}else requestAnimationFrame(sample);}requestAnimationFrame(sample);});
+     return{action,rate:1,duration,maxPaintGap,changes};
+    },{duration:drawingDuration(action),action});
+    assert.ok(observed.changes.length>=DRAWING_SEQUENCES[action].length*.5,'Native clock did not meaningfully advance');
+    playback.push(observed);
+   }
+   if(!CHARACTER_ACTIONS[action].loop){await canvas.evaluate(el=>{if(el.dataset.playing!=='idle')el.getAnimations()[0].finish();});await page.waitForFunction(()=>document.querySelector('dialog canvas')?.dataset.playing==='idle');}
   }
   for(const action of ['wave','bow','yawn','nod'])await dialog.getByRole('button',{name:`播放${CHARACTER_ACTIONS[action].label}动作`}).click();
   await page.waitForSelector('dialog canvas[data-ready=true][data-loaded-action=nod]');assert.equal(await canvas.getAttribute('data-instance'),'persistent-canvas');

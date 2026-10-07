@@ -1,0 +1,51 @@
+{
+  "status": "VISUAL_REVIEW_PASSED_WITH_PROVIDER_VARIATIONS",
+  "assetScopeSha256": "30839f3339154ff39128474bc6bb0751970fa90f3dce91d97a96018cfff19d26",
+  "frameScopeSha256": "8dcd7850670619dee1bc1cd2618865cc1740464f52b6ffd41362dc37016b36a3",
+  "ownerAuthorization": "修正正后部署上线",
+  "reviewScope": "All 73/73/73/97 frames in complete sequential light/dark contact overviews; six native tile-size start/apex/recovery detail views per action on both backgrounds; native cheer palm source frame 30 before/after.",
+  "notClaimed": "Not independent human review, not a full-resolution manual examination of every pixel, not mathematically exact head rotation, not lossless RGB WebP, and not guaranteed every-frame delivery on physical phones.",
+  "sourceTreatment": {
+    "originalMp4AndDecodedPngsRetained": true,
+    "wholeFrame": true,
+    "separatedLimbCompositing": false,
+    "geometryWarping": false,
+    "interpolation": false,
+    "fixedCropAndScaleForAllFrames": true,
+    "nativeFps": 24,
+    "canonicalRestingEndpoints": true,
+    "aiOriginRetainedInAssetXmp": true
+  },
+  "paletteRepair": {
+    "scope": "Cheer fists only: 31 PNG frames with exact alpha and exact outside-mask pixels before encoding.",
+    "deltaAtFullStrength": [4, 25, 37],
+    "maskMethod": "Label neutral-bright components on the whole image before source-specific hand-side bbox filtering. Do not reuse waving hand coordinates or clip the face into a component ROI.",
+    "temporalRepair": "The first 24-frame correction candidate omitted some hands above y=365. It was not deployed. v2 includes the complete raised-hand region: both fists are corrected on every source frame 19 through 40.",
+    "alphaChanges": 0,
+    "geometryChanges": 0,
+    "outsideMaskPngChanges": 0,
+    "compressionDisclosure": "Quality-92 WebP may slightly change RGB outside the palette mask; each tile opaque-pixel RGB mean error is bounded to 3 levels and alpha is exact."
+  },
+  "actions": {
+    "nod": {"meaning": "温和点头、表示明白或确认", "durationMs": 3041.6666666666665, "note": "Shallow head-forward inclination with closed eyes and a small smile; distinct from the deeper already-released thanks bow. No head-only scaling or layer translation applied."},
+    "thinking": {"meaning": "指尖近下巴、查找记录或稍作思考", "durationMs": 3041.6666666666665, "note": "A short blink on recovery remains a provider variation. Hand/sleeve connections and the completed lowering phase are retained."},
+    "cheer": {"meaning": "双拳轻抬、开心鼓劲", "durationMs": 3041.6666666666665, "note": "Warm fist color no longer alternates to uncorrected white at the apex. Cheerful closed-eye curves are retained; they are not substituted for the separately refined idle blink."},
+    "yawn": {"meaning": "掩嘴打哈欠、轻松等待", "durationMs": 4041.6666666666665, "note": "Covered-mouth opening, eye closure and complete arm recovery remain from the full-figure source. No separate hand or mouth composite."}
+  },
+  "observations": {
+    "recognizableOriginalHairEyesHeadsetCoatAndCollarBadge": true,
+    "noObviousDetachedArmsOrAdditionalLimbsInReviewedOverview": true,
+    "noObviousHairOrBootClippingOrAdjacentSpriteLeak": true,
+    "smallSourceGeneratedExpressionAndClothVariationsRemain": true,
+    "runtimeAndActualResourceChecks": "Require a matching browser-local/report.json; this art record alone cannot authorize a different source or atlas."
+  },
+  "credits": {"additionalGenerations": 0, "additionalSpend": 0},
+  "reproduction": [
+    "Verify the source hashes and embedded ProduceIDs in the manifest against the retained original MP4s.",
+    "Prepare source-specific whole-frame black mattes; manually inspect light/dark edges before reuse on a different source.",
+    "Run correct-kling-cheer.py against the retained 20261007-b sample folder; output is immutable cheer-cutouts-color-v2.",
+    "Run package-kling-actions.mjs against the same folder. All action canvases share one crop, scale, gutters and sole anchor.",
+    "Review complete contact overviews plus critical native detail frames, then verify the exact manifest-scoped browser resources and every timeline slot.",
+    "Back up database, uploads, environment, Nginx and the current image before replacing only the application container."
+  ]
+}

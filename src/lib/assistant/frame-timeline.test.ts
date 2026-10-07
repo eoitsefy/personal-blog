@@ -19,7 +19,7 @@ test("selected whole-figure timelines share an exact original neutral, excluding
       if (pose.sheet === "yawn") assert.ok(pose.frame < 20, "Abrupt hand drop is replaced by recovery drawings");
     }
   }
-  assert.equal(sources.size, 342); // Drawing addresses, not independently drawn poses.
+  assert.equal(sources.size, 565); // Drawing addresses, not independently drawn poses.
 });
 
 test("breath uses 15 fps and blink uses 30 fps without geometric blends", () => {
@@ -32,7 +32,7 @@ test("breath uses 15 fps and blink uses 30 fps without geometric blends", () => 
       assert.ok(times[i] > times[i - 1]);
       if (i > 1) {
         const delta = times[i] - times[i - 1];
-        assert.ok(Math.abs(delta - (action === "wave" || action === "bow" ? 1000 / 24 : FRAME_INTERVAL_MS)) < 1e-8 || (action === "idle" && Math.abs(delta - 1000 / 30) < 1e-8));
+        assert.ok(Math.abs(delta - (action !== "idle" ? 1000 / 24 : FRAME_INTERVAL_MS)) < 1e-8 || (action === "idle" && Math.abs(delta - 1000 / 30) < 1e-8));
       }
       const start = times[i];
       assert.deepEqual(drawingSample(action, start + FRAME_BLEND_MS).to, DRAWING_SEQUENCES[action][i]);
