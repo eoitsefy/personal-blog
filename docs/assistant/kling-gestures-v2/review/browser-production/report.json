@@ -1,0 +1,1201 @@
+{
+  "accepted": true,
+  "characterVersion": "original-left-collar-kling-gestures-v2",
+  "assetScopeSha256": "23bcc770f4ecc4601eb2eb60d8823f9aed5ab3b204acd6bb6bb58d4b0da191c3",
+  "frameScopeSha256": "acbe82df7a5cce875cc3db019b1b7311bd83008d457fa415c966caf3bde26dcc",
+  "noAIRequests": true,
+  "reducedMotion": true,
+  "fallback": true,
+  "fallbackDecoded": true,
+  "fallbackSha256": "9d102b3251940dbd3e1a8e2c8437b5fd719b0312bdff674329b2ee6e9337d091",
+  "bitmapCacheLimit": 8,
+  "actualAssetHashesVerified": true,
+  "playback": [
+    {
+      "rate": 1,
+      "loops": 3,
+      "maxPaintGap": 4,
+      "stopTime": 12000.199999999999,
+      "changes": [
+        {
+          "time": 0,
+          "pose": "pilot-blink:0"
+        },
+        {
+          "time": 69.89999999999964,
+          "pose": "pilot-blink:1"
+        },
+        {
+          "time": 136.49999999999983,
+          "pose": "pilot-blink:2"
+        },
+        {
+          "time": 202.99999999999986,
+          "pose": "pilot-blink:3"
+        },
+        {
+          "time": 269.80000000000007,
+          "pose": "pilot-blink:4"
+        },
+        {
+          "time": 336.30000000000007,
+          "pose": "pilot-blink:5"
+        },
+        {
+          "time": 402.8999999999998,
+          "pose": "pilot-blink:6"
+        },
+        {
+          "time": 469.5,
+          "pose": "pilot-blink:7"
+        },
+        {
+          "time": 536.0999999999998,
+          "pose": "pilot-blink:8"
+        },
+        {
+          "time": 602.7,
+          "pose": "pilot-blink:9"
+        },
+        {
+          "time": 669.2999999999997,
+          "pose": "pilot-blink:10"
+        },
+        {
+          "time": 735.9,
+          "pose": "pilot-blink:11"
+        },
+        {
+          "time": 802.4,
+          "pose": "pilot-blink:12"
+        },
+        {
+          "time": 868.9999999999998,
+          "pose": "pilot-blink:13"
+        },
+        {
+          "time": 935.6,
+          "pose": "pilot-blink:14"
+        },
+        {
+          "time": 1002.1999999999997,
+          "pose": "pilot-blink:15"
+        },
+        {
+          "time": 1068.8,
+          "pose": "pilot-blink:16"
+        },
+        {
+          "time": 1135.3999999999996,
+          "pose": "pilot-blink:17"
+        },
+        {
+          "time": 1202,
+          "pose": "pilot-blink:18"
+        },
+        {
+          "time": 1235.2999999999997,
+          "pose": "pilot-blink:19"
+        },
+        {
+          "time": 1268.5999999999997,
+          "pose": "pilot-blink:20"
+        },
+        {
+          "time": 1302,
+          "pose": "pilot-blink:21"
+        },
+        {
+          "time": 1335.2,
+          "pose": "pilot-blink:22"
+        },
+        {
+          "time": 1368.5,
+          "pose": "pilot-blink:23"
+        },
+        {
+          "time": 1401.7,
+          "pose": "pilot-blink:24"
+        },
+        {
+          "time": 1435.1,
+          "pose": "pilot-blink:25"
+        },
+        {
+          "time": 1468.3999999999999,
+          "pose": "pilot-blink:26"
+        },
+        {
+          "time": 1501.6,
+          "pose": "pilot-blink:27"
+        },
+        {
+          "time": 1535.0000000000002,
+          "pose": "pilot-blink:28"
+        },
+        {
+          "time": 1568.2,
+          "pose": "pilot-blink:29"
+        },
+        {
+          "time": 1601.5999999999995,
+          "pose": "pilot-blink:30"
+        },
+        {
+          "time": 1634.8000000000002,
+          "pose": "pilot-blink:31"
+        },
+        {
+          "time": 1668.1999999999996,
+          "pose": "pilot-blink:32"
+        },
+        {
+          "time": 1734.7,
+          "pose": "pilot-blink:33"
+        },
+        {
+          "time": 1801.4,
+          "pose": "pilot-blink:34"
+        },
+        {
+          "time": 1867.8999999999996,
+          "pose": "pilot-blink:35"
+        },
+        {
+          "time": 1934.5,
+          "pose": "pilot-blink:36"
+        },
+        {
+          "time": 2001.1000000000001,
+          "pose": "pilot-blink:37"
+        },
+        {
+          "time": 2067.8,
+          "pose": "pilot-blink:38"
+        },
+        {
+          "time": 2134.2999999999997,
+          "pose": "pilot-blink:39"
+        },
+        {
+          "time": 2200.8999999999996,
+          "pose": "pilot-blink:40"
+        },
+        {
+          "time": 2267.5,
+          "pose": "pilot-blink:41"
+        },
+        {
+          "time": 2334.0999999999995,
+          "pose": "pilot-blink:42"
+        },
+        {
+          "time": 2400.7,
+          "pose": "pilot-blink:43"
+        },
+        {
+          "time": 2467.2999999999997,
+          "pose": "pilot-blink:44"
+        },
+        {
+          "time": 2533.9,
+          "pose": "pilot-blink:45"
+        },
+        {
+          "time": 2600.3999999999996,
+          "pose": "pilot-blink:46"
+        },
+        {
+          "time": 2667.0999999999995,
+          "pose": "pilot-blink:47"
+        },
+        {
+          "time": 2733.7,
+          "pose": "pilot-blink:48"
+        },
+        {
+          "time": 2800.3,
+          "pose": "pilot-blink:49"
+        },
+        {
+          "time": 2866.9,
+          "pose": "pilot-blink:50"
+        },
+        {
+          "time": 2933.3999999999996,
+          "pose": "pilot-blink:51"
+        },
+        {
+          "time": 3000,
+          "pose": "pilot-blink:52"
+        },
+        {
+          "time": 3066.7,
+          "pose": "pilot-blink:53"
+        },
+        {
+          "time": 3136.5999999999995,
+          "pose": "pilot-blink:54"
+        },
+        {
+          "time": 3203.1,
+          "pose": "pilot-blink:55"
+        },
+        {
+          "time": 3269.8,
+          "pose": "pilot-blink:56"
+        },
+        {
+          "time": 3336.2999999999997,
+          "pose": "pilot-blink:57"
+        },
+        {
+          "time": 3402.8999999999996,
+          "pose": "pilot-blink:58"
+        },
+        {
+          "time": 3469.6,
+          "pose": "pilot-blink:59"
+        },
+        {
+          "time": 3536.2,
+          "pose": "pilot-blink:60"
+        },
+        {
+          "time": 3602.6999999999994,
+          "pose": "pilot-blink:61"
+        },
+        {
+          "time": 3669.2999999999997,
+          "pose": "pilot-blink:62"
+        },
+        {
+          "time": 3735.9,
+          "pose": "pilot-blink:63"
+        },
+        {
+          "time": 3802.5,
+          "pose": "pilot-blink:64"
+        },
+        {
+          "time": 3869.0999999999995,
+          "pose": "pilot-blink:65"
+        },
+        {
+          "time": 3935.7,
+          "pose": "pilot-blink:66"
+        },
+        {
+          "time": 3969.1,
+          "pose": "pilot-blink:0"
+        },
+        {
+          "time": 4068.9,
+          "pose": "pilot-blink:1"
+        },
+        {
+          "time": 4135.6,
+          "pose": "pilot-blink:2"
+        },
+        {
+          "time": 4202.2,
+          "pose": "pilot-blink:3"
+        },
+        {
+          "time": 4268.7,
+          "pose": "pilot-blink:4"
+        },
+        {
+          "time": 4335.3,
+          "pose": "pilot-blink:5"
+        },
+        {
+          "time": 4401.9,
+          "pose": "pilot-blink:6"
+        },
+        {
+          "time": 4468.599999999999,
+          "pose": "pilot-blink:7"
+        },
+        {
+          "time": 4535,
+          "pose": "pilot-blink:8"
+        },
+        {
+          "time": 4601.7,
+          "pose": "pilot-blink:9"
+        },
+        {
+          "time": 4668.299999999999,
+          "pose": "pilot-blink:10"
+        },
+        {
+          "time": 4734.9,
+          "pose": "pilot-blink:11"
+        },
+        {
+          "time": 4801.400000000001,
+          "pose": "pilot-blink:12"
+        },
+        {
+          "time": 4867.999999999999,
+          "pose": "pilot-blink:13"
+        },
+        {
+          "time": 4934.7,
+          "pose": "pilot-blink:14"
+        },
+        {
+          "time": 5001.2,
+          "pose": "pilot-blink:15"
+        },
+        {
+          "time": 5067.8,
+          "pose": "pilot-blink:16"
+        },
+        {
+          "time": 5134.4,
+          "pose": "pilot-blink:17"
+        },
+        {
+          "time": 5201,
+          "pose": "pilot-blink:18"
+        },
+        {
+          "time": 5234.3,
+          "pose": "pilot-blink:19"
+        },
+        {
+          "time": 5267.599999999999,
+          "pose": "pilot-blink:20"
+        },
+        {
+          "time": 5300.8,
+          "pose": "pilot-blink:21"
+        },
+        {
+          "time": 5334.2,
+          "pose": "pilot-blink:22"
+        },
+        {
+          "time": 5367.5,
+          "pose": "pilot-blink:23"
+        },
+        {
+          "time": 5400.7,
+          "pose": "pilot-blink:24"
+        },
+        {
+          "time": 5434,
+          "pose": "pilot-blink:25"
+        },
+        {
+          "time": 5467.400000000001,
+          "pose": "pilot-blink:26"
+        },
+        {
+          "time": 5500.699999999999,
+          "pose": "pilot-blink:27"
+        },
+        {
+          "time": 5534,
+          "pose": "pilot-blink:28"
+        },
+        {
+          "time": 5567.200000000001,
+          "pose": "pilot-blink:29"
+        },
+        {
+          "time": 5600.599999999999,
+          "pose": "pilot-blink:30"
+        },
+        {
+          "time": 5633.9,
+          "pose": "pilot-blink:31"
+        },
+        {
+          "time": 5667.1,
+          "pose": "pilot-blink:32"
+        },
+        {
+          "time": 5733.7,
+          "pose": "pilot-blink:33"
+        },
+        {
+          "time": 5800.299999999999,
+          "pose": "pilot-blink:34"
+        },
+        {
+          "time": 5866.900000000001,
+          "pose": "pilot-blink:35"
+        },
+        {
+          "time": 5933.599999999999,
+          "pose": "pilot-blink:36"
+        },
+        {
+          "time": 6000.5,
+          "pose": "pilot-blink:37"
+        },
+        {
+          "time": 6066.7,
+          "pose": "pilot-blink:38"
+        },
+        {
+          "time": 6136.6,
+          "pose": "pilot-blink:39"
+        },
+        {
+          "time": 6203.2,
+          "pose": "pilot-blink:40"
+        },
+        {
+          "time": 6269.799999999999,
+          "pose": "pilot-blink:41"
+        },
+        {
+          "time": 6336.5,
+          "pose": "pilot-blink:42"
+        },
+        {
+          "time": 6403,
+          "pose": "pilot-blink:43"
+        },
+        {
+          "time": 6469.700000000001,
+          "pose": "pilot-blink:44"
+        },
+        {
+          "time": 6536.2,
+          "pose": "pilot-blink:45"
+        },
+        {
+          "time": 6602.899999999999,
+          "pose": "pilot-blink:46"
+        },
+        {
+          "time": 6669.400000000001,
+          "pose": "pilot-blink:47"
+        },
+        {
+          "time": 6736,
+          "pose": "pilot-blink:48"
+        },
+        {
+          "time": 6802.599999999999,
+          "pose": "pilot-blink:49"
+        },
+        {
+          "time": 6869.2,
+          "pose": "pilot-blink:50"
+        },
+        {
+          "time": 6935.799999999999,
+          "pose": "pilot-blink:51"
+        },
+        {
+          "time": 7002.400000000001,
+          "pose": "pilot-blink:52"
+        },
+        {
+          "time": 7069,
+          "pose": "pilot-blink:53"
+        },
+        {
+          "time": 7135.499999999999,
+          "pose": "pilot-blink:54"
+        },
+        {
+          "time": 7202.1,
+          "pose": "pilot-blink:55"
+        },
+        {
+          "time": 7268.7,
+          "pose": "pilot-blink:56"
+        },
+        {
+          "time": 7335.399999999999,
+          "pose": "pilot-blink:57"
+        },
+        {
+          "time": 7402,
+          "pose": "pilot-blink:58"
+        },
+        {
+          "time": 7468.599999999999,
+          "pose": "pilot-blink:59"
+        },
+        {
+          "time": 7535.200000000001,
+          "pose": "pilot-blink:60"
+        },
+        {
+          "time": 7601.8,
+          "pose": "pilot-blink:61"
+        },
+        {
+          "time": 7668.299999999999,
+          "pose": "pilot-blink:62"
+        },
+        {
+          "time": 7734.900000000001,
+          "pose": "pilot-blink:63"
+        },
+        {
+          "time": 7801.5,
+          "pose": "pilot-blink:64"
+        },
+        {
+          "time": 7868.099999999999,
+          "pose": "pilot-blink:65"
+        },
+        {
+          "time": 7934.8,
+          "pose": "pilot-blink:66"
+        },
+        {
+          "time": 7967.999999999999,
+          "pose": "pilot-blink:0"
+        },
+        {
+          "time": 8067.799999999998,
+          "pose": "pilot-blink:1"
+        },
+        {
+          "time": 8134.499999999999,
+          "pose": "pilot-blink:2"
+        },
+        {
+          "time": 8201.1,
+          "pose": "pilot-blink:3"
+        },
+        {
+          "time": 8267.7,
+          "pose": "pilot-blink:4"
+        },
+        {
+          "time": 8334.199999999999,
+          "pose": "pilot-blink:5"
+        },
+        {
+          "time": 8400.9,
+          "pose": "pilot-blink:6"
+        },
+        {
+          "time": 8467.500000000002,
+          "pose": "pilot-blink:7"
+        },
+        {
+          "time": 8534.099999999999,
+          "pose": "pilot-blink:8"
+        },
+        {
+          "time": 8600.699999999999,
+          "pose": "pilot-blink:9"
+        },
+        {
+          "time": 8667.2,
+          "pose": "pilot-blink:10"
+        },
+        {
+          "time": 8733.8,
+          "pose": "pilot-blink:11"
+        },
+        {
+          "time": 8800.4,
+          "pose": "pilot-blink:12"
+        },
+        {
+          "time": 8866.900000000001,
+          "pose": "pilot-blink:13"
+        },
+        {
+          "time": 8933.599999999999,
+          "pose": "pilot-blink:14"
+        },
+        {
+          "time": 9000.199999999999,
+          "pose": "pilot-blink:15"
+        },
+        {
+          "time": 9066.800000000001,
+          "pose": "pilot-blink:16"
+        },
+        {
+          "time": 9133.399999999998,
+          "pose": "pilot-blink:17"
+        },
+        {
+          "time": 9200,
+          "pose": "pilot-blink:18"
+        },
+        {
+          "time": 9236.599999999999,
+          "pose": "pilot-blink:19"
+        },
+        {
+          "time": 9269.9,
+          "pose": "pilot-blink:20"
+        },
+        {
+          "time": 9303.2,
+          "pose": "pilot-blink:21"
+        },
+        {
+          "time": 9336.6,
+          "pose": "pilot-blink:22"
+        },
+        {
+          "time": 9369.800000000001,
+          "pose": "pilot-blink:23"
+        },
+        {
+          "time": 9403.099999999999,
+          "pose": "pilot-blink:24"
+        },
+        {
+          "time": 9436.3,
+          "pose": "pilot-blink:25"
+        },
+        {
+          "time": 9469.8,
+          "pose": "pilot-blink:26"
+        },
+        {
+          "time": 9503.1,
+          "pose": "pilot-blink:27"
+        },
+        {
+          "time": 9536.300000000001,
+          "pose": "pilot-blink:28"
+        },
+        {
+          "time": 9569.7,
+          "pose": "pilot-blink:29"
+        },
+        {
+          "time": 9602.899999999998,
+          "pose": "pilot-blink:30"
+        },
+        {
+          "time": 9636.199999999999,
+          "pose": "pilot-blink:31"
+        },
+        {
+          "time": 9669.5,
+          "pose": "pilot-blink:32"
+        },
+        {
+          "time": 9736,
+          "pose": "pilot-blink:33"
+        },
+        {
+          "time": 9802.7,
+          "pose": "pilot-blink:34"
+        },
+        {
+          "time": 9869.3,
+          "pose": "pilot-blink:35"
+        },
+        {
+          "time": 9935.9,
+          "pose": "pilot-blink:36"
+        },
+        {
+          "time": 10002.500000000002,
+          "pose": "pilot-blink:37"
+        },
+        {
+          "time": 10068.9,
+          "pose": "pilot-blink:38"
+        },
+        {
+          "time": 10135.7,
+          "pose": "pilot-blink:39"
+        },
+        {
+          "time": 10202.300000000001,
+          "pose": "pilot-blink:40"
+        },
+        {
+          "time": 10268.8,
+          "pose": "pilot-blink:41"
+        },
+        {
+          "time": 10335.5,
+          "pose": "pilot-blink:42"
+        },
+        {
+          "time": 10402.1,
+          "pose": "pilot-blink:43"
+        },
+        {
+          "time": 10468.599999999999,
+          "pose": "pilot-blink:44"
+        },
+        {
+          "time": 10535.199999999999,
+          "pose": "pilot-blink:45"
+        },
+        {
+          "time": 10601.900000000001,
+          "pose": "pilot-blink:46"
+        },
+        {
+          "time": 10668.399999999998,
+          "pose": "pilot-blink:47"
+        },
+        {
+          "time": 10735,
+          "pose": "pilot-blink:48"
+        },
+        {
+          "time": 10801.6,
+          "pose": "pilot-blink:49"
+        },
+        {
+          "time": 10868.199999999999,
+          "pose": "pilot-blink:50"
+        },
+        {
+          "time": 10934.8,
+          "pose": "pilot-blink:51"
+        },
+        {
+          "time": 11001.4,
+          "pose": "pilot-blink:52"
+        },
+        {
+          "time": 11067.899999999998,
+          "pose": "pilot-blink:53"
+        },
+        {
+          "time": 11134.599999999999,
+          "pose": "pilot-blink:54"
+        },
+        {
+          "time": 11201.2,
+          "pose": "pilot-blink:55"
+        },
+        {
+          "time": 11267.800000000001,
+          "pose": "pilot-blink:56"
+        },
+        {
+          "time": 11334.399999999998,
+          "pose": "pilot-blink:57"
+        },
+        {
+          "time": 11400.9,
+          "pose": "pilot-blink:58"
+        },
+        {
+          "time": 11467.6,
+          "pose": "pilot-blink:59"
+        },
+        {
+          "time": 11534.099999999999,
+          "pose": "pilot-blink:60"
+        },
+        {
+          "time": 11600.699999999999,
+          "pose": "pilot-blink:61"
+        },
+        {
+          "time": 11667.300000000001,
+          "pose": "pilot-blink:62"
+        },
+        {
+          "time": 11733.899999999998,
+          "pose": "pilot-blink:63"
+        },
+        {
+          "time": 11800.5,
+          "pose": "pilot-blink:64"
+        },
+        {
+          "time": 11867.1,
+          "pose": "pilot-blink:65"
+        },
+        {
+          "time": 11933.699999999999,
+          "pose": "pilot-blink:66"
+        },
+        {
+          "time": 11966.999999999998,
+          "pose": "pilot-blink:0"
+        }
+      ]
+    },
+    {
+      "rate": 0.5,
+      "loops": 1,
+      "maxPaintGap": 6.69999999999709,
+      "stopTime": 4000.7000000000003,
+      "changes": [
+        {
+          "time": 0,
+          "pose": "pilot-blink:0"
+        },
+        {
+          "time": 68.29999999999981,
+          "pose": "pilot-blink:1"
+        },
+        {
+          "time": 134.90000000000003,
+          "pose": "pilot-blink:2"
+        },
+        {
+          "time": 201.50000000000023,
+          "pose": "pilot-blink:3"
+        },
+        {
+          "time": 268.1000000000005,
+          "pose": "pilot-blink:4"
+        },
+        {
+          "time": 334.64999999999986,
+          "pose": "pilot-blink:5"
+        },
+        {
+          "time": 401.2500000000001,
+          "pose": "pilot-blink:6"
+        },
+        {
+          "time": 467.8500000000003,
+          "pose": "pilot-blink:7"
+        },
+        {
+          "time": 534.4500000000005,
+          "pose": "pilot-blink:8"
+        },
+        {
+          "time": 601.0499999999998,
+          "pose": "pilot-blink:9"
+        },
+        {
+          "time": 667.6500000000001,
+          "pose": "pilot-blink:10"
+        },
+        {
+          "time": 734.1999999999995,
+          "pose": "pilot-blink:11"
+        },
+        {
+          "time": 800.8500000000005,
+          "pose": "pilot-blink:12"
+        },
+        {
+          "time": 867.4,
+          "pose": "pilot-blink:13"
+        },
+        {
+          "time": 934.050000000001,
+          "pose": "pilot-blink:14"
+        },
+        {
+          "time": 1000.6500000000003,
+          "pose": "pilot-blink:15"
+        },
+        {
+          "time": 1067.1999999999998,
+          "pose": "pilot-blink:16"
+        },
+        {
+          "time": 1133.8500000000006,
+          "pose": "pilot-blink:17"
+        },
+        {
+          "time": 1200.4,
+          "pose": "pilot-blink:18"
+        },
+        {
+          "time": 1233.7000000000007,
+          "pose": "pilot-blink:19"
+        },
+        {
+          "time": 1266.9999999999995,
+          "pose": "pilot-blink:20"
+        },
+        {
+          "time": 1300.2500000000002,
+          "pose": "pilot-blink:21"
+        },
+        {
+          "time": 1333.6000000000006,
+          "pose": "pilot-blink:22"
+        },
+        {
+          "time": 1366.8999999999994,
+          "pose": "pilot-blink:23"
+        },
+        {
+          "time": 1400.15,
+          "pose": "pilot-blink:24"
+        },
+        {
+          "time": 1433.5000000000005,
+          "pose": "pilot-blink:25"
+        },
+        {
+          "time": 1466.800000000001,
+          "pose": "pilot-blink:26"
+        },
+        {
+          "time": 1500.0999999999997,
+          "pose": "pilot-blink:27"
+        },
+        {
+          "time": 1533.4000000000003,
+          "pose": "pilot-blink:28"
+        },
+        {
+          "time": 1568.3500000000006,
+          "pose": "pilot-blink:29"
+        },
+        {
+          "time": 1601.6499999999994,
+          "pose": "pilot-blink:30"
+        },
+        {
+          "time": 1634.9499999999998,
+          "pose": "pilot-blink:31"
+        },
+        {
+          "time": 1668.2500000000005,
+          "pose": "pilot-blink:32"
+        },
+        {
+          "time": 1734.8,
+          "pose": "pilot-blink:33"
+        },
+        {
+          "time": 1801.400000000001,
+          "pose": "pilot-blink:34"
+        },
+        {
+          "time": 1868.0000000000002,
+          "pose": "pilot-blink:35"
+        },
+        {
+          "time": 1934.5999999999997,
+          "pose": "pilot-blink:36"
+        },
+        {
+          "time": 2001.2000000000007,
+          "pose": "pilot-blink:37"
+        },
+        {
+          "time": 2067.8,
+          "pose": "pilot-blink:38"
+        },
+        {
+          "time": 2134.3999999999996,
+          "pose": "pilot-blink:39"
+        },
+        {
+          "time": 2200.9500000000007,
+          "pose": "pilot-blink:40"
+        },
+        {
+          "time": 2267.6,
+          "pose": "pilot-blink:41"
+        },
+        {
+          "time": 2334.2000000000007,
+          "pose": "pilot-blink:42"
+        },
+        {
+          "time": 2400.7500000000005,
+          "pose": "pilot-blink:43"
+        },
+        {
+          "time": 2467.35,
+          "pose": "pilot-blink:44"
+        },
+        {
+          "time": 2533.9500000000007,
+          "pose": "pilot-blink:45"
+        },
+        {
+          "time": 2600.55,
+          "pose": "pilot-blink:46"
+        },
+        {
+          "time": 2667.1499999999996,
+          "pose": "pilot-blink:47"
+        },
+        {
+          "time": 2733.7500000000005,
+          "pose": "pilot-blink:48"
+        },
+        {
+          "time": 2800.3,
+          "pose": "pilot-blink:49"
+        },
+        {
+          "time": 2866.950000000001,
+          "pose": "pilot-blink:50"
+        },
+        {
+          "time": 2933.55,
+          "pose": "pilot-blink:51"
+        },
+        {
+          "time": 3000.1,
+          "pose": "pilot-blink:52"
+        },
+        {
+          "time": 3066.7000000000007,
+          "pose": "pilot-blink:53"
+        },
+        {
+          "time": 3135,
+          "pose": "pilot-blink:54"
+        },
+        {
+          "time": 3201.550000000001,
+          "pose": "pilot-blink:55"
+        },
+        {
+          "time": 3268.1500000000005,
+          "pose": "pilot-blink:56"
+        },
+        {
+          "time": 3334.7499999999995,
+          "pose": "pilot-blink:57"
+        },
+        {
+          "time": 3401.350000000001,
+          "pose": "pilot-blink:58"
+        },
+        {
+          "time": 3467.9500000000003,
+          "pose": "pilot-blink:59"
+        },
+        {
+          "time": 3534.5499999999993,
+          "pose": "pilot-blink:60"
+        },
+        {
+          "time": 3601.1500000000005,
+          "pose": "pilot-blink:61"
+        },
+        {
+          "time": 3667.7,
+          "pose": "pilot-blink:62"
+        },
+        {
+          "time": 3734.300000000001,
+          "pose": "pilot-blink:63"
+        },
+        {
+          "time": 3800.9000000000005,
+          "pose": "pilot-blink:64"
+        },
+        {
+          "time": 3867.4999999999995,
+          "pose": "pilot-blink:65"
+        },
+        {
+          "time": 3934.100000000001,
+          "pose": "pilot-blink:66"
+        },
+        {
+          "time": 3967.3999999999996,
+          "pose": "pilot-blink:0"
+        }
+      ]
+    }
+  ],
+  "results": [
+    {
+      "width": 1280,
+      "dpr": 1,
+      "poses": 355,
+      "sharedNeutral": true,
+      "persistentCanvas": true,
+      "maxBootMidpointDrift": 0.7000000000000028,
+      "fixedViewport": true,
+      "hiDpi": true,
+      "actualAssetHashesVerified": true,
+      "resourceSha256": {
+        "/assistant/chibi-bow-kling-v1.webp": "2a8a642f38c2817efa843d6a8ef79f9d359e4c7264c6ccfc0d27e05b4d64b9e2",
+        "/assistant/chibi-cheer-left-collar-v5.webp": "da4cf1a72b35c35eb25fd8ea40d25e3f8653332282c54f34e0d0e6871045971f",
+        "/assistant/chibi-idle-blink-refined-v1.webp": "4c4af5f206d67366e76eeff7a57eecea37b43302564601e3051a04f7a68ceeb3",
+        "/assistant/chibi-nod-left-collar-v5.webp": "91030a3348a780d04af6778bef463c73216ca4b0dae216bb2822ca3e671408f0",
+        "/assistant/chibi-thinking-left-collar-v5.webp": "769d6800ebaf9f49e467601555f3ccfee5b5852ae9b74f67ea052439125e18f0",
+        "/assistant/chibi-thinking-recovery-left-collar-v5.webp": "af22821609bc800ef37ca405c0d7d201aeffa7cb3135b10c705732519cd500cd",
+        "/assistant/chibi-wave-kling-v2.webp": "e155d3d9a592ec786731ec902f941ddc4a909b13f5a54035625358781e8af477",
+        "/assistant/chibi-yawn-left-collar-v5.webp": "94d1ef212414b1ac68c5514beef40f4bbc80c919bb85205fe768f2617aaeb0bb",
+        "/assistant/chibi-yawn-recovery-left-collar-v5.webp": "058c571e639f5706cf22784efae174b3fba6cc4a1b17c4d22f6f0cbf6bcd708c"
+      }
+    },
+    {
+      "width": 768,
+      "dpr": 1,
+      "poses": 355,
+      "sharedNeutral": true,
+      "persistentCanvas": true,
+      "maxBootMidpointDrift": 0.7000000000000028,
+      "fixedViewport": true,
+      "hiDpi": true,
+      "actualAssetHashesVerified": true,
+      "resourceSha256": {
+        "/assistant/chibi-bow-kling-v1.webp": "2a8a642f38c2817efa843d6a8ef79f9d359e4c7264c6ccfc0d27e05b4d64b9e2",
+        "/assistant/chibi-cheer-left-collar-v5.webp": "da4cf1a72b35c35eb25fd8ea40d25e3f8653332282c54f34e0d0e6871045971f",
+        "/assistant/chibi-idle-blink-refined-v1.webp": "4c4af5f206d67366e76eeff7a57eecea37b43302564601e3051a04f7a68ceeb3",
+        "/assistant/chibi-nod-left-collar-v5.webp": "91030a3348a780d04af6778bef463c73216ca4b0dae216bb2822ca3e671408f0",
+        "/assistant/chibi-thinking-left-collar-v5.webp": "769d6800ebaf9f49e467601555f3ccfee5b5852ae9b74f67ea052439125e18f0",
+        "/assistant/chibi-thinking-recovery-left-collar-v5.webp": "af22821609bc800ef37ca405c0d7d201aeffa7cb3135b10c705732519cd500cd",
+        "/assistant/chibi-wave-kling-v2.webp": "e155d3d9a592ec786731ec902f941ddc4a909b13f5a54035625358781e8af477",
+        "/assistant/chibi-yawn-left-collar-v5.webp": "94d1ef212414b1ac68c5514beef40f4bbc80c919bb85205fe768f2617aaeb0bb",
+        "/assistant/chibi-yawn-recovery-left-collar-v5.webp": "058c571e639f5706cf22784efae174b3fba6cc4a1b17c4d22f6f0cbf6bcd708c"
+      }
+    },
+    {
+      "width": 390,
+      "dpr": 2,
+      "poses": 355,
+      "sharedNeutral": true,
+      "persistentCanvas": true,
+      "maxBootMidpointDrift": 0.9333333333333371,
+      "fixedViewport": true,
+      "hiDpi": true,
+      "actualAssetHashesVerified": true,
+      "resourceSha256": {
+        "/assistant/chibi-bow-kling-v1.webp": "2a8a642f38c2817efa843d6a8ef79f9d359e4c7264c6ccfc0d27e05b4d64b9e2",
+        "/assistant/chibi-cheer-left-collar-v5.webp": "da4cf1a72b35c35eb25fd8ea40d25e3f8653332282c54f34e0d0e6871045971f",
+        "/assistant/chibi-idle-blink-refined-v1.webp": "4c4af5f206d67366e76eeff7a57eecea37b43302564601e3051a04f7a68ceeb3",
+        "/assistant/chibi-nod-left-collar-v5.webp": "91030a3348a780d04af6778bef463c73216ca4b0dae216bb2822ca3e671408f0",
+        "/assistant/chibi-thinking-left-collar-v5.webp": "769d6800ebaf9f49e467601555f3ccfee5b5852ae9b74f67ea052439125e18f0",
+        "/assistant/chibi-thinking-recovery-left-collar-v5.webp": "af22821609bc800ef37ca405c0d7d201aeffa7cb3135b10c705732519cd500cd",
+        "/assistant/chibi-wave-kling-v2.webp": "e155d3d9a592ec786731ec902f941ddc4a909b13f5a54035625358781e8af477",
+        "/assistant/chibi-yawn-left-collar-v5.webp": "94d1ef212414b1ac68c5514beef40f4bbc80c919bb85205fe768f2617aaeb0bb",
+        "/assistant/chibi-yawn-recovery-left-collar-v5.webp": "058c571e639f5706cf22784efae174b3fba6cc4a1b17c4d22f6f0cbf6bcd708c"
+      }
+    },
+    {
+      "width": 320,
+      "dpr": 2,
+      "poses": 355,
+      "sharedNeutral": true,
+      "persistentCanvas": true,
+      "maxBootMidpointDrift": 0.9333333333333371,
+      "fixedViewport": true,
+      "hiDpi": true,
+      "actualAssetHashesVerified": true,
+      "resourceSha256": {
+        "/assistant/chibi-bow-kling-v1.webp": "2a8a642f38c2817efa843d6a8ef79f9d359e4c7264c6ccfc0d27e05b4d64b9e2",
+        "/assistant/chibi-cheer-left-collar-v5.webp": "da4cf1a72b35c35eb25fd8ea40d25e3f8653332282c54f34e0d0e6871045971f",
+        "/assistant/chibi-idle-blink-refined-v1.webp": "4c4af5f206d67366e76eeff7a57eecea37b43302564601e3051a04f7a68ceeb3",
+        "/assistant/chibi-nod-left-collar-v5.webp": "91030a3348a780d04af6778bef463c73216ca4b0dae216bb2822ca3e671408f0",
+        "/assistant/chibi-thinking-left-collar-v5.webp": "769d6800ebaf9f49e467601555f3ccfee5b5852ae9b74f67ea052439125e18f0",
+        "/assistant/chibi-thinking-recovery-left-collar-v5.webp": "af22821609bc800ef37ca405c0d7d201aeffa7cb3135b10c705732519cd500cd",
+        "/assistant/chibi-wave-kling-v2.webp": "e155d3d9a592ec786731ec902f941ddc4a909b13f5a54035625358781e8af477",
+        "/assistant/chibi-yawn-left-collar-v5.webp": "94d1ef212414b1ac68c5514beef40f4bbc80c919bb85205fe768f2617aaeb0bb",
+        "/assistant/chibi-yawn-recovery-left-collar-v5.webp": "058c571e639f5706cf22784efae174b3fba6cc4a1b17c4d22f6f0cbf6bcd708c"
+      }
+    }
+  ]
+}

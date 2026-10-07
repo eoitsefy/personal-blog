@@ -1,0 +1,17 @@
+{
+  "status": "INITIAL_SAMPLES_COMPLETE_PENDING_ART_DETAIL_AND_OWNER_ACCEPTANCE",
+  "productionAssetsUnchanged": true,
+  "provider": "Kling Video 3.0",
+  "sourceReferenceSha256": "9d102b3251940dbd3e1a8e2c8437b5fd719b0312bdff674329b2ee6e9337d091",
+  "sourceUsage": "Same original neutral image at both first and last frames; one 720p result per action, sound off, sequential generation, no retry or purchase.",
+  "generationCredits": {"balanceBefore": 156, "spent": 78, "balanceAfter": 78, "creditsPerGeneratedSecond": 6, "minimumSecondsObserved": 3},
+  "localArtifacts": "External to the Git checkout: ../kling-samples/20261007-b (original videos with AIGC, all decoded PNGs, prompts/plan, raw previews, fixed-crop transparent trial previews and art-review.json). Owner download archive E:/Edgedownloads/下载结果.zip retained unchanged.",
+  "actions": {
+    "nod": {"meaning": "温和点头、确认明白", "generationSeconds": 3, "credits": 18, "sourceFrames": 73, "sourceFps": 24, "produceId": "HB1_PROD_ai_web_323379465165902", "sourceSha256": "e96ff3b1869e75f7269cccee2881d2e97f72a0207c1bd7705cc68e53662f4a34", "note": "Shallow head-forward inclination, closed eyes and small smile; do not describe this as an exact 10-degree rotation. Pending owner review and browser anchor gates."},
+    "thinking": {"meaning": "指尖近下巴、查找记录", "generationSeconds": 3, "credits": 18, "sourceFrames": 73, "sourceFps": 24, "produceId": "HB1_PROD_ai_web_323379776246342", "sourceSha256": "b6c6fce827353d0513107ce045201381948bc84c785bb5c629aaf354c3b63889", "note": "A slight head inclination and return blink; pending final hand/edge and owner review."},
+    "cheer": {"meaning": "双拳鼓劲、找到答案", "generationSeconds": 3, "credits": 18, "sourceFrames": 73, "sourceFps": 24, "produceId": "HB1_PROD_ai_web_323380026155431", "sourceSha256": "99605e9caecdcd6761cb563e06605949ba1ed59bfc1f6576c778ded8f3891ffc", "note": "Both hands remain noticeably too pale relative to the face; detail repair required before release. Never reuse the waving ROI on two different moving hands."},
+    "yawn": {"meaning": "掩嘴打哈欠、安静等待", "generationSeconds": 4, "credits": 24, "sourceFrames": 97, "sourceFps": 24, "produceId": "HB1_PROD_ai_web_323380354245700", "sourceSha256": "e37bc78f1eb104fb40c47803de07d720bf162a0494c27291b44b42f2fee5bd77", "note": "Small rounded mouth and hand cover; pending warm hand color, closed-eye matte edge and owner review."}
+  },
+  "reviewScope": "Every source frame in sequential contact overviews plus four native critical frames. Transparent trials are previews, not production-ready packages or inherited art approvals.",
+  "nextReleaseGate": "Explicit candidate review, any source-specific authorized color correction, light/dark alpha review, immutable hashes, native timing, fixed foot anchor, canonical resting endpoints, mobile and production browser checks."
+}
