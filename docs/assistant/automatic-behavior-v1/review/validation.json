@@ -1,0 +1,12 @@
+{
+  "behaviorVersion": "conversation-events-v1",
+  "status": "local-gates-passed-production-pending",
+  "scope": "automatic local UI scheduling only; character assets unchanged; bed clips not integrated",
+  "unitTests": { "releaseTrackedSelection": 207, "passed": 206, "failed": 0, "skipped": 1, "newBehaviorTests": 7 },
+  "lint": "targeted changed files passed without warnings",
+  "typecheck": "passed",
+  "build": "production webpack build passed in plain-path D-drive validation checkout",
+  "browser": { "accepted": true, "widths": [1280, 768, 390, 320], "nativePositionsPerWidth": 578, "realModelQueries": 0, "report": "browser-local/report.json" },
+  "excludedWorkspaceExperiment": "The broader untracked experiment suite had one unrelated frozen Cubism ownership hash mismatch. It was not modified or represented as a passing full npm test run.",
+  "timingScope": "deterministic event/clock and native frame-position validation, not a physical-device FPS benchmark"
+}

@@ -7,18 +7,23 @@ import { createPortal } from "react-dom";
 import { FormEvent, useEffect, useId, useRef, useState } from "react";
 import { ASSISTANT_GREETINGS, parseAssistantAnswer, pickAssistantGreeting, type AssistantAnswer } from "@/lib/assistant/ui";
 import styles from "./assistant-panel.module.css";
-import { CHARACTER_ACTIONS, CHARACTER_STAGE, PLAYFUL_ACTIONS, type CharacterAction } from "@/lib/assistant/character";
+import { CHARACTER_ACTIONS, CHARACTER_STAGE, type CharacterAction } from "@/lib/assistant/character";
 import { CHARACTER_FRAME_VERSION, DRAWING_SEQUENCES, NEUTRAL_DRAWING, drawingDuration, drawingKey, drawingPose, drawingSample, type Drawing } from "@/lib/assistant/frame-timeline";
+import { ASSISTANT_BEHAVIOR_VERSION, responseAction } from "@/lib/assistant/behavior";
+import { useAssistantBehavior } from "./use-assistant-behavior";
 
 type Settings = { enabled: boolean; maxQuestionChars: number };
 type Turn = { question: string; result: AssistantAnswer };
 
-type CharacterProps = { action?: CharacterAction; small?: boolean; animate?: boolean; active?: boolean; playId?: number };
-function Character({ action = "idle", small = false, animate = true, active = true, playId = 0 }: CharacterProps) {
+type CharacterProps = { action?: CharacterAction; small?: boolean; animate?: boolean; active?: boolean; playId?: number; once?: boolean; onFinished?: (playId: number) => void };
+function Character({ action = "idle", small = false, animate = true, active = true, playId = 0, once = false, onFinished }: CharacterProps) {
   const [failed, setFailed] = useState(false);
   const sheet = useRef<HTMLCanvasElement>(null);
   const cachedImages = useRef(new Map<string, Promise<HTMLImageElement>>());
   const neutralFrame = useRef<HTMLCanvasElement | null>(null);
+  const completion = useRef(onFinished);
+  useEffect(() => { completion.current = onFinished; }, [onFinished]);
+  useEffect(() => { if (failed && action !== "idle") completion.current?.(playId); }, [failed, action, playId]);
   useEffect(() => {
     const element = sheet.current;
     if (!element || failed) return;
@@ -71,8 +76,9 @@ function Character({ action = "idle", small = false, animate = true, active = tr
       playing = next;
       const config = CHARACTER_ACTIONS[next];
       // Constant opacity is a seekable clock, never a whole-character movement.
-      animation = element!.animate([{ opacity: 1 }, { opacity: 1 }], { duration: drawingDuration(next), iterations: config.loop ? Infinity : 1, fill: "none" });
-      if (!config.loop) animation.onfinish = () => play("idle");
+      const loop = config.loop && (next === "idle" || !once);
+      animation = element!.animate([{ opacity: 1 }, { opacity: 1 }], { duration: drawingDuration(next), iterations: loop ? Infinity : 1, fill: "none" });
+      if (!loop) animation.onfinish = () => { play("idle"); completion.current?.(playId); };
       draw(next, 0);
     }
     function paint() {
@@ -129,7 +135,7 @@ function Character({ action = "idle", small = false, animate = true, active = tr
     reduced.addEventListener("change", refresh); document.addEventListener("visibilitychange", refresh);
     window.addEventListener("resize", prepare);
     return () => { disposed = true; cancelAnimationFrame(tick); if (animation) { animation.onfinish = null; animation.cancel(); } reduced.removeEventListener("change", refresh); document.removeEventListener("visibilitychange", refresh); window.removeEventListener("resize", prepare); };
-  }, [action, active, animate, failed, playId]);
+  }, [action, active, animate, failed, playId, once]);
   // Draw registered pose rectangles, never translate the character viewport.
   return <span className={styles.character} data-action={action} data-engine="frames" data-character-version={CHARACTER_FRAME_VERSION} aria-hidden="true">
     {failed ? <Image className={styles.fallbackCharacter} src="/assistant/chibi-neutral-left-collar-v4.png" alt="" width={768} height={768} sizes={small ? "180px" : "400px"} /> :
@@ -146,24 +152,26 @@ export function FloatingAssistant() {
 export function ChibiAssistant({ floating = false, settings }: { floating?: boolean; settings?: Settings }) {
   const [open, setOpen] = useState(false), [started, setStarted] = useState(false);
   const [greeting, setGreeting] = useState<string>(ASSISTANT_GREETINGS[0]);
-  const [animate, setAnimate] = useState(true), [wave, setWave] = useState(0);
+  const [animate, setAnimate] = useState(true);
+  const behavior = useAssistantBehavior(animate);
   const trigger = useRef<HTMLButtonElement>(null);
   function show() {
     if (!started) { setGreeting(pickAssistantGreeting(Math.random())); setStarted(true); }
-    setWave(value => value + 1); setOpen(true);
+    behavior.send({ type: "open" }); setOpen(true);
   }
-  return <div className={`${floating ? styles.floating : styles.panel} ${animate ? "" : styles.still}`}>
+  function dismiss() { behavior.send({ type: "close" }); setOpen(false); }
+  return <div className={`${floating ? styles.floating : styles.panel} ${animate ? "" : styles.still}`} data-behavior-version={ASSISTANT_BEHAVIOR_VERSION}>
     {!floating ? <><h1>小助手</h1><p className={styles.invitation}>有想找的记录吗？</p></> : null}
     <button ref={trigger} type="button" className={styles.launcher} onClick={show} aria-label="打开小助手对话" aria-haspopup="dialog" aria-expanded={open}>
-      <span><Character action="idle" small={floating} animate={animate} active={!open} playId={wave} /></span><span className={styles.launcherLabel}>{floating ? "聊聊" : "点击和我聊聊"}</span>
+      <span><Character action={open ? "idle" : behavior.state.action} small={floating} animate={animate} active={!open} playId={behavior.state.playId} once onFinished={behavior.finished} /></span><span className={styles.launcherLabel}>{floating ? "聊聊" : "点击和我聊聊"}</span>
     </button>
     {!floating ? <><div className={styles.introduction}>{ASSISTANT_GREETINGS[0]}</div><nav className={styles.explore} aria-label="浏览网站"><Link href="/posts">浏览日志 ↗</Link><Link href="/places">看看地点 ↗</Link></nav></> : null}
-    {started ? createPortal(<AssistantDialog open={open} greeting={greeting} initialSettings={settings} animate={animate} onAnimate={() => setAnimate(value => !value)} onClose={() => setOpen(false)} returnFocus={() => trigger.current?.focus({ preventScroll: true })} />, document.body) : null}
+    {started ? createPortal(<AssistantDialog open={open} greeting={greeting} initialSettings={settings} animate={animate} behavior={behavior} onAnimate={() => setAnimate(value => !value)} onClose={dismiss} returnFocus={() => trigger.current?.focus({ preventScroll: true })} />, document.body) : null}
   </div>;
 }
 
-function AssistantDialog({ open, greeting, initialSettings, animate, onAnimate, onClose, returnFocus }: {
-  open: boolean; greeting: string; initialSettings?: Settings; animate: boolean; onAnimate: () => void; onClose: () => void; returnFocus: () => void;
+function AssistantDialog({ open, greeting, initialSettings, animate, behavior, onAnimate, onClose, returnFocus }: {
+  open: boolean; greeting: string; initialSettings?: Settings; animate: boolean; behavior: ReturnType<typeof useAssistantBehavior>; onAnimate: () => void; onClose: () => void; returnFocus: () => void;
 }) {
   const dialog = useRef<HTMLDialogElement>(null), closeButton = useRef<HTMLButtonElement>(null);
   const controller = useRef<AbortController | null>(null), messages = useRef<HTMLDivElement>(null), focus = useRef(returnFocus);
@@ -171,9 +179,6 @@ function AssistantDialog({ open, greeting, initialSettings, animate, onAnimate, 
   const [question, setQuestion] = useState(""), [turns, setTurns] = useState<Turn[]>([]);
   const [error, setError] = useState(""), [pending, setPending] = useState(false), [currentQuestion, setCurrentQuestion] = useState("");
   const [settings, setSettings] = useState<Settings | null>(initialSettings ?? null);
-  const [touch, setTouch] = useState(0);
-  const [action, setAction] = useState<CharacterAction>("idle");
-  function perform(next: CharacterAction) { setAction(next); setTouch(value => value + 1); }
 
   useEffect(() => {
     if (initialSettings) return;
@@ -198,12 +203,12 @@ function AssistantDialog({ open, greeting, initialSettings, animate, onAnimate, 
   useEffect(() => { messages.current?.scrollTo({ top: messages.current.scrollHeight }); }, [turns, pending, open]);
 
   function close() { controller.current?.abort(); controller.current = null; setPending(false); setCurrentQuestion(""); onClose(); }
-  function clear() { controller.current?.abort(); controller.current = null; setPending(false); setCurrentQuestion(""); setTurns([]); setQuestion(""); setError(""); }
+  function clear() { controller.current?.abort(); controller.current = null; setPending(false); setCurrentQuestion(""); setTurns([]); setQuestion(""); setError(""); behavior.send({ type: "clear" }); }
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (!settings?.enabled || pending || question.trim().length < 2) return;
     const text = question.trim(), abort = new AbortController(); controller.current = abort;
-    setPending(true); setCurrentQuestion(text); setError("");
+    setPending(true); setCurrentQuestion(text); setError(""); behavior.send({ type: "submit" });
     const timeout = window.setTimeout(() => abort.abort(), 25_000);
     try {
       const response = await fetch("/api/assistant/query", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ question: text, responseMode: "text" }), signal: abort.signal });
@@ -213,8 +218,10 @@ function AssistantDialog({ open, greeting, initialSettings, animate, onAnimate, 
       const result = parseAssistantAnswer(payload.data);
       if (controller.current !== abort) return;
       setTurns(previous => [...previous, { question: text, result }].slice(-6)); setQuestion("");
+      behavior.send({ type: "answer", action: responseAction(text, result) });
     } catch (cause) {
       if (controller.current !== abort) return;
+      behavior.send({ type: "error" });
       setError(abort.signal.aborted ? "等得有点久，请稍后重试。你的问题仍在输入框里。" : cause instanceof Error ? cause.message : "助手暂时不可用，请稍后再试。");
     } finally { window.clearTimeout(timeout); if (controller.current === abort) { controller.current = null; setPending(false); setCurrentQuestion(""); } }
   }
@@ -227,8 +234,8 @@ function AssistantDialog({ open, greeting, initialSettings, animate, onAnimate, 
     else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first?.focus(); }
   }}>
     <header className={styles.header}><div><strong id={`${id}-title`}>小助手</strong><small>AI 回答仅供参考 · 公开文章检索</small></div><div className={styles.headerControls}><button className={styles.motion} type="button" onClick={onAnimate} aria-pressed={!animate}>{animate ? "暂停动作" : "开启动作"}</button><button ref={closeButton} type="button" onClick={close} aria-label="关闭小助手对话">×</button></div></header>
-    <div className={styles.companion}><button type="button" aria-label="让小助手点头" onClick={() => perform("nod")}><span><Character action={pending ? "thinking" : action} small animate={animate} active={open} playId={touch} /></span></button><div className={styles.companionControls}><p>{pending ? "让我找找相关记录…" : turns.length ? "还想了解什么？" : "你好，很高兴见到你！"}</p><div className={styles.actions} aria-label="助手动作">{PLAYFUL_ACTIONS.map(next => <button type="button" key={next} onClick={() => perform(next)} disabled={pending || !animate} aria-label={`播放${CHARACTER_ACTIONS[next].label}动作`}>{CHARACTER_ACTIONS[next].label}</button>)}</div></div></div>
-    <div ref={messages} className={styles.messages} aria-label="对话记录" tabIndex={0}>
+    <div className={styles.companion} data-motion-source="automatic"><div className={styles.companionCharacter}><Character action={open ? behavior.state.action : "idle"} small animate={animate} active={open} playId={behavior.state.playId} once onFinished={behavior.finished} /></div><p>{pending ? "让我找找相关记录…" : turns.length ? "还想了解什么？" : "你好，很高兴见到你！"}</p></div>
+    <div ref={messages} className={styles.messages} aria-label="对话记录" tabIndex={0} onScroll={() => behavior.send({ type: "activity" })}>
       <p className={styles.bubble}>{greeting}</p>
       {!turns.length ? <nav className={styles.explore} aria-label="助手推荐入口"><Link href="/posts" onClick={close}>浏览日志 ↗</Link><Link href="/places" onClick={close}>看看地点 ↗</Link></nav> : null}
       {turns.map((turn, index) => <div key={index}><p className={`${styles.bubble} ${styles.userBubble}`}>{turn.question}</p><article className={styles.bubble}><p>{turn.result.answer}</p>{turn.result.mode === "grounded" ? <small>可信度：{turn.result.confidence === "high" ? "较高" : turn.result.confidence === "medium" ? "中等" : "较低"}</small> : null}{turn.result.sources.length ? <details><summary>参考原文 · {turn.result.sources.length}</summary><ol>{turn.result.sources.map(source => <li key={source.postId}><Link href={source.url} onClick={close}>{source.title} ↗</Link><p>{source.excerpt}</p></li>)}</ol></details> : null}</article></div>)}
@@ -237,6 +244,6 @@ function AssistantDialog({ open, greeting, initialSettings, animate, onAnimate, 
       {error ? <p className={styles.error} role="alert">{error}</p> : null}
       {!settings ? <p role="status">正在连接助手…</p> : !settings.enabled ? <p className={styles.notice}>助手暂不可用，你仍可以浏览日志和地点。</p> : null}
     </div>
-    <form className={styles.form} onSubmit={submit}><label htmlFor={`${id}-question`}>你的问题</label><textarea id={`${id}-question`} value={question} onChange={event => setQuestion(event.target.value)} maxLength={settings?.maxQuestionChars ?? 500} rows={2} disabled={!settings?.enabled || pending} placeholder="想找什么记录？" required minLength={2} /><div className={styles.formMeta}><button type="button" onClick={clear}>清空对话</button><span>{question.length} / {settings?.maxQuestionChars ?? 500}</span><button type="submit" disabled={!settings?.enabled || pending || question.trim().length < 2}>{pending ? "查找中…" : "发送 ↗"}</button></div></form>
+    <form className={styles.form} onSubmit={submit} onPointerDown={() => behavior.send({ type: "activity" })}><label htmlFor={`${id}-question`}>你的问题</label><textarea id={`${id}-question`} value={question} onFocus={() => behavior.send({ type: "activity" })} onChange={event => { setQuestion(event.target.value); behavior.send({ type: "activity" }); }} maxLength={settings?.maxQuestionChars ?? 500} rows={2} disabled={!settings?.enabled || pending} placeholder="想找什么记录？" required minLength={2} /><div className={styles.formMeta}><button type="button" onClick={clear}>清空对话</button><span>{question.length} / {settings?.maxQuestionChars ?? 500}</span><button type="submit" disabled={!settings?.enabled || pending || question.trim().length < 2}>{pending ? "查找中…" : "发送 ↗"}</button></div></form>
   </dialog>;
 }
