@@ -1,0 +1,22 @@
+{
+  "status": "SUCCESS",
+  "commit": "c01e5e83ea475c09fd5ba0e4cebf5cd675e11382",
+  "runId": 37686726842,
+  "url": "https://github.com/eoitsefy/personal-blog/actions/runs/37686726842",
+  "validationJobId": 113016352467,
+  "completedAt": "2026-10-07T21:07:01Z",
+  "checks": [
+    "production dependency audit",
+    "operations script validation",
+    "privacy-safe Nginx tests",
+    "Docker Compose configuration",
+    "unit tests",
+    "PostgreSQL integration",
+    "lint",
+    "typecheck",
+    "production build",
+    "Linux container build",
+    "production container runtime"
+  ],
+  "scope": "Accepted wave application commit. Subsequent documentation-only acceptance records do not change the deployed image."
+}

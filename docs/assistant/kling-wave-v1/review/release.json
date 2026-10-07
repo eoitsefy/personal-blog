@@ -42,5 +42,5 @@
     "A new character or action invalidates art and asset hashes; this acceptance must not automatically authorize another generation.",
     "The rejected nod sample resembles a polite bow. Recommend the separate label 鞠躬致谢 for greeting, thanks or farewell; do not silently substitute it for nod or deploy it without owner authorization."
   ],
-  "productionDeployment": "pending"
+  "productionDeployment": "production-deployment.json"
 }
