@@ -27,5 +27,8 @@
   "newHandPaletteChangedFrames": 31,
   "geometryAlphaAndOutsideMaskPngChanges": 0,
   "additionalGenerationCredits": 0,
-  "productionStatus": "PENDING_DEPLOYMENT_AND_PRODUCTION_BROWSER_CHECKS"
+  "productionStatus": "DEPLOYED_AND_SERVER_AND_BROWSER_CHECKS_PASSED",
+  "productionRecord": "production-deployment.json",
+  "productionBrowserRecord": "browser-production/report.json",
+  "ciRecord": "ci.json"
 }
