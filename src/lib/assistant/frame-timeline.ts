@@ -4,21 +4,23 @@ import { REGISTERED_SHEETS } from "./registered-sheets";
 import { PILOT_SHEETS } from "./pilot-sheets";
 import { LEFT_COLLAR_SHEETS } from "./left-collar-sheets";
 import { BLINK_REFINEMENT_SHEETS, BLINK_DRAWING_TIMES } from "./blink-refinement-sheets";
+import { KLING_WAVE_SHEETS, KLING_WAVE_FPS, KLING_WAVE_FRAME_COUNT, KLING_WAVE_DRAWING_TIMES } from "./kling-wave-sheets";
 
-export const RUNTIME_SHEETS = { ...REGISTERED_SHEETS, ...PILOT_SHEETS, ...LEFT_COLLAR_SHEETS, ...BLINK_REFINEMENT_SHEETS };
-export const CHARACTER_FRAME_VERSION = "original-left-collar-blink-refined-v1";
+export const RUNTIME_SHEETS = { ...REGISTERED_SHEETS, ...PILOT_SHEETS, ...LEFT_COLLAR_SHEETS, ...BLINK_REFINEMENT_SHEETS, ...KLING_WAVE_SHEETS };
+export const CHARACTER_FRAME_VERSION = "original-left-collar-kling-wave-v1";
 type Sheet = keyof typeof RUNTIME_SHEETS;
 export type Drawing = { sheet: Sheet; frame: number };
 export const NEUTRAL_DRAWING: Drawing = { sheet: "pilot-blink", frame: 0 };
 const range = (sheet: Sheet, first: number, last: number): Drawing[] =>
   Array.from({ length: last - first + 1 }, (_, i) => ({ sheet, frame: first + i }));
 // Whole figures: native torso exports with an eye-only contour finish. Breath
-// uses 15 fps, with 30 fps samples around the blink. Legacy actions only gain
+// uses 15 fps, with 30 fps blink samples; the owner-accepted video wave uses
+// 24 fps without geometric blends or limb compositing. Legacy actions only gain
 // the left-collar accessory; their original art history is not re-approved.
 // Every action starts/ends on the exact same canonical original-derived neutral.
 export const DRAWING_SEQUENCES: Record<CharacterAction, readonly Drawing[]> = {
   idle: [NEUTRAL_DRAWING, ...range("pilot-blink", 1, 66), NEUTRAL_DRAWING],
-  wave: [NEUTRAL_DRAWING, ...range("pilot-wave", 1, 35), NEUTRAL_DRAWING],
+  wave: [NEUTRAL_DRAWING, ...range("kling-wave", 1, KLING_WAVE_FRAME_COUNT - 2), NEUTRAL_DRAWING],
   nod: [NEUTRAL_DRAWING, ...range("nod", 0, 11), NEUTRAL_DRAWING],
   thinking: [NEUTRAL_DRAWING, ...range("thinking", 0, 13), ...range("thinking-recovery", 0, 11), NEUTRAL_DRAWING],
   bow: [NEUTRAL_DRAWING, ...range("bow", 0, 17), NEUTRAL_DRAWING],
@@ -28,7 +30,7 @@ export const DRAWING_SEQUENCES: Record<CharacterAction, readonly Drawing[]> = {
 export const FRAME_INTERVAL_MS = 1000 / MOTION_AUTHORING_FPS;
 export const FRAME_BLEND_MS = 24;
 export const isPilotAction = (action: CharacterAction) => action === "idle" || action === "wave";
-export const drawingDuration = (action: CharacterAction) => action === "idle" ? 4000 : action === "wave" ? 3000 : CHARACTER_ACTIONS[action].duration;
+export const drawingDuration = (action: CharacterAction) => action === "idle" ? 4000 : action === "wave" ? KLING_WAVE_FRAME_COUNT / KLING_WAVE_FPS * 1000 : CHARACTER_ACTIONS[action].duration;
 export function drawingKey(drawing: Drawing) { return `${drawing.sheet}:${drawing.frame}`; }
 export function drawingPose(drawing: Drawing) {
   const sheet = RUNTIME_SHEETS[drawing.sheet];
@@ -43,6 +45,7 @@ export function drawingPose(drawing: Drawing) {
 }
 export function drawingTimes(action: CharacterAction) {
   if (action === "idle") return BLINK_DRAWING_TIMES;
+  if (action === "wave") return KLING_WAVE_DRAWING_TIMES;
   // Neutral resting holds are intentional, not counted as newly drawn poses.
   return DRAWING_SEQUENCES[action].map((_, index) => index === 0 ? 0 :
     index * FRAME_INTERVAL_MS);

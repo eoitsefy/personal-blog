@@ -1,0 +1,46 @@
+{
+  "status": "OWNER_ACCEPTED_AND_TECHNICAL_GATES_PASSED",
+  "characterVersion": "original-left-collar-kling-wave-v1",
+  "assetScopeSha256": "92e49f47e9bb2b64c9cbb945ad63656df57dc63298ed9eb675d8f451cf5cb70c",
+  "frameScopeSha256": "9fa49967dd2d15a06fabe9d7d68aba1237fd2095f947500fef417ea2e2e23be1",
+  "ownerAcceptedAction": "wave",
+  "ownerMessage": "挥手样片可以通过并部署上线",
+  "acceptedKnownVariation": "The provider-generated wave includes a short blink around 3.33 seconds; retained after explicit owner acceptance.",
+  "otherActionsAuthorized": false,
+  "visualReview": {
+    "scope": "Complete actual-canvas 121-slot contact sheets on light/dark backgrounds plus native critical arm/blink frames.",
+    "backgroundTransparent": true,
+    "limbsRemainConnected": true,
+    "fixedViewportAndCrop": true,
+    "noLayeredArmCompositing": true,
+    "unrelatedLegacyArtReapproved": false
+  },
+  "tests": {
+    "trackedUnitTestsInIndependentDirectory": {"total": 194, "passed": 193, "skipped": 1, "failed": 0},
+    "latestTimingAndAssetTests": {"passed": 6, "failed": 0},
+    "targetedLint": "passed",
+    "typecheck": "passed",
+    "isolatedWebpackBuild": "passed; existing missing-DATABASE_URL admin prerender diagnostic did not fail the build; no production database connection made",
+    "browserReport": "browser-local/report.json",
+    "browserWidths": [1280, 768, 390, 320],
+    "posesPerWidth": 302,
+    "maxObservedBootMidpointDriftInStagePixels": 0.9333333333333371,
+    "runtimeCanvasCacheLimit": 8,
+    "reducedMotionAndFallback": true,
+    "modelRequestsMade": 0
+  },
+  "workflow": [
+    "Retain hash-bound original video with provider AIGC metadata; same original PNG used as first and last frame.",
+    "Losslessly decode the 24 fps MP4 to 121 PNGs with ffmpeg -fps_mode passthrough.",
+    "Run python scripts/animation/prepare-kling-matte.py against the external sample folder; inspect black-matte cutouts without painting or splitting limbs.",
+    "Run node scripts/animation/prepare-kling-wave.mjs against the same folder; fixed crop, uniform scale, alpha-lossless quality-92 static WebP with AI origin in XMP.",
+    "Bind runtime timeline, source hashes, whole-canvas light/dark review and actual browser bytes. Keep exact existing neutral at both endpoints.",
+    "Build and deploy only the accepted wave; back up application, database, uploads, ACLs and environment before replacing the app container. Keep all other actions unchanged."
+  ],
+  "reuseLimits": [
+    "This matte is validated only for this black-background character clip. Different backgrounds or low-contrast black clothing require new matte review.",
+    "A new character or action invalidates art and asset hashes; this acceptance must not automatically authorize another generation.",
+    "The rejected nod sample resembles a polite bow. Recommend the separate label 鞠躬致谢 for greeting, thanks or farewell; do not silently substitute it for nod or deploy it without owner authorization."
+  ],
+  "productionDeployment": "pending"
+}

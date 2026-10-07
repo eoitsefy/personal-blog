@@ -6,7 +6,8 @@ import {createHash} from 'node:crypto';
 import {CHARACTER_ACTIONS} from '../src/lib/assistant/character.ts';
 import {CHARACTER_FRAME_VERSION,DRAWING_SEQUENCES,NEUTRAL_DRAWING,isPilotAction,drawingKey,drawingTimes,FRAME_BLEND_MS} from '../src/lib/assistant/frame-timeline.ts';
 const base=process.env.TEST_BASE_URL || 'http://127.0.0.1:3220';
-const manifest=JSON.parse(await readFile('docs/assistant/blink-refinement-v1/candidate.json','utf8'));
+const manifest=JSON.parse(await readFile('docs/assistant/kling-wave-v1/manifest.json','utf8'));
+const blinkManifest=JSON.parse(await readFile('docs/assistant/blink-refinement-v1/candidate.json','utf8'));
 const assets=[manifest.asset,...Object.values(manifest.keptAssets)];
 const expectedHashes=new Map(assets.map(a=>[a.src,a.sha256]));
 const hash=b=>createHash('sha256').update(b).digest('hex');
@@ -50,7 +51,7 @@ try{
   const dialog=page.getByRole('dialog',{name:'小助手',exact:true}),character=dialog.locator('[data-action]'),canvas=character.locator('canvas');
   await page.waitForSelector('dialog canvas[data-ready=true]');
   assert.equal(await character.getAttribute('data-character-version'),CHARACTER_FRAME_VERSION);
-  assert.deepEqual([...requested].sort(),[manifest.asset.src]);
+  assert.deepEqual([...requested].sort(),[manifest.keptAssets.idle.src]);
   await canvas.evaluate(el=>{el.dataset.instance='persistent-canvas';});
   const box=await character.boundingBox(),neutral=await seek(canvas,0),gallery=[];let checked=0,maxDrift=0;
   if(width===1280){
@@ -62,7 +63,7 @@ try{
      await new Promise(resolve=>{function sample(now){maxPaintGap=Math.max(maxPaintGap,now-last);last=now;const time=Number(a.currentTime??0),pose=el.dataset.pose;if(pose!==previous){changes.push({time,pose});previous=pose;}if(time>=loops*4000){a.pause();resolve();}else requestAnimationFrame(sample);}requestAnimationFrame(sample);});
      return{rate,loops,maxPaintGap,stopTime:Number(a.currentTime),changes};
     },{rate,loops});
-    for(let cycle=0;cycle<loops;cycle++)for(let i=0;i<manifest.indices.length;i++)if(manifest.indices[i]>=36&&manifest.indices[i]<=50)assert.ok(observed.changes.some(p=>p.time>=cycle*4000&&p.time<(cycle+1)*4000&&p.pose===`pilot-blink:${i}`),'Real playback skipped a blink sample');
+    for(let cycle=0;cycle<loops;cycle++)for(let i=0;i<blinkManifest.indices.length;i++)if(blinkManifest.indices[i]>=36&&blinkManifest.indices[i]<=50)assert.ok(observed.changes.some(p=>p.time>=cycle*4000&&p.time<(cycle+1)*4000&&p.pose===`pilot-blink:${i}`),'Real playback skipped a blink sample');
     playback.push(observed);
    }
   }
@@ -73,7 +74,7 @@ try{
    assert.equal((await seek(canvas,0)).alphaHash,neutral.alphaHash,'Exact neutral silhouette required');
    const times=drawingTimes(action),seen=[];
    for(let i=0;i<times.length;i++){
-    const p=await seek(canvas,times[i]+FRAME_BLEND_MS+1);seen.push(p.pose);checked++;
+    const p=await seek(canvas,times[i]+(isPilotAction(action)?1:FRAME_BLEND_MS+1));seen.push(p.pose);checked++;
     assert.ok(Number(await canvas.getAttribute('data-cached-poses'))<=8,'Display bitmap cache exceeds mobile budget');
     assert.ok(p.top>=7 && p.bottom<=217 && p.left>=8 && p.right<=216,`${action}/${i}: clipped or adjacent art ${JSON.stringify({...p,image:undefined})}`);
     maxDrift=Math.max(maxDrift,Math.abs(p.footCentre-112));assert.ok(Math.abs(p.footCentre-112)<=1.25,`${action}/${i}: boot midpoint drift (${p.footCentre})`);
@@ -107,7 +108,7 @@ try{
   results.push({width,dpr,poses:checked,sharedNeutral:true,persistentCanvas:true,maxBootMidpointDrift:maxDrift,fixedViewport:true,hiDpi:true,actualAssetHashesVerified:true,resourceSha256:Object.fromEntries([...received].sort().map(p=>[p,expectedHashes.get(p)]))});await context.close();
  }
  const reduced=await browser.newContext({viewport:{width:390,height:844},reducedMotion:'reduce'}),page=await reduced.newPage();await page.goto(base+'/assistant');await page.waitForSelector('canvas[data-ready=true]');assert.equal(await page.locator('canvas').evaluate(el=>el.getAnimations().length),0);assert.equal(await page.locator('canvas').getAttribute('data-pose'),drawingKey(NEUTRAL_DRAWING));await reduced.close();
- const fallback=await browser.newContext();await fallback.route('**'+manifest.asset.src,r=>r.abort());const f=await fallback.newPage();await f.goto(base+'/assistant');await f.waitForSelector('img[src*="chibi-neutral-left-collar-v4"]');
+ const fallback=await browser.newContext();await fallback.route('**'+manifest.keptAssets.idle.src,r=>r.abort());const f=await fallback.newPage();await f.goto(base+'/assistant');await f.waitForSelector('img[src*="chibi-neutral-left-collar-v4"]');
  await f.locator('img[src*="chibi-neutral-left-collar-v4"]').evaluate(async img=>{await img.decode();if(!(img.naturalWidth>0&&img.naturalWidth===img.naturalHeight))throw Error('Fallback artwork did not decode');});
  const fallbackResponse=await fallback.request.get(base+manifest.keptAssets.fallback.src);assert.equal(fallbackResponse.status(),200);const fallbackSha256=hash(await fallbackResponse.body());assert.equal(fallbackSha256,manifest.keptAssets.fallback.sha256);await fallback.close();
  assert.deepEqual(errors,[]);const report={accepted:true,characterVersion:CHARACTER_FRAME_VERSION,assetScopeSha256,frameScopeSha256:manifest.frameScopeSha256,noAIRequests:true,reducedMotion:true,fallback:true,fallbackDecoded:true,fallbackSha256,bitmapCacheLimit:8,actualAssetHashesVerified:true,playback,results};await writeFile(`${output}/report.json`,JSON.stringify(report,null,2));console.log(JSON.stringify({...report,playback:playback.map(p=>({...p,changes:p.changes.length}))},null,2));

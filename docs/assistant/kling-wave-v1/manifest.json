@@ -1,0 +1,1704 @@
+{
+  "version": 1,
+  "status": "OWNER_ACCEPTED_WAVE_PENDING_TECHNICAL_RELEASE",
+  "ownerAcceptance": {
+    "scope": [
+      "wave"
+    ],
+    "sourceVideoSha256": "0f1495e856a10445ef705c57bb4faf974925a1b5868b0184a6aaa3218c6b911e",
+    "extraBlinkAccepted": true,
+    "otherActionsAuthorized": false
+  },
+  "source": {
+    "videoSha256": "0f1495e856a10445ef705c57bb4faf974925a1b5868b0184a6aaa3218c6b911e",
+    "referenceSha256": "9d102b3251940dbd3e1a8e2c8437b5fd719b0312bdff674329b2ee6e9337d091",
+    "provider": "Kling Video 3.0",
+    "produceId": "HB1_PROD_ai_web_323375346120805",
+    "originalAigcMetadataRetained": true,
+    "originalFile": "external/wave-original.mp4"
+  },
+  "processing": {
+    "wholeFrame": true,
+    "limbCompositing": false,
+    "interpolation": false,
+    "fps": 24,
+    "sourceFrameCount": 121,
+    "durationMs": 5041.666666666667,
+    "sourceCrop": {
+      "left": 180,
+      "top": 153,
+      "width": 366,
+      "height": 460
+    },
+    "uniformScale": 0.6666666666666666,
+    "fixedRuntimeAnchor": {"x": 136, "y": 305},
+    "alphaMethod": "border-connected black background with enclosed dark ink preservation",
+    "platformMarksOutsideCharacterRoi": true,
+    "aiOriginInDerivativeXmp": true,
+    "neutralEndpointSource": "existing canonical idle frame",
+    "webpQuality": 92,
+    "alphaLossless": true,
+    "maxOpaqueRgbMeanError": 2.702494835531543
+  },
+  "asset": {
+    "src": "/assistant/chibi-wave-kling-v1.webp",
+    "width": 1464,
+    "height": 6468,
+    "bytes": 1988146,
+    "sha256": "5e78bcd1c66f0abd8c1acdc5466976b7d56d3b0e6842155c37cb7dc67919148f",
+    "columns": 6,
+    "tileWidth": 244,
+    "tileHeight": 308,
+    "frames": 121
+  },
+  "keptAssets": {
+    "idle": {
+      "src": "/assistant/chibi-idle-blink-refined-v1.webp",
+      "width": 2196,
+      "height": 5520,
+      "bytes": 4615062,
+      "sha256": "4c4af5f206d67366e76eeff7a57eecea37b43302564601e3051a04f7a68ceeb3"
+    },
+    "nod": {
+      "src": "/assistant/chibi-nod-left-collar-v5.webp",
+      "width": 1448,
+      "height": 1086,
+      "scale": 0.5902578796561605,
+      "frames": 12,
+      "bytes": 928832,
+      "sha256": "91030a3348a780d04af6778bef463c73216ca4b0dae216bb2822ca3e671408f0",
+      "sourceSrc": "/assistant/chibi-nod-inbetweens-v5.png",
+      "sourceSha256": "f44fceceb5362ac61cd24ac6d2c8e848150f20821de0f7738bd174aab5a83136",
+      "placements": [
+        {
+          "index": 0,
+          "left": 259,
+          "top": 211,
+          "width": 10,
+          "height": 29,
+          "necklineShift": 0
+        },
+        {
+          "index": 1,
+          "left": 594,
+          "top": 212,
+          "width": 10,
+          "height": 29,
+          "necklineShift": 0.7818100358422938
+        },
+        {
+          "index": 2,
+          "left": 928,
+          "top": 212,
+          "width": 10,
+          "height": 29,
+          "necklineShift": 1.5636200716845876
+        },
+        {
+          "index": 3,
+          "left": 1263,
+          "top": 214,
+          "width": 10,
+          "height": 29,
+          "necklineShift": 3.127240143369175
+        },
+        {
+          "index": 4,
+          "left": 259,
+          "top": 577,
+          "width": 10,
+          "height": 29,
+          "necklineShift": 4.690860215053763
+        },
+        {
+          "index": 5,
+          "left": 595,
+          "top": 577,
+          "width": 10,
+          "height": 29,
+          "necklineShift": 6.25448028673835
+        },
+        {
+          "index": 6,
+          "left": 928,
+          "top": 578,
+          "width": 10,
+          "height": 29,
+          "necklineShift": 7.818100358422938
+        },
+        {
+          "index": 7,
+          "left": 1263,
+          "top": 577,
+          "width": 10,
+          "height": 29,
+          "necklineShift": 6.25448028673835
+        },
+        {
+          "index": 8,
+          "left": 258,
+          "top": 917,
+          "width": 10,
+          "height": 29,
+          "necklineShift": 4.690860215053763
+        },
+        {
+          "index": 9,
+          "left": 594,
+          "top": 915,
+          "width": 10,
+          "height": 29,
+          "necklineShift": 3.127240143369175
+        },
+        {
+          "index": 10,
+          "left": 928,
+          "top": 913,
+          "width": 10,
+          "height": 29,
+          "necklineShift": 1.5636200716845876
+        },
+        {
+          "index": 11,
+          "left": 1262,
+          "top": 912,
+          "width": 10,
+          "height": 29,
+          "necklineShift": 0
+        }
+      ]
+    },
+    "thinking": {
+      "src": "/assistant/chibi-thinking-left-collar-v5.webp",
+      "width": 1254,
+      "height": 1254,
+      "scale": 0.6776315789473685,
+      "frames": 24,
+      "bytes": 1548212,
+      "sha256": "769d6800ebaf9f49e467601555f3ccfee5b5852ae9b74f67ea052439125e18f0",
+      "sourceSrc": "/assistant/chibi-thinking-inbetweens-v5.png",
+      "sourceSha256": "d6da7c84afb14f1f95bcb66e7b1ec729073a7aa36d91841b864c521d515de4e2",
+      "placements": [
+        {
+          "index": 0,
+          "left": 144,
+          "top": 187,
+          "width": 9,
+          "height": 25,
+          "necklineShift": 0
+        },
+        {
+          "index": 1,
+          "left": 349,
+          "top": 187,
+          "width": 9,
+          "height": 25,
+          "necklineShift": 0
+        },
+        {
+          "index": 2,
+          "left": 554,
+          "top": 187,
+          "width": 9,
+          "height": 25,
+          "necklineShift": 0
+        },
+        {
+          "index": 3,
+          "left": 760,
+          "top": 187,
+          "width": 9,
+          "height": 25,
+          "necklineShift": 0
+        },
+        {
+          "index": 4,
+          "left": 969,
+          "top": 187,
+          "width": 9,
+          "height": 25,
+          "necklineShift": 0
+        },
+        {
+          "index": 5,
+          "left": 1177,
+          "top": 188,
+          "width": 9,
+          "height": 25,
+          "necklineShift": 0.6810035842293907
+        },
+        {
+          "index": 6,
+          "left": 144,
+          "top": 505,
+          "width": 9,
+          "height": 25,
+          "necklineShift": 0.6810035842293907
+        },
+        {
+          "index": 7,
+          "left": 349,
+          "top": 505,
+          "width": 9,
+          "height": 25,
+          "necklineShift": 1.3620071684587813
+        },
+        {
+          "index": 8,
+          "left": 554,
+          "top": 506,
+          "width": 9,
+          "height": 25,
+          "necklineShift": 2.043010752688172
+        },
+        {
+          "index": 9,
+          "left": 760,
+          "top": 506,
+          "width": 9,
+          "height": 25,
+          "necklineShift": 2.043010752688172
+        },
+        {
+          "index": 10,
+          "left": 968,
+          "top": 506,
+          "width": 9,
+          "height": 25,
+          "necklineShift": 2.043010752688172
+        },
+        {
+          "index": 11,
+          "left": 1177,
+          "top": 506,
+          "width": 9,
+          "height": 25,
+          "necklineShift": 2.043010752688172
+        },
+        {
+          "index": 12,
+          "left": 145,
+          "top": 822,
+          "width": 9,
+          "height": 25,
+          "necklineShift": 2.043010752688172
+        },
+        {
+          "index": 13,
+          "left": 349,
+          "top": 820,
+          "width": 9,
+          "height": 25,
+          "necklineShift": 1.3620071684587813
+        },
+        {
+          "index": 14,
+          "left": 554,
+          "top": 819,
+          "width": 9,
+          "height": 25,
+          "necklineShift": 0
+        },
+        {
+          "index": 15,
+          "left": 761,
+          "top": 819,
+          "width": 9,
+          "height": 25,
+          "necklineShift": 0
+        },
+        {
+          "index": 16,
+          "left": 968,
+          "top": 819,
+          "width": 9,
+          "height": 25,
+          "necklineShift": 0
+        },
+        {
+          "index": 17,
+          "left": 1178,
+          "top": 820,
+          "width": 9,
+          "height": 25,
+          "necklineShift": 0
+        },
+        {
+          "index": 18,
+          "left": 145,
+          "top": 1115,
+          "width": 9,
+          "height": 25,
+          "necklineShift": 0
+        },
+        {
+          "index": 19,
+          "left": 349,
+          "top": 1115,
+          "width": 9,
+          "height": 25,
+          "necklineShift": 0
+        },
+        {
+          "index": 20,
+          "left": 554,
+          "top": 1115,
+          "width": 9,
+          "height": 25,
+          "necklineShift": 0
+        },
+        {
+          "index": 21,
+          "left": 761,
+          "top": 1115,
+          "width": 9,
+          "height": 25,
+          "necklineShift": 0
+        },
+        {
+          "index": 22,
+          "left": 970,
+          "top": 1115,
+          "width": 9,
+          "height": 25,
+          "necklineShift": 0
+        },
+        {
+          "index": 23,
+          "left": 1177,
+          "top": 1115,
+          "width": 9,
+          "height": 25,
+          "necklineShift": 0
+        }
+      ]
+    },
+    "thinking-recovery": {
+      "src": "/assistant/chibi-thinking-recovery-left-collar-v5.webp",
+      "width": 1448,
+      "height": 1086,
+      "scale": 0.5852272727272727,
+      "frames": 12,
+      "bytes": 1022634,
+      "sha256": "af22821609bc800ef37ca405c0d7d201aeffa7cb3135b10c705732519cd500cd",
+      "sourceSrc": "/assistant/chibi-thinking-recovery-inbetweens-v5.png",
+      "sourceSha256": "08dfcf4685b267a2f620371f41bd4a9714775cf40b771363704a0ab07e947fef",
+      "placements": [
+        {
+          "index": 0,
+          "left": 275,
+          "top": 205,
+          "width": 10,
+          "height": 29,
+          "necklineShift": 1.5770609318996416
+        },
+        {
+          "index": 1,
+          "left": 599,
+          "top": 205,
+          "width": 10,
+          "height": 29,
+          "necklineShift": 1.5770609318996416
+        },
+        {
+          "index": 2,
+          "left": 918,
+          "top": 205,
+          "width": 10,
+          "height": 29,
+          "necklineShift": 1.5770609318996416
+        },
+        {
+          "index": 3,
+          "left": 1240,
+          "top": 204,
+          "width": 10,
+          "height": 29,
+          "necklineShift": 0.7885304659498208
+        },
+        {
+          "index": 4,
+          "left": 279,
+          "top": 564,
+          "width": 10,
+          "height": 29,
+          "necklineShift": 0.7885304659498208
+        },
+        {
+          "index": 5,
+          "left": 604,
+          "top": 564,
+          "width": 10,
+          "height": 29,
+          "necklineShift": 0.7885304659498208
+        },
+        {
+          "index": 6,
+          "left": 920,
+          "top": 565,
+          "width": 10,
+          "height": 29,
+          "necklineShift": 0.7885304659498208
+        },
+        {
+          "index": 7,
+          "left": 1241,
+          "top": 564,
+          "width": 10,
+          "height": 29,
+          "necklineShift": 0
+        },
+        {
+          "index": 8,
+          "left": 276,
+          "top": 925,
+          "width": 10,
+          "height": 29,
+          "necklineShift": 0
+        },
+        {
+          "index": 9,
+          "left": 603,
+          "top": 925,
+          "width": 10,
+          "height": 29,
+          "necklineShift": 0
+        },
+        {
+          "index": 10,
+          "left": 918,
+          "top": 926,
+          "width": 10,
+          "height": 29,
+          "necklineShift": 0
+        },
+        {
+          "index": 11,
+          "left": 1241,
+          "top": 925,
+          "width": 10,
+          "height": 29,
+          "necklineShift": 0
+        }
+      ]
+    },
+    "bow": {
+      "src": "/assistant/chibi-bow-left-collar-v5.webp",
+      "width": 1774,
+      "height": 887,
+      "scale": 0.71280276816609,
+      "frames": 18,
+      "bytes": 1053340,
+      "sha256": "a5e71f2aa9d779fcf0bda11d933e6fd6ff601643fa209e9daac939bc2677de9a",
+      "sourceSrc": "/assistant/chibi-bow-inbetweens-v5.png",
+      "sourceSha256": "4b28d3944567a8628e3f6a17bebfe5d5ba678da143b6b0fbf1a972719b3153a1",
+      "placements": [
+        {
+          "index": 0,
+          "left": 199,
+          "top": 174,
+          "width": 8,
+          "height": 24,
+          "necklineShift": 0
+        },
+        {
+          "index": 1,
+          "left": 495,
+          "top": 175,
+          "width": 8,
+          "height": 24,
+          "necklineShift": 1.2948028673835124
+        },
+        {
+          "index": 2,
+          "left": 789,
+          "top": 178,
+          "width": 8,
+          "height": 24,
+          "necklineShift": 3.884408602150537
+        },
+        {
+          "index": 3,
+          "left": 1073,
+          "top": 180,
+          "width": 8,
+          "height": 24,
+          "necklineShift": 5.826612903225806
+        },
+        {
+          "index": 4,
+          "left": 1362,
+          "top": 182,
+          "width": 8,
+          "height": 24,
+          "necklineShift": 8.41621863799283
+        },
+        {
+          "index": 5,
+          "left": 1649,
+          "top": 186,
+          "width": 8,
+          "height": 24,
+          "necklineShift": 12.300627240143367
+        },
+        {
+          "index": 6,
+          "left": 200,
+          "top": 485,
+          "width": 8,
+          "height": 24,
+          "necklineShift": 18.12724014336917
+        },
+        {
+          "index": 7,
+          "left": 496,
+          "top": 491,
+          "width": 8,
+          "height": 24,
+          "necklineShift": 22.659050179211466
+        },
+        {
+          "index": 8,
+          "left": 789,
+          "top": 496,
+          "width": 8,
+          "height": 24,
+          "necklineShift": 27.838261648745515
+        },
+        {
+          "index": 9,
+          "left": 1074,
+          "top": 498,
+          "width": 8,
+          "height": 24,
+          "necklineShift": 29.780465949820783
+        },
+        {
+          "index": 10,
+          "left": 1365,
+          "top": 494,
+          "width": 8,
+          "height": 24,
+          "necklineShift": 25.896057347670247
+        },
+        {
+          "index": 11,
+          "left": 1648,
+          "top": 489,
+          "width": 8,
+          "height": 24,
+          "necklineShift": 21.364247311827953
+        },
+        {
+          "index": 12,
+          "left": 201,
+          "top": 766,
+          "width": 8,
+          "height": 24,
+          "necklineShift": 16.185035842293903
+        },
+        {
+          "index": 13,
+          "left": 496,
+          "top": 760,
+          "width": 8,
+          "height": 24,
+          "necklineShift": 10.358422939068099
+        },
+        {
+          "index": 14,
+          "left": 789,
+          "top": 756,
+          "width": 8,
+          "height": 24,
+          "necklineShift": 6.474014336917562
+        },
+        {
+          "index": 15,
+          "left": 1076,
+          "top": 753,
+          "width": 8,
+          "height": 24,
+          "necklineShift": 3.237007168458781
+        },
+        {
+          "index": 16,
+          "left": 1363,
+          "top": 751,
+          "width": 8,
+          "height": 24,
+          "necklineShift": 1.2948028673835124
+        },
+        {
+          "index": 17,
+          "left": 1648,
+          "top": 750,
+          "width": 8,
+          "height": 24,
+          "necklineShift": 0
+        }
+      ]
+    },
+    "cheer": {
+      "src": "/assistant/chibi-cheer-left-collar-v5.webp",
+      "width": 1254,
+      "height": 1254,
+      "scale": 0.555256064690027,
+      "frames": 15,
+      "bytes": 1314886,
+      "sha256": "da4cf1a72b35c35eb25fd8ea40d25e3f8653332282c54f34e0d0e6871045971f",
+      "sourceSrc": "/assistant/chibi-cheer-inbetweens-v5.png",
+      "sourceSha256": "276419aed2f97762b113264143965a384b237ecef76fb724ea6f7f66e289ea8f",
+      "placements": [
+        {
+          "index": 0,
+          "left": 194,
+          "top": 235,
+          "width": 11,
+          "height": 31,
+          "necklineShift": 0
+        },
+        {
+          "index": 1,
+          "left": 431,
+          "top": 235,
+          "width": 11,
+          "height": 31,
+          "necklineShift": 0
+        },
+        {
+          "index": 2,
+          "left": 672,
+          "top": 235,
+          "width": 11,
+          "height": 31,
+          "necklineShift": 0
+        },
+        {
+          "index": 3,
+          "left": 918,
+          "top": 235,
+          "width": 11,
+          "height": 31,
+          "necklineShift": 0
+        },
+        {
+          "index": 4,
+          "left": 1168,
+          "top": 235,
+          "width": 11,
+          "height": 31,
+          "necklineShift": 0
+        },
+        {
+          "index": 5,
+          "left": 192,
+          "top": 637,
+          "width": 11,
+          "height": 31,
+          "necklineShift": 0
+        },
+        {
+          "index": 6,
+          "left": 435,
+          "top": 637,
+          "width": 11,
+          "height": 31,
+          "necklineShift": 0
+        },
+        {
+          "index": 7,
+          "left": 673,
+          "top": 637,
+          "width": 11,
+          "height": 31,
+          "necklineShift": 0
+        },
+        {
+          "index": 8,
+          "left": 919,
+          "top": 637,
+          "width": 11,
+          "height": 31,
+          "necklineShift": 0
+        },
+        {
+          "index": 9,
+          "left": 1168,
+          "top": 637,
+          "width": 11,
+          "height": 31,
+          "necklineShift": 0
+        },
+        {
+          "index": 10,
+          "left": 193,
+          "top": 1038,
+          "width": 11,
+          "height": 31,
+          "necklineShift": 0
+        },
+        {
+          "index": 11,
+          "left": 434,
+          "top": 1038,
+          "width": 11,
+          "height": 31,
+          "necklineShift": 0
+        },
+        {
+          "index": 12,
+          "left": 671,
+          "top": 1038,
+          "width": 11,
+          "height": 31,
+          "necklineShift": 0
+        },
+        {
+          "index": 13,
+          "left": 919,
+          "top": 1038,
+          "width": 11,
+          "height": 31,
+          "necklineShift": 0
+        },
+        {
+          "index": 14,
+          "left": 1167,
+          "top": 1038,
+          "width": 11,
+          "height": 31,
+          "necklineShift": 0
+        }
+      ]
+    },
+    "yawn": {
+      "src": "/assistant/chibi-yawn-left-collar-v5.webp",
+      "width": 1236,
+      "height": 1272,
+      "scale": 0.762962962962963,
+      "frames": 24,
+      "bytes": 1347802,
+      "sha256": "94d1ef212414b1ac68c5514beef40f4bbc80c919bb85205fe768f2617aaeb0bb",
+      "sourceSrc": "/assistant/chibi-yawn-inbetweens-v5.png",
+      "sourceSha256": "71c7728528e974bd46ef2c4c2c1ac3faec1a2374e2925775b46a70d42f11c4a8",
+      "placements": [
+        {
+          "index": 0,
+          "left": 146,
+          "top": 158,
+          "width": 8,
+          "height": 22,
+          "necklineShift": 0
+        },
+        {
+          "index": 1,
+          "left": 344,
+          "top": 158,
+          "width": 8,
+          "height": 22,
+          "necklineShift": 0
+        },
+        {
+          "index": 2,
+          "left": 542,
+          "top": 158,
+          "width": 8,
+          "height": 22,
+          "necklineShift": 0
+        },
+        {
+          "index": 3,
+          "left": 741,
+          "top": 158,
+          "width": 8,
+          "height": 22,
+          "necklineShift": 0
+        },
+        {
+          "index": 4,
+          "left": 941,
+          "top": 159,
+          "width": 8,
+          "height": 22,
+          "necklineShift": 0.6048387096774194
+        },
+        {
+          "index": 5,
+          "left": 1141,
+          "top": 160,
+          "width": 8,
+          "height": 22,
+          "necklineShift": 1.2096774193548387
+        },
+        {
+          "index": 6,
+          "left": 146,
+          "top": 435,
+          "width": 8,
+          "height": 22,
+          "necklineShift": 1.814516129032258
+        },
+        {
+          "index": 7,
+          "left": 345,
+          "top": 436,
+          "width": 8,
+          "height": 22,
+          "necklineShift": 2.4193548387096775
+        },
+        {
+          "index": 8,
+          "left": 545,
+          "top": 436,
+          "width": 8,
+          "height": 22,
+          "necklineShift": 3.024193548387097
+        },
+        {
+          "index": 9,
+          "left": 744,
+          "top": 437,
+          "width": 8,
+          "height": 22,
+          "necklineShift": 3.629032258064516
+        },
+        {
+          "index": 10,
+          "left": 944,
+          "top": 437,
+          "width": 8,
+          "height": 22,
+          "necklineShift": 3.629032258064516
+        },
+        {
+          "index": 11,
+          "left": 1142,
+          "top": 437,
+          "width": 8,
+          "height": 22,
+          "necklineShift": 3.629032258064516
+        },
+        {
+          "index": 12,
+          "left": 148,
+          "top": 711,
+          "width": 8,
+          "height": 22,
+          "necklineShift": 3.629032258064516
+        },
+        {
+          "index": 13,
+          "left": 346,
+          "top": 711,
+          "width": 8,
+          "height": 22,
+          "necklineShift": 3.629032258064516
+        },
+        {
+          "index": 14,
+          "left": 546,
+          "top": 711,
+          "width": 8,
+          "height": 22,
+          "necklineShift": 3.629032258064516
+        },
+        {
+          "index": 15,
+          "left": 745,
+          "top": 711,
+          "width": 8,
+          "height": 22,
+          "necklineShift": 3.629032258064516
+        },
+        {
+          "index": 16,
+          "left": 946,
+          "top": 710,
+          "width": 8,
+          "height": 22,
+          "necklineShift": 3.024193548387097
+        },
+        {
+          "index": 17,
+          "left": 1143,
+          "top": 710,
+          "width": 8,
+          "height": 22,
+          "necklineShift": 2.4193548387096775
+        },
+        {
+          "index": 18,
+          "left": 148,
+          "top": 984,
+          "width": 8,
+          "height": 22,
+          "necklineShift": 1.814516129032258
+        },
+        {
+          "index": 19,
+          "left": 346,
+          "top": 984,
+          "width": 8,
+          "height": 22,
+          "necklineShift": 1.2096774193548387
+        },
+        {
+          "index": 20,
+          "left": 544,
+          "top": 982,
+          "width": 8,
+          "height": 22,
+          "necklineShift": 0
+        },
+        {
+          "index": 21,
+          "left": 742,
+          "top": 982,
+          "width": 8,
+          "height": 22,
+          "necklineShift": 0
+        },
+        {
+          "index": 22,
+          "left": 942,
+          "top": 982,
+          "width": 8,
+          "height": 22,
+          "necklineShift": 0
+        },
+        {
+          "index": 23,
+          "left": 1142,
+          "top": 982,
+          "width": 8,
+          "height": 22,
+          "necklineShift": 0
+        }
+      ]
+    },
+    "yawn-recovery": {
+      "src": "/assistant/chibi-yawn-recovery-left-collar-v5.webp",
+      "width": 1254,
+      "height": 1254,
+      "scale": 0.5435356200527705,
+      "frames": 12,
+      "bytes": 1121176,
+      "sha256": "058c571e639f5706cf22784efae174b3fba6cc4a1b17c4d22f6f0cbf6bcd708c",
+      "sourceSrc": "/assistant/chibi-yawn-recovery-inbetweens-v5.png",
+      "sourceSha256": "d01ac335b8037a947e721d51397af49984705902824541511e5dacbf6024334c",
+      "placements": [
+        {
+          "index": 0,
+          "left": 208,
+          "top": 235,
+          "width": 11,
+          "height": 31,
+          "necklineShift": 1.6980286738351253
+        },
+        {
+          "index": 1,
+          "left": 522,
+          "top": 235,
+          "width": 11,
+          "height": 31,
+          "necklineShift": 1.6980286738351253
+        },
+        {
+          "index": 2,
+          "left": 835,
+          "top": 234,
+          "width": 11,
+          "height": 31,
+          "necklineShift": 0.8490143369175627
+        },
+        {
+          "index": 3,
+          "left": 1149,
+          "top": 234,
+          "width": 11,
+          "height": 31,
+          "necklineShift": 0.8490143369175627
+        },
+        {
+          "index": 4,
+          "left": 208,
+          "top": 652,
+          "width": 11,
+          "height": 31,
+          "necklineShift": 0.8490143369175627
+        },
+        {
+          "index": 5,
+          "left": 522,
+          "top": 651,
+          "width": 11,
+          "height": 31,
+          "necklineShift": 0
+        },
+        {
+          "index": 6,
+          "left": 835,
+          "top": 651,
+          "width": 11,
+          "height": 31,
+          "necklineShift": 0
+        },
+        {
+          "index": 7,
+          "left": 1149,
+          "top": 651,
+          "width": 11,
+          "height": 31,
+          "necklineShift": 0
+        },
+        {
+          "index": 8,
+          "left": 208,
+          "top": 1069,
+          "width": 11,
+          "height": 31,
+          "necklineShift": 0
+        },
+        {
+          "index": 9,
+          "left": 522,
+          "top": 1069,
+          "width": 11,
+          "height": 31,
+          "necklineShift": 0
+        },
+        {
+          "index": 10,
+          "left": 835,
+          "top": 1069,
+          "width": 11,
+          "height": 31,
+          "necklineShift": 0
+        },
+        {
+          "index": 11,
+          "left": 1149,
+          "top": 1069,
+          "width": 11,
+          "height": 31,
+          "necklineShift": 0
+        }
+      ]
+    },
+    "fallback": {
+      "src": "/assistant/chibi-neutral-left-collar-v4.png",
+      "sha256": "9d102b3251940dbd3e1a8e2c8437b5fd719b0312bdff674329b2ee6e9337d091",
+      "bytes": 218526
+    }
+  },
+  "frames": [
+    {
+      "index": 0,
+      "sourcePngSha256": "67add1ff7fbe34f4c72b67e73f8fd40019531bfecd70721efa6fc4d6b5201cc6",
+      "tileRgbaSha256": "240c1ca5e9ef8b98df5749285a3943f9e8560319ff72df5cee13ae215e8aff42"
+    },
+    {
+      "index": 1,
+      "sourcePngSha256": "25590983cf193b67fee7bf8b4c2463690ec8b7e470f2e6a7d69aedcc0b87482a",
+      "tileRgbaSha256": "0cf411f2c44dd119bcaeb6b6c8b5a0286f7ab34a718e5c718a3a167602a1176d"
+    },
+    {
+      "index": 2,
+      "sourcePngSha256": "5d76e151dcd0f774089eef762e9b3736521d0a89b4711a4ae0754b19ef049dc3",
+      "tileRgbaSha256": "f7ed08572f684e4fb117c64273abbf72f9d8ee620e41c27e7029baf501533736"
+    },
+    {
+      "index": 3,
+      "sourcePngSha256": "cfd530af2a2650d77362bbe41a782fbae464100a239eea7df11e049a13cc7b6f",
+      "tileRgbaSha256": "bafbc9a69f7cc8162b0a3619559fd11aa1886b22ba5c02a5365f8b3b56a69cb9"
+    },
+    {
+      "index": 4,
+      "sourcePngSha256": "d991c8270914dc16f9a17363f0727a1522fe1b415cac6564ccae710834a09691",
+      "tileRgbaSha256": "99c05d1151d25426a2f0f926d22dc32bf94ede1ce98ea3eb262af1b688aaa874"
+    },
+    {
+      "index": 5,
+      "sourcePngSha256": "6918b3344d8f2ae55dc855038aca4f677b79046e5170026a858a6ce40389b84a",
+      "tileRgbaSha256": "8a3d3c10eee74c5513a846b40d3f3de361d5acf028f7c81317fc32c536bbbdc9"
+    },
+    {
+      "index": 6,
+      "sourcePngSha256": "d8ba16a68d00aab1468c3c8f8cf8b69854d59743096c43021a2397945bddc20e",
+      "tileRgbaSha256": "f8cb6bc5c4ad80449ff437e6e10b2a68906a3fabef1dc1f158c502f1d2ae711f"
+    },
+    {
+      "index": 7,
+      "sourcePngSha256": "065bce97e6104518a77e64ec7051242d9f836b37a4497273df174ffaca64284c",
+      "tileRgbaSha256": "ba79e354462d522b89867b1d43c2e1db220fb9396e180a96bd2228156f821537"
+    },
+    {
+      "index": 8,
+      "sourcePngSha256": "cdc63df8e0c42789b7ce5d9028089b89ac0925bc418ba23f12eb150680a8b37c",
+      "tileRgbaSha256": "5a6c94426277b366ae829e260ff58a4e3b8ee2e51f31565247b91ae2adfdc01d"
+    },
+    {
+      "index": 9,
+      "sourcePngSha256": "a478589f0c59974fe60c196ddab7d8251161af08645eef28a0e8c2a6f8a24713",
+      "tileRgbaSha256": "7aae757a7d0d29d5a8f05e35ad4c2041759f3f4cf5267d7a44244417a3a35668"
+    },
+    {
+      "index": 10,
+      "sourcePngSha256": "06070841aa519dc993be680b3366a1fbe4bda8e8957554ae5349b30eaf830b5b",
+      "tileRgbaSha256": "3ae10df7d3bd6f9d29bf0deaf5ab4a7034a4b6d08fe4d28d9194dd6f20c79b4a"
+    },
+    {
+      "index": 11,
+      "sourcePngSha256": "86cc347b478e3c61db9f6b7a2128fe501926176e59ad625464fdcee5ae03d84b",
+      "tileRgbaSha256": "4635353c1e91e32487a16482f54a0d0592447f0bf18148b551b4140f32301a72"
+    },
+    {
+      "index": 12,
+      "sourcePngSha256": "07a40077e304219586ab4d3f09c79a0501718b11edb5141dbdb37b435d6839ab",
+      "tileRgbaSha256": "730ab784c6f105a6910479de4f9c8626ea4f986b9e9b59a4915824e564a357b0"
+    },
+    {
+      "index": 13,
+      "sourcePngSha256": "24860160b2c01a36708eb44c2e7a557b45ad12765d81f7c221d505f7500c8f2d",
+      "tileRgbaSha256": "40d3af0942d79b9798c8ddd13287bea09465418301f4a029dd732ebf4f3d936f"
+    },
+    {
+      "index": 14,
+      "sourcePngSha256": "a0444cc7e1d5df0d24eb753bdb47bc679d79edbd77fa13388149664c89113e13",
+      "tileRgbaSha256": "967eef7fe4da75edb418e93e5be804c7d79642059df8bccfd20d0617706e85a3"
+    },
+    {
+      "index": 15,
+      "sourcePngSha256": "f3be584211c973cd10a318b69b6b4ff69b8330872c76366349b1e4c8cdb6d856",
+      "tileRgbaSha256": "72f3bde89f98a94b80d91651140a875b055451f8b29ecdda1730453dd985c332"
+    },
+    {
+      "index": 16,
+      "sourcePngSha256": "fd367a31003ac6c45237a4c6679177bbc2c75c048b99f6eb86b266df1715c985",
+      "tileRgbaSha256": "e2382249f919b5ca284fa96181c0223e88840d34cfeb7b76d7d4540823bd749f"
+    },
+    {
+      "index": 17,
+      "sourcePngSha256": "2a31a2ab1bb4241d7ce2c2e64445c8ff09c7e77fe93587650a434b97e75d8253",
+      "tileRgbaSha256": "6418ce9e0d51cdf60e4237a956e839641b07cf7e9748d8ea5208fbde0fb15ec1"
+    },
+    {
+      "index": 18,
+      "sourcePngSha256": "258ca553bd3df6cbe66d5c853f3e423a6027572a82b31e9507c33254161dbeaa",
+      "tileRgbaSha256": "f8eab2d64920da89a0aec09cb1681a27f71bfe01030c4cc55cbb2dfab50c072e"
+    },
+    {
+      "index": 19,
+      "sourcePngSha256": "d85abcff8792a3282258dad1fdec545aec6e8bc32272039729d95143701671d2",
+      "tileRgbaSha256": "cdab568067ea577330ead174d85327205910ab67a45010053e814dcc131ae726"
+    },
+    {
+      "index": 20,
+      "sourcePngSha256": "22663342b0c2c4c2c28e29fbfa599bafcbbb89df3a67fe101df9ac5d9b9d575a",
+      "tileRgbaSha256": "014358b560359607aa2eb64cf134433b167ddbeab955d92cd16964cf6a24891f"
+    },
+    {
+      "index": 21,
+      "sourcePngSha256": "525c181c95dc3ed514b450af0b4fdfa635037e331506d554ee3f1938ccf4dc27",
+      "tileRgbaSha256": "a85dc4c8dffbeeec40fb0ae46b19edd932dca31f25b2ccd793f8e5c93f37cdb2"
+    },
+    {
+      "index": 22,
+      "sourcePngSha256": "349fbc44c856a062239325941eb3301284825acb5a3f0233fb5102bff2868a17",
+      "tileRgbaSha256": "fc51be6c5addc9047be16da8ca5f245746a24da8b4296b1ecdb2852d3037d66b"
+    },
+    {
+      "index": 23,
+      "sourcePngSha256": "f6977a2eff0d3d6a654faed326af5813e7acdf83d93867bcdb4c4c62c56018fe",
+      "tileRgbaSha256": "b4f063798b6699cf3e4b05ae4e10ed1bcb26f185e51a5a83385096de2b2646bf"
+    },
+    {
+      "index": 24,
+      "sourcePngSha256": "b3ba6151f75982db23a452a44bd67d203a5cd488a094310d3daacd55dbca1c8b",
+      "tileRgbaSha256": "aee9710f61e4f67e4af3a2838909de339fdaab3f65a99e2666fe840aee2715c2"
+    },
+    {
+      "index": 25,
+      "sourcePngSha256": "7fa30dfa1f7d680cc92e99435a891af948d955057eada49f348b3237fb445486",
+      "tileRgbaSha256": "fcd02a4a1720a9ada720a2af70e85d0822103484e788aae313a7b63d7da95ce2"
+    },
+    {
+      "index": 26,
+      "sourcePngSha256": "fa9a7fb00983c404f8faaea40b0142f726b14a920c55d38d09d8b81d1e0c79e3",
+      "tileRgbaSha256": "99d219fc9c355091a7105ba997b8e2cccbcca6f084eb4b2304ae82cac05a4955"
+    },
+    {
+      "index": 27,
+      "sourcePngSha256": "8eb7410ffd1d579f365d29ba4a8b92c59aaa446d91635f2171c64b44a6bfb565",
+      "tileRgbaSha256": "328d98e01668b7dc05226bf56e6522dac335f59d89090c7f6d37ada2ee978635"
+    },
+    {
+      "index": 28,
+      "sourcePngSha256": "8f82acb30327e77e80614c24c959c8260a7b1e83884859b137c53a3b602246f8",
+      "tileRgbaSha256": "093433932d1bcdf6fd88d1d0824bb9fddbcde05043fb5a4905c4306daf6e488b"
+    },
+    {
+      "index": 29,
+      "sourcePngSha256": "581957ec2495e9120500bb566868d0979e9e1ae365b4eefb909c0bc83e9d0c29",
+      "tileRgbaSha256": "047e504bdb8da41453e60fad5347a9f6ca9132a6f97e32ac2039dabed0cf813a"
+    },
+    {
+      "index": 30,
+      "sourcePngSha256": "37fab6e6d1f51242c765318b4b8cb88737bb63577b3400cf112e7c96f6c03892",
+      "tileRgbaSha256": "930158e3114ca022fa21a2723926f0c13fc507439eb984019631f14d01b556f2"
+    },
+    {
+      "index": 31,
+      "sourcePngSha256": "027e61c80afb418b76cd280224bb696bdd3bc836028613800ceaaa62a1e862f3",
+      "tileRgbaSha256": "a03e154b35bb5f0d9b2c8b4accba8a70c51c35d037197d2cfb30bfabccc05680"
+    },
+    {
+      "index": 32,
+      "sourcePngSha256": "e25a6be60668fbc5204003149d2e1b20a662ee97644a9db8825b3761a1c48f98",
+      "tileRgbaSha256": "2cf158f7a961a6747fe08bc26654d623037c022e9555d79b81d15dc0fbf421ed"
+    },
+    {
+      "index": 33,
+      "sourcePngSha256": "9df9fa1f1525863a976be0b034bc4b83d4915b1e9afa5351eff170f0c9dcf560",
+      "tileRgbaSha256": "bbfaf40e9a0787aa09ad82016ec07cc9272c50614aea8e5a3e74141b39a74322"
+    },
+    {
+      "index": 34,
+      "sourcePngSha256": "43f1005829348b4a0b55fe4259d55a6e5d733129db17937c6594905f53ed662e",
+      "tileRgbaSha256": "576777c0e995f3c8a38d66cfa28a3abf1d21ca805a49732c310e9688322c4fc0"
+    },
+    {
+      "index": 35,
+      "sourcePngSha256": "d35cbf8dcf0ed2c5f140b303e1fa95d8f80c6ef8b66be64ded4765de04d52bfc",
+      "tileRgbaSha256": "8e5a2e68c17a324bb55c7c2382f5040c9934433b8308aeb29f13a5ff3bd08fe5"
+    },
+    {
+      "index": 36,
+      "sourcePngSha256": "94ae8b0bc1cf276076839aa2d8659baa85b9cdd4fa4656fd85880c636834c5cc",
+      "tileRgbaSha256": "eb5c6060ad9161b97751309382dac5df78eef5b53f0babd775b6d28828adef5d"
+    },
+    {
+      "index": 37,
+      "sourcePngSha256": "1ead2216584c1a0ca2dcff227592e95b986238a7788eb0781a679ad5f5e1f5f3",
+      "tileRgbaSha256": "f8ca472a8c57079de76acb6a44c421af04c1a8a3363fb2745d59ee9ce6b02273"
+    },
+    {
+      "index": 38,
+      "sourcePngSha256": "3cd104c2d56a87f4c804906697ec0bb5e079e7f0957641d0602191e2e61c2e15",
+      "tileRgbaSha256": "0a46fc04d482112bcb95bf86f0572c318c82e429f9b8dbf824da416bd71c8eeb"
+    },
+    {
+      "index": 39,
+      "sourcePngSha256": "1e287562dd35b237741a111c732c26e934f2239bde5672ad135f837618652ae7",
+      "tileRgbaSha256": "1e17cafd159e11a22bb0c3efb43dc3caa776439b4a81881ccf53dae86b3e5ca4"
+    },
+    {
+      "index": 40,
+      "sourcePngSha256": "8bfafba7fddded5d97db6155be70852e9e300fea4aa90df0d44b2be91c75ba39",
+      "tileRgbaSha256": "aac635a54d1a6d379fbed4c96c6d7e5dd3df63af23b20e39445180c66ab78465"
+    },
+    {
+      "index": 41,
+      "sourcePngSha256": "3d8e13ca8d7ece1493b94e666cf6f2c16025a8e4329fcbf6db910908a95c3201",
+      "tileRgbaSha256": "d89bd3bf667f2ecbf535905ceb7d01a243ecadf32262efe9be50a5f57f97b5ad"
+    },
+    {
+      "index": 42,
+      "sourcePngSha256": "bb7e2ad7ed7bd3e9eb019785de2ba144d46f633240e1d4fdc06d0cbbcfe69af5",
+      "tileRgbaSha256": "25aade9947a0bf9470b4f4c0fd2eda90520ca3b472a609c17152e9ce5ec5db2d"
+    },
+    {
+      "index": 43,
+      "sourcePngSha256": "7767f3f79e1cdaf7834931325eaeccb59141b9c44b98bafa72f3aab3f2eb1cf1",
+      "tileRgbaSha256": "bc9a9dfa94d5caf812a28b23b9f51168cae98fe5289c2b0395274f6d838db17c"
+    },
+    {
+      "index": 44,
+      "sourcePngSha256": "4c466641d27d17bf1ea8f3398a29adc95ad60ba5848a7a2f5f17e430c30c47c1",
+      "tileRgbaSha256": "cb14de78e3b3c13cb0565d1a44ecf9d18e35b9d53b40cecd2889784441a45d9f"
+    },
+    {
+      "index": 45,
+      "sourcePngSha256": "0b6f8b2e8c9ccf1b59c83c6160ace693b83180fdb8ddbcc8ac26295b364a95a1",
+      "tileRgbaSha256": "7f33751061c5296a4a4aeea994a9add0bbf9cf8bffb66073ac7c0841891b2393"
+    },
+    {
+      "index": 46,
+      "sourcePngSha256": "e9a1f0e0b3f264dbbf9f51e9d7222372eeecf101c5468c14128261c2b04557ac",
+      "tileRgbaSha256": "c5eefad2d67ed61420419fa4f99a6b8ee37cb9457eefc4465cf5571d7584172e"
+    },
+    {
+      "index": 47,
+      "sourcePngSha256": "42b4234f9d04a2eaa04110229c12e0b89384bb756477c3b09fc47a31c86b4b7e",
+      "tileRgbaSha256": "def70ab9747753e4c6859152a7991bd62e14fa1f06e6eb415f87b8a454451479"
+    },
+    {
+      "index": 48,
+      "sourcePngSha256": "3f222deb402c07c85937ef3ff463aa09cf8d881edae5c3e8be3c86ea9a9f7688",
+      "tileRgbaSha256": "8eea4bb8c3c791e9b4686882523a0068666e0f13dad9eea29fac5bb5f4c49727"
+    },
+    {
+      "index": 49,
+      "sourcePngSha256": "df45208c10baff583efad1d4139cd7ff6555dfddd69c9a0e767bc401a0bfff67",
+      "tileRgbaSha256": "5a798297b7b2a08ec54efc2385be66458c4478c2d2fb090e7c9be1be0de570cb"
+    },
+    {
+      "index": 50,
+      "sourcePngSha256": "6a23d34c001538c58a261d41d7dbde45e64d7291642f911dd74b359a236e1e51",
+      "tileRgbaSha256": "ad30e44c52e361f9dde9610c3bcc0361ae892c9178758bf419b02d37343de370"
+    },
+    {
+      "index": 51,
+      "sourcePngSha256": "32766bfdb6be983800171d848707bfaa338f7726d9b05c6c86ceaa55811f2a4b",
+      "tileRgbaSha256": "f2b231f23f79e1d578da68c1fe3ba1f7d8c43f407496db5291c81ccb98686a75"
+    },
+    {
+      "index": 52,
+      "sourcePngSha256": "4d8692aa0f4d4968ba5f798ea9db932ae4ca1619e87442af566d8ca3de5a2fa6",
+      "tileRgbaSha256": "65ce54428ece000cfff34ae8f8ce12ac55aa819698e3d482e1a44f8b32a1eb01"
+    },
+    {
+      "index": 53,
+      "sourcePngSha256": "cfa5b408c6c79ce5c8b17e41703db01dd8311c9358448763c42733ba7e93fc64",
+      "tileRgbaSha256": "4fe4360763d843c44f75ae585963a0f78a9497a9191f30f6cc611918827e0f58"
+    },
+    {
+      "index": 54,
+      "sourcePngSha256": "052cf89507a4f4ef2246d66094dc6ba70a2cd2719bae7ea36555534c9d94ab9a",
+      "tileRgbaSha256": "476e80f73e84874b2dd31b53cb548a74de131163f66f235fef7ca5fa1b5d40b9"
+    },
+    {
+      "index": 55,
+      "sourcePngSha256": "3bd411041b7f65cf1e70fe684f7c1abab4a9110d988a08c7788a9588303347ee",
+      "tileRgbaSha256": "e08b881005a4bfcca63bcd2a15796f635d75016481d3bfff9eed64a409859374"
+    },
+    {
+      "index": 56,
+      "sourcePngSha256": "4c4a33122bf5c7c47a0e04b346be1a90e5eade4d5fa9806b80786bf60363f006",
+      "tileRgbaSha256": "c91b2f02caac3fbb42264847267895a95c071f07baf68cb9cdc71e7ca0b06c07"
+    },
+    {
+      "index": 57,
+      "sourcePngSha256": "8637b2433dd2561a6895405477268e05952b72e2112a0f1e6b95a149babbfcfe",
+      "tileRgbaSha256": "f90f699ad499dad81fcb6ba51e96ea6b2257bc687afa88d5173b8ba855572b1a"
+    },
+    {
+      "index": 58,
+      "sourcePngSha256": "482e7768c2d449c806581bdf59e3157079852a9a28348700e9f9fb9a710fb695",
+      "tileRgbaSha256": "ef2f8958e3e1cd2b4838a89f828202aa7973895affa6b09f4a667f9a6445acbe"
+    },
+    {
+      "index": 59,
+      "sourcePngSha256": "5c187f3b595b7c3ebb8476f31b4d25737b066f0dcc7730e340167b0e8c534854",
+      "tileRgbaSha256": "50fed011e093db046fc4fc21f17f184a5514fbc97b1f796ede7d2e1f254c52df"
+    },
+    {
+      "index": 60,
+      "sourcePngSha256": "8e048bdef365943692497849bd143c56441d1a2e4958bb8d43b700b4cb542b30",
+      "tileRgbaSha256": "cdc5d5cc1bb9f6d72a55a2dee9024ee0b065e9893d4f4eb4f8d579e0cd7e6362"
+    },
+    {
+      "index": 61,
+      "sourcePngSha256": "9c9512a983b2723c217c455f6b5e58d96e3ea3f7541113a2a10ee68af7efecb0",
+      "tileRgbaSha256": "981a70fb8178c13af64f138b5c24788b261fa1d60d4851b2897c5bbe2a75a9de"
+    },
+    {
+      "index": 62,
+      "sourcePngSha256": "0b0f9f3f3c145760ba35fc6dc5ee27b960e5aceab6286015abba8bf6cd7e72fc",
+      "tileRgbaSha256": "27ff78033956424bd4190b417dc6221c54f99faec6f3a825a4090f87e85c80cf"
+    },
+    {
+      "index": 63,
+      "sourcePngSha256": "f0f3cf461103dbecc9bea001db1e725eb33e0a67d4df8aedc46e1a158c2894a0",
+      "tileRgbaSha256": "d6b50e92914e9e7134d3899579b5718da2b7a904c92a14f271eb85b3b071e082"
+    },
+    {
+      "index": 64,
+      "sourcePngSha256": "b24890bca687fbc5c5f394f7cccef2cf77ea740d170abbf26ecf6f2e14748c14",
+      "tileRgbaSha256": "bb4106ff65795a5962938040dbbc9f0802818bb4cd8e0adc39eace21d9f5c83a"
+    },
+    {
+      "index": 65,
+      "sourcePngSha256": "186bdf286b46a08d49b2b53e181e411829fa7d3e0c6146c747f5478625091e9c",
+      "tileRgbaSha256": "6549d936ea4eae0648d9c4fe0ca0340b4669d0c3eae10da2dbe0d9f7cc297d61"
+    },
+    {
+      "index": 66,
+      "sourcePngSha256": "fe9400c53c222d9ff842ff46898f470107620b637e10169d7b1917c564b5fdf2",
+      "tileRgbaSha256": "2ef95b67220bfc05ca0f29cf5d014979dc03c7f667d853e7a0c9865d172769ca"
+    },
+    {
+      "index": 67,
+      "sourcePngSha256": "21492783cd316fa7c16b30aa0b17f6422363e0ee47306a46aea9926373207e91",
+      "tileRgbaSha256": "5cb356b5b03f92f0f2fad51bd75ef1776ff20a90c228ca13a96f39f0845c31f4"
+    },
+    {
+      "index": 68,
+      "sourcePngSha256": "d6999f9a89e3187ddc796232ae99a90b7ba44939bb435a46832864e88eec188a",
+      "tileRgbaSha256": "cb466f2a0015fa28a6bf5da45ec7a331e1b2489bf63d10f5cbcca5dfac0b552d"
+    },
+    {
+      "index": 69,
+      "sourcePngSha256": "ba572211929f36c6f830cec34ceff6968b5e128d941d59e0b2e7d634f56b497c",
+      "tileRgbaSha256": "5265ee28eed472ce5cc4910305512b4a8daedd5c92f3440a17ed32bd406fdfc5"
+    },
+    {
+      "index": 70,
+      "sourcePngSha256": "1f18cb2e2a94514636d0f9ea00d498844e53ddf8a20c7aca57d6ec83d8d114e3",
+      "tileRgbaSha256": "d72ded904eed7893c4251e95d0276d5463f940a9ce182096feb335fd775961e5"
+    },
+    {
+      "index": 71,
+      "sourcePngSha256": "5a984a081dc3a5b0884a9ec31f78516a1f89460b9ed85c30712f5e339db69ca3",
+      "tileRgbaSha256": "142aeb3970188fe3e3bf73898f4a09facf35cb45257dae6831e17eae71098c39"
+    },
+    {
+      "index": 72,
+      "sourcePngSha256": "8c893587a0e7efbf7b2cb62ebebe5766d77011e9e10fcc053efc2818c229b426",
+      "tileRgbaSha256": "c3e6d4d561ce9f1eec9d2e3b5a7bc974b435143a68769846795727ba4fc0f7a6"
+    },
+    {
+      "index": 73,
+      "sourcePngSha256": "da6e5f63f235b5594a6dc7c91c5e7d823e20f2ee87e663e4dd46f22147d022f1",
+      "tileRgbaSha256": "bf1c06e2998ce3a64a265046d4dde1436e529b2dfa1fee40e9d1f700cc097594"
+    },
+    {
+      "index": 74,
+      "sourcePngSha256": "94bcffb17c8c5b5c4deab9012f4975775f4455237d3c9a07522c9200368d8cd4",
+      "tileRgbaSha256": "c397f7873168134fea09c26dcebab9ddbef0447b49066def48cb4fdde13b9ee9"
+    },
+    {
+      "index": 75,
+      "sourcePngSha256": "aeea73ac9b96ae1dfbd9f0738dfd2ac1a08c8db2bbd192d66b6b5d54e1f91ccb",
+      "tileRgbaSha256": "cf959073d938d6f05ec4d737bd6ad06a02c2512497600c9eaec7b9025420748e"
+    },
+    {
+      "index": 76,
+      "sourcePngSha256": "4371ea3dc3ef87da9ea5c156790f1845b2337a4a71d6b600360c107a3c43f7dd",
+      "tileRgbaSha256": "f4918a491263fdd654c05591765860d6c167f1247cfea18222b55d4fd58c1d81"
+    },
+    {
+      "index": 77,
+      "sourcePngSha256": "8db9a7b8d91139e1d81b6c43031414b025e5435d2666a2f4d101bfbebd9c2c30",
+      "tileRgbaSha256": "a0fc9d01fe5a0b4506e326c7a5615bec41cc1c5e6f8f4b45355fadfd99440d82"
+    },
+    {
+      "index": 78,
+      "sourcePngSha256": "670e55b8ff4b734e4cb8a7dca515a38b57809c8b5f502c2b4295a30c031db0d0",
+      "tileRgbaSha256": "e54dbb77c6d094f11e18564ff563d5819018951c28d3e673d72f2c14759032b7"
+    },
+    {
+      "index": 79,
+      "sourcePngSha256": "3dbc96b607a37e11979ddb9c2cdcf3f04df2e56c74c9356cb5404c0f9ca2cf76",
+      "tileRgbaSha256": "7af51ae7c320af4640a717104e00f2a6b5e3d0cc2feca0bc00ce6314efeb3780"
+    },
+    {
+      "index": 80,
+      "sourcePngSha256": "6b0427ae8a1011e9b106c1d71134250f7842f78964e1aa0cad1dadf3e195da7b",
+      "tileRgbaSha256": "54972027082bc92aa23e7d0382c73c5d011b518ce5fe637f6954cf9dd4c7a86f"
+    },
+    {
+      "index": 81,
+      "sourcePngSha256": "2d35fad2e708530eaeb1a8efbe70162af9611f576527ee2ad027ac148d95360d",
+      "tileRgbaSha256": "c3594089b3717767cd6ee52d7ed8e7726b38fe0595eedafd555e22f82b4f91f0"
+    },
+    {
+      "index": 82,
+      "sourcePngSha256": "a2347f83dd0fa1c63a263e69ac52ca8c19e6ead7e1b1075892b465f46bd66d05",
+      "tileRgbaSha256": "347c6921fac44b8159c588ff6701637f74e97d09a0827359caa4eca70097a4f3"
+    },
+    {
+      "index": 83,
+      "sourcePngSha256": "4cc1cf9c26468e1d884ba3eaa8458de16e1dd763c3da03809c5d521f0e87aece",
+      "tileRgbaSha256": "e4490b6853585a704685006e92b5e1119b53fceaa758876107ea0c1d89c7e9fe"
+    },
+    {
+      "index": 84,
+      "sourcePngSha256": "c902562024fbf77134ae3a1bcacf1075a5fe58db4f1a7f96e204a2e02cc5754e",
+      "tileRgbaSha256": "9eeca9db9c81ba0b5f729535836942d31a8c015ba33e9541d3098393eb59ab0f"
+    },
+    {
+      "index": 85,
+      "sourcePngSha256": "c74c40121f883231c45599593976ecd24bcab3fe3ca0c65c32c38cd0b5286298",
+      "tileRgbaSha256": "fa2d5a85aa7460a718ce679ec78e7de863b200ccc860dc41df3fae8fbaf34bd1"
+    },
+    {
+      "index": 86,
+      "sourcePngSha256": "eb3f15c51f4f128d71955d5ee707e6a680a3ed3737bd28acff9083aa24b28a4a",
+      "tileRgbaSha256": "494dcbdd9afc2ca0ce4f85bb069198a182bfcf81808d0add19765638a055032a"
+    },
+    {
+      "index": 87,
+      "sourcePngSha256": "6f6f5e0c10109f693e78f4036a9ad6d1a3463486b3eb16a11645d0e1fa768f0d",
+      "tileRgbaSha256": "cadccb13fcfe708c7dc0dbf9a5ff6cfcf8dc30e6725e4eab0b2f25bd2522b2f3"
+    },
+    {
+      "index": 88,
+      "sourcePngSha256": "0dc787af6b26baff35f29cfa88d3d375a3cd210950b40da6a0d01a5d3c68e4b7",
+      "tileRgbaSha256": "0da0b35d1537f476c0e8fa08011b9aa0a3fbc7e86ef69546246a46ab53507a0e"
+    },
+    {
+      "index": 89,
+      "sourcePngSha256": "a27e2b546c94bea8046de93a70207c4ca52060ba784fa244c304443309fd7b50",
+      "tileRgbaSha256": "a34b924061be05256add8ccfd53e10ed7d7e6b00b37d34baff2d95f552b74017"
+    },
+    {
+      "index": 90,
+      "sourcePngSha256": "a6bf517aafe0122330ece7d7b170e0071dadf33f29f2f5279940460680dddeb4",
+      "tileRgbaSha256": "d6ed8f52f8755685ffa952f4a91a72182cefb6497fab299cf15e721626e4107a"
+    },
+    {
+      "index": 91,
+      "sourcePngSha256": "dc45611fda6d84d040c24ee48217914281fe685846bc56d523d7a2689b39d6ee",
+      "tileRgbaSha256": "ea5d0f0361c2b91ed5854cef92a6621d3edc6a0490699d73a0fe2115881e9656"
+    },
+    {
+      "index": 92,
+      "sourcePngSha256": "d74f7bc6a0603f74ca2f1792d1c055b047e9927c074cdd79710a51cf7b518eb0",
+      "tileRgbaSha256": "fefdbe6242587d4d3cee305a54b571a05636117d0218e3d5fca5aeab6563cfe9"
+    },
+    {
+      "index": 93,
+      "sourcePngSha256": "06edb2b61463aecc69b1f2a38a9e4ac546b2769c6a34039047cdb4fdc18325cf",
+      "tileRgbaSha256": "8bc8321a4ea1847c3b41af056d5a3b2d2c8de6afab5853e73550a9a17035a010"
+    },
+    {
+      "index": 94,
+      "sourcePngSha256": "136e890772b7d429f49ffd1401776f8790992516b6e59e3569a6611cefddb79f",
+      "tileRgbaSha256": "017f3f5d5ff6995a36f54d68b370e4d62d227fc170fec921a0cf80a105d10be4"
+    },
+    {
+      "index": 95,
+      "sourcePngSha256": "394929364774da589053f689aa3f15f427b0a5e50bd6bc90a890eafa6d4c5a37",
+      "tileRgbaSha256": "8224343a87da03734c041a3cda3e43accf92c2584eb098ce256d2ba762ca4d7b"
+    },
+    {
+      "index": 96,
+      "sourcePngSha256": "3e0ea9c66fee3d57338c582074814a3bea77015f4a92fbfd5ac05d2fb6f15e46",
+      "tileRgbaSha256": "c22e0b4de74d5c28dfef19ce1b6b13cf1923ef5625c7dea48f5acaf32678c0b9"
+    },
+    {
+      "index": 97,
+      "sourcePngSha256": "3b7595a498a1efdb8efbc9ce18cc930c24f193af400e3d2586e88961efbef7ce",
+      "tileRgbaSha256": "f6d9305ea1027e7c6d15eb7cda5d75e8333d721efe0586a1596124480f9bc2f8"
+    },
+    {
+      "index": 98,
+      "sourcePngSha256": "207720bd7189b8332096dd27e54123171c8dcfa51ba46d06b32239da451b4229",
+      "tileRgbaSha256": "6b9f77c9d11663611ca301007edc079ee4d07ce9ba02edaf7f708b09bf1b0afb"
+    },
+    {
+      "index": 99,
+      "sourcePngSha256": "265a7e47b305fc68c37ce23a1116b3933845dd405670db998a02e6351ac4ea6f",
+      "tileRgbaSha256": "3cc9cd49f55d0fff1c6c31b14c065e585c7e905cfb51283668aaace0161bddc0"
+    },
+    {
+      "index": 100,
+      "sourcePngSha256": "f58683cf3aee55720cc7884d168626565f75738270bb9c10c06adccbef6ec562",
+      "tileRgbaSha256": "770df52d30b4803ed4c85de3f179202df1ac279e2e39fd188957ef266385d01a"
+    },
+    {
+      "index": 101,
+      "sourcePngSha256": "5b278b64a0f84dc24e846ccb0e093a55a3c8bf165e37d3bdd0f2c23e840636a5",
+      "tileRgbaSha256": "94d929ae497dba22dfb53ef7d6e247c82df3048c07904d10bedef5e92608e625"
+    },
+    {
+      "index": 102,
+      "sourcePngSha256": "e3531d81254bf36bb8ad7c491b03cf0330f8a3c4aa1c6ff6619bd6df55abaeb1",
+      "tileRgbaSha256": "eca2bb8d0b8f9f9adb37cd511cf15c8fff4f256281bc0d59942097e87cfe9c67"
+    },
+    {
+      "index": 103,
+      "sourcePngSha256": "960823a376c462d760d550e558cb12f8f811703c753f47afb3a52dd5754571bd",
+      "tileRgbaSha256": "4e58369031587745178727fff25b71f40b8fce792e88ff9d23d7d29d1a8cd827"
+    },
+    {
+      "index": 104,
+      "sourcePngSha256": "1fb8473cac23a1a77adea6ec5aba1791493585523177fc10a59829d3ecbdb096",
+      "tileRgbaSha256": "1d3b1e3c118187a8cc3c10c808e75a6f53c63e1bfaacefff44095d548be3dd07"
+    },
+    {
+      "index": 105,
+      "sourcePngSha256": "9605a7c617b920e667c640d03e1bc4aa25da9f592c690205377552f6fcf3477d",
+      "tileRgbaSha256": "55be83cc55d8e19ae52838e6079efaa0db6dd0634fd9ae77614a673d0f5567a5"
+    },
+    {
+      "index": 106,
+      "sourcePngSha256": "23c539591004ac087ffd50e91dd61a848b6c27a99bf3dde1b4d34a67c2127b45",
+      "tileRgbaSha256": "65b35b61f0e46fedfb2e908e98b485e874680e2731995793179136c1cea21b29"
+    },
+    {
+      "index": 107,
+      "sourcePngSha256": "28adb69d5aefb3cb8814374e38ac5fdbfc800a5e1a00a0770b59cac001396bc9",
+      "tileRgbaSha256": "10278b25409b95dff2beaa1f8ab8d9f305253225aed38aba472c07e87b32bb4c"
+    },
+    {
+      "index": 108,
+      "sourcePngSha256": "1eddf81b35455aa0c17a0d6b0f9888e9de45e00012c817520b721232e5f8cf9b",
+      "tileRgbaSha256": "eca09b56a10faf38e1764d6e82252a13c15efee15893a73484251ac7ccd49d3a"
+    },
+    {
+      "index": 109,
+      "sourcePngSha256": "b58ac0e895c1256cbe925e061d23a33bdd6e5dcab791c8a28949ec853cc3a94f",
+      "tileRgbaSha256": "c23196165297be7bff94d206aa574823c202087b88db987831785e395bd13e61"
+    },
+    {
+      "index": 110,
+      "sourcePngSha256": "bf8ffb67887e881c5723dfc43bc3f6db9a38593fa1772b723cf0dffa9b97f520",
+      "tileRgbaSha256": "128bc1973f2e5f5afcbe275d5579762bb75e8e37ac2bc5726dd32c35474fd9f5"
+    },
+    {
+      "index": 111,
+      "sourcePngSha256": "0ad7a7b8199d52b29325cf899ed205abc27f06124fc8fb4d87a513e02972c1f9",
+      "tileRgbaSha256": "469c6ac33fabc93abee62e4b8af27e7415c7bd34403dbda4214ff0a43d4a45e2"
+    },
+    {
+      "index": 112,
+      "sourcePngSha256": "28ad4dae3959a1f66590bd7d6ccc0c589f1a56e16b63b3fab8714ad8894c388f",
+      "tileRgbaSha256": "98c56ff264d641b1f02216351224820b2a495b1dbb569c0c39140d572609539d"
+    },
+    {
+      "index": 113,
+      "sourcePngSha256": "0995b96dea966a44fe23871af561d9532d182b8bec09e1c801ea245d3df2afa8",
+      "tileRgbaSha256": "e67a272caeded127693506579cf8b1080076c93eeba2c3caf711a8d8198d45e1"
+    },
+    {
+      "index": 114,
+      "sourcePngSha256": "01318a1ce06574a84ca68841098e669d2b355d988931c19ee901f6bd36beb837",
+      "tileRgbaSha256": "d3b5b2f64de0eb4178ee01474fa0cc5aa4853cc081a533008bb50fd3407af126"
+    },
+    {
+      "index": 115,
+      "sourcePngSha256": "c00438b62c9229bb0060caaf4b9f9e291f8116b5ddf4542eae517edccbe507ec",
+      "tileRgbaSha256": "c73d84a224208ae331b9e3927862a66453417c35b9886ad38adf7cff1a94b477"
+    },
+    {
+      "index": 116,
+      "sourcePngSha256": "2c95818b6c3c3912eae9b5bf1a258c78a615eabb8177fbad6653c73e14fd2265",
+      "tileRgbaSha256": "38bda0592fb7fe6d7767eb0c929472953337094e40813e9d0c787ee64b13e020"
+    },
+    {
+      "index": 117,
+      "sourcePngSha256": "7bac90e7393fb4b6cafcde1839aae6512d2b175570507cdfae3a36a95e13f720",
+      "tileRgbaSha256": "e191b9ae55071ebc11a8b7435d7bc5935148b3849b3861d43aa205dd43ff9fa2"
+    },
+    {
+      "index": 118,
+      "sourcePngSha256": "700e30c8f29f6900138993deafe5e18689d9820ac4f7681e5f09bce33c575a0a",
+      "tileRgbaSha256": "531fbf4727c7899126730a738a8dbe99cfeaa4864c7bff655b05f57a298e62c1"
+    },
+    {
+      "index": 119,
+      "sourcePngSha256": "1891be4cd1a9cf778bc1342b1209ae0c8afa0d72d323a13c5bffda2a603c37c5",
+      "tileRgbaSha256": "396ec39a891d5bcc71326a322749059f6fd61a95493b8da7661c8bd90c81b00a"
+    },
+    {
+      "index": 120,
+      "sourcePngSha256": "7265cb4ba41e7a8601147b4b6d2d40a5d360b6ec8a5138d997e4fe252e0d29d2",
+      "tileRgbaSha256": "d560a7f10e72c4d70f76207b5935935f5f303e9b40a46fa898fef1bc7323f368"
+    }
+  ],
+  "frameScopeSha256": "9fa49967dd2d15a06fabe9d7d68aba1237fd2095f947500fef417ea2e2e23be1",
+  "assetScopeSha256": "92e49f47e9bb2b64c9cbb945ad63656df57dc63298ed9eb675d8f451cf5cb70c"
+}
