@@ -1,0 +1,23 @@
+{
+  "status": "server-and-browser-gates-passed",
+  "completedAtServer": "2026-10-08T07:20:02+08:00",
+  "deployedCommit": "f8e838d6962abcd5f09766674364ba32bcc8ea65",
+  "applicationImage": "sha256:0c93db03a322dbbd0e4efd3324469735af92648927d548ced1f7b0489e5e2fb0",
+  "rollbackCommit": "a3c5d2ccab3f7348932795e1893b249e8685cf9d",
+  "rollbackImage": "personal-blog-web-app:rollback-assistant-behavior-20261008-071743",
+  "backupDirectory": "/root/backups/assistant-behavior-20261008-071743",
+  "deploymentLog": "/root/server-ops/logs/deploy-assistant-behavior-20261008-071743.log",
+  "backupVerification": { "databaseGzip": true, "uploadsArchive": true, "environment": true, "nginxSite": true, "compose": true, "rollbackImage": true },
+  "serverChecks": { "appHealthy": true, "databaseHealthy": true, "redisHealthy": true, "nonRootRuntime": true, "mapEnabled": true, "assistantEnabled": true, "unchangedEnvironment": true, "unchangedNginx": true, "unchangedUploadsAcl": true, "verifiedPublicCharacterResources": 8 },
+  "httpsRoutes": ["/", "/posts", "/places", "/login", "/assistant", "/api/healthz", "/sitemap.xml", "/feed.xml"],
+  "wwwHttps": true,
+  "schemaMigration": false,
+  "sleepAssetsDeployed": false,
+  "browserAcceptedAt": "2026-10-07T23:34:32.291Z",
+  "browserAcceptedRun": 4,
+  "browserChecks": { "widths": [1280, 768, 390, 320], "nativePositionsPerWidth": 578, "realModelQueries": 0, "reducedMotion": true, "fallbackSettled": true, "pause": true, "requestCancellation": true, "focusRestored": true },
+  "browserFirstAttempt": "1280, 768 and 390 passed; the 320-width navigation timed out waiting for the full page load event. Health and HTTPS returned 200 immediately afterwards. Retest waits for DOM and the same explicit character/resource gates.",
+  "browserSecondAttempt": "1280 passed; the next viewport timed out waiting for the opening wave after early DOM navigation. A neutral launcher-ready barrier and diagnostic capture were added before the next full run. Runtime code and art gates were not changed.",
+  "browserThirdAttempt": "All four viewports and their 578 positions passed. The separate reduced-motion page was clicked before hydration; the captured screenshot showed a closed dialog with a ready neutral launcher and no page errors. That branch now uses the same launcher-ready barrier.",
+  "browserReport": "browser-production/report.json"
+}

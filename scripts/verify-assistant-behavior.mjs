@@ -53,8 +53,10 @@ try{
       if(plan==='held'){held=route;return;}
       await route.fulfill({status:plan.error?503:200,json:plan.error?{success:false,error:{message:'模拟服务暂不可用'}}:{success:true,data:plan}});
     });
-    await page.goto(base+'/');
+    // Validate the assistant's explicit ready gates, not unrelated page media.
+    await page.goto(base+'/',{waitUntil:'domcontentloaded',timeout:60_000});
     assert.equal(await page.locator('[data-behavior-version]').getAttribute('data-behavior-version'),ASSISTANT_BEHAVIOR_VERSION);
+    await page.waitForSelector('[data-behavior-version] canvas[data-ready=true][data-loaded-action=idle]');
     const launcher=page.getByRole('button',{name:'打开小助手对话'});
     await launcher.click();const dialog=page.getByRole('dialog'),canvas=dialog.locator('canvas');
     await ready(page,'wave');
@@ -144,15 +146,24 @@ try{
   }
   const reduced=await browser.newContext({viewport:{width:390,height:844},reducedMotion:'reduce'}),r=await reduced.newPage();
   await reduced.route('**/api/assistant/status',route=>route.fulfill({json:{feature:{enabled:true},limits:{maxQuestionChars:500}}}));
-  await r.goto(base+'/');await r.getByRole('button',{name:'打开小助手对话'}).click();await r.waitForSelector('dialog canvas[data-ready=true]');
+  await r.goto(base+'/',{waitUntil:'domcontentloaded',timeout:60_000});await r.waitForSelector('[data-behavior-version] canvas[data-ready=true]');await r.getByRole('button',{name:'打开小助手对话'}).click();await r.waitForSelector('dialog canvas[data-ready=true]');
   assert.equal(await r.locator('dialog canvas').evaluate(el=>el.getAnimations().length),0);await reduced.close();
   const fallback=await browser.newContext();await fallback.route('**'+manifest.keptAssets.idle.src,route=>route.abort());
-  const f=await fallback.newPage();await f.goto(base+'/');await f.waitForSelector('img[src*="chibi-neutral-left-collar-v4"]');
+  const f=await fallback.newPage();await f.goto(base+'/',{waitUntil:'domcontentloaded',timeout:60_000});await f.waitForSelector('img[src*="chibi-neutral-left-collar-v4"]');
   await f.locator('img[src*="chibi-neutral-left-collar-v4"]').evaluate(async img=>{await img.decode();if(!img.naturalWidth)throw Error('Fallback decode failed');});
   await f.getByRole('button',{name:'打开小助手对话'}).click();
   await f.waitForSelector('dialog [data-engine=frames][data-action=idle] img');
   const response=await fallback.request.get(base+manifest.keptAssets.fallback.src);assert.equal(response.status(),200);const fallbackSha256=hash(await response.body());assert.equal(fallbackSha256,manifest.keptAssets.fallback.sha256);await fallback.close();
   assert.deepEqual(errors,[]);
-  const report={accepted:true,characterVersion:CHARACTER_FRAME_VERSION,behaviorVersion:ASSISTANT_BEHAVIOR_VERSION,behaviorCodeScopeSha256,assetScopeSha256:manifest.assetScopeSha256,frameScopeSha256:manifest.frameScopeSha256,actualAssetHashesVerified:true,noAIRequests:true,mockedQueries,realModelQueries:0,manualActionControls:false,reducedMotion:true,fallback:true,fallbackDecoded:true,fallbackBehaviorSettled:true,fallbackSha256,bitmapCacheLimit:8,results,timingScope:'Deterministic policy timers advanced with Playwright clock and native drawing positions sought. Not a physical-device FPS benchmark.'};
+  const report={accepted:true,testedBaseUrl:base,completedAt:new Date().toISOString(),characterVersion:CHARACTER_FRAME_VERSION,behaviorVersion:ASSISTANT_BEHAVIOR_VERSION,behaviorCodeScopeSha256,assetScopeSha256:manifest.assetScopeSha256,frameScopeSha256:manifest.frameScopeSha256,actualAssetHashesVerified:true,noAIRequests:true,mockedQueries,realModelQueries:0,manualActionControls:false,reducedMotion:true,fallback:true,fallbackDecoded:true,fallbackBehaviorSettled:true,fallbackSha256,bitmapCacheLimit:8,results,timingScope:'Deterministic policy timers advanced with Playwright clock and native drawing positions sought. Not a physical-device FPS benchmark.'};
   await writeFile(`${output}/report.json`,JSON.stringify(report,null,2));console.log(JSON.stringify(report,null,2));
+}catch(error){
+  const states=[];
+  for(const context of browser.contexts())for(const page of context.pages()){
+    const index=states.length;
+    states.push({url:page.url(),characters:await page.locator('[data-engine=frames]').evaluateAll(elements=>elements.map(el=>({action:el.dataset.action,canvas:el.querySelector('canvas')?.dataset,fallback:!!el.querySelector('img')}))).catch(()=>[])});
+    await page.screenshot({path:`${output}/failure-${index}.png`}).catch(()=>{});
+  }
+  await writeFile(`${output}/failure.json`,JSON.stringify({testedBaseUrl:base,behaviorCodeScopeSha256,failedAt:new Date().toISOString(),mockedQueries,error:String(error),pageErrors:errors,results,states},null,2));
+  throw error;
 }finally{await browser.close();}
