@@ -1,0 +1,301 @@
+{
+  "status": "ART_AND_LOCAL_BROWSER_GATES_PASSED",
+  "reviewer": "primary_agent_visual_review",
+  "independentAgentReview": false,
+  "assetScopeSha256": "91a8270dd0650a22118f8791b3f39a397880bc7ec84c8d6ef6bc91f2c87f9089",
+  "frameScopeSha256": "603feca56d10f447562924fe0399086be5bbbd7a12a3f34dc23664449cff02f9",
+  "nativeFramesReviewed": {
+    "enter": 193,
+    "wake": 121
+  },
+  "themes": [
+    "light",
+    "dark"
+  ],
+  "allFramesViewed": true,
+  "boards": [
+    {
+      "path": "boards/enter-000-light.png",
+      "sha256": "397f0c5842ac613eeeafc082e1a27d46a193efcee5173b84b28bf1c196dabb94",
+      "action": "enter",
+      "theme": "light",
+      "firstFrame": 0,
+      "lastFrame": 23
+    },
+    {
+      "path": "boards/enter-000-dark.png",
+      "sha256": "2a5a3f1164a804179edc8fc3bcaa8d77cc94f97bf61d37073c9e1223dcc22e07",
+      "action": "enter",
+      "theme": "dark",
+      "firstFrame": 0,
+      "lastFrame": 23
+    },
+    {
+      "path": "boards/enter-024-light.png",
+      "sha256": "8e3f32555ec1a260cc651ee036e374f58d1df4cc110335d1116f99509ad96e1d",
+      "action": "enter",
+      "theme": "light",
+      "firstFrame": 24,
+      "lastFrame": 47
+    },
+    {
+      "path": "boards/enter-024-dark.png",
+      "sha256": "88946422d1fe1e9256268cae848351c21de045137c00c2d5e6aef3230a179de2",
+      "action": "enter",
+      "theme": "dark",
+      "firstFrame": 24,
+      "lastFrame": 47
+    },
+    {
+      "path": "boards/enter-048-light.png",
+      "sha256": "2e0417d526bed5b82507ff1ddcab2ab0a531e0dc8b2c3ad6734e5a395993db92",
+      "action": "enter",
+      "theme": "light",
+      "firstFrame": 48,
+      "lastFrame": 71
+    },
+    {
+      "path": "boards/enter-048-dark.png",
+      "sha256": "c10640df3bc66ecd3d03a01ad8671f2951bf4fc25794e37031dd4b3f0aaec814",
+      "action": "enter",
+      "theme": "dark",
+      "firstFrame": 48,
+      "lastFrame": 71
+    },
+    {
+      "path": "boards/enter-072-light.png",
+      "sha256": "7fc25a3e0a925b7176caf9cc75688899540e8841d7ecdbc9caff068c2791de66",
+      "action": "enter",
+      "theme": "light",
+      "firstFrame": 72,
+      "lastFrame": 95
+    },
+    {
+      "path": "boards/enter-072-dark.png",
+      "sha256": "b3cf72e4cca166440a1cb17d38fde4ac6626f30a00f7e8783bbad113aba0e776",
+      "action": "enter",
+      "theme": "dark",
+      "firstFrame": 72,
+      "lastFrame": 95
+    },
+    {
+      "path": "boards/enter-096-light.png",
+      "sha256": "f18014a6ff861e2792d7b9e8b9a300c588cf58d52aecf60aecbed0bb81333be1",
+      "action": "enter",
+      "theme": "light",
+      "firstFrame": 96,
+      "lastFrame": 119
+    },
+    {
+      "path": "boards/enter-096-dark.png",
+      "sha256": "1ff8e303e3de2ad037d0a31e9bf474b6e398779d938152b8fe72a7db524d212f",
+      "action": "enter",
+      "theme": "dark",
+      "firstFrame": 96,
+      "lastFrame": 119
+    },
+    {
+      "path": "boards/enter-120-light.png",
+      "sha256": "c5e85cc6264c79b283b220d71acce97bd8b4a7bace270b5fb499224537a33725",
+      "action": "enter",
+      "theme": "light",
+      "firstFrame": 120,
+      "lastFrame": 143
+    },
+    {
+      "path": "boards/enter-120-dark.png",
+      "sha256": "94fff555230ecf151ef41b9679be9e66f4156b562d8820e05e97badcb2744db1",
+      "action": "enter",
+      "theme": "dark",
+      "firstFrame": 120,
+      "lastFrame": 143
+    },
+    {
+      "path": "boards/enter-144-light.png",
+      "sha256": "b211eb76fbfce104014b7d86b8f5e83cd41d4ade8272bded0e955fdeb1b2309f",
+      "action": "enter",
+      "theme": "light",
+      "firstFrame": 144,
+      "lastFrame": 167
+    },
+    {
+      "path": "boards/enter-144-dark.png",
+      "sha256": "60598acb7880123ebdd40e2deec140d0da7d59e2f141d492ecd98d419d886e1c",
+      "action": "enter",
+      "theme": "dark",
+      "firstFrame": 144,
+      "lastFrame": 167
+    },
+    {
+      "path": "boards/enter-168-light.png",
+      "sha256": "715e5f98e00e29c98bebaf538db9274e227cdceb11c3c811ae19019102f9b97d",
+      "action": "enter",
+      "theme": "light",
+      "firstFrame": 168,
+      "lastFrame": 191
+    },
+    {
+      "path": "boards/enter-168-dark.png",
+      "sha256": "73dd63f3512961cf66408507590a61e30d281685012c71aeafdf01d51c23d6e4",
+      "action": "enter",
+      "theme": "dark",
+      "firstFrame": 168,
+      "lastFrame": 191
+    },
+    {
+      "path": "boards/enter-192-light.png",
+      "sha256": "e62d7a9e17fcf82048333be718e36ca32204dab1791e16516039eea9d989c3af",
+      "action": "enter",
+      "theme": "light",
+      "firstFrame": 192,
+      "lastFrame": 192
+    },
+    {
+      "path": "boards/enter-192-dark.png",
+      "sha256": "4e440d0ee982b8b4ca9f16665e570de9823a9ba55697fda6c061ed0946be2bcc",
+      "action": "enter",
+      "theme": "dark",
+      "firstFrame": 192,
+      "lastFrame": 192
+    },
+    {
+      "path": "boards/wake-000-light.png",
+      "sha256": "cc9201b8d26ebfe2975e23981b676bba343f4e391b49a6d638424d61b8bef138",
+      "action": "wake",
+      "theme": "light",
+      "firstFrame": 0,
+      "lastFrame": 23
+    },
+    {
+      "path": "boards/wake-000-dark.png",
+      "sha256": "a6786139c04a103c42df7a8e85b83327907334d47357fb227abf6192a0538d36",
+      "action": "wake",
+      "theme": "dark",
+      "firstFrame": 0,
+      "lastFrame": 23
+    },
+    {
+      "path": "boards/wake-024-light.png",
+      "sha256": "560226c185108099ac4aaba30716d967829ca951e7fdc8d2d7b812b6e9475d4e",
+      "action": "wake",
+      "theme": "light",
+      "firstFrame": 24,
+      "lastFrame": 47
+    },
+    {
+      "path": "boards/wake-024-dark.png",
+      "sha256": "0a41b1b3ce85ec2d36fc1793abfef5977d4fbcdc667d28577f38666b83bea794",
+      "action": "wake",
+      "theme": "dark",
+      "firstFrame": 24,
+      "lastFrame": 47
+    },
+    {
+      "path": "boards/wake-048-light.png",
+      "sha256": "408e9565139006ba40888a0333c4f394ef6e37ec037537a67589782e562ed268",
+      "action": "wake",
+      "theme": "light",
+      "firstFrame": 48,
+      "lastFrame": 71
+    },
+    {
+      "path": "boards/wake-048-dark.png",
+      "sha256": "e0e107bdffe58ecaa09a694e83a579304f0f28501d22f374ce5fa3faf989612a",
+      "action": "wake",
+      "theme": "dark",
+      "firstFrame": 48,
+      "lastFrame": 71
+    },
+    {
+      "path": "boards/wake-072-light.png",
+      "sha256": "575349e6f38277b0278b366bb69568268745d4ebbe02e176f98c4e2fe500c0c0",
+      "action": "wake",
+      "theme": "light",
+      "firstFrame": 72,
+      "lastFrame": 95
+    },
+    {
+      "path": "boards/wake-072-dark.png",
+      "sha256": "b405d38ab91750b6b87a4fff81e5fdf9fe92abccdde7ab0ea9f3b4353f73b557",
+      "action": "wake",
+      "theme": "dark",
+      "firstFrame": 72,
+      "lastFrame": 95
+    },
+    {
+      "path": "boards/wake-096-light.png",
+      "sha256": "d848e9e72477c5169fba21e00f6747ba708630db9b625a892b79a24062a1eb47",
+      "action": "wake",
+      "theme": "light",
+      "firstFrame": 96,
+      "lastFrame": 119
+    },
+    {
+      "path": "boards/wake-096-dark.png",
+      "sha256": "0fb4974d314aa86b07c6371bd42382d1183b877cef96c66edf0bc2b5515c4d67",
+      "action": "wake",
+      "theme": "dark",
+      "firstFrame": 96,
+      "lastFrame": 119
+    },
+    {
+      "path": "boards/wake-120-light.png",
+      "sha256": "381f954771e256806942eb13a7cd34fc0ca4fb2a77d01ba37bfb68b6ff44e355",
+      "action": "wake",
+      "theme": "light",
+      "firstFrame": 120,
+      "lastFrame": 120
+    },
+    {
+      "path": "boards/wake-120-dark.png",
+      "sha256": "14e353d5c5927e6978d16aaadd06475bc6352e8d8edcafef4300e88c8ff4d924",
+      "action": "wake",
+      "theme": "dark",
+      "firstFrame": 120,
+      "lastFrame": 120
+    }
+  ],
+  "sourceVideoSha256": {
+    "enter": "94851ca10b61a09d315b4190dbdc910087f1f04ace59364f51aabc12ad0e50e0",
+    "wake": "151f88f4ab10be186544afb297c6de67afb4b3d8f22b3bc380c8e0f2b99e888c"
+  },
+  "checks": {
+    "wholeFigureIdentity": true,
+    "thinClosedEyes": true,
+    "bedContactAndOcclusion": true,
+    "propEdgesRestored": true,
+    "noLargeGroundShadowBlocks": true,
+    "fixedCanvas": true,
+    "noPerFrameRecentering": true,
+    "noDetachedLimbCompositing": true,
+    "noNewInterpolatedPoses": true,
+    "loopSeamViewed": true,
+    "mobileSleepBoundsViewed": true
+  },
+  "rejectedTrials": [
+    {
+      "version": "sleep-bed-v1",
+      "reason": "U2net-only alpha retained large black ground-shadow blocks in transition frames."
+    },
+    {
+      "revision": 11,
+      "reason": "BiRefNet-only alpha omitted the right bed edge during wake; color-supported whole-frame alpha refinement restored it."
+    }
+  ],
+  "limitations": [
+    "Native provider motion blur remains during a few fast head turns; no face redraw was applied.",
+    "The bed intentionally enters and exits through the source canvas right edge.",
+    "Browser evidence is deterministic headless Edge testing, not a physical mobile-device FPS benchmark."
+  ],
+  "authorization": {
+    "scope": [
+      "sleep-enter",
+      "sleep-loop",
+      "wake",
+      "existing-yawn-recovery"
+    ],
+    "basis": "Requested sleep/wake workflow and standing instruction to deploy completed changes directly.",
+    "additionalGenerationAuthorized": false,
+    "additionalSpend": 0
+  }
+}

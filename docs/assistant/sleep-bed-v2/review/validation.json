@@ -1,0 +1,19 @@
+{
+  "status": "LOCAL_VALIDATION_PASSED",
+  "unitTests": {
+    "tests": 214,
+    "passed": 213,
+    "failed": 0,
+    "skipped": 1,
+    "scope": "Git-tracked unit tests plus presence and sleep-sheet tests, run with the project tsx loader in a plain-file validation checkout. Database integration tests are not included."
+  },
+  "targetedLint": "passed",
+  "typecheck": "passed",
+  "productionBuild": "passed",
+  "sleepBrowser": "browser-local/report.json",
+  "standingRegression": "standing-regression-local/report.json",
+  "artReview": "art-review.json",
+  "realModelQueries": 0,
+  "additionalGeneration": 0,
+  "additionalSpend": 0
+}

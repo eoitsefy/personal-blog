@@ -2,7 +2,7 @@
 .panel h1 { margin: 0; font: 400 clamp(2rem, 5vw, 3rem)/1.2 Georgia, "Noto Serif SC", serif; }
 .invitation { color: var(--ink-soft); margin: 12px 0 24px; }
 .launcher { border: 0; padding: 0; background: transparent; cursor: pointer; color: inherit; display: inline-flex; align-items: center; flex-direction: column; }
-.panel .launcher { width: min(400px, 85vw); border-radius: 50%; background: radial-gradient(ellipse, rgba(245,194,63,.16), transparent 70%); }
+.panel .launcher { width: min(320px, 56vw); border-radius: 50%; background: radial-gradient(ellipse, rgba(245,194,63,.16), transparent 70%); }
 .character { position: relative; display: block; width: 100%; aspect-ratio: 1; overflow: hidden; }
 .spriteSheet { position: absolute; left: 0; top: 0; display: block; width: 100%; height: 100%; transition: none; }
 .fallbackCharacter { display: block; width: 100%; height: 100%; object-fit: contain; }
@@ -10,7 +10,7 @@
 .introduction { max-width: 480px; margin: 28px auto 18px; line-height: 1.9; font-size: .94rem; color: var(--ink-soft); }
 .explore { display: flex; justify-content: center; flex-wrap: wrap; gap: 8px; margin: 12px 0; }
 .explore a { padding: 10px 14px; border: 1px solid #ddcfab; border-radius: 999px; color: #554422; text-decoration: none; font-size: .875rem; }
-.floating { position: fixed; z-index: 35; right: max(18px, env(safe-area-inset-right)); bottom: max(18px, env(safe-area-inset-bottom)); width: 180px; color: #29271f; pointer-events: none; }
+.floating { position: fixed; z-index: 35; right: max(26px, env(safe-area-inset-right)); bottom: max(18px, env(safe-area-inset-bottom)); width: 180px; color: #29271f; pointer-events: none; }
 .floating .launcherLabel { padding: 6px 12px; font-size: .875rem; }
 .floating .launcher { width: 100%; pointer-events: none; }
 /* Registered full-figure silhouettes stay inside these margins. Transparent
@@ -18,6 +18,13 @@
 .floating .launcher > span:first-child { pointer-events: auto; clip-path: inset(0 10% 0 13%); }
 .floating .launcherLabel { pointer-events: auto; }
 .launcher > span:first-child { width: 100%; }
+/* Reserve bed-floor space even while standing: entering does not reflow the
+   fixed launcher. One transform is shared by all 314 native source frames. */
+.sceneSlot { position: relative; display: block; aspect-ratio: 224 / 250; }
+.sleepScene { position: absolute; display: block; width: 158%; height: auto; aspect-ratio: 1; left: -28.66%; top: -26.12%; pointer-events: auto; clip-path: inset(15% 0 9% 6%); }
+.sceneSlot:has([data-sleep-ready="true"]) > .character { visibility: hidden; }
+.floating .launcher > .sceneSlot:has(.sleepScene) { clip-path: inset(0 -50% -8% -50%); pointer-events: none; }
+.sleepScene[data-sleep-phase="sleeping"] { clip-path: inset(35% 8% 10% 8%); }
 .dialog { position: fixed; inset: auto 24px 24px auto; margin: 0; width: min(440px, calc(100vw - 32px)); height: min(720px, calc(100dvh - 48px)); max-height: calc(100dvh - 24px); max-width: calc(100vw - 24px); border: 1px solid #d7ccae; border-radius: 24px; padding: 0; color: #29271f; background: #f9f7ef; box-shadow: 0 20px 90px #0005; display: flex; flex-direction: column; overflow: hidden; }
 .dialog:not([open]) { display: none; }
 .dialog::backdrop { background: #11131c40; }
@@ -59,6 +66,6 @@
 .still .spriteSheet, .still .dots { animation: none; left: 0; top: 0; }
 /* Registered pose blending changes artwork only, never viewport position. */
 @keyframes pulse { 50% { opacity: .35; } }
-@media (max-width: 600px) { .panel { padding: 36px 0 60px; } .panel .launcher { width: min(300px, 100%); } .floating { width: 128px; right: 12px; bottom: max(12px, env(safe-area-inset-bottom)); } .dialog { inset: auto 12px max(12px, env(safe-area-inset-bottom)) auto; height: min(680px, calc(100dvh - 24px)); border-radius: 18px; } .companion { padding: 8px 14px 0; gap: 8px; } .companionCharacter { width: 120px; } .messages, .form { padding-left: 14px; padding-right: 14px; } }
+@media (max-width: 600px) { .panel { padding: 36px 0 60px; } .floating { width: 128px; right: 20px; bottom: max(12px, env(safe-area-inset-bottom)); } .dialog { inset: auto 12px max(12px, env(safe-area-inset-bottom)) auto; height: min(680px, calc(100dvh - 24px)); border-radius: 18px; } .companion { padding: 8px 14px 0; gap: 8px; } .companionCharacter { width: 120px; } .messages, .form { padding-left: 14px; padding-right: 14px; } }
 @media (max-height: 500px) { .companion { display: none; } .header { padding: 8px 14px; } .form textarea { max-height: 64px; } }
 @media (prefers-reduced-motion: reduce) { .spriteSheet, .dots { animation: none; left: 0; top: 0; } }

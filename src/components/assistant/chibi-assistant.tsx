@@ -11,6 +11,8 @@ import { CHARACTER_ACTIONS, CHARACTER_STAGE, type CharacterAction } from "@/lib/
 import { CHARACTER_FRAME_VERSION, DRAWING_SEQUENCES, NEUTRAL_DRAWING, drawingDuration, drawingKey, drawingPose, drawingSample, type Drawing } from "@/lib/assistant/frame-timeline";
 import { ASSISTANT_BEHAVIOR_VERSION, responseAction } from "@/lib/assistant/behavior";
 import { useAssistantBehavior } from "./use-assistant-behavior";
+import { useAssistantPresence } from "./use-assistant-presence";
+import { SleepScene } from "./sleep-scene";
 
 type Settings = { enabled: boolean; maxQuestionChars: number };
 type Turn = { question: string; result: AssistantAnswer };
@@ -153,17 +155,26 @@ export function ChibiAssistant({ floating = false, settings }: { floating?: bool
   const [open, setOpen] = useState(false), [started, setStarted] = useState(false);
   const [greeting, setGreeting] = useState<string>(ASSISTANT_GREETINGS[0]);
   const [animate, setAnimate] = useState(true);
-  const behavior = useAssistantBehavior(animate);
+  const presence = useAssistantPresence(animate, open);
+  const behavior = useAssistantBehavior(animate && presence.state.phase === "awake");
+  const phase = presence.state.phase;
+  const sleepScene = phase === "entering" || phase === "sleeping" || phase === "waking";
   const trigger = useRef<HTMLButtonElement>(null);
   function show() {
+    presence.send({ type: "click" });
+    // A sleeping companion is woken first; this click never starts an AI query.
+    if (phase !== "awake") return;
     if (!started) { setGreeting(pickAssistantGreeting(Math.random())); setStarted(true); }
     behavior.send({ type: "open" }); setOpen(true);
   }
   function dismiss() { behavior.send({ type: "close" }); setOpen(false); }
-  return <div className={`${floating ? styles.floating : styles.panel} ${animate ? "" : styles.still}`} data-behavior-version={ASSISTANT_BEHAVIOR_VERSION}>
+  return <div className={`${floating ? styles.floating : styles.panel} ${animate ? "" : styles.still}`} data-behavior-version={ASSISTANT_BEHAVIOR_VERSION} data-presence={phase}>
     {!floating ? <><h1>小助手</h1><p className={styles.invitation}>有想找的记录吗？</p></> : null}
-    <button ref={trigger} type="button" className={styles.launcher} onClick={show} aria-label="打开小助手对话" aria-haspopup="dialog" aria-expanded={open}>
-      <span><Character action={open ? "idle" : behavior.state.action} small={floating} animate={animate} active={!open} playId={behavior.state.playId} once onFinished={behavior.finished} /></span><span className={styles.launcherLabel}>{floating ? "聊聊" : "点击和我聊聊"}</span>
+    <button ref={trigger} type="button" className={styles.launcher} onClick={show} aria-label={phase === "awake" ? "打开小助手对话" : phase === "entering" || phase === "sleeping" ? "唤醒小助手" : "小助手正在起床"} aria-haspopup="dialog" aria-expanded={open}>
+      <span className={styles.sceneSlot}>
+        <Character action={phase === "recovering" ? "yawn" : open || sleepScene ? "idle" : behavior.state.action} small={floating} animate={animate} active={!open && !sleepScene} playId={phase === "recovering" ? presence.state.cycle : behavior.state.playId} once onFinished={phase === "recovering" ? presence.finished : behavior.finished} />
+        {sleepScene ? <SleepScene phase={phase} cycle={presence.state.cycle} animate={animate} onFinished={presence.finished} onFailed={presence.failed} /> : null}
+      </span><span className={styles.launcherLabel}>{phase === "sleeping" ? "轻点叫醒" : phase === "entering" ? "困了…" : phase === "waking" || phase === "recovering" ? "醒一醒…" : floating ? "聊聊" : "点击和我聊聊"}</span>
     </button>
     {!floating ? <><div className={styles.introduction}>{ASSISTANT_GREETINGS[0]}</div><nav className={styles.explore} aria-label="浏览网站"><Link href="/posts">浏览日志 ↗</Link><Link href="/places">看看地点 ↗</Link></nav></> : null}
     {started ? createPortal(<AssistantDialog open={open} greeting={greeting} initialSettings={settings} animate={animate} behavior={behavior} onAnimate={() => setAnimate(value => !value)} onClose={dismiss} returnFocus={() => trigger.current?.focus({ preventScroll: true })} />, document.body) : null}

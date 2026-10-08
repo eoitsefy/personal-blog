@@ -1,6 +1,6 @@
 {
   "version": "sleep-bed-v1",
-  "status": "two-clips-generated-download-blocked-not-released",
+  "status": "art-and-local-browser-gates-passed-awaiting-production",
   "provider": "Kling browser video 3.0",
   "resolution": "720p",
   "budget": {"seconds": 13, "credits": 78, "creditsPerSecond": 6, "paidRetries": false},
@@ -12,11 +12,12 @@
   ],
   "presence": {"yawnAfterInactivityMs": 75000, "sleepAfterInactivityMs": 120000, "sleepOnlyWhileDialogClosed": true, "sleepDuration": "until assistant clicked", "wakeFollowUp": "reuse existing yawn, then neutral", "backgroundTab": "pause without catch-up", "reducedMotion": "static sleeping and standing poses"},
   "review": {"fixedCanvas": true, "safeMarginPercent": 20, "identityAndLeftCollarBadge": true, "naturalJoints": true, "bedContactAndOcclusion": true, "thinClosedEyes": true, "noSceneOrCameraMotion": true, "seamlessLoopRequired": true, "wholeFrameOnly": true, "doNotDeployUnreviewed": true},
-  "generatedFiles": ["kling_20261008_作品_8秒单镜头2D Q版_1761_0.mp4", "kling_20261008_作品_5秒单镜头2D Q版_1819_0.mp4"],
+  "generatedFiles": ["kling_20261008_作品_8秒单镜头2D_Q版_1761_0.mp4", "kling_20261008_作品_5秒单镜头2D_Q版_1819_0.mp4"],
+  "downloadedOriginals": {"archive": "下载结果 (1).zip", "archiveBytes": 7580136, "nativeSize": [960, 960], "nativeFps": 24, "enter": {"frames": 193, "sha256": "94851ca10b61a09d315b4190dbdc910087f1f04ace59364f51aabc12ad0e50e0"}, "wake": {"frames": 121, "sha256": "151f88f4ab10be186544afb297c6de67afb4b3d8f22b3bc380c8e0f2b99e888c"}},
   "spentCredits": 78,
   "remainingCreditsObserved": 0,
   "generationCount": 2,
-  "downloadIssue": "Browser blocked provider download destination with ERR_BLOCKED_BY_CLIENT; documented pageAssets export also failed. No browser protection changed.",
+  "downloadIssue": "Resolved by user download. Earlier browser export was blocked; no browser protection was changed.",
   "proof": ["sleep-platform.png", "wake-platform.png"],
-  "notes": ["Sleep loop and both yawns reuse available frames and consume no additional generation credits.", "The standing atlas crop must not be reused for the wider bed animation.", "Generation failure does not authorize spending additional credits.", "Provider generated a gray background despite black-background prompt; matting and all-frame review are pending local original files."]
+  "notes": ["Sleep loop and both yawns reuse available frames and consume no additional generation credits.", "The standing atlas crop must not be reused for the wider bed animation.", "Generation failure does not authorize spending additional credits.", "Provider output changes between black and gray background. Whole-frame alpha refinement is offline and free; U2net-only trials failed ground-shadow review and were not released.", "Downloaded originals are 960 square at native 24 fps, although the generation UI selected 720p. No intermediate frames are synthesized."]
 }
