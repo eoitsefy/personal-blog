@@ -7,6 +7,9 @@ import {resolve} from 'node:path';
 const folder=resolve(process.argv[2]||''),root='docs/assistant/sleep-bed-v2',out=root+'/review';
 assert.equal(process.argv[3],'--all-314-frames-visually-reviewed');
 const hash=b=>createHash('sha256').update(b).digest('hex');
+const codeScope=async inputs=>hash((await Promise.all(inputs.map(async p=>p+':'+hash((await readFile(p,'utf8')).replace(/\r\n/g,'\n'))))).sort().join('\n'));
+const sleepInputs=['src/lib/assistant/presence.ts','src/lib/assistant/sleep-sheets.ts','src/components/assistant/use-assistant-presence.ts','src/components/assistant/sleep-scene.tsx','src/components/assistant/chibi-assistant.tsx','src/components/assistant/assistant-panel.module.css','src/components/assistant/use-assistant-behavior.ts','src/lib/assistant/behavior.ts'];
+const standingInputs=['src/lib/assistant/behavior.ts','src/components/assistant/use-assistant-behavior.ts','src/components/assistant/chibi-assistant.tsx','src/components/assistant/assistant-panel.module.css'];
 const manifest=JSON.parse(await readFile(root+'/manifest.json','utf8'));
 await mkdir(out+'/boards',{recursive:true});
 const boards=[];
@@ -21,9 +24,13 @@ for(const[name,destination]of[['browser-local','browser-local'],['standing-regre
   const report=JSON.parse(await readFile(resolve(folder,name,'report.json'),'utf8'));
   assert.equal(report.accepted,true);assert.equal(report.realModelQueries,0);
   if(name==='browser-local'){
+    assert.deepEqual(report.inputs,sleepInputs);assert.equal(report.codeScopeSha256,await codeScope(sleepInputs),'Sleep report must bind the exact normalized runtime code');
     assert.equal(report.assetScopeSha256,manifest.assetScopeSha256);assert.equal(report.frameScopeSha256,manifest.frameScopeSha256);
     assert.deepEqual(report.results.map(r=>r.positions),[410,410,410,410]);assert.ok(report.fallback);
-  }else{assert.deepEqual(report.results.map(r=>r.poses),[578,578,578,578]);}
+  }else{
+    assert.equal(report.behaviorCodeScopeSha256,await codeScope(standingInputs),'Standing regression must bind the exact normalized runtime code');
+    assert.deepEqual(report.results.map(r=>r.poses),[578,578,578,578]);
+  }
   await copyFile(resolve(folder,name,'report.json'),out+'/'+destination+'/report.json');
 }
 for(const name of['loop-wake-seam.png','enter-preview.webp','wake-preview.webp','sleep-loop-preview.webp'])await copyFile(resolve(folder,'review-v2',name),out+'/'+name);

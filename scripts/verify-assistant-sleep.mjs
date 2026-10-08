@@ -111,7 +111,7 @@ try{
     await context.close();
   }
   assert.equal(realModelQueries,0);assert.deepEqual(errors,[]);
-  const report={accepted:true,artVersion:manifest.version,assetScopeSha256:manifest.assetScopeSha256,frameScopeSha256:manifest.frameScopeSha256,codeScopeSha256,inputs,realModelQueries,fallback,results,limitations:['Headless Edge is not a physical mobile-device performance test.','Synthetic visibility uses the same browser visibility event handler.']};
+  const report={accepted:true,testedBaseUrl:base,completedAt:new Date().toISOString(),artVersion:manifest.version,assetScopeSha256:manifest.assetScopeSha256,frameScopeSha256:manifest.frameScopeSha256,codeScopeSha256,inputs,realModelQueries,fallback,results,limitations:['Headless Edge is not a physical mobile-device performance test.','Synthetic visibility uses the same browser visibility event handler.']};
   await writeFile(out+'/report.json',JSON.stringify(report,null,2)+'\n');console.log(JSON.stringify({accepted:true,widths:results.map(r=>r.width),positions:results.map(r=>r.positions),realModelQueries}));
-}catch(error){await writeFile(out+'/failure.json',JSON.stringify({message:error.message,stack:error.stack,errors},null,2));throw error;}
+}catch(error){await writeFile(out+'/failure.json',JSON.stringify({testedBaseUrl:base,failedAt:new Date().toISOString(),codeScopeSha256,message:error.message,stack:error.stack,errors},null,2));throw error;}
 finally{await browser.close();}

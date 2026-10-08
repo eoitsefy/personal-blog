@@ -1,5 +1,7 @@
 {
   "accepted": true,
+  "testedBaseUrl": "http://127.0.0.1:3220",
+  "completedAt": "2026-10-08T07:16:15.473Z",
   "artVersion": "sleep-bed-v2",
   "assetScopeSha256": "91a8270dd0650a22118f8791b3f39a397880bc7ec84c8d6ef6bc91f2c87f9089",
   "frameScopeSha256": "603feca56d10f447562924fe0399086be5bbbd7a12a3f34dc23664449cff02f9",

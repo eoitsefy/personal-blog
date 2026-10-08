@@ -1,10 +1,8 @@
 {
   "accepted": true,
-  "testedBaseUrl": "http://127.0.0.1:3220",
-  "completedAt": "2026-10-08T07:15:43.292Z",
   "characterVersion": "original-left-collar-kling-actions-v2",
   "behaviorVersion": "conversation-events-v1",
-  "behaviorCodeScopeSha256": "dc2f6c602a0d32f46973f8438bdc591aa7585588111bd3943eff04ea9d1ad838",
+  "behaviorCodeScopeSha256": "584a860586d03eaf597e0f4edd712de33a65d8f2fe63ca00105d5bece6ac25db",
   "assetScopeSha256": "30839f3339154ff39128474bc6bb0751970fa90f3dce91d97a96018cfff19d26",
   "frameScopeSha256": "8dcd7850670619dee1bc1cd2618865cc1740464f52b6ffd41362dc37016b36a3",
   "actualAssetHashesVerified": true,

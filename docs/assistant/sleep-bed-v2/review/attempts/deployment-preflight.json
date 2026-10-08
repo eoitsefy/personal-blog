@@ -1,0 +1,15 @@
+{
+  "status": "BLOCKED_BEFORE_BUILD_OR_CONTAINER_REPLACEMENT",
+  "startedAtServer": "2026-10-08T15:12:01+08:00",
+  "attemptedCommit": "6b7bb9daba915b45164110a2e4d5c548bc566969",
+  "preservedProductionCommit": "f8e838d6962abcd5f09766674364ba32bcc8ea65",
+  "deploymentLog": "/root/server-ops/logs/deploy-assistant-sleep-20261008-151201.log",
+  "backupDirectory": "/root/backups/assistant-sleep-20261008-151201",
+  "reason": "The earlier standing-regression runner hashed raw Windows bytes, while the release gate and current runner normalize CRLF to LF. The code-scope guard correctly rejected that nonmatching evidence.",
+  "resolution": "Reran both browser suites using the current runner against the identical production build, normalized code fingerprints and all original asset checks. The review recorder now rejects mismatched code evidence before packaging. No runtime or artwork changes were needed.",
+  "gatesWeakened": false,
+  "newImageBuilt": false,
+  "containerReplaced": false,
+  "databaseMigration": false,
+  "additionalGenerationCredits": 0
+}
