@@ -1,6 +1,7 @@
 {
   "version": "sleep-bed-v1",
-  "status": "art-and-local-browser-gates-passed-awaiting-production",
+  "status": "deployed-and-production-accepted",
+  "productionAcceptance": {"applicationCommit": "cb42ad11b8f6449a2431245345b1701cd88594e7", "completedAt": "2026-10-08T07:51:42.399Z", "record": "../../sleep-bed-v2/review/production-deployment.json", "additionalGenerationCredits": 0},
   "provider": "Kling browser video 3.0",
   "resolution": "720p",
   "budget": {"seconds": 13, "credits": 78, "creditsPerSecond": 6, "paidRetries": false},
