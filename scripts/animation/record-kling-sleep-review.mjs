@@ -26,7 +26,7 @@ for(const[name,destination]of[['browser-local','browser-local'],['standing-regre
   if(name==='browser-local'){
     assert.deepEqual(report.inputs,sleepInputs);assert.equal(report.codeScopeSha256,await codeScope(sleepInputs),'Sleep report must bind the exact normalized runtime code');
     assert.equal(report.assetScopeSha256,manifest.assetScopeSha256);assert.equal(report.frameScopeSha256,manifest.frameScopeSha256);
-    assert.deepEqual(report.results.map(r=>r.positions),[410,410,410,410]);assert.ok(report.fallback);
+    assert.deepEqual(report.results.map(r=>r.positions),[410,410,410,410]);assert.ok(report.fallback);assert.equal(report.mediaNotificationFallback,true);
   }else{
     assert.equal(report.behaviorCodeScopeSha256,await codeScope(standingInputs),'Standing regression must bind the exact normalized runtime code');
     assert.deepEqual(report.results.map(r=>r.poses),[578,578,578,578]);

@@ -13,6 +13,8 @@
   "sleepBrowser": "browser-local/report.json",
   "standingRegression": "standing-regression-local/report.json",
   "artReview": "art-review.json",
+  "mediaNotificationFallback": "passed with notifications deliberately suppressed",
+  "boundaryFixTargetedTests": {"passed": 7, "failed": 0},
   "realModelQueries": 0,
   "additionalGeneration": 0,
   "additionalSpend": 0

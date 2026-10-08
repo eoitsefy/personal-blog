@@ -73,6 +73,9 @@ export function SleepScene({ phase, cycle, animate, onFinished, onFailed }: {
     function frame() {
       raf = 0;
       if (disposed) return;
+      // A freshly created media query can update before its change event is
+      // delivered. Settle the still pose here as well, rather than just stop.
+      if (clock && !allowed()) { void refresh(); return; }
       if (clock && allowed()) {
         const time = Math.max(0, Number(clock.currentTime ?? 0));
         const position = Math.min(sequence.length - 1, Math.floor((phase === "sleeping" ? time % (sequence.length / SLEEP_FPS * 1000) : time) * SLEEP_FPS / 1000));

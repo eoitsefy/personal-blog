@@ -1,0 +1,8 @@
+{
+  "testedBaseUrl": "https://eastherphil.cn",
+  "failedAt": "2026-10-08T07:21:14.283Z",
+  "codeScopeSha256": "7745fb4ecf9ad03a28b4179901abb5f64212c55d3116dbb9ffd4953e5a363abf",
+  "message": "locator.evaluate: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('canvas[data-sleep-phase=entering]')\u001b[22m\n",
+  "stack": "locator.evaluate: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('canvas[data-sleep-phase=entering]')\u001b[22m\n\n    at seek (C:\\Users\\Administrator\\Documents\\Codex\\2026-07-15\\github-plugin-github-openai-curated-remote-4\\work\\personal-blog\\scripts\\verify-assistant-sleep.mjs:36:17)\n    at async finish (C:\\Users\\Administrator\\Documents\\Codex\\2026-07-15\\github-plugin-github-openai-curated-remote-4\\work\\personal-blog\\scripts\\verify-assistant-sleep.mjs:51:3)\n    at async file:///C:/Users/Administrator/Documents/Codex/2026-07-15/github-plugin-github-openai-curated-remote-4/work/personal-blog/scripts/verify-assistant-sleep.mjs:92:59",
+  "errors": []
+}

@@ -6,7 +6,7 @@
   "deploymentLog": "/root/server-ops/logs/deploy-assistant-sleep-20261008-151201.log",
   "backupDirectory": "/root/backups/assistant-sleep-20261008-151201",
   "reason": "The earlier standing-regression runner hashed raw Windows bytes, while the release gate and current runner normalize CRLF to LF. The code-scope guard correctly rejected that nonmatching evidence.",
-  "resolution": "Reran both browser suites using the current runner against the identical production build, normalized code fingerprints and all original asset checks. The review recorder now rejects mismatched code evidence before packaging. No runtime or artwork changes were needed.",
+  "resolution": "Reran both browser suites using the current runner against the identical production build, normalized code fingerprints and all original asset checks. The review recorder now rejects mismatched code evidence before publishing. No runtime or artwork changes were needed for this preflight mismatch.",
   "gatesWeakened": false,
   "newImageBuilt": false,
   "containerReplaced": false,

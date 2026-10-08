@@ -1,0 +1,14 @@
+{
+  "status": "REPRODUCED_AND_FIXED_IN_LOCAL_BROWSER",
+  "initialApplicationCommit": "66fe50e10ed23792716ba3efff68597d1265c2ab",
+  "initialCodeScopeSha256": "7745fb4ecf9ad03a28b4179901abb5f64212c55d3116dbb9ffd4953e5a363abf",
+  "isolatedProbe": {"viewport": 390, "dpr": 2, "attempts": 3, "stalled": 1, "completed": 2, "realModelQueries": 0},
+  "observedFailure": "The waking renderer's newly created MediaQueryList missed its change notification in one trial. Other identical queries received the event. The actual preference became reduced, drawing stopped at source frame 1 and the native clock later finished without a phase completion callback.",
+  "fix": "The drawing loop now checks actual availability and invokes the same safe still-pose settlement when motion becomes unavailable. It no longer relies only on the change notification.",
+  "regression": "The browser suite suppresses reduced-motion change listeners in a separate context and requires waking to return to a usable static launcher, without another sleep or a model request.",
+  "fixedCodeScopeSha256": "e804081c3e0be1093073c0f15dc5a8667d45c32b79906b350aa06e998c862481",
+  "fixedLocalBrowserAcceptedAt": "2026-10-08T07:37:25.591Z",
+  "artworkChanged": false,
+  "additionalGenerationCredits": 0,
+  "gatesWeakened": false
+}

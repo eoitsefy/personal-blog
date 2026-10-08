@@ -1,11 +1,11 @@
 {
   "accepted": true,
   "testedBaseUrl": "http://127.0.0.1:3220",
-  "completedAt": "2026-10-08T07:37:25.591Z",
+  "completedAt": "2026-10-08T07:16:15.473Z",
   "artVersion": "sleep-bed-v2",
   "assetScopeSha256": "91a8270dd0650a22118f8791b3f39a397880bc7ec84c8d6ef6bc91f2c87f9089",
   "frameScopeSha256": "603feca56d10f447562924fe0399086be5bbbd7a12a3f34dc23664449cff02f9",
-  "codeScopeSha256": "e804081c3e0be1093073c0f15dc5a8667d45c32b79906b350aa06e998c862481",
+  "codeScopeSha256": "7745fb4ecf9ad03a28b4179901abb5f64212c55d3116dbb9ffd4953e5a363abf",
   "inputs": [
     "src/lib/assistant/presence.ts",
     "src/lib/assistant/sleep-sheets.ts",
@@ -18,7 +18,6 @@
   ],
   "realModelQueries": 0,
   "fallback": true,
-  "mediaNotificationFallback": true,
   "results": [
     {
       "width": 1280,
