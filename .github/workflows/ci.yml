@@ -59,6 +59,24 @@ jobs:
       - run: npm run typecheck
       - run: npm run build
       - name: Build production Linux container
-        run: docker build --tag personal-blog:ci .
+        run: docker build --label "org.opencontainers.image.revision=$GITHUB_SHA" --tag personal-blog:ci .
       - name: Verify production container runtime
         run: bash scripts/verify-container-ci.sh
+      - name: Export verified release image
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: |
+          mkdir -p release-image
+          docker save personal-blog:ci | gzip -1 > release-image/personal-blog.tar.gz
+          docker image inspect personal-blog:ci --format '{{.Id}}' > release-image/image-id.txt
+          printf '%s\n' "$GITHUB_SHA" > release-image/commit.txt
+          cd release-image
+          sha256sum personal-blog.tar.gz > SHA256SUMS
+      - name: Retain verified image for deployment
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        uses: actions/upload-artifact@v4
+        with:
+          name: production-image-${{ github.sha }}
+          path: release-image/
+          if-no-files-found: error
+          compression-level: 0
+          retention-days: 1

@@ -65,6 +65,35 @@ Do not place database dumps in the Git repository.
 
 ## Deployment sequence
 
+### Preferred: deploy the CI-built Linux image
+
+Do not compile a release on the serving ECS host. A previous unbounded build coincided
+with provider-confirmed disk I/O restriction and loss of management connectivity.
+The main-branch CI now retains `production-image-<full-commit>` for one day, only after
+all checks and the Linux container smoke test succeed. It contains the compressed
+Docker image, archive checksum, immutable image ID and source commit. No production
+environment file or credentials are sent to CI.
+
+1. Verify the successful run belongs to the intended full commit on this repository.
+2. Download the artifact, verify `SHA256SUMS`, `commit.txt`, and the OCI revision label.
+3. Transfer it to a new release directory and check its checksum again before loading.
+4. Confirm the loaded image ID matches `image-id.txt`. Preserve/tag the running image.
+5. Start a temporary candidate bound only to loopback on a spare port, on the existing
+   application network, with production environment supplied locally (never printed),
+   read-only uploads, CPU/memory/PID limits and the normal unprivileged security options.
+   Do not run migrations unless reviewed schema changes require them.
+6. Check health, homepage, anonymous access boundaries, native modules, and animation
+   asset hashes. Keep the old application serving throughout these checks.
+7. Remove only the temporary candidate, tag the verified image with the Compose app's
+   existing image name, and use `docker compose up -d --no-deps --no-build app`.
+   This replaces only the app; database/cache volumes and uploads remain unchanged.
+8. Check HTTPS and actual browser transitions. If unhealthy, retag the recorded old
+   image and run the same app-only command. Record the deployed commit and image ID.
+
+The source-build commands below remain reference material for isolated builders, not
+the preferred procedure on this small serving host. Never run `compose config` without
+`--quiet` in shared output: interpolated environment values may expose credentials.
+
 A conservative flow:
 
 ```bash
