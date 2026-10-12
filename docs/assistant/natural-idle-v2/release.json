@@ -1,0 +1,20 @@
+{
+  "status": "LOCAL_CHECKS_PASSED_OWNER_AUTHORIZED_DEPLOYMENT",
+  "defaultAppearance": "natural",
+  "legacy": {"assetsRetained": true, "codeRetained": true, "selector": "助手形象 → 原版 · 完整动作", "automaticMixing": false},
+  "changes": "Accepted natural-hand idle is the default. Old gesture/sleep art is not mixed with the new identity. Selecting legacy restores the previous complete animation system. Chat API unchanged.",
+  "checks": {
+    "typescript": "passed",
+    "eslintChangedSource": "passed",
+    "unitTests": {"passed": 17, "failed": 0, "scope": "appearance, behavior, presence, frame-timeline"},
+    "localBrowser": {"route": "/assistant", "newAnimationLoaded": true, "pauseUsesStill": true, "legacyCanvasesReady": true, "preferenceSurvivesReload": true, "mobileWidths": [390,320], "horizontalOverflowAt320": false, "realModelRequests": 0},
+    "independentCodeReview": "no blockers found",
+    "independentCompressedArtReview": {"frames": [0,46,60], "result": "No new visible face, sleeve, hand or edge defects in sampled frames", "fullSequenceVisualApprovalClaimed": false},
+    "reducedMotionAndNetworkFailure": "static implementation review; not yet browser fault-injected"
+  },
+  "localBuildEnvironment": "C-drive project has cross-drive node_modules junction; tested exact HEAD plus scoped changes in an isolated D-drive copy with webpack. No production configuration changes required.",
+  "previousProductionCommit": "cb42ad11b8f6449a2431245345b1701cd88594e7",
+  "databaseSchemaChanged": false,
+  "environmentChanged": false,
+  "nginxChanged": false
+}

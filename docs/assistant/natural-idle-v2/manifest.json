@@ -1,0 +1,28 @@
+{
+  "version": "natural-idle-v2",
+  "fps": 30,
+  "durationMs": 4000,
+  "frames": 120,
+  "width": 480,
+  "height": 480,
+  "assets": [
+    {
+      "src": "/assistant/chibi-natural-idle-v2.webp",
+      "bytes": 2815178,
+      "sha256": "60b58c34cf64d15ee8693ac9fcf7ee0ec940fd3442ed21bd866effd534d76da7"
+    },
+    {
+      "src": "/assistant/chibi-natural-idle-v2-still.webp",
+      "bytes": 95440,
+      "sha256": "7ce9ab545b2bd0732a7460ce1ddab8166e3e70963e1517bfb2248fadf8b6749e"
+    }
+  ],
+  "sourceReportSha256": "c0a4b7110b65025b11c427919ea7c5105141715e436ab6045b6646ab5ad21969",
+  "ownerAccepted": true,
+  "legacyAssetsRetained": true,
+  "encoding": {
+    "quality": 90,
+    "alphaQuality": 100,
+    "geometryChange": false
+  }
+}

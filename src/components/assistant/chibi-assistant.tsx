@@ -13,12 +13,19 @@ import { ASSISTANT_BEHAVIOR_VERSION, responseAction } from "@/lib/assistant/beha
 import { useAssistantBehavior } from "./use-assistant-behavior";
 import { useAssistantPresence } from "./use-assistant-presence";
 import { SleepScene } from "./sleep-scene";
+import { NaturalIdleCharacter } from "./natural-idle-character";
+import { setAssistantAppearance, useAssistantAppearance } from "./use-assistant-appearance";
+import { parseAppearance } from "@/lib/assistant/appearance";
 
 type Settings = { enabled: boolean; maxQuestionChars: number };
 type Turn = { question: string; result: AssistantAnswer };
 
 type CharacterProps = { action?: CharacterAction; small?: boolean; animate?: boolean; active?: boolean; playId?: number; once?: boolean; onFinished?: (playId: number) => void };
-function Character({ action = "idle", small = false, animate = true, active = true, playId = 0, once = false, onFinished }: CharacterProps) {
+function Character(props: CharacterProps) {
+  const appearance = useAssistantAppearance();
+  return appearance === "natural" ? <NaturalIdleCharacter animate={props.animate} active={props.active} /> : <LegacyCharacter {...props} />;
+}
+function LegacyCharacter({ action = "idle", small = false, animate = true, active = true, playId = 0, once = false, onFinished }: CharacterProps) {
   const [failed, setFailed] = useState(false);
   const sheet = useRef<HTMLCanvasElement>(null);
   const cachedImages = useRef(new Map<string, Promise<HTMLImageElement>>());
@@ -155,9 +162,11 @@ export function ChibiAssistant({ floating = false, settings }: { floating?: bool
   const [open, setOpen] = useState(false), [started, setStarted] = useState(false);
   const [greeting, setGreeting] = useState<string>(ASSISTANT_GREETINGS[0]);
   const [animate, setAnimate] = useState(true);
-  const presence = useAssistantPresence(animate, open);
-  const behavior = useAssistantBehavior(animate && presence.state.phase === "awake");
-  const phase = presence.state.phase;
+  const appearance = useAssistantAppearance();
+  const legacy = appearance === "legacy";
+  const presence = useAssistantPresence(animate && legacy, open);
+  const behavior = useAssistantBehavior(animate && legacy && presence.state.phase === "awake");
+  const phase = legacy ? presence.state.phase : "awake";
   const sleepScene = phase === "entering" || phase === "sleeping" || phase === "waking";
   const trigger = useRef<HTMLButtonElement>(null);
   function show() {
@@ -184,6 +193,7 @@ export function ChibiAssistant({ floating = false, settings }: { floating?: bool
 function AssistantDialog({ open, greeting, initialSettings, animate, behavior, onAnimate, onClose, returnFocus }: {
   open: boolean; greeting: string; initialSettings?: Settings; animate: boolean; behavior: ReturnType<typeof useAssistantBehavior>; onAnimate: () => void; onClose: () => void; returnFocus: () => void;
 }) {
+  const appearance = useAssistantAppearance();
   const dialog = useRef<HTMLDialogElement>(null), closeButton = useRef<HTMLButtonElement>(null);
   const controller = useRef<AbortController | null>(null), messages = useRef<HTMLDivElement>(null), focus = useRef(returnFocus);
   const id = useId();
@@ -245,7 +255,7 @@ function AssistantDialog({ open, greeting, initialSettings, animate, behavior, o
     else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first?.focus(); }
   }}>
     <header className={styles.header}><div><strong id={`${id}-title`}>小助手</strong><small>AI 回答仅供参考 · 公开文章检索</small></div><div className={styles.headerControls}><button className={styles.motion} type="button" onClick={onAnimate} aria-pressed={!animate}>{animate ? "暂停动作" : "开启动作"}</button><button ref={closeButton} type="button" onClick={close} aria-label="关闭小助手对话">×</button></div></header>
-    <div className={styles.companion} data-motion-source="automatic"><div className={styles.companionCharacter}><Character action={open ? behavior.state.action : "idle"} small animate={animate} active={open} playId={behavior.state.playId} once onFinished={behavior.finished} /></div><p>{pending ? "让我找找相关记录…" : turns.length ? "还想了解什么？" : "你好，很高兴见到你！"}</p></div>
+    <div className={styles.companion} data-motion-source="automatic"><div className={styles.companionCharacter}><Character action={open ? behavior.state.action : "idle"} small animate={animate} active={open} playId={behavior.state.playId} once onFinished={behavior.finished} /></div><div><label className={styles.skinChoice}>助手形象<select value={appearance} onChange={event => setAssistantAppearance(parseAppearance(event.target.value))}><option value="natural">新版 · 自然待机</option><option value="legacy">原版 · 完整动作</option></select></label><p>{pending ? "让我找找相关记录…" : turns.length ? "还想了解什么？" : "你好，很高兴见到你！"}</p></div></div>
     <div ref={messages} className={styles.messages} aria-label="对话记录" tabIndex={0} onScroll={() => behavior.send({ type: "activity" })}>
       <p className={styles.bubble}>{greeting}</p>
       {!turns.length ? <nav className={styles.explore} aria-label="助手推荐入口"><Link href="/posts" onClick={close}>浏览日志 ↗</Link><Link href="/places" onClick={close}>看看地点 ↗</Link></nav> : null}
