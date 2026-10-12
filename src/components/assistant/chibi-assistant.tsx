@@ -16,6 +16,7 @@ import { SleepScene } from "./sleep-scene";
 import { NaturalIdleCharacter } from "./natural-idle-character";
 import { setAssistantAppearance, useAssistantAppearance } from "./use-assistant-appearance";
 import { parseAppearance } from "@/lib/assistant/appearance";
+import { NATURAL_MOTION, validNaturalMotion } from "@/lib/assistant/natural-motion";
 
 type Settings = { enabled: boolean; maxQuestionChars: number };
 type Turn = { question: string; result: AssistantAnswer };
@@ -23,7 +24,7 @@ type Turn = { question: string; result: AssistantAnswer };
 type CharacterProps = { action?: CharacterAction; small?: boolean; animate?: boolean; active?: boolean; playId?: number; once?: boolean; onFinished?: (playId: number) => void };
 function Character(props: CharacterProps) {
   const appearance = useAssistantAppearance();
-  return appearance === "natural" ? <NaturalIdleCharacter animate={props.animate} active={props.active} /> : <LegacyCharacter {...props} />;
+  return appearance === "natural" ? <NaturalIdleCharacter {...props} /> : <LegacyCharacter {...props} />;
 }
 function LegacyCharacter({ action = "idle", small = false, animate = true, active = true, playId = 0, once = false, onFinished }: CharacterProps) {
   const [failed, setFailed] = useState(false);
@@ -165,7 +166,8 @@ export function ChibiAssistant({ floating = false, settings }: { floating?: bool
   const appearance = useAssistantAppearance();
   const legacy = appearance === "legacy";
   const presence = useAssistantPresence(animate && legacy, open);
-  const behavior = useAssistantBehavior(animate && legacy && presence.state.phase === "awake");
+  const naturalActions = validNaturalMotion(NATURAL_MOTION);
+  const behavior = useAssistantBehavior(animate && (legacy || naturalActions) && (!legacy || presence.state.phase === "awake"));
   const phase = legacy ? presence.state.phase : "awake";
   const sleepScene = phase === "entering" || phase === "sleeping" || phase === "waking";
   const trigger = useRef<HTMLButtonElement>(null);

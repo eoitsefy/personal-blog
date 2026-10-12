@@ -1,0 +1,1456 @@
+{
+  "version": "natural-cloud-wave-hand-v3-matte-v6b",
+  "width": 480,
+  "height": 480,
+  "anchorRgbaSha256": "609dcd9ad3faccbc73c0f749a6b3473ecba113df660fb73a429b773a7f02b9de",
+  "still": {
+    "src": "/assistant/natural-cloud-wave-hand-v3-matte-v6b/anchor.webp",
+    "sha256": "7ce9ab545b2bd0732a7460ce1ddab8166e3e70963e1517bfb2248fadf8b6749e"
+  },
+  "review": {
+    "art": "PASS",
+    "technical": "PASS",
+    "transitions": "PASS",
+    "report": "src/lib/assistant/releases/natural-cloud-wave-hand-v3-matte-v6b/review.json"
+  },
+  "assets": {
+    "idle-0": {
+      "src": "/assistant/natural-cloud-wave-hand-v3-matte-v6b/idle-0.webp",
+      "width": 1920,
+      "height": 1920,
+      "sha256": "53aac47a3635c3341711fe48dc62083ab476c974c141b4bffa74d884694cff7c",
+      "alpha": true
+    },
+    "idle-1": {
+      "src": "/assistant/natural-cloud-wave-hand-v3-matte-v6b/idle-1.webp",
+      "width": 1920,
+      "height": 1920,
+      "sha256": "2e7cb2940448b86ad89a163007d206b052aa409e4e6a7a46141e40a2e745a064",
+      "alpha": true
+    },
+    "idle-2": {
+      "src": "/assistant/natural-cloud-wave-hand-v3-matte-v6b/idle-2.webp",
+      "width": 1920,
+      "height": 1920,
+      "sha256": "96fdfb3d0e5cec4921f73e018fd5ccf33f98633496ed97575887cae31b1f367e",
+      "alpha": true
+    },
+    "idle-3": {
+      "src": "/assistant/natural-cloud-wave-hand-v3-matte-v6b/idle-3.webp",
+      "width": 1920,
+      "height": 1920,
+      "sha256": "30adcc280beb84472ab2291ba2f0ec6a142a180d392192be08652ac444d8f659",
+      "alpha": true
+    },
+    "idle-4": {
+      "src": "/assistant/natural-cloud-wave-hand-v3-matte-v6b/idle-4.webp",
+      "width": 1920,
+      "height": 1440,
+      "sha256": "9879294dabb294eff24556520aeb9298793e02a9dbbc7cbbde8a41a306b65fa5",
+      "alpha": true
+    },
+    "wave-5": {
+      "src": "/assistant/natural-cloud-wave-hand-v3-matte-v6b/wave-5.webp",
+      "width": 1920,
+      "height": 1920,
+      "sha256": "5ef71e908ec2f224a27abdf3b65545c0c716fcbeb7930648381c87d78eb18bd6",
+      "alpha": true
+    },
+    "wave-6": {
+      "src": "/assistant/natural-cloud-wave-hand-v3-matte-v6b/wave-6.webp",
+      "width": 1920,
+      "height": 1920,
+      "sha256": "5f7cfaae4bc43466829d5992c1434e84faaa9c2573a5096bd5192db0fe0ecd95",
+      "alpha": true
+    },
+    "wave-7": {
+      "src": "/assistant/natural-cloud-wave-hand-v3-matte-v6b/wave-7.webp",
+      "width": 1920,
+      "height": 1920,
+      "sha256": "0fecf01b5c2204701a6509b5ed4b0bf7541bd635b9e5cc5d1d33135803fd0888",
+      "alpha": true
+    },
+    "wave-8": {
+      "src": "/assistant/natural-cloud-wave-hand-v3-matte-v6b/wave-8.webp",
+      "width": 1920,
+      "height": 1920,
+      "sha256": "0c8eab42ec754a653208e9917420fd108f79ec11cc7f8becea069cdfb586b5ba",
+      "alpha": true
+    },
+    "wave-9": {
+      "src": "/assistant/natural-cloud-wave-hand-v3-matte-v6b/wave-9.webp",
+      "width": 1920,
+      "height": 960,
+      "sha256": "5ba985349d701dd419704efec7e102cebcbef17e3a8797ca29e21629f56f8da5",
+      "alpha": true
+    }
+  },
+  "clips": {
+    "idle": {
+      "frames": [
+        {
+          "asset": "idle-0",
+          "x": 0,
+          "y": 0,
+          "rgbaSha256": "609dcd9ad3faccbc73c0f749a6b3473ecba113df660fb73a429b773a7f02b9de",
+          "durationMs": 17
+        },
+        {
+          "asset": "idle-0",
+          "x": 480,
+          "y": 0,
+          "rgbaSha256": "4cedd3bfde24539e373619f97f45f30f203c5071b17bbd47fb4bd64359511018",
+          "durationMs": 33
+        },
+        {
+          "asset": "idle-0",
+          "x": 960,
+          "y": 0,
+          "rgbaSha256": "3b1a7149967117a244257f310633895c3e48f8455c13cd8d310bec196ae4bdc0",
+          "durationMs": 34
+        },
+        {
+          "asset": "idle-0",
+          "x": 1440,
+          "y": 0,
+          "rgbaSha256": "145c5460a8e9d589e89517dcfc9a1c8a303cb4deefb192cf3c973f3bddaac912",
+          "durationMs": 33
+        },
+        {
+          "asset": "idle-0",
+          "x": 0,
+          "y": 480,
+          "rgbaSha256": "4f65e4af845c977d2d25636bf90fc0df4254a532a47e7f2ac4f3007dbd77d9a6",
+          "durationMs": 33
+        },
+        {
+          "asset": "idle-0",
+          "x": 480,
+          "y": 480,
+          "rgbaSha256": "28c8290b0db6f58f114b1f9c4ce107a827e323cdda456bd72906d547c47fdec1",
+          "durationMs": 34
+        },
+        {
+          "asset": "idle-0",
+          "x": 960,
+          "y": 480,
+          "rgbaSha256": "12a3ddf7d0c7bbd175a2e631e38e099f617dbd3df513b3b0274194d0862edddf",
+          "durationMs": 33
+        },
+        {
+          "asset": "idle-0",
+          "x": 1440,
+          "y": 480,
+          "rgbaSha256": "34ae9dbd5dcf879d98fa5c1a2722ee3470de08a836b3064d347b8ef82f16b12a",
+          "durationMs": 33
+        },
+        {
+          "asset": "idle-0",
+          "x": 0,
+          "y": 960,
+          "rgbaSha256": "d06151330d7cac9b132ee986804fd879160d21f5dbb2c2d5b527c5e0c1719df3",
+          "durationMs": 34
+        },
+        {
+          "asset": "idle-0",
+          "x": 480,
+          "y": 960,
+          "rgbaSha256": "1101acc6902938a2f5193bfdd97dbae58c5c015d4c3b2093f7a75b0653987932",
+          "durationMs": 33
+        },
+        {
+          "asset": "idle-0",
+          "x": 960,
+          "y": 960,
+          "rgbaSha256": "1e8cf5a08ff05e16bcf4c0efc5a88828255c6bd4e68bcc9b5fd43bb50857edc5",
+          "durationMs": 33
+        },
+        {
+          "asset": "idle-0",
+          "x": 1440,
+          "y": 960,
+          "rgbaSha256": "934eba8cba57a69a77215175abd54110b2e4d6ac063230f9bba9d1d82c79e117",
+          "durationMs": 34
+        },
+        {
+          "asset": "idle-0",
+          "x": 0,
+          "y": 1440,
+          "rgbaSha256": "29e2a81d5af567f0f56f70603361f5d6c4bd203ba97c79e5d7efc154be41e538",
+          "durationMs": 33
+        },
+        {
+          "asset": "idle-0",
+          "x": 480,
+          "y": 1440,
+          "rgbaSha256": "1fd6c8a0973e597ca41b56a7c7919c8c0de36b6c01341da5133d279eb8f17e77",
+          "durationMs": 33
+        },
+        {
+          "asset": "idle-0",
+          "x": 960,
+          "y": 1440,
+          "rgbaSha256": "0b77bd8e579d584c1df358fd4e9186a3cdd819e35b1a1b5d3dd4b6fd01716f9e",
+          "durationMs": 34
+        },
+        {
+          "asset": "idle-0",
+          "x": 1440,
+          "y": 1440,
+          "rgbaSha256": "b16bfafcc030b17319d658acdbb9b168c35e84db7ea9cf9e76ce0d1efda5c1be",
+          "durationMs": 33
+        },
+        {
+          "asset": "idle-1",
+          "x": 0,
+          "y": 0,
+          "rgbaSha256": "c584d2f1c25e2709a148f6fddb8d3f3d276b5e33a9059aaaf65e5235584eed46",
+          "durationMs": 33
+        },
+        {
+          "asset": "idle-1",
+          "x": 480,
+          "y": 0,
+          "rgbaSha256": "cab2b309b2a92183da51ada5df17cdd6c6059f84c34f26be72668c74c5158585",
+          "durationMs": 34
+        },
+        {
+          "asset": "idle-1",
+          "x": 960,
+          "y": 0,
+          "rgbaSha256": "8b132a984a799a7c8b54913dcbf6df30052c4e2a224fb4ff49d6a26e10689a65",
+          "durationMs": 33
+        },
+        {
+          "asset": "idle-1",
+          "x": 1440,
+          "y": 0,
+          "rgbaSha256": "a1ed595f695d7019620a77efb03c40c32cef8b4f42812cc52dd05e1821baa6b3",
+          "durationMs": 33
+        },
+        {
+          "asset": "idle-1",
+          "x": 0,
+          "y": 480,
+          "rgbaSha256": "3599ff5a2bafb13589cb61ea6231639de53fd1cde221ed0a76acad67714997ea",
+          "durationMs": 34
+        },
+        {
+          "asset": "idle-1",
+          "x": 480,
+          "y": 480,
+          "rgbaSha256": "59ddb0c7b6f67a0cc5f9705a5c4c5662dfd5c30bb398b19940ca7faca2fede47",
+          "durationMs": 33
+        },
+        {
+          "asset": "idle-1",
+          "x": 960,
+          "y": 480,
+          "rgbaSha256": "9028a6d044a86b7c455f6415f9b5082cd6c580b37cb0b54833db8406d80937f0",
+          "durationMs": 33
+        },
+        {
+          "asset": "idle-1",
+          "x": 1440,
+          "y": 480,
+          "rgbaSha256": "59b3c603288b2e737e28fe95d9f48bcb2dc6460d46f97eb51b3e0ca37338faf2",
+          "durationMs": 34
+        },
+        {
+          "asset": "idle-1",
+          "x": 0,
+          "y": 960,
+          "rgbaSha256": "34cf4cb2e0f38fef529079f46e3240284155bd540ffb96e700f008b6f4e48219",
+          "durationMs": 33
+        },
+        {
+          "asset": "idle-1",
+          "x": 480,
+          "y": 960,
+          "rgbaSha256": "0ac4acb445d77c98fa6e7f1667c39049a9ef15abf52e9668b6c33661e165e800",
+          "durationMs": 33
+        },
+        {
+          "asset": "idle-1",
+          "x": 960,
+          "y": 960,
+          "rgbaSha256": "8114cb2fda31b46a8b7e4555262204b9a0eabe98ea0ffe811522f1d6084d5164",
+          "durationMs": 34
+        },
+        {
+          "asset": "idle-1",
+          "x": 1440,
+          "y": 960,
+          "rgbaSha256": "e21c0462f13061d93e235d9392cbf6681cbd922e0242bf7ecec2d75c82b3509c",
+          "durationMs": 33
+        },
+        {
+          "asset": "idle-1",
+          "x": 0,
+          "y": 1440,
+          "rgbaSha256": "bbccf610c423e734206697b0b942a7303d09f510bec52c437deca2a15ac98554",
+          "durationMs": 33
+        },
+        {
+          "asset": "idle-1",
+          "x": 480,
+          "y": 1440,
+          "rgbaSha256": "9dee61e21032945434bb027e818733668de5542704977740d24aa556f0ae3ee1",
+          "durationMs": 34
+        },
+        {
+          "asset": "idle-1",
+          "x": 960,
+          "y": 1440,
+          "rgbaSha256": "715a139e525ab926546610189f361645e8ed12d343cb2d21855cd14ee52bd306",
+          "durationMs": 33
+        },
+        {
+          "asset": "idle-1",
+          "x": 1440,
+          "y": 1440,
+          "rgbaSha256": "35123b51f4eb22252e7c4b3b48961e78e86e9a98b75dd3e6fc0a59f3894468ae",
+          "durationMs": 33
+        },
+        {
+          "asset": "idle-2",
+          "x": 0,
+          "y": 0,
+          "rgbaSha256": "3519b8e5489baada682fc2d4fa50c508fabec7d0b23ceb52cdce7da0f871e477",
+          "durationMs": 34
+        },
+        {
+          "asset": "idle-2",
+          "x": 480,
+          "y": 0,
+          "rgbaSha256": "7778fb25fc510ffe450487bff806e249ebaf2b5f8ea9ed0b484d217f8b258568",
+          "durationMs": 33
+        },
+        {
+          "asset": "idle-2",
+          "x": 960,
+          "y": 0,
+          "rgbaSha256": "ee8303d21ec8518ebc3217e344762b83f7ee925573e4ade463348192ce19e73f",
+          "durationMs": 33
+        },
+        {
+          "asset": "idle-2",
+          "x": 1440,
+          "y": 0,
+          "rgbaSha256": "6a922dc052432e23a12be8495f76b1222eb827172da245654a8efc24ba2de196",
+          "durationMs": 34
+        },
+        {
+          "asset": "idle-2",
+          "x": 0,
+          "y": 480,
+          "rgbaSha256": "6db2e442a3383e4498061e5684b813c31cff72bf179479b2ff187f329c792074",
+          "durationMs": 33
+        },
+        {
+          "asset": "idle-2",
+          "x": 480,
+          "y": 480,
+          "rgbaSha256": "0effd52411fff6d31003f4976d5428d23544eea778412164a6a4d203579c04f3",
+          "durationMs": 33
+        },
+        {
+          "asset": "idle-2",
+          "x": 960,
+          "y": 480,
+          "rgbaSha256": "6eacb3dcf228f293f23fe6c24f1125a0e8751f398997dc7478b56b86b41b29da",
+          "durationMs": 34
+        },
+        {
+          "asset": "idle-2",
+          "x": 1440,
+          "y": 480,
+          "rgbaSha256": "91a1a6fe0a02f0c614bce89aff695f733c0549c2403f12a7b09dd021dd9c8086",
+          "durationMs": 33
+        },
+        {
+          "asset": "idle-2",
+          "x": 0,
+          "y": 960,
+          "rgbaSha256": "ba763e9b294eff9c972fa9e36243f251e440d677fca9eb75ef9bf3fd149be39c",
+          "durationMs": 33
+        },
+        {
+          "asset": "idle-2",
+          "x": 480,
+          "y": 960,
+          "rgbaSha256": "e25e5dccb635f55cb3dccd1ef6e6722bc0ea2ade52bc85ca9a9464093379c869",
+          "durationMs": 34
+        },
+        {
+          "asset": "idle-2",
+          "x": 960,
+          "y": 960,
+          "rgbaSha256": "f089dd4a895f3d7084b319685c714dcdac750a610baad4f90e6523a77fc35705",
+          "durationMs": 33
+        },
+        {
+          "asset": "idle-2",
+          "x": 1440,
+          "y": 960,
+          "rgbaSha256": "1dd28d99b750adbe84208b764a6631e08bb2461339fa491fff3e94c95082a2f8",
+          "durationMs": 33
+        },
+        {
+          "asset": "idle-2",
+          "x": 0,
+          "y": 1440,
+          "rgbaSha256": "f882062cc5ec90a30414a7e445362c8bcf0b8345c4178b3405b366dff92e9f0c",
+          "durationMs": 34
+        },
+        {
+          "asset": "idle-2",
+          "x": 480,
+          "y": 1440,
+          "rgbaSha256": "845664265e22481c0458bd0e14166c6d24e320f9b5e9a73fef92daaa039cf9df",
+          "durationMs": 33
+        },
+        {
+          "asset": "idle-2",
+          "x": 960,
+          "y": 1440,
+          "rgbaSha256": "7b958f71190c1242a96828044f452d9f518bc98244b06e86637c53b8bb577bc7",
+          "durationMs": 33
+        },
+        {
+          "asset": "idle-2",
+          "x": 1440,
+          "y": 1440,
+          "rgbaSha256": "cc66de4f2d12c97f5341b87da8941571c521cedf6d48b40aac0271748a036d7c",
+          "durationMs": 34
+        },
+        {
+          "asset": "idle-3",
+          "x": 0,
+          "y": 0,
+          "rgbaSha256": "14b99c1f710f5b0aa3555c9b558cc02ed5354d2ad555e9cf457e3d3e52a3be2a",
+          "durationMs": 33
+        },
+        {
+          "asset": "idle-3",
+          "x": 480,
+          "y": 0,
+          "rgbaSha256": "c8998c99cedb39cc7179c1d018b187dd2cbc9797cb46f0e4fa59c781813784a6",
+          "durationMs": 33
+        },
+        {
+          "asset": "idle-3",
+          "x": 960,
+          "y": 0,
+          "rgbaSha256": "2da3570d4facf716d08a3ec60ddc22d2c70b11373040b7fe9c9fa0e00f5d93e8",
+          "durationMs": 34
+        },
+        {
+          "asset": "idle-3",
+          "x": 1440,
+          "y": 0,
+          "rgbaSha256": "417c9385eb50f6e66ae9f55ea16b04c4cf1222248fc708e4b69382e6b44d2ae0",
+          "durationMs": 33
+        },
+        {
+          "asset": "idle-3",
+          "x": 0,
+          "y": 480,
+          "rgbaSha256": "7ea3405a48083b2e0efadea38b827df94076a2fc911e860cb03281b6d219a24e",
+          "durationMs": 33
+        },
+        {
+          "asset": "idle-3",
+          "x": 480,
+          "y": 480,
+          "rgbaSha256": "d32bf04b30c659b5811f16473c3b80c05a9d8395c772ee841f1591274df7559d",
+          "durationMs": 34
+        },
+        {
+          "asset": "idle-3",
+          "x": 960,
+          "y": 480,
+          "rgbaSha256": "cf4adfb09caf8ff7ccf4fe63540cad65b34511943243822f4b237ae3c85103d3",
+          "durationMs": 33
+        },
+        {
+          "asset": "idle-3",
+          "x": 1440,
+          "y": 480,
+          "rgbaSha256": "0377e038b06f264ce60ec52a562f9d7fc4334bd4d888e192895b0f30e582c47a",
+          "durationMs": 33
+        },
+        {
+          "asset": "idle-3",
+          "x": 0,
+          "y": 960,
+          "rgbaSha256": "b0ab80e7f1a3aad07d40ad7d506da6c8a42c9ca63a0fe2963cf60dbec7d2c245",
+          "durationMs": 34
+        },
+        {
+          "asset": "idle-3",
+          "x": 480,
+          "y": 960,
+          "rgbaSha256": "74431ee38e8b39c2d647f9658b9c68906b9c3aa9de243e1b829e8619c5499c50",
+          "durationMs": 33
+        },
+        {
+          "asset": "idle-3",
+          "x": 960,
+          "y": 960,
+          "rgbaSha256": "73992a0c9ddc00e27481e7feea1bd22cebb8d762995d5684901cd6c86fc0bdd5",
+          "durationMs": 33
+        },
+        {
+          "asset": "idle-3",
+          "x": 1440,
+          "y": 960,
+          "rgbaSha256": "4c412da25ca5a79eff45c6e59947545e68028887be51c5f7d9c9252ac0f8e1d7",
+          "durationMs": 34
+        },
+        {
+          "asset": "idle-3",
+          "x": 0,
+          "y": 1440,
+          "rgbaSha256": "c40da8b262a587065b39ad1247945da0c3cc85caff5e0185c8af4361c74946ba",
+          "durationMs": 33
+        },
+        {
+          "asset": "idle-3",
+          "x": 1440,
+          "y": 960,
+          "rgbaSha256": "4c412da25ca5a79eff45c6e59947545e68028887be51c5f7d9c9252ac0f8e1d7",
+          "durationMs": 33
+        },
+        {
+          "asset": "idle-3",
+          "x": 960,
+          "y": 960,
+          "rgbaSha256": "73992a0c9ddc00e27481e7feea1bd22cebb8d762995d5684901cd6c86fc0bdd5",
+          "durationMs": 34
+        },
+        {
+          "asset": "idle-3",
+          "x": 480,
+          "y": 960,
+          "rgbaSha256": "74431ee38e8b39c2d647f9658b9c68906b9c3aa9de243e1b829e8619c5499c50",
+          "durationMs": 33
+        },
+        {
+          "asset": "idle-3",
+          "x": 480,
+          "y": 1440,
+          "rgbaSha256": "e058af14755a1433b5b7daf7b0005b22142c73de72cc34410b48c3d12c1bf56e",
+          "durationMs": 33
+        },
+        {
+          "asset": "idle-3",
+          "x": 960,
+          "y": 1440,
+          "rgbaSha256": "d6cb222010cddbaab1627182026c8041202d39e63a779ee2fd18f5f355ec9206",
+          "durationMs": 34
+        },
+        {
+          "asset": "idle-3",
+          "x": 1440,
+          "y": 1440,
+          "rgbaSha256": "d2e171e77f5c3c2bb7125a5f1446c929628a9fdc316c77a9a6cff49537a82e7b",
+          "durationMs": 33
+        },
+        {
+          "asset": "idle-4",
+          "x": 0,
+          "y": 0,
+          "rgbaSha256": "87e59a89a7aa04eaee17d637195d658bc4ab442c250ace0710257dec9d4370b7",
+          "durationMs": 33
+        },
+        {
+          "asset": "idle-4",
+          "x": 480,
+          "y": 0,
+          "rgbaSha256": "2a7fd04972a6e2ba9d9bc1735863f2df9b90e0eb9a386cf0cc156b614d4d8884",
+          "durationMs": 34
+        },
+        {
+          "asset": "idle-4",
+          "x": 960,
+          "y": 0,
+          "rgbaSha256": "e8e6ee19d6235bf309840248f26f6ed58ac01f2c0c594b7806c7669b2054b01d",
+          "durationMs": 33
+        },
+        {
+          "asset": "idle-4",
+          "x": 1440,
+          "y": 0,
+          "rgbaSha256": "17141d0781b972e7a820bfb466077e9e920fad045eb6d484a3678170a37be0da",
+          "durationMs": 33
+        },
+        {
+          "asset": "idle-4",
+          "x": 0,
+          "y": 480,
+          "rgbaSha256": "72abca31168888c7e3630c7607cf96081cefbd2b94228c8d5b0e84ca521df513",
+          "durationMs": 34
+        },
+        {
+          "asset": "idle-4",
+          "x": 480,
+          "y": 480,
+          "rgbaSha256": "33f73bc5be009e7b0181ac701cca5af9f20e373db6edc4d24dc5438032042961",
+          "durationMs": 33
+        },
+        {
+          "asset": "idle-4",
+          "x": 960,
+          "y": 480,
+          "rgbaSha256": "71e63e1536f8fd1d961481dd061a03fed21f51f77f64012e0881afe2068166be",
+          "durationMs": 33
+        },
+        {
+          "asset": "idle-4",
+          "x": 1440,
+          "y": 480,
+          "rgbaSha256": "99f935d6e30385895a98ec4229048b37129dd4697035c369ba4308fa31ee738d",
+          "durationMs": 34
+        },
+        {
+          "asset": "idle-4",
+          "x": 0,
+          "y": 960,
+          "rgbaSha256": "bf0b8f46a4cf3a460c9f476c1aa63f6a73e322a21a81729be79ca04441b9dbd4",
+          "durationMs": 33
+        },
+        {
+          "asset": "idle-4",
+          "x": 480,
+          "y": 960,
+          "rgbaSha256": "4d448258719d6232274fca56d38a4e99f78bcc99b1e604a8093dba094fa070ae",
+          "durationMs": 33
+        },
+        {
+          "asset": "idle-4",
+          "x": 960,
+          "y": 960,
+          "rgbaSha256": "38962ecb8bdfeb08d7e723e36baf55ebff13813b382d8ca62a8f2141259944b7",
+          "durationMs": 34
+        },
+        {
+          "asset": "idle-4",
+          "x": 1440,
+          "y": 960,
+          "rgbaSha256": "12ef213de381557c5e8af2761d464800bb976235fdd490ced00fa7d0a6ac7654",
+          "durationMs": 33
+        },
+        {
+          "asset": "idle-2",
+          "x": 480,
+          "y": 960,
+          "rgbaSha256": "e25e5dccb635f55cb3dccd1ef6e6722bc0ea2ade52bc85ca9a9464093379c869",
+          "durationMs": 33
+        },
+        {
+          "asset": "idle-2",
+          "x": 0,
+          "y": 960,
+          "rgbaSha256": "ba763e9b294eff9c972fa9e36243f251e440d677fca9eb75ef9bf3fd149be39c",
+          "durationMs": 34
+        },
+        {
+          "asset": "idle-2",
+          "x": 1440,
+          "y": 480,
+          "rgbaSha256": "91a1a6fe0a02f0c614bce89aff695f733c0549c2403f12a7b09dd021dd9c8086",
+          "durationMs": 33
+        },
+        {
+          "asset": "idle-2",
+          "x": 960,
+          "y": 480,
+          "rgbaSha256": "6eacb3dcf228f293f23fe6c24f1125a0e8751f398997dc7478b56b86b41b29da",
+          "durationMs": 33
+        },
+        {
+          "asset": "idle-2",
+          "x": 480,
+          "y": 480,
+          "rgbaSha256": "0effd52411fff6d31003f4976d5428d23544eea778412164a6a4d203579c04f3",
+          "durationMs": 34
+        },
+        {
+          "asset": "idle-2",
+          "x": 0,
+          "y": 480,
+          "rgbaSha256": "6db2e442a3383e4498061e5684b813c31cff72bf179479b2ff187f329c792074",
+          "durationMs": 33
+        },
+        {
+          "asset": "idle-2",
+          "x": 1440,
+          "y": 0,
+          "rgbaSha256": "6a922dc052432e23a12be8495f76b1222eb827172da245654a8efc24ba2de196",
+          "durationMs": 33
+        },
+        {
+          "asset": "idle-2",
+          "x": 960,
+          "y": 0,
+          "rgbaSha256": "ee8303d21ec8518ebc3217e344762b83f7ee925573e4ade463348192ce19e73f",
+          "durationMs": 34
+        },
+        {
+          "asset": "idle-2",
+          "x": 480,
+          "y": 0,
+          "rgbaSha256": "7778fb25fc510ffe450487bff806e249ebaf2b5f8ea9ed0b484d217f8b258568",
+          "durationMs": 33
+        },
+        {
+          "asset": "idle-2",
+          "x": 0,
+          "y": 0,
+          "rgbaSha256": "3519b8e5489baada682fc2d4fa50c508fabec7d0b23ceb52cdce7da0f871e477",
+          "durationMs": 33
+        },
+        {
+          "asset": "idle-1",
+          "x": 1440,
+          "y": 1440,
+          "rgbaSha256": "35123b51f4eb22252e7c4b3b48961e78e86e9a98b75dd3e6fc0a59f3894468ae",
+          "durationMs": 34
+        },
+        {
+          "asset": "idle-1",
+          "x": 960,
+          "y": 1440,
+          "rgbaSha256": "715a139e525ab926546610189f361645e8ed12d343cb2d21855cd14ee52bd306",
+          "durationMs": 33
+        },
+        {
+          "asset": "idle-1",
+          "x": 480,
+          "y": 1440,
+          "rgbaSha256": "9dee61e21032945434bb027e818733668de5542704977740d24aa556f0ae3ee1",
+          "durationMs": 33
+        },
+        {
+          "asset": "idle-1",
+          "x": 0,
+          "y": 1440,
+          "rgbaSha256": "bbccf610c423e734206697b0b942a7303d09f510bec52c437deca2a15ac98554",
+          "durationMs": 34
+        },
+        {
+          "asset": "idle-1",
+          "x": 1440,
+          "y": 960,
+          "rgbaSha256": "e21c0462f13061d93e235d9392cbf6681cbd922e0242bf7ecec2d75c82b3509c",
+          "durationMs": 33
+        },
+        {
+          "asset": "idle-1",
+          "x": 960,
+          "y": 960,
+          "rgbaSha256": "8114cb2fda31b46a8b7e4555262204b9a0eabe98ea0ffe811522f1d6084d5164",
+          "durationMs": 33
+        },
+        {
+          "asset": "idle-1",
+          "x": 480,
+          "y": 960,
+          "rgbaSha256": "0ac4acb445d77c98fa6e7f1667c39049a9ef15abf52e9668b6c33661e165e800",
+          "durationMs": 34
+        },
+        {
+          "asset": "idle-1",
+          "x": 0,
+          "y": 960,
+          "rgbaSha256": "34cf4cb2e0f38fef529079f46e3240284155bd540ffb96e700f008b6f4e48219",
+          "durationMs": 33
+        },
+        {
+          "asset": "idle-1",
+          "x": 1440,
+          "y": 480,
+          "rgbaSha256": "59b3c603288b2e737e28fe95d9f48bcb2dc6460d46f97eb51b3e0ca37338faf2",
+          "durationMs": 33
+        },
+        {
+          "asset": "idle-1",
+          "x": 960,
+          "y": 480,
+          "rgbaSha256": "9028a6d044a86b7c455f6415f9b5082cd6c580b37cb0b54833db8406d80937f0",
+          "durationMs": 34
+        },
+        {
+          "asset": "idle-1",
+          "x": 480,
+          "y": 480,
+          "rgbaSha256": "59ddb0c7b6f67a0cc5f9705a5c4c5662dfd5c30bb398b19940ca7faca2fede47",
+          "durationMs": 33
+        },
+        {
+          "asset": "idle-1",
+          "x": 0,
+          "y": 480,
+          "rgbaSha256": "3599ff5a2bafb13589cb61ea6231639de53fd1cde221ed0a76acad67714997ea",
+          "durationMs": 33
+        },
+        {
+          "asset": "idle-1",
+          "x": 1440,
+          "y": 0,
+          "rgbaSha256": "a1ed595f695d7019620a77efb03c40c32cef8b4f42812cc52dd05e1821baa6b3",
+          "durationMs": 34
+        },
+        {
+          "asset": "idle-1",
+          "x": 960,
+          "y": 0,
+          "rgbaSha256": "8b132a984a799a7c8b54913dcbf6df30052c4e2a224fb4ff49d6a26e10689a65",
+          "durationMs": 33
+        },
+        {
+          "asset": "idle-1",
+          "x": 480,
+          "y": 0,
+          "rgbaSha256": "cab2b309b2a92183da51ada5df17cdd6c6059f84c34f26be72668c74c5158585",
+          "durationMs": 33
+        },
+        {
+          "asset": "idle-1",
+          "x": 0,
+          "y": 0,
+          "rgbaSha256": "c584d2f1c25e2709a148f6fddb8d3f3d276b5e33a9059aaaf65e5235584eed46",
+          "durationMs": 34
+        },
+        {
+          "asset": "idle-0",
+          "x": 1440,
+          "y": 1440,
+          "rgbaSha256": "b16bfafcc030b17319d658acdbb9b168c35e84db7ea9cf9e76ce0d1efda5c1be",
+          "durationMs": 33
+        },
+        {
+          "asset": "idle-0",
+          "x": 960,
+          "y": 1440,
+          "rgbaSha256": "0b77bd8e579d584c1df358fd4e9186a3cdd819e35b1a1b5d3dd4b6fd01716f9e",
+          "durationMs": 33
+        },
+        {
+          "asset": "idle-0",
+          "x": 480,
+          "y": 1440,
+          "rgbaSha256": "1fd6c8a0973e597ca41b56a7c7919c8c0de36b6c01341da5133d279eb8f17e77",
+          "durationMs": 34
+        },
+        {
+          "asset": "idle-0",
+          "x": 0,
+          "y": 1440,
+          "rgbaSha256": "29e2a81d5af567f0f56f70603361f5d6c4bd203ba97c79e5d7efc154be41e538",
+          "durationMs": 33
+        },
+        {
+          "asset": "idle-0",
+          "x": 1440,
+          "y": 960,
+          "rgbaSha256": "934eba8cba57a69a77215175abd54110b2e4d6ac063230f9bba9d1d82c79e117",
+          "durationMs": 33
+        },
+        {
+          "asset": "idle-0",
+          "x": 960,
+          "y": 960,
+          "rgbaSha256": "1e8cf5a08ff05e16bcf4c0efc5a88828255c6bd4e68bcc9b5fd43bb50857edc5",
+          "durationMs": 34
+        },
+        {
+          "asset": "idle-0",
+          "x": 480,
+          "y": 960,
+          "rgbaSha256": "1101acc6902938a2f5193bfdd97dbae58c5c015d4c3b2093f7a75b0653987932",
+          "durationMs": 33
+        },
+        {
+          "asset": "idle-0",
+          "x": 0,
+          "y": 960,
+          "rgbaSha256": "d06151330d7cac9b132ee986804fd879160d21f5dbb2c2d5b527c5e0c1719df3",
+          "durationMs": 33
+        },
+        {
+          "asset": "idle-0",
+          "x": 1440,
+          "y": 480,
+          "rgbaSha256": "34ae9dbd5dcf879d98fa5c1a2722ee3470de08a836b3064d347b8ef82f16b12a",
+          "durationMs": 34
+        },
+        {
+          "asset": "idle-0",
+          "x": 960,
+          "y": 480,
+          "rgbaSha256": "12a3ddf7d0c7bbd175a2e631e38e099f617dbd3df513b3b0274194d0862edddf",
+          "durationMs": 33
+        },
+        {
+          "asset": "idle-0",
+          "x": 480,
+          "y": 480,
+          "rgbaSha256": "28c8290b0db6f58f114b1f9c4ce107a827e323cdda456bd72906d547c47fdec1",
+          "durationMs": 33
+        },
+        {
+          "asset": "idle-0",
+          "x": 0,
+          "y": 480,
+          "rgbaSha256": "4f65e4af845c977d2d25636bf90fc0df4254a532a47e7f2ac4f3007dbd77d9a6",
+          "durationMs": 34
+        },
+        {
+          "asset": "idle-0",
+          "x": 1440,
+          "y": 0,
+          "rgbaSha256": "145c5460a8e9d589e89517dcfc9a1c8a303cb4deefb192cf3c973f3bddaac912",
+          "durationMs": 33
+        },
+        {
+          "asset": "idle-0",
+          "x": 960,
+          "y": 0,
+          "rgbaSha256": "3b1a7149967117a244257f310633895c3e48f8455c13cd8d310bec196ae4bdc0",
+          "durationMs": 33
+        },
+        {
+          "asset": "idle-0",
+          "x": 480,
+          "y": 0,
+          "rgbaSha256": "4cedd3bfde24539e373619f97f45f30f203c5071b17bbd47fb4bd64359511018",
+          "durationMs": 34
+        },
+        {
+          "asset": "idle-0",
+          "x": 0,
+          "y": 0,
+          "rgbaSha256": "609dcd9ad3faccbc73c0f749a6b3473ecba113df660fb73a429b773a7f02b9de",
+          "durationMs": 16
+        }
+      ]
+    },
+    "wave": {
+      "frames": [
+        {
+          "asset": "idle-0",
+          "x": 0,
+          "y": 0,
+          "rgbaSha256": "609dcd9ad3faccbc73c0f749a6b3473ecba113df660fb73a429b773a7f02b9de",
+          "durationMs": 17
+        },
+        {
+          "asset": "wave-5",
+          "x": 0,
+          "y": 0,
+          "rgbaSha256": "ed3aa0b04404fc0ccab573ef993537b56560f076b53f5aecc6eff1b017b094e3",
+          "durationMs": 17
+        },
+        {
+          "asset": "wave-5",
+          "x": 480,
+          "y": 0,
+          "rgbaSha256": "aee539f39e539ddd4400c7ee7d01cb8c266b30a4ec4944053b14697959222ac4",
+          "durationMs": 16
+        },
+        {
+          "asset": "wave-5",
+          "x": 960,
+          "y": 0,
+          "rgbaSha256": "031d5f62d1cf5c570d4ff2b04cd3478b82f1372d10cb1b66fddc59f513a95065",
+          "durationMs": 17
+        },
+        {
+          "asset": "wave-5",
+          "x": 1440,
+          "y": 0,
+          "rgbaSha256": "ec293a39bf09948dbf8a723793a153047a70fa50c29d9adf4e36432a7a18ba14",
+          "durationMs": 17
+        },
+        {
+          "asset": "wave-5",
+          "x": 0,
+          "y": 480,
+          "rgbaSha256": "df94f2fbf5d8df7a63c3307529fa7cd0ee78f23ed551797bfbb0964417b438be",
+          "durationMs": 16
+        },
+        {
+          "asset": "wave-5",
+          "x": 480,
+          "y": 480,
+          "rgbaSha256": "3a63acac72ed3952c787591addc2c56fc4e1abe391f92b24ffbec56f01d3cd56",
+          "durationMs": 17
+        },
+        {
+          "asset": "wave-5",
+          "x": 960,
+          "y": 480,
+          "rgbaSha256": "996a44c8ed45d10671ba3586e4a0500df4e515b54deb1deac0013f3962c1b6f5",
+          "durationMs": 17
+        },
+        {
+          "asset": "wave-5",
+          "x": 1440,
+          "y": 480,
+          "rgbaSha256": "5fca3d5c35ea703ec19d018612aaaaf2124070ced653fa05752ed6eb13edae4a",
+          "durationMs": 16
+        },
+        {
+          "asset": "wave-5",
+          "x": 0,
+          "y": 960,
+          "rgbaSha256": "7616479dd2802487450ee8b8d1479f4b13e65b5cf3f200c0cfc4011660662d18",
+          "durationMs": 17
+        },
+        {
+          "asset": "wave-5",
+          "x": 480,
+          "y": 960,
+          "rgbaSha256": "0e6c7256f8d36789626a3ee6f6181207e371f0a68931e78b66f17b24bb162f0a",
+          "durationMs": 17
+        },
+        {
+          "asset": "wave-5",
+          "x": 960,
+          "y": 960,
+          "rgbaSha256": "c9161b22c5311cb968a3b2d897302698b1f3b95e09628031f720ccce167be39a",
+          "durationMs": 16
+        },
+        {
+          "asset": "wave-5",
+          "x": 1440,
+          "y": 960,
+          "rgbaSha256": "0ba26d9b9b6d93a0e3bf3f604cba47b4b89270ca17b784df59b7cb437e47d62f",
+          "durationMs": 63
+        },
+        {
+          "asset": "wave-5",
+          "x": 0,
+          "y": 1440,
+          "rgbaSha256": "bcdc3e5cc415907c2df4ef86a34a778a0b229261f05ee04725f35ab49a7a2e3d",
+          "durationMs": 62
+        },
+        {
+          "asset": "wave-5",
+          "x": 480,
+          "y": 1440,
+          "rgbaSha256": "fb17bb7ae86a581f9304f315ed44e062706cff16f3de63cac5932065d2eb56b0",
+          "durationMs": 63
+        },
+        {
+          "asset": "wave-5",
+          "x": 960,
+          "y": 1440,
+          "rgbaSha256": "0226ee75b56070b52d383a278ab3a52fffebec0c2dc06a19ac0dfe630b544a94",
+          "durationMs": 62
+        },
+        {
+          "asset": "wave-5",
+          "x": 1440,
+          "y": 1440,
+          "rgbaSha256": "1994c5f772a90aa42341cc9d74085de121eee747c969f87960133f9327e04b68",
+          "durationMs": 63
+        },
+        {
+          "asset": "wave-6",
+          "x": 0,
+          "y": 0,
+          "rgbaSha256": "89c9bee2edb5cf83b3e0aee9bbeddfdd653178a197e3dc52b7a77e8a4a58c8a3",
+          "durationMs": 62
+        },
+        {
+          "asset": "wave-6",
+          "x": 480,
+          "y": 0,
+          "rgbaSha256": "0093f50cd719f52833eb52837b9cf3e3da015fc6951801a7af4600110bbdb615",
+          "durationMs": 63
+        },
+        {
+          "asset": "wave-6",
+          "x": 960,
+          "y": 0,
+          "rgbaSha256": "0f8c4893d45aacae3b5140d8d82eccbb6061c58a07393364cc42403e4d96c099",
+          "durationMs": 62
+        },
+        {
+          "asset": "wave-6",
+          "x": 1440,
+          "y": 0,
+          "rgbaSha256": "1617d3e1974936916d07004aeae6cda428eb27fb1495bb201985bc16be73afe8",
+          "durationMs": 63
+        },
+        {
+          "asset": "wave-6",
+          "x": 0,
+          "y": 480,
+          "rgbaSha256": "71e379746702da380b08de5c951a9fd50dab6deebe81f637f79d3637e018579c",
+          "durationMs": 62
+        },
+        {
+          "asset": "wave-6",
+          "x": 480,
+          "y": 480,
+          "rgbaSha256": "37f08a05530088edb0621adb0aad3f15f55a14df34bd92a546d352136ade3b57",
+          "durationMs": 63
+        },
+        {
+          "asset": "wave-6",
+          "x": 960,
+          "y": 480,
+          "rgbaSha256": "82e54e918e876a8be24f49248dc4aa16938be5d8de8f0701484b6d0639f27bb7",
+          "durationMs": 62
+        },
+        {
+          "asset": "wave-6",
+          "x": 1440,
+          "y": 480,
+          "rgbaSha256": "690a4c2ede90d85c3086e40cacdf348d7adc81f894552911a0d24ab356466149",
+          "durationMs": 63
+        },
+        {
+          "asset": "wave-6",
+          "x": 0,
+          "y": 960,
+          "rgbaSha256": "5463c6c5f64f8b048038cfb91ffe9be9a970687e366a1cf2727e4e5b66e36d2b",
+          "durationMs": 62
+        },
+        {
+          "asset": "wave-6",
+          "x": 480,
+          "y": 960,
+          "rgbaSha256": "39d447e1754b4cf392819479f1dc4c2dd5f2b4929315f9d62ee858a119c999a4",
+          "durationMs": 63
+        },
+        {
+          "asset": "wave-6",
+          "x": 960,
+          "y": 960,
+          "rgbaSha256": "7f7f22180cea2bce7460f8eead875ef27d40e4c4f435acc3147867e4154ae47c",
+          "durationMs": 62
+        },
+        {
+          "asset": "wave-6",
+          "x": 1440,
+          "y": 960,
+          "rgbaSha256": "1a9f7c95722ce8a145c2605ce30cacfde387498ac40f07b3afd15774e6d8e459",
+          "durationMs": 63
+        },
+        {
+          "asset": "wave-6",
+          "x": 0,
+          "y": 1440,
+          "rgbaSha256": "5a71073fa43e747b762f97c8d25bf17ac92fa396c8460b844b0a69e9c1ee4588",
+          "durationMs": 62
+        },
+        {
+          "asset": "wave-6",
+          "x": 480,
+          "y": 1440,
+          "rgbaSha256": "fedcef4bc3ceb2205bc1c597f06d55dee55ee80ebc412d50d8b6e9132f6f1a1b",
+          "durationMs": 63
+        },
+        {
+          "asset": "wave-6",
+          "x": 960,
+          "y": 1440,
+          "rgbaSha256": "98b14c0748abacbcfc4127299577219c1dca1fe6a8d1fead80e6969fa6a58697",
+          "durationMs": 62
+        },
+        {
+          "asset": "wave-6",
+          "x": 1440,
+          "y": 1440,
+          "rgbaSha256": "659b808adb4a3f2d534cf1c0a125ed346fae77f47e5022a28b846b2b6eaf4852",
+          "durationMs": 63
+        },
+        {
+          "asset": "wave-7",
+          "x": 0,
+          "y": 0,
+          "rgbaSha256": "786967fc6efed6950f90f0b4f460da057112e80790dd26be2df6bc00c1941061",
+          "durationMs": 62
+        },
+        {
+          "asset": "wave-7",
+          "x": 480,
+          "y": 0,
+          "rgbaSha256": "7f0870c5cd6bbd9dde309404a39cece48fa46a81e8e379e02a4fde07dc6adafb",
+          "durationMs": 63
+        },
+        {
+          "asset": "wave-7",
+          "x": 960,
+          "y": 0,
+          "rgbaSha256": "7ec082799c6524d689495710dae7fb5659e49fbfd91c936ada5788140980491d",
+          "durationMs": 62
+        },
+        {
+          "asset": "wave-7",
+          "x": 1440,
+          "y": 0,
+          "rgbaSha256": "a10daf0389b4b23283519b2332306cee37fc658acd2859a8d3b5de84f3a422a4",
+          "durationMs": 63
+        },
+        {
+          "asset": "wave-7",
+          "x": 0,
+          "y": 480,
+          "rgbaSha256": "d4b1d031ae2c52d40012bff01eebc963a3963cead67b487adaf8ccb45ff0e4ed",
+          "durationMs": 62
+        },
+        {
+          "asset": "wave-7",
+          "x": 480,
+          "y": 480,
+          "rgbaSha256": "9db4cd3f8a6f9e14f75950848cf2f8a0920e512cbbffb88451cb211d1b34d8c4",
+          "durationMs": 63
+        },
+        {
+          "asset": "wave-7",
+          "x": 960,
+          "y": 480,
+          "rgbaSha256": "7fec152c75761fb40b3237c35e3289a30260ff04a52c661a6b9daf6cfb5e24d0",
+          "durationMs": 62
+        },
+        {
+          "asset": "wave-7",
+          "x": 1440,
+          "y": 480,
+          "rgbaSha256": "ba81945cea85808f235bd3bac4983ced200187a635937a4545befacfaef4be8c",
+          "durationMs": 63
+        },
+        {
+          "asset": "wave-7",
+          "x": 0,
+          "y": 960,
+          "rgbaSha256": "71287c0a5f96480ee2536d29675c60e7ff7342920f3369dbb9c598a971186d25",
+          "durationMs": 62
+        },
+        {
+          "asset": "wave-7",
+          "x": 480,
+          "y": 960,
+          "rgbaSha256": "8c2a3c5af7a70f26f554b796ea7490970ef1415ee277440ed9a4085a0fd1ff23",
+          "durationMs": 63
+        },
+        {
+          "asset": "wave-7",
+          "x": 960,
+          "y": 960,
+          "rgbaSha256": "16f09e38c50be62774349bb3fa7582939c914ae8a1fa7e239ea04952c76c82b2",
+          "durationMs": 62
+        },
+        {
+          "asset": "wave-7",
+          "x": 1440,
+          "y": 960,
+          "rgbaSha256": "aeb801fc766213f5629f90f10c314d846afc52bda896ebaea6e445ce75d36463",
+          "durationMs": 63
+        },
+        {
+          "asset": "wave-7",
+          "x": 0,
+          "y": 1440,
+          "rgbaSha256": "00644f7d07fb93ce013e07afffb5b58de8f8b345d6d6ca8462bdcd4493ee8194",
+          "durationMs": 62
+        },
+        {
+          "asset": "wave-7",
+          "x": 480,
+          "y": 1440,
+          "rgbaSha256": "ee81278586513b5998c7f7d8848dd62de181af2a720e775fa36aefde31de9455",
+          "durationMs": 63
+        },
+        {
+          "asset": "wave-7",
+          "x": 960,
+          "y": 1440,
+          "rgbaSha256": "52c7e2ed28081c62d02197eef6a76b33abed171337ce01cd236d7d44de69cce0",
+          "durationMs": 62
+        },
+        {
+          "asset": "wave-7",
+          "x": 1440,
+          "y": 1440,
+          "rgbaSha256": "a3f4e98d716bb5dc0b7432aa77e821f896afded91caf74069a04f253f7784258",
+          "durationMs": 63
+        },
+        {
+          "asset": "wave-8",
+          "x": 0,
+          "y": 0,
+          "rgbaSha256": "54b0ac74281193f804c67afae98ec706384d36dacb05cebf721135f73890b90e",
+          "durationMs": 62
+        },
+        {
+          "asset": "wave-8",
+          "x": 480,
+          "y": 0,
+          "rgbaSha256": "e2dd4da7e00748e9b3c664bb8cc7ef3373ca112ac12d28245b85133c05ac8f08",
+          "durationMs": 63
+        },
+        {
+          "asset": "wave-8",
+          "x": 960,
+          "y": 0,
+          "rgbaSha256": "ed7af7e7914e549a0eb7fdf64f81c2bba9f76758585729b16dc4ff6d39379cd6",
+          "durationMs": 62
+        },
+        {
+          "asset": "wave-8",
+          "x": 1440,
+          "y": 0,
+          "rgbaSha256": "a881f295f2c51d77050a4864322b690ad0ce431c0849832de39081a811aebfc2",
+          "durationMs": 63
+        },
+        {
+          "asset": "wave-8",
+          "x": 0,
+          "y": 480,
+          "rgbaSha256": "9511ee4fd1b4d4e3514eecf3e224b2cc284d3f9add0164363ef3e4050412e93f",
+          "durationMs": 62
+        },
+        {
+          "asset": "wave-8",
+          "x": 480,
+          "y": 480,
+          "rgbaSha256": "d44a950e72094543301c55ed0b28212cf1cf10b4ed0b9e7d13c44708700f9f6f",
+          "durationMs": 63
+        },
+        {
+          "asset": "wave-8",
+          "x": 960,
+          "y": 480,
+          "rgbaSha256": "b00fd1b483ebfbb46bc2339611318f41bcc6ef547b49f0439297318f8e255bed",
+          "durationMs": 62
+        },
+        {
+          "asset": "wave-8",
+          "x": 1440,
+          "y": 480,
+          "rgbaSha256": "e7fdaf9e8ab19bdd08f786beaf2810331d3f04ba7cadcfc597ad2918519bad71",
+          "durationMs": 63
+        },
+        {
+          "asset": "wave-8",
+          "x": 0,
+          "y": 960,
+          "rgbaSha256": "7c78ed488cbf157227f718d0c309e0eecc34a73cea1c77dfd9c63618c8735500",
+          "durationMs": 62
+        },
+        {
+          "asset": "wave-8",
+          "x": 480,
+          "y": 960,
+          "rgbaSha256": "72bec0f4038f70dc559f97503b90794a680c9c0e1e200d7aabeead918b815264",
+          "durationMs": 63
+        },
+        {
+          "asset": "wave-8",
+          "x": 960,
+          "y": 960,
+          "rgbaSha256": "5c13de03154b36d8747b28242e1581748f81ef57ed445d55b7253046464af4d5",
+          "durationMs": 62
+        },
+        {
+          "asset": "wave-8",
+          "x": 1440,
+          "y": 960,
+          "rgbaSha256": "1dbe4265875f43db235a447f1bbd332d04f7916aa82923390b297745e0b922ab",
+          "durationMs": 63
+        },
+        {
+          "asset": "wave-8",
+          "x": 0,
+          "y": 1440,
+          "rgbaSha256": "ecd06a6e9f95bae6d43dc11d987222542d42d38563b9b0d836c818a1e7fdbf3d",
+          "durationMs": 17
+        },
+        {
+          "asset": "wave-8",
+          "x": 480,
+          "y": 1440,
+          "rgbaSha256": "530625480e00ea4b825ac4f70aa22801ecad15e3eaac993dc3d3e0bb249a4335",
+          "durationMs": 17
+        },
+        {
+          "asset": "wave-8",
+          "x": 960,
+          "y": 1440,
+          "rgbaSha256": "6d379242f69aef164891aac33eeb76b18e550d9aa2c44b10aca2cec30063a3f2",
+          "durationMs": 16
+        },
+        {
+          "asset": "wave-8",
+          "x": 1440,
+          "y": 1440,
+          "rgbaSha256": "867263ceacfbd27095add96a5d3759ec7827c92a3c46ebcea9c387274e37eff7",
+          "durationMs": 17
+        },
+        {
+          "asset": "wave-9",
+          "x": 0,
+          "y": 0,
+          "rgbaSha256": "a06c019ee89dff1c0fe27b3d5dc08de2c4eaa82b44f7ae7966073bd96fb1efd1",
+          "durationMs": 17
+        },
+        {
+          "asset": "wave-9",
+          "x": 480,
+          "y": 0,
+          "rgbaSha256": "e716b082da89f713d2c867f7387ee4e302d089038584ab718c16f14e9913dd5b",
+          "durationMs": 16
+        },
+        {
+          "asset": "wave-9",
+          "x": 960,
+          "y": 0,
+          "rgbaSha256": "5ca9127dd006ace435cd1c9fa2640fcfb8bb0bb8fb5644b40ca411862fee3fdc",
+          "durationMs": 17
+        },
+        {
+          "asset": "wave-9",
+          "x": 1440,
+          "y": 0,
+          "rgbaSha256": "b0d9ae3608ebb70ea2ad8b20b0b9bc11ead64af288f785a0751082b2fd8e447b",
+          "durationMs": 17
+        },
+        {
+          "asset": "wave-9",
+          "x": 0,
+          "y": 480,
+          "rgbaSha256": "fa95bd883097f6163d0ff85512214a56efea98689ea77d32f14cea70308e5df1",
+          "durationMs": 16
+        },
+        {
+          "asset": "wave-9",
+          "x": 480,
+          "y": 480,
+          "rgbaSha256": "1441a64993949a726304b328558be793ee58f9328080f93bcefa6f614c98febe",
+          "durationMs": 17
+        },
+        {
+          "asset": "wave-9",
+          "x": 960,
+          "y": 480,
+          "rgbaSha256": "db05e9b3d1e564c8ed2453edc587735104556f2fe420b47c95aeaf606a76a329",
+          "durationMs": 17
+        },
+        {
+          "asset": "idle-0",
+          "x": 0,
+          "y": 0,
+          "rgbaSha256": "609dcd9ad3faccbc73c0f749a6b3473ecba113df660fb73a429b773a7f02b9de",
+          "durationMs": 16
+        }
+      ]
+    }
+  }
+}

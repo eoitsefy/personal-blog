@@ -1,0 +1,46 @@
+{
+  "reviewer": "/root/r3_style_review",
+  "reviewedAtUtc": "2026-10-12T20:10:10Z",
+  "candidate": "wave-transition-v1/hand-v3-matte-v6",
+  "result": "PASS",
+  "scope": "Independent static visual acceptance of repaired hand structure and boundary continuity; not deployment authorization or continuous-playback certification.",
+  "method": "Direct view_image inspection of original-resolution hand-continuity-2x-black.png and hand-continuity-2x-white.png, plus 17 native 480px mapped frames.",
+  "nativeFramesViewed": [7, 8, 11, 12, 13, 14, 15, 16, 20, 25, 26, 27, 28, 31, 32, 33, 36],
+  "evidence": [
+    {
+      "id": "FINGER_STRUCTURE_RESTORED",
+      "status": "PASS",
+      "frames": [14, 15, 16, 26, 27, 28],
+      "files": ["review/hand-continuity-2x-black.png", "review/hand-continuity-2x-white.png", "mapped-frames/frame-016.png", "mapped-frames/frame-028.png"],
+      "observation": "The previously unprotected anchor hands now retain readable open-hand silhouettes. Deep alpha notches that ate finger shapes in V5 are no longer evident at native size. Small contour softness remains but does not constitute severe structural loss."
+    },
+    {
+      "id": "ANCHOR_BOUNDARY_CONTINUITY",
+      "status": "PASS",
+      "transitions": [[13, 14], [25, 26]],
+      "observation": "Both sides of each inspected boundary now have intact open palms. The former complete-hand to eroded-hand switch is removed. Minor line-weight, palm crease and orientation differences remain, but no obvious new fist/open-hand snap or wrist separation is visible in the adjacent-frame inspection."
+    },
+    {
+      "id": "EDGE_CONTAMINATION_IMPROVED",
+      "status": "PASS",
+      "frames": [7, 8, 12, 20, 32, 33, 36],
+      "observation": "The broad pale sticker outline seen in V5 is substantially reduced. At native full-character size it no longer forms a conspicuous uniform band around the repaired hand. Fine light antialiasing, occasional bright pixels and small edge softness remain visible on dark backgrounds and at 2x; these are nonblocking residuals under this review's criterion."
+    },
+    {
+      "id": "NO_SEVERE_NEW_STYLE_OR_BODY_DAMAGE",
+      "status": "PASS",
+      "observation": "Inspected native frames retain the same 2D character, body proportions, sleeves and face presentation. No severe new body deformation or 2D-to-3D material shift was observed."
+    }
+  ],
+  "nonBlockingNotes": [
+    "F12-F14 and F20 have slightly different hand contour and crease treatment from the simpler donor-style hands; this is visible mainly in enlarged comparison.",
+    "Fine bright specks and residual edge softness are not claimed to be eliminated. Further global erosion is not recommended because it previously damaged fingers.",
+    "This PASS should not be described as pixel-perfect or as proof that every temporal transition is invisible."
+  ],
+  "limitations": [
+    "The 49-frame set was sampled at 17 native frames plus the two review boards; every source frame was not individually displayed.",
+    "No continuous WebP or browser playback was performed by this reviewer. Root must independently verify playback, loop transitions, display sizes and artifact loading.",
+    "Bridge timing and exact endpoint equality were not remeasured in this V6 hand-focused review.",
+    "Only this review record was written. No animation pixels or deployment state were changed."
+  ]
+}

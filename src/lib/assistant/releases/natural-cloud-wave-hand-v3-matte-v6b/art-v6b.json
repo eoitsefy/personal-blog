@@ -1,0 +1,41 @@
+{
+  "reviewer": "/root/r3_style_review",
+  "reviewedAtUtc": "2026-10-12T20:14:56Z",
+  "candidate": "wave-transition-v1/hand-v3-matte-v6b",
+  "atlasVersion": "natural-cloud-wave-hand-v3-matte-v6b",
+  "result": "PASS",
+  "inheritsReview": "art-v6.json",
+  "deltaResult": "PASS",
+  "method": "Direct view_image inspection of four local before/after comparison boards on black and white backgrounds and native mapped frames 014 and 025. Independently compared all 49 mapped RGBA frames against V6 using Pillow/NumPy.",
+  "rgbaDeltaVerification": {
+    "framesCompared": 49,
+    "unchangedFrames": 47,
+    "changedPixelsByFrame": {
+      "frame-014.png": 40,
+      "frame-025.png": 25
+    },
+    "observedScopeMatchesRequestedDelta": true
+  },
+  "reviewedFrameSha256": {
+    "mapped-frames/frame-014.png": "062460cbe3c9e04d83895fa9d652c31bcbc90e46d70142301824fa4df702fec7",
+    "mapped-frames/frame-025.png": "24721eeeedcd10f8fa2b22cd210470ea390b51c96129c7e8fc62950525face46"
+  },
+  "evidence": [
+    {
+      "files": ["review/local-pocket-014-black.png", "review/local-pocket-014-white.png", "mapped-frames/frame-014.png"],
+      "observation": "The small pale pocket near the hand/headset gap is reduced without observable damage to the palm silhouette, thumb, cuff or adjacent headset line. Native character proportions and hand pose are preserved.",
+      "status": "PASS"
+    },
+    {
+      "files": ["review/local-pocket-025-black.png", "review/local-pocket-025-white.png", "mapped-frames/frame-025.png"],
+      "observation": "The pale dot below the headset is removed on the black-background comparison. The surrounding dark hair/headset and sleeve border remain intact; no new visible hole appears in skin or clothing.",
+      "status": "PASS"
+    }
+  ],
+  "limitations": [
+    "This is a delta review inheriting V6's static-art acceptance and limitations, not a new full continuous-playback review.",
+    "Only the 49 mapped frame RGBA files were pixel-compared; atlas packing, browser loading, timing and runtime transition behavior remain the root reviewer's responsibility.",
+    "Minor pre-existing edge softness and stylistic differences noted in V6 remain; this record does not claim pixel-perfect artwork.",
+    "No deployment was performed or authorized by this review record."
+  ]
+}

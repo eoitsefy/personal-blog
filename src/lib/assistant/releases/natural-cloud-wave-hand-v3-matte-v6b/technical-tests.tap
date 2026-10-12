@@ -1,0 +1,135 @@
+TAP version 13
+# Subtest: configured production motion must pass actual asset and review validation before release
+ok 1 - configured production motion must pass actual asset and review validation before release
+  ---
+  duration_ms: 1.0523
+  ...
+# Subtest: RGBA hash ignores only invisible RGB, never semitransparent color differences
+ok 2 - RGBA hash ignores only invisible RGB, never semitransparent color differences
+  ---
+  duration_ms: 0.7288
+  ...
+# Subtest: checks real page, alpha, frame hashes, fallback and review scope
+ok 3 - checks real page, alpha, frame hashes, fallback and review scope
+  ---
+  duration_ms: 33.6291
+  ...
+# Subtest: missing page, wrong content hash and wrong frame hash are rejected
+ok 4 - missing page, wrong content hash and wrong frame hash are rejected
+  ---
+  duration_ms: 9.2581
+  ...
+# Subtest: same-size RGB file cannot masquerade as alpha asset
+ok 5 - same-size RGB file cannot masquerade as alpha asset
+  ---
+  duration_ms: 10.1845
+  ...
+# Subtest: actual changed crop fails even when the manifest endpoints still claim equality
+ok 6 - actual changed crop fails even when the manifest endpoints still claim equality
+  ---
+  duration_ms: 14.5543
+  ...
+# Subtest: stale review, missing evidence and non-independent reviewers cannot release
+ok 7 - stale review, missing evidence and non-independent reviewers cannot release
+  ---
+  duration_ms: 42.647
+  ...
+# Subtest: mismatched static fallback is rejected rather than flashing an older character
+ok 8 - mismatched static fallback is rejected rather than flashing an older character
+  ---
+  duration_ms: 11.0445
+  ...
+# Subtest: production motion is disabled or structurally valid; file scope is checked by asset-validator tests
+ok 9 - production motion is disabled or structurally valid; file scope is checked by asset-validator tests
+  ---
+  duration_ms: 1.8359
+  ...
+# Subtest: gate rejects RGB, mismatched endpoints, off-canvas crops and external sources
+ok 10 - gate rejects RGB, mismatched endpoints, off-canvas crops and external sources
+  ---
+  duration_ms: 0.4692
+  ...
+# Subtest: idle completes to common anchor before wave; completed wave returns directly to same anchor
+ok 11 - idle completes to common anchor before wave; completed wave returns directly to same anchor
+  ---
+  duration_ms: 1.3792
+  ...
+# Subtest: late browser ticks never skip action's anchor or shorten its playback
+ok 12 - late browser ticks never skip action's anchor or shorten its playback
+  ---
+  duration_ms: 0.1949
+  ...
+# Subtest: newly visible player can begin on shared anchor without an unnecessary idle-cycle wait
+ok 13 - newly visible player can begin on shared anchor without an unnecessary idle-cycle wait
+  ---
+  duration_ms: 0.2541
+  ...
+# Subtest: unsupported action settles once without legacy assets
+ok 14 - unsupported action settles once without legacy assets
+  ---
+  duration_ms: 0.2138
+  ...
+# Subtest: reset for hidden or reduced-motion cancels pending/current requests once
+ok 15 - reset for hidden or reduced-motion cancels pending/current requests once
+  ---
+  duration_ms: 0.2516
+  ...
+# Subtest: looping request and replacement remain on whole-clip boundaries
+ok 16 - looping request and replacement remain on whole-clip boundaries
+  ---
+  duration_ms: 0.1722
+  ...
+# Subtest: frame boundaries are deterministic and never blend drawings
+ok 17 - frame boundaries are deterministic and never blend drawings
+  ---
+  duration_ms: 0.3124
+  ...
+# Subtest: malformed generated manifests fail closed without throwing
+ok 18 - malformed generated manifests fail closed without throwing
+  ---
+  duration_ms: 0.9611
+  ...
+# Subtest: four-second breathing returns along existing frames within 360ms, then starts gesture at anchor
+ok 19 - four-second breathing returns along existing frames within 360ms, then starts gesture at anchor
+  ---
+  duration_ms: 2.326
+  ...
+# Subtest: a cancelled idle return settles at anchor without starting superseded wave
+ok 20 - a cancelled idle return settles at anchor without starting superseded wave
+  ---
+  duration_ms: 0.2816
+  ...
+# Subtest: resource-loading delay does not fast-forward a current gesture
+ok 21 - resource-loading delay does not fast-forward a current gesture
+  ---
+  duration_ms: 0.2037
+  ...
+# Subtest: shared cache deduplicates pending loads and reuses a decoded page across visible instances
+ok 22 - shared cache deduplicates pending loads and reuses a decoded page across visible instances
+  ---
+  duration_ms: 0.5635
+  ...
+# Subtest: cache evicts only unused settled pages and never exceeds decoded budget
+ok 23 - cache evicts only unused settled pages and never exceeds decoded budget
+  ---
+  duration_ms: 1.1022
+  ...
+# Subtest: long full-quality libraries may exceed live cache size while paging stays bounded
+ok 24 - long full-quality libraries may exceed live cache size while paging stays bounded
+  ---
+  duration_ms: 0.9159
+  ...
+# Subtest: a pending unused decode is not evicted and duplicated during a fast handoff
+ok 25 - a pending unused decode is not evicted and duplicated during a fast handoff
+  ---
+  duration_ms: 0.4603
+  ...
+1..25
+# tests 25
+# suites 0
+# pass 25
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 499.7727

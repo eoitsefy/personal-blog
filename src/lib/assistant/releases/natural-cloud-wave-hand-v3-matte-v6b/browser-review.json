@@ -1,0 +1,21 @@
+{
+  "status": "PASS",
+  "scope": "LOCAL_RUNTIME_AND_ANCHOR_TRANSITIONS",
+  "reviewer": "/root",
+  "version": "natural-cloud-wave-hand-v3-matte-v6b",
+  "manifestScopeSha256": "1f37af2a9ab285073f9874ffbb218e6a8a95386caa21441d93fd51527cae138a",
+  "observations": [
+    "Actual v6b player completed idle-wave-idle on normal loading with one completion callback and no image error.",
+    "Final candidate also completed with fixed 1200ms delay per wave atlas page.",
+    "Deliberate missing wave image emitted a launcher failure and retained the common anchor rather than displaying a blank or switching to legacy art.",
+    "Previous same-source runtime checks passed rapid 8 switches, dialog completion, 390x844 viewport and reduced-motion/hidden simulations.",
+    "Both bridge endpoints and fallback equal the accepted idle anchor in actual RGBA; transition imagery inspected by independent art review and root."
+  ],
+  "limits": [
+    "Screenshot observations sample playback, not uninterrupted video observation or a guarantee of imperceptible transitions.",
+    "Simulated network latency is not a physical mobile network throughput test.",
+    "Failure injection tested lower-level canvas; production host fallback completion is verified by code review, not this isolated canvas harness.",
+    "Minor texture softness remains between generated action and frozen idle; no severe body deformation or 2D-to-3D material jump was found.",
+    "Production browser acceptance is a separate post-deployment check and remains pending."
+  ]
+}

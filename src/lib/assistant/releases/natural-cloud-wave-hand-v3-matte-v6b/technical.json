@@ -1,0 +1,470 @@
+{
+  "status": "PASS",
+  "scope": "TECHNICAL_ASSET_INTEGRITY_AND_UNIT_GATES_ONLY",
+  "reviewer": "/root/suite_runtime_engineer",
+  "reviewedAt": "2026-10-12T20:13:50.144Z",
+  "manifestVersion": "natural-cloud-wave-hand-v3-matte-v6b",
+  "manifestScopeSha256": "1f37af2a9ab285073f9874ffbb218e6a8a95386caa21441d93fd51527cae138a",
+  "productionAllowed": false,
+  "handRecords": [
+    {
+      "frame": 0,
+      "changedRgbBytes": 0,
+      "outsideMaskChangedRgbBytes": 0,
+      "webpChangedRgbBytes": 0,
+      "sha256": "5ee377a7bf96621be1026e52859110e7e831218f16c1076ab8bda1f77605279e"
+    },
+    {
+      "frame": 1,
+      "changedRgbBytes": 0,
+      "outsideMaskChangedRgbBytes": 0,
+      "webpChangedRgbBytes": 0,
+      "sha256": "3d978a38baee50b3fa05b724a3738ec9ea35b5080c8986f517fe2e07fe300ead"
+    },
+    {
+      "frame": 2,
+      "changedRgbBytes": 0,
+      "outsideMaskChangedRgbBytes": 0,
+      "webpChangedRgbBytes": 0,
+      "sha256": "b2a73d3c397946a6b1b76adf7f6da63aaddac2db5f8fce95f0fb9781405a9c7f"
+    },
+    {
+      "frame": 3,
+      "changedRgbBytes": 0,
+      "outsideMaskChangedRgbBytes": 0,
+      "webpChangedRgbBytes": 0,
+      "sha256": "328ea28c2fbbf058a2902475ae9d7f4bc02a9d388e349b64a4dd71df998f16f0"
+    },
+    {
+      "frame": 4,
+      "changedRgbBytes": 0,
+      "outsideMaskChangedRgbBytes": 0,
+      "webpChangedRgbBytes": 0,
+      "sha256": "2a6b821d7640453ab1b14a38b6888f1fe3a3eeeb2fe804beeaf00985ce6fb847"
+    },
+    {
+      "frame": 5,
+      "changedRgbBytes": 0,
+      "outsideMaskChangedRgbBytes": 0,
+      "webpChangedRgbBytes": 0,
+      "sha256": "9a41179ef364cd9be3f17f75014d081d4e1986ce4a0858cb05456b88df67585c"
+    },
+    {
+      "frame": 6,
+      "changedRgbBytes": 3890,
+      "outsideMaskChangedRgbBytes": 0,
+      "webpChangedRgbBytes": 0,
+      "sha256": "47f61b5ff59b9c9ef060afe38d71f67e82c0d287b60ffebd9f65c8f213ec8d03"
+    },
+    {
+      "frame": 7,
+      "changedRgbBytes": 3237,
+      "outsideMaskChangedRgbBytes": 0,
+      "webpChangedRgbBytes": 0,
+      "sha256": "25ae55948c6220323afb67f45e5550bceccdc3ee254fe8438051404eed942234"
+    },
+    {
+      "frame": 8,
+      "changedRgbBytes": 3269,
+      "outsideMaskChangedRgbBytes": 0,
+      "webpChangedRgbBytes": 0,
+      "sha256": "c50f77f362e6083d4715e30dcd4e6580ea4a6d4690a39bf52144643a28781400"
+    },
+    {
+      "frame": 9,
+      "changedRgbBytes": 3266,
+      "outsideMaskChangedRgbBytes": 0,
+      "webpChangedRgbBytes": 0,
+      "sha256": "e98f5399a3d3785f870c4da827059c0c6fec4e9f57a2020507537859a5e833ff"
+    },
+    {
+      "frame": 10,
+      "changedRgbBytes": 4908,
+      "outsideMaskChangedRgbBytes": 0,
+      "webpChangedRgbBytes": 0,
+      "sha256": "fac2e25103e97531ed669f30add9cc4b9397daf3e844acce62e1f4d5e59a6e98"
+    },
+    {
+      "frame": 11,
+      "changedRgbBytes": 3841,
+      "outsideMaskChangedRgbBytes": 0,
+      "webpChangedRgbBytes": 0,
+      "sha256": "b842bd01b6ecd1d41568b49d02f8ff99cd48d9f1adf0c778d54c0a3b0572bbb2"
+    },
+    {
+      "frame": 12,
+      "changedRgbBytes": 3727,
+      "outsideMaskChangedRgbBytes": 0,
+      "webpChangedRgbBytes": 0,
+      "sha256": "a4e9bf4335dfb5ab20f2016dc8d346ce75acade716302556cb5af81da8ed069f"
+    },
+    {
+      "frame": 13,
+      "changedRgbBytes": 3563,
+      "outsideMaskChangedRgbBytes": 0,
+      "webpChangedRgbBytes": 0,
+      "sha256": "bbe81e5ea782e08f123d0d84e4abd891c8e2afe8bed0710f5b6719c978a963ca"
+    },
+    {
+      "frame": 14,
+      "changedRgbBytes": 0,
+      "outsideMaskChangedRgbBytes": 0,
+      "webpChangedRgbBytes": 0,
+      "sha256": "4157f13f0eca5cd26eebc9a6e88cac5abeaecf1fe438412ee90539d485f0f4db"
+    },
+    {
+      "frame": 15,
+      "changedRgbBytes": 0,
+      "outsideMaskChangedRgbBytes": 0,
+      "webpChangedRgbBytes": 0,
+      "sha256": "47433c2fde98d7a77a3c18f2dab14a8e051564a57ee9fb94785e75e44a77dd67"
+    },
+    {
+      "frame": 16,
+      "changedRgbBytes": 0,
+      "outsideMaskChangedRgbBytes": 0,
+      "webpChangedRgbBytes": 0,
+      "sha256": "123ede4401e049c43aa66a80ad1a9eb87e4059a48c4afdd3f787f60e3f35b153"
+    },
+    {
+      "frame": 17,
+      "changedRgbBytes": 3728,
+      "outsideMaskChangedRgbBytes": 0,
+      "webpChangedRgbBytes": 0,
+      "sha256": "aad32ca33452b0177285fc8bb712bf97e691dbc48d556cb0dcf624129be9e748"
+    },
+    {
+      "frame": 18,
+      "changedRgbBytes": 4010,
+      "outsideMaskChangedRgbBytes": 0,
+      "webpChangedRgbBytes": 0,
+      "sha256": "eefef2124b02849df623d312e9ef3f970fcfc8cb076f0190534302705f20c367"
+    },
+    {
+      "frame": 19,
+      "changedRgbBytes": 3328,
+      "outsideMaskChangedRgbBytes": 0,
+      "webpChangedRgbBytes": 0,
+      "sha256": "c3874634f3e6ccb235899d0b4af1f276c20848b9515a54bde58ed06535777d56"
+    },
+    {
+      "frame": 20,
+      "changedRgbBytes": 3296,
+      "outsideMaskChangedRgbBytes": 0,
+      "webpChangedRgbBytes": 0,
+      "sha256": "ed9f65ab61351704d79d7da73cdbf9b8dee59b531db17aea56baed1b55d1c385"
+    },
+    {
+      "frame": 21,
+      "changedRgbBytes": 3852,
+      "outsideMaskChangedRgbBytes": 0,
+      "webpChangedRgbBytes": 0,
+      "sha256": "c44c18e7ed0b7a9b02758f7cec57bdacca8c0aa8fa382eb796686603b17a27d7"
+    },
+    {
+      "frame": 22,
+      "changedRgbBytes": 3367,
+      "outsideMaskChangedRgbBytes": 0,
+      "webpChangedRgbBytes": 0,
+      "sha256": "54793a6755acd15c8ef36ad050f2dc92473ad13913e253334635849bd1b772a5"
+    },
+    {
+      "frame": 23,
+      "changedRgbBytes": 3339,
+      "outsideMaskChangedRgbBytes": 0,
+      "webpChangedRgbBytes": 0,
+      "sha256": "f7dc1f61ce9e094d279e7098d9b9f1638516d50925c342ac47210eb80fea7f6d"
+    },
+    {
+      "frame": 24,
+      "changedRgbBytes": 3794,
+      "outsideMaskChangedRgbBytes": 0,
+      "webpChangedRgbBytes": 0,
+      "sha256": "f48c06fe5dd68622e3d61e91ddb43107680efb645c4005d2655277019c7144b6"
+    },
+    {
+      "frame": 25,
+      "changedRgbBytes": 3556,
+      "outsideMaskChangedRgbBytes": 0,
+      "webpChangedRgbBytes": 0,
+      "sha256": "8d1a00ea9e36e563982fa31603288df33778e46d033213b73cc90c014ca8bedf"
+    },
+    {
+      "frame": 26,
+      "changedRgbBytes": 0,
+      "outsideMaskChangedRgbBytes": 0,
+      "webpChangedRgbBytes": 0,
+      "sha256": "9deaf520c3d5589ab8efc5f8a9ea25fd47cfd56233f4227db73a936ae674bb6a"
+    },
+    {
+      "frame": 27,
+      "changedRgbBytes": 0,
+      "outsideMaskChangedRgbBytes": 0,
+      "webpChangedRgbBytes": 0,
+      "sha256": "0b30ee5c09f7e1844894163cb5630159ea29a128c1094a2e84990db870ac865d"
+    },
+    {
+      "frame": 28,
+      "changedRgbBytes": 0,
+      "outsideMaskChangedRgbBytes": 0,
+      "webpChangedRgbBytes": 0,
+      "sha256": "58c773391df713e0258cbe013f5dbb1315f1aab0c7de1a2f0a96f43f153db424"
+    },
+    {
+      "frame": 29,
+      "changedRgbBytes": 3490,
+      "outsideMaskChangedRgbBytes": 0,
+      "webpChangedRgbBytes": 0,
+      "sha256": "29d75b0b57c04d01bd3327fd4c1d8283c2a8e4e0b8bfae8959addf4c94b1d17a"
+    },
+    {
+      "frame": 30,
+      "changedRgbBytes": 3216,
+      "outsideMaskChangedRgbBytes": 0,
+      "webpChangedRgbBytes": 0,
+      "sha256": "5b1f3324fa62fc1e90c9aa33ed7e5cff6c7bc84aa2fe61634d141c20798d7339"
+    },
+    {
+      "frame": 31,
+      "changedRgbBytes": 3175,
+      "outsideMaskChangedRgbBytes": 0,
+      "webpChangedRgbBytes": 0,
+      "sha256": "6614f40f010713696149f2ee6c02208dd50cc97a2490b5ed63266d589983cf88"
+    },
+    {
+      "frame": 32,
+      "changedRgbBytes": 3694,
+      "outsideMaskChangedRgbBytes": 0,
+      "webpChangedRgbBytes": 0,
+      "sha256": "d93cdde14e9614ff839f66b5bdbf29c009cb154f5121aabca893ca11c2078a61"
+    },
+    {
+      "frame": 33,
+      "changedRgbBytes": 3766,
+      "outsideMaskChangedRgbBytes": 0,
+      "webpChangedRgbBytes": 0,
+      "sha256": "3fe0845dd410a9874ede551eb8d8a99a052d84da6ef251938aeb30488cfd944c"
+    },
+    {
+      "frame": 34,
+      "changedRgbBytes": 2978,
+      "outsideMaskChangedRgbBytes": 0,
+      "webpChangedRgbBytes": 0,
+      "sha256": "3bff8812806fa4b38d3c92bfe720dfd18271684c8f51af1176df57aa72dd4d2e"
+    },
+    {
+      "frame": 35,
+      "changedRgbBytes": 2900,
+      "outsideMaskChangedRgbBytes": 0,
+      "webpChangedRgbBytes": 0,
+      "sha256": "4d3b426ea334ea2f67aabfe22309bd6996f0b4b8f21c5ab1496975c7ebbd0834"
+    },
+    {
+      "frame": 36,
+      "changedRgbBytes": 2179,
+      "outsideMaskChangedRgbBytes": 0,
+      "webpChangedRgbBytes": 0,
+      "sha256": "b35475578c8e9eec4e6f899b0d23ee853979bfecd278950476f2346496b152a4"
+    },
+    {
+      "frame": 37,
+      "changedRgbBytes": 0,
+      "outsideMaskChangedRgbBytes": 0,
+      "webpChangedRgbBytes": 0,
+      "sha256": "5eb0d539f6d30d34926afceb3a08763cb5b7fb7c75abac2a5078d451721f8baa"
+    },
+    {
+      "frame": 38,
+      "changedRgbBytes": 0,
+      "outsideMaskChangedRgbBytes": 0,
+      "webpChangedRgbBytes": 0,
+      "sha256": "18ac7fa84a87d8047f8b872148031fdf8432dc413d46f1afc215dec8ac34e184"
+    },
+    {
+      "frame": 39,
+      "changedRgbBytes": 0,
+      "outsideMaskChangedRgbBytes": 0,
+      "webpChangedRgbBytes": 0,
+      "sha256": "18c0e7469cf18fe3f06d333eaffb0b8e3324ddbee250e59cc5f39caa4d4cd91e"
+    },
+    {
+      "frame": 40,
+      "changedRgbBytes": 0,
+      "outsideMaskChangedRgbBytes": 0,
+      "webpChangedRgbBytes": 0,
+      "sha256": "677fdab5a5fd16a5fb0ec72abd445b58eaa73f83f156f460beecc4080b525301"
+    },
+    {
+      "frame": 41,
+      "changedRgbBytes": 0,
+      "outsideMaskChangedRgbBytes": 0,
+      "webpChangedRgbBytes": 0,
+      "sha256": "61ce12575dcc0e9fc57626775ab13b949372ab3d17d0cb57451409000e1b6a42"
+    },
+    {
+      "frame": 42,
+      "changedRgbBytes": 0,
+      "outsideMaskChangedRgbBytes": 0,
+      "webpChangedRgbBytes": 0,
+      "sha256": "7b995a14bce247b6b1f4af21c6722754abce4842a931ddfabe06fa0f3fe528fc"
+    },
+    {
+      "frame": 43,
+      "changedRgbBytes": 0,
+      "outsideMaskChangedRgbBytes": 0,
+      "webpChangedRgbBytes": 0,
+      "sha256": "542b76570e57d839dddb3ace7ec62216c4a16db3a92ef360c0e1ac3c2aab284a"
+    },
+    {
+      "frame": 44,
+      "changedRgbBytes": 0,
+      "outsideMaskChangedRgbBytes": 0,
+      "webpChangedRgbBytes": 0,
+      "sha256": "6ca9218af283c70735957b96dcf6b995b63e6e22af00416b4d3e59728c63933e"
+    },
+    {
+      "frame": 45,
+      "changedRgbBytes": 0,
+      "outsideMaskChangedRgbBytes": 0,
+      "webpChangedRgbBytes": 0,
+      "sha256": "a7f7fec99efa244b5fb1992d050dd9a3887ad79f42d1fd54583c0107673c8bf2"
+    },
+    {
+      "frame": 46,
+      "changedRgbBytes": 0,
+      "outsideMaskChangedRgbBytes": 0,
+      "webpChangedRgbBytes": 0,
+      "sha256": "88074683b36c3d032992ed4b418433abc5edaf10513ed71c51c827ffc8ae3905"
+    },
+    {
+      "frame": 47,
+      "changedRgbBytes": 0,
+      "outsideMaskChangedRgbBytes": 0,
+      "webpChangedRgbBytes": 0,
+      "sha256": "90fb7d1e4da3b3980ea4c7d9c7dc9f369227c33f58bfce707c06b15c79549ed6"
+    },
+    {
+      "frame": 48,
+      "changedRgbBytes": 0,
+      "outsideMaskChangedRgbBytes": 0,
+      "webpChangedRgbBytes": 0,
+      "sha256": "30a2ba6579cb23c4abbe935140ee8c98a2d88ec9f590332ba20aaf20e78d6133"
+    }
+  ],
+  "pageRecords": [
+    {
+      "key": "idle-0",
+      "sha256": "53aac47a3635c3341711fe48dc62083ab476c974c141b4bffa74d884694cff7c",
+      "width": 1920,
+      "height": 1920,
+      "bytes": 1161262
+    },
+    {
+      "key": "idle-1",
+      "sha256": "2e7cb2940448b86ad89a163007d206b052aa409e4e6a7a46141e40a2e745a064",
+      "width": 1920,
+      "height": 1920,
+      "bytes": 1281756
+    },
+    {
+      "key": "idle-2",
+      "sha256": "96fdfb3d0e5cec4921f73e018fd5ccf33f98633496ed97575887cae31b1f367e",
+      "width": 1920,
+      "height": 1920,
+      "bytes": 1268962
+    },
+    {
+      "key": "idle-3",
+      "sha256": "30adcc280beb84472ab2291ba2f0ec6a142a180d392192be08652ac444d8f659",
+      "width": 1920,
+      "height": 1920,
+      "bytes": 1167874
+    },
+    {
+      "key": "idle-4",
+      "sha256": "9879294dabb294eff24556520aeb9298793e02a9dbbc7cbbde8a41a306b65fa5",
+      "width": 1920,
+      "height": 1440,
+      "bytes": 947174
+    },
+    {
+      "key": "wave-5",
+      "sha256": "5ef71e908ec2f224a27abdf3b65545c0c716fcbeb7930648381c87d78eb18bd6",
+      "width": 1920,
+      "height": 1920,
+      "bytes": 1490720
+    },
+    {
+      "key": "wave-6",
+      "sha256": "5f7cfaae4bc43466829d5992c1434e84faaa9c2573a5096bd5192db0fe0ecd95",
+      "width": 1920,
+      "height": 1920,
+      "bytes": 1555470
+    },
+    {
+      "key": "wave-7",
+      "sha256": "0fecf01b5c2204701a6509b5ed4b0bf7541bd635b9e5cc5d1d33135803fd0888",
+      "width": 1920,
+      "height": 1920,
+      "bytes": 1551500
+    },
+    {
+      "key": "wave-8",
+      "sha256": "0c8eab42ec754a653208e9917420fd108f79ec11cc7f8becea069cdfb586b5ba",
+      "width": 1920,
+      "height": 1920,
+      "bytes": 1470406
+    },
+    {
+      "key": "wave-9",
+      "sha256": "5ba985349d701dd419704efec7e102cebcbef17e3a8797ca29e21629f56f8da5",
+      "width": 1920,
+      "height": 960,
+      "bytes": 640494
+    }
+  ],
+  "clipRecords": [
+    {
+      "action": "idle",
+      "frameSlots": 121,
+      "durationMs": 4000,
+      "allActualCropHashesMatch": true,
+      "firstAndLastActualAnchorMatch": true
+    },
+    {
+      "action": "wave",
+      "frameSlots": 73,
+      "durationMs": 3463,
+      "allActualCropHashesMatch": true,
+      "firstAndLastActualAnchorMatch": true
+    }
+  ],
+  "approvedStillActualRgbaExact": true,
+  "sourceHashes": {
+    "src/lib/assistant/natural-motion.ts": "a8484e48f0c894227684fdd4dbbb922edef26a942b615f870a48d9639e9be78c",
+    "src/components/assistant/natural-idle-character.tsx": "2511b498ac87417acf9bd6984672602da096059a43724a0e28f23d161c710deb",
+    "scripts/animation/validate-natural-motion-assets.mjs": "c5da96a21a290eb60ddf16eb2becb200960b0b9a5ffb349b4a608592d46b79fa"
+  },
+  "runtime": {
+    "productionConfigured": false,
+    "decodedPixelBudget": 25165824,
+    "testsPassed": 25,
+    "testEvidence": "review/independent-technical-tests.tap",
+    "candidatePendingRejected": true
+  },
+  "legacyTestDiagnosis": {
+    "error": "reparse_path_rejected",
+    "component": "docs",
+    "isSymbolicLink": true,
+    "target": "D:/CodexTools/assistant-animation/migrated-blog-storage/docs",
+    "cause": "pipeline safeAncestors rejects junction ancestors before reading legacy wave-v9 fixture",
+    "securityGateChanged": false
+  },
+  "limitations": [
+    "This report does not grant art or browser-transition approval.",
+    "RGBA crops and anchors verified, not anatomy, temporal style or alpha-edge quality.",
+    "Donor coverage is available only for 25 repaired source frames, not semantic foreground ground truth; this audit does not certify hand alpha.",
+    "Full-suite legacy wave-v9 failures remain diagnosed, not waived.",
+    "Runtime browser performance, hidden/reduced-motion UI, slow network and production deployment not verified here."
+  ]
+}

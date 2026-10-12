@@ -1,0 +1,1366 @@
+{
+  "status": "CANDIDATE_PENDING_INDEPENDENT_VISUAL_REVIEW",
+  "productionAllowed": false,
+  "productionChanged": false,
+  "sourceFrames": [
+    {
+      "path": "frame-000.png",
+      "sha256": "5ee377a7bf96621be1026e52859110e7e831218f16c1076ab8bda1f77605279e"
+    },
+    {
+      "path": "frame-001.png",
+      "sha256": "3d978a38baee50b3fa05b724a3738ec9ea35b5080c8986f517fe2e07fe300ead"
+    },
+    {
+      "path": "frame-002.png",
+      "sha256": "b2a73d3c397946a6b1b76adf7f6da63aaddac2db5f8fce95f0fb9781405a9c7f"
+    },
+    {
+      "path": "frame-003.png",
+      "sha256": "328ea28c2fbbf058a2902475ae9d7f4bc02a9d388e349b64a4dd71df998f16f0"
+    },
+    {
+      "path": "frame-004.png",
+      "sha256": "2a6b821d7640453ab1b14a38b6888f1fe3a3eeeb2fe804beeaf00985ce6fb847"
+    },
+    {
+      "path": "frame-005.png",
+      "sha256": "9a41179ef364cd9be3f17f75014d081d4e1986ce4a0858cb05456b88df67585c"
+    },
+    {
+      "path": "frame-006.png",
+      "sha256": "47f61b5ff59b9c9ef060afe38d71f67e82c0d287b60ffebd9f65c8f213ec8d03"
+    },
+    {
+      "path": "frame-007.png",
+      "sha256": "25ae55948c6220323afb67f45e5550bceccdc3ee254fe8438051404eed942234"
+    },
+    {
+      "path": "frame-008.png",
+      "sha256": "c50f77f362e6083d4715e30dcd4e6580ea4a6d4690a39bf52144643a28781400"
+    },
+    {
+      "path": "frame-009.png",
+      "sha256": "e98f5399a3d3785f870c4da827059c0c6fec4e9f57a2020507537859a5e833ff"
+    },
+    {
+      "path": "frame-010.png",
+      "sha256": "fac2e25103e97531ed669f30add9cc4b9397daf3e844acce62e1f4d5e59a6e98"
+    },
+    {
+      "path": "frame-011.png",
+      "sha256": "b842bd01b6ecd1d41568b49d02f8ff99cd48d9f1adf0c778d54c0a3b0572bbb2"
+    },
+    {
+      "path": "frame-012.png",
+      "sha256": "a4e9bf4335dfb5ab20f2016dc8d346ce75acade716302556cb5af81da8ed069f"
+    },
+    {
+      "path": "frame-013.png",
+      "sha256": "bbe81e5ea782e08f123d0d84e4abd891c8e2afe8bed0710f5b6719c978a963ca"
+    },
+    {
+      "path": "frame-014.png",
+      "sha256": "4157f13f0eca5cd26eebc9a6e88cac5abeaecf1fe438412ee90539d485f0f4db"
+    },
+    {
+      "path": "frame-015.png",
+      "sha256": "47433c2fde98d7a77a3c18f2dab14a8e051564a57ee9fb94785e75e44a77dd67"
+    },
+    {
+      "path": "frame-016.png",
+      "sha256": "123ede4401e049c43aa66a80ad1a9eb87e4059a48c4afdd3f787f60e3f35b153"
+    },
+    {
+      "path": "frame-017.png",
+      "sha256": "aad32ca33452b0177285fc8bb712bf97e691dbc48d556cb0dcf624129be9e748"
+    },
+    {
+      "path": "frame-018.png",
+      "sha256": "eefef2124b02849df623d312e9ef3f970fcfc8cb076f0190534302705f20c367"
+    },
+    {
+      "path": "frame-019.png",
+      "sha256": "c3874634f3e6ccb235899d0b4af1f276c20848b9515a54bde58ed06535777d56"
+    },
+    {
+      "path": "frame-020.png",
+      "sha256": "ed9f65ab61351704d79d7da73cdbf9b8dee59b531db17aea56baed1b55d1c385"
+    },
+    {
+      "path": "frame-021.png",
+      "sha256": "c44c18e7ed0b7a9b02758f7cec57bdacca8c0aa8fa382eb796686603b17a27d7"
+    },
+    {
+      "path": "frame-022.png",
+      "sha256": "54793a6755acd15c8ef36ad050f2dc92473ad13913e253334635849bd1b772a5"
+    },
+    {
+      "path": "frame-023.png",
+      "sha256": "f7dc1f61ce9e094d279e7098d9b9f1638516d50925c342ac47210eb80fea7f6d"
+    },
+    {
+      "path": "frame-024.png",
+      "sha256": "f48c06fe5dd68622e3d61e91ddb43107680efb645c4005d2655277019c7144b6"
+    },
+    {
+      "path": "frame-025.png",
+      "sha256": "8d1a00ea9e36e563982fa31603288df33778e46d033213b73cc90c014ca8bedf"
+    },
+    {
+      "path": "frame-026.png",
+      "sha256": "9deaf520c3d5589ab8efc5f8a9ea25fd47cfd56233f4227db73a936ae674bb6a"
+    },
+    {
+      "path": "frame-027.png",
+      "sha256": "0b30ee5c09f7e1844894163cb5630159ea29a128c1094a2e84990db870ac865d"
+    },
+    {
+      "path": "frame-028.png",
+      "sha256": "58c773391df713e0258cbe013f5dbb1315f1aab0c7de1a2f0a96f43f153db424"
+    },
+    {
+      "path": "frame-029.png",
+      "sha256": "29d75b0b57c04d01bd3327fd4c1d8283c2a8e4e0b8bfae8959addf4c94b1d17a"
+    },
+    {
+      "path": "frame-030.png",
+      "sha256": "5b1f3324fa62fc1e90c9aa33ed7e5cff6c7bc84aa2fe61634d141c20798d7339"
+    },
+    {
+      "path": "frame-031.png",
+      "sha256": "6614f40f010713696149f2ee6c02208dd50cc97a2490b5ed63266d589983cf88"
+    },
+    {
+      "path": "frame-032.png",
+      "sha256": "d93cdde14e9614ff839f66b5bdbf29c009cb154f5121aabca893ca11c2078a61"
+    },
+    {
+      "path": "frame-033.png",
+      "sha256": "3fe0845dd410a9874ede551eb8d8a99a052d84da6ef251938aeb30488cfd944c"
+    },
+    {
+      "path": "frame-034.png",
+      "sha256": "3bff8812806fa4b38d3c92bfe720dfd18271684c8f51af1176df57aa72dd4d2e"
+    },
+    {
+      "path": "frame-035.png",
+      "sha256": "4d3b426ea334ea2f67aabfe22309bd6996f0b4b8f21c5ab1496975c7ebbd0834"
+    },
+    {
+      "path": "frame-036.png",
+      "sha256": "b35475578c8e9eec4e6f899b0d23ee853979bfecd278950476f2346496b152a4"
+    },
+    {
+      "path": "frame-037.png",
+      "sha256": "5eb0d539f6d30d34926afceb3a08763cb5b7fb7c75abac2a5078d451721f8baa"
+    },
+    {
+      "path": "frame-038.png",
+      "sha256": "18ac7fa84a87d8047f8b872148031fdf8432dc413d46f1afc215dec8ac34e184"
+    },
+    {
+      "path": "frame-039.png",
+      "sha256": "18c0e7469cf18fe3f06d333eaffb0b8e3324ddbee250e59cc5f39caa4d4cd91e"
+    },
+    {
+      "path": "frame-040.png",
+      "sha256": "677fdab5a5fd16a5fb0ec72abd445b58eaa73f83f156f460beecc4080b525301"
+    },
+    {
+      "path": "frame-041.png",
+      "sha256": "61ce12575dcc0e9fc57626775ab13b949372ab3d17d0cb57451409000e1b6a42"
+    },
+    {
+      "path": "frame-042.png",
+      "sha256": "7b995a14bce247b6b1f4af21c6722754abce4842a931ddfabe06fa0f3fe528fc"
+    },
+    {
+      "path": "frame-043.png",
+      "sha256": "542b76570e57d839dddb3ace7ec62216c4a16db3a92ef360c0e1ac3c2aab284a"
+    },
+    {
+      "path": "frame-044.png",
+      "sha256": "6ca9218af283c70735957b96dcf6b995b63e6e22af00416b4d3e59728c63933e"
+    },
+    {
+      "path": "frame-045.png",
+      "sha256": "a7f7fec99efa244b5fb1992d050dd9a3887ad79f42d1fd54583c0107673c8bf2"
+    },
+    {
+      "path": "frame-046.png",
+      "sha256": "88074683b36c3d032992ed4b418433abc5edaf10513ed71c51c827ffc8ae3905"
+    },
+    {
+      "path": "frame-047.png",
+      "sha256": "90fb7d1e4da3b3980ea4c7d9c7dc9f369227c33f58bfce707c06b15c79549ed6"
+    },
+    {
+      "path": "frame-048.png",
+      "sha256": "30a2ba6579cb23c4abbe935140ee8c98a2d88ec9f590332ba20aaf20e78d6133"
+    }
+  ],
+  "sourceDirectory": "D:\\CodexTools\\assistant-animation\\migrated-blog-storage\\docs\\assistant\\cloud-motion-suite-v1\\wave-repair-v1\\full-sequence-v3\\frames",
+  "outputDirectory": "C:\\Users\\Administrator\\Documents\\Codex\\2026-07-15\\github-plugin-github-openai-curated-remote-4\\work\\personal-blog\\docs\\assistant\\cloud-motion-suite-v1\\wave-transition-v1\\hand-v3-matte-v6b",
+  "scopedHeadHandHoleCleanup": true,
+  "handCoverageOverrides": "D:\\CodexTools\\assistant-animation\\migrated-blog-storage\\docs\\assistant\\cloud-motion-suite-v1\\wave-transition-v1\\hand-alpha-v6",
+  "animationPreviewsEncoded": false,
+  "anchorRgbaSha256": "609dcd9ad3faccbc73c0f749a6b3473ecba113df660fb73a429b773a7f02b9de",
+  "approvedStillVisibleRGBAExact": true,
+  "zeroAlphaRGBNormalized": true,
+  "geometry": {
+    "baselineSize": 1254,
+    "approvedIdleSourceSize": 768,
+    "cloudPaddedSize": 1536,
+    "cloudSize": 512,
+    "outputSize": 480,
+    "scale": 1.1483253588516746,
+    "translation": -53.97129186602871,
+    "anisotropicStretch": false,
+    "perFrameCrop": false
+  },
+  "matteMethod": "Border-fitted RGB background plane, dominant connected silhouette, alpha unmixing; no AI matte model",
+  "edgeRefinement": "One pixel contour contraction; 3x3 local opaque ink selection; alpha>16 connected silhouette cleanup; interior farther than 3px exact",
+  "matteFrameMetrics": [
+    {
+      "backgroundResidualP95": 2.7360303401545103,
+      "headHandBackgroundPixelsCleared": 11,
+      "visiblePixels": 43511,
+      "softPixels": 1531,
+      "edgeRefinement": {
+        "changedPixels": 7122,
+        "protectedInteriorPixels": 52466,
+        "interiorExact": true,
+        "outerIsolatedPixelsCleared": 30,
+        "silhouetteContractionPx": 1,
+        "colourNeighborhoodPx": 1
+      },
+      "independentHandCoverage": {
+        "supportPixels": 0,
+        "changedPixels": 0,
+        "sourceRgbaSha256": "b262bd68d44f93637b9949caf7ff7ce0b6b6ed839c3a2468681952b215ec4d95"
+      }
+    },
+    {
+      "backgroundResidualP95": 7.45231501283431,
+      "headHandBackgroundPixelsCleared": 19,
+      "visiblePixels": 43998,
+      "softPixels": 1455,
+      "edgeRefinement": {
+        "changedPixels": 7127,
+        "protectedInteriorPixels": 53120,
+        "interiorExact": true,
+        "outerIsolatedPixelsCleared": 26,
+        "silhouetteContractionPx": 1,
+        "colourNeighborhoodPx": 1
+      },
+      "independentHandCoverage": {
+        "supportPixels": 0,
+        "changedPixels": 0,
+        "sourceRgbaSha256": "b262bd68d44f93637b9949caf7ff7ce0b6b6ed839c3a2468681952b215ec4d95"
+      }
+    },
+    {
+      "backgroundResidualP95": 7.222355845456648,
+      "headHandBackgroundPixelsCleared": 27,
+      "visiblePixels": 44367,
+      "softPixels": 1467,
+      "edgeRefinement": {
+        "changedPixels": 7248,
+        "protectedInteriorPixels": 53533,
+        "interiorExact": true,
+        "outerIsolatedPixelsCleared": 14,
+        "silhouetteContractionPx": 1,
+        "colourNeighborhoodPx": 1
+      },
+      "independentHandCoverage": {
+        "supportPixels": 0,
+        "changedPixels": 0,
+        "sourceRgbaSha256": "b262bd68d44f93637b9949caf7ff7ce0b6b6ed839c3a2468681952b215ec4d95"
+      }
+    },
+    {
+      "backgroundResidualP95": 5.534627743717164,
+      "headHandBackgroundPixelsCleared": 16,
+      "visiblePixels": 44354,
+      "softPixels": 1483,
+      "edgeRefinement": {
+        "changedPixels": 7234,
+        "protectedInteriorPixels": 53527,
+        "interiorExact": true,
+        "outerIsolatedPixelsCleared": 16,
+        "silhouetteContractionPx": 1,
+        "colourNeighborhoodPx": 1
+      },
+      "independentHandCoverage": {
+        "supportPixels": 0,
+        "changedPixels": 0,
+        "sourceRgbaSha256": "b262bd68d44f93637b9949caf7ff7ce0b6b6ed839c3a2468681952b215ec4d95"
+      }
+    },
+    {
+      "backgroundResidualP95": 6.896620303994885,
+      "headHandBackgroundPixelsCleared": 36,
+      "visiblePixels": 44754,
+      "softPixels": 1443,
+      "edgeRefinement": {
+        "changedPixels": 7253,
+        "protectedInteriorPixels": 54026,
+        "interiorExact": true,
+        "outerIsolatedPixelsCleared": 17,
+        "silhouetteContractionPx": 1,
+        "colourNeighborhoodPx": 1
+      },
+      "independentHandCoverage": {
+        "supportPixels": 0,
+        "changedPixels": 0,
+        "sourceRgbaSha256": "b262bd68d44f93637b9949caf7ff7ce0b6b6ed839c3a2468681952b215ec4d95"
+      }
+    },
+    {
+      "backgroundResidualP95": 6.78138792469789,
+      "headHandBackgroundPixelsCleared": 46,
+      "visiblePixels": 45396,
+      "softPixels": 1573,
+      "edgeRefinement": {
+        "changedPixels": 7582,
+        "protectedInteriorPixels": 54652,
+        "interiorExact": true,
+        "outerIsolatedPixelsCleared": 18,
+        "silhouetteContractionPx": 1,
+        "colourNeighborhoodPx": 1
+      },
+      "independentHandCoverage": {
+        "supportPixels": 0,
+        "changedPixels": 0,
+        "sourceRgbaSha256": "b262bd68d44f93637b9949caf7ff7ce0b6b6ed839c3a2468681952b215ec4d95"
+      }
+    },
+    {
+      "backgroundResidualP95": 6.77106677243336,
+      "headHandBackgroundPixelsCleared": 58,
+      "visiblePixels": 46137,
+      "softPixels": 1550,
+      "edgeRefinement": {
+        "changedPixels": 7827,
+        "protectedInteriorPixels": 55472,
+        "interiorExact": true,
+        "outerIsolatedPixelsCleared": 33,
+        "silhouetteContractionPx": 1,
+        "colourNeighborhoodPx": 1
+      },
+      "independentHandCoverage": {
+        "supportPixels": 1925,
+        "changedPixels": 959,
+        "outsideSupportExact": true,
+        "sourceRgbaSha256": "354b84ac043fa9f3f7740edb1ad487753883573f0d9a0c3575e32b644fd17105",
+        "sourceSupportSha256": "ff891850622814b3bc29ff1a450cdda329b74bed8eadda0a5f975082b4feaa4b",
+        "noErosion": true,
+        "noBrightnessKey": true
+      }
+    },
+    {
+      "backgroundResidualP95": 7.171476952035172,
+      "headHandBackgroundPixelsCleared": 27,
+      "visiblePixels": 46404,
+      "softPixels": 1602,
+      "edgeRefinement": {
+        "changedPixels": 7986,
+        "protectedInteriorPixels": 55682,
+        "interiorExact": true,
+        "outerIsolatedPixelsCleared": 24,
+        "silhouetteContractionPx": 1,
+        "colourNeighborhoodPx": 1
+      },
+      "independentHandCoverage": {
+        "supportPixels": 1559,
+        "changedPixels": 866,
+        "outsideSupportExact": true,
+        "sourceRgbaSha256": "e8c98949d4edc0df953d55710d18da079707d42d1572667374cb4baf297b6750",
+        "sourceSupportSha256": "e370c4aa6e7cf70c88f1f6c2a9753ca83cac8d5f32ca60f13718777254942846",
+        "noErosion": true,
+        "noBrightnessKey": true
+      }
+    },
+    {
+      "backgroundResidualP95": 7.632067734551529,
+      "headHandBackgroundPixelsCleared": 27,
+      "visiblePixels": 47017,
+      "softPixels": 1639,
+      "edgeRefinement": {
+        "changedPixels": 7893,
+        "protectedInteriorPixels": 56567,
+        "interiorExact": true,
+        "outerIsolatedPixelsCleared": 20,
+        "silhouetteContractionPx": 1,
+        "colourNeighborhoodPx": 1
+      },
+      "independentHandCoverage": {
+        "supportPixels": 1771,
+        "changedPixels": 843,
+        "outsideSupportExact": true,
+        "sourceRgbaSha256": "e9c96d23512029dfd06d1cdb508c54de4af045cdafaec61a5c635cc838d42b96",
+        "sourceSupportSha256": "43a1fe15ba343faf986ae81b4d8e7b82f37d13869eec07835226cad45488ce71",
+        "noErosion": true,
+        "noBrightnessKey": true
+      }
+    },
+    {
+      "backgroundResidualP95": 7.476452907354566,
+      "headHandBackgroundPixelsCleared": 62,
+      "visiblePixels": 47111,
+      "softPixels": 1641,
+      "edgeRefinement": {
+        "changedPixels": 8068,
+        "protectedInteriorPixels": 56520,
+        "interiorExact": true,
+        "outerIsolatedPixelsCleared": 23,
+        "silhouetteContractionPx": 1,
+        "colourNeighborhoodPx": 1
+      },
+      "independentHandCoverage": {
+        "supportPixels": 1639,
+        "changedPixels": 834,
+        "outsideSupportExact": true,
+        "sourceRgbaSha256": "b805e05cd9e11506038c7fe068e5a3a9d7c872a189bbbb4e244505fe4febfff3",
+        "sourceSupportSha256": "907b9736bc3df8cf0d4f60cdb35ad8621473ff2f958f4cf8b5030a4d43c50338",
+        "noErosion": true,
+        "noBrightnessKey": true
+      }
+    },
+    {
+      "backgroundResidualP95": 7.5258310866813405,
+      "headHandBackgroundPixelsCleared": 104,
+      "visiblePixels": 47213,
+      "softPixels": 1573,
+      "edgeRefinement": {
+        "changedPixels": 8027,
+        "protectedInteriorPixels": 56704,
+        "interiorExact": true,
+        "outerIsolatedPixelsCleared": 32,
+        "silhouetteContractionPx": 1,
+        "colourNeighborhoodPx": 1
+      },
+      "independentHandCoverage": {
+        "supportPixels": 2491,
+        "changedPixels": 1073,
+        "outsideSupportExact": true,
+        "sourceRgbaSha256": "3f3958477a18d18178af1bc91b91118267776c325a7c072033988dd7e9c66765",
+        "sourceSupportSha256": "a400c1427eca96472f88a0b945bd18d7b2b7741a2e456a71e61ff838adacb754",
+        "noErosion": true,
+        "noBrightnessKey": true
+      }
+    },
+    {
+      "backgroundResidualP95": 6.849654377470386,
+      "headHandBackgroundPixelsCleared": 41,
+      "visiblePixels": 47297,
+      "softPixels": 1587,
+      "edgeRefinement": {
+        "changedPixels": 7731,
+        "protectedInteriorPixels": 57023,
+        "interiorExact": true,
+        "outerIsolatedPixelsCleared": 37,
+        "silhouetteContractionPx": 1,
+        "colourNeighborhoodPx": 1
+      },
+      "independentHandCoverage": {
+        "supportPixels": 1914,
+        "changedPixels": 1093,
+        "outsideSupportExact": true,
+        "sourceRgbaSha256": "2e51863749921a453fed605fce7142076c036a0c0027d5a4effe5e94cec34ad0",
+        "sourceSupportSha256": "f5cfa8bdfa56fe70b03d47c6a0a975979c2354a697c396ca0fd3db22544da6cb",
+        "noErosion": true,
+        "noBrightnessKey": true
+      }
+    },
+    {
+      "backgroundResidualP95": 7.540062059845542,
+      "headHandBackgroundPixelsCleared": 87,
+      "visiblePixels": 46754,
+      "softPixels": 1531,
+      "edgeRefinement": {
+        "changedPixels": 7472,
+        "protectedInteriorPixels": 56451,
+        "interiorExact": true,
+        "outerIsolatedPixelsCleared": 40,
+        "silhouetteContractionPx": 1,
+        "colourNeighborhoodPx": 1
+      },
+      "independentHandCoverage": {
+        "supportPixels": 1880,
+        "changedPixels": 942,
+        "outsideSupportExact": true,
+        "sourceRgbaSha256": "02e3c0774fabaddfc6f126e1a89f39fb4f2f7f16ef4ca488cb58939500434a9d",
+        "sourceSupportSha256": "56d4b2f9937ca00dfc1be866968d390e706f719e222fa48c159622a2b9a6df81",
+        "noErosion": true,
+        "noBrightnessKey": true
+      }
+    },
+    {
+      "backgroundResidualP95": 7.5091580401055635,
+      "headHandBackgroundPixelsCleared": 128,
+      "visiblePixels": 46716,
+      "softPixels": 1457,
+      "edgeRefinement": {
+        "changedPixels": 7452,
+        "protectedInteriorPixels": 56450,
+        "interiorExact": true,
+        "outerIsolatedPixelsCleared": 31,
+        "silhouetteContractionPx": 1,
+        "colourNeighborhoodPx": 1
+      },
+      "independentHandCoverage": {
+        "supportPixels": 1796,
+        "changedPixels": 950,
+        "outsideSupportExact": true,
+        "sourceRgbaSha256": "d5ca205857e3f429907fce60c25b42869770b2363170d5d4ae0e654bd080cfc8",
+        "sourceSupportSha256": "e4973977eb0b492bf9239843b4f17c5e48c675692aac3e9a1e4f4df911d9a299",
+        "noErosion": true,
+        "noBrightnessKey": true
+      }
+    },
+    {
+      "backgroundResidualP95": 7.611038373411303,
+      "headHandBackgroundPixelsCleared": 86,
+      "visiblePixels": 47135,
+      "softPixels": 1519,
+      "edgeRefinement": {
+        "changedPixels": 7811,
+        "protectedInteriorPixels": 56716,
+        "interiorExact": true,
+        "outerIsolatedPixelsCleared": 24,
+        "silhouetteContractionPx": 1,
+        "colourNeighborhoodPx": 1
+      },
+      "independentHandCoverage": {
+        "supportPixels": 1638,
+        "changedPixels": 1056,
+        "outsideSupportExact": true,
+        "sourceRgbaSha256": "96a38ef760f75922fe10b6d9b902d13cde3782b9565af78ee1b46595eef7126a",
+        "sourceSupportSha256": "4a356b0e44438807fcc3f51e86cc4e312213a77ad554723e09bb7036d044dda8",
+        "noErosion": true,
+        "noBrightnessKey": true
+      }
+    },
+    {
+      "backgroundResidualP95": 7.053424479357148,
+      "headHandBackgroundPixelsCleared": 124,
+      "visiblePixels": 47079,
+      "softPixels": 1564,
+      "edgeRefinement": {
+        "changedPixels": 7992,
+        "protectedInteriorPixels": 56606,
+        "interiorExact": true,
+        "outerIsolatedPixelsCleared": 27,
+        "silhouetteContractionPx": 1,
+        "colourNeighborhoodPx": 1
+      },
+      "independentHandCoverage": {
+        "supportPixels": 1514,
+        "changedPixels": 824,
+        "outsideSupportExact": true,
+        "sourceRgbaSha256": "bd616b03cfc62cf7e6b293a738b44cb55030d9f2cfe0fdf334e1070b9e3aba89",
+        "sourceSupportSha256": "910ccc77b0cc908200d43ffe4aa72a2a5947478537a2f21cf15eb051d2edde99",
+        "noErosion": true,
+        "noBrightnessKey": true
+      }
+    },
+    {
+      "backgroundResidualP95": 8.098874999848418,
+      "headHandBackgroundPixelsCleared": 118,
+      "visiblePixels": 47015,
+      "softPixels": 1575,
+      "edgeRefinement": {
+        "changedPixels": 8076,
+        "protectedInteriorPixels": 56438,
+        "interiorExact": true,
+        "outerIsolatedPixelsCleared": 41,
+        "silhouetteContractionPx": 1,
+        "colourNeighborhoodPx": 1
+      },
+      "independentHandCoverage": {
+        "supportPixels": 1616,
+        "changedPixels": 977,
+        "outsideSupportExact": true,
+        "sourceRgbaSha256": "902c5874f636f4339f04e153af9d4c182a2f199ef0ec05363034dce785617d97",
+        "sourceSupportSha256": "53916f315a528b3c6ddc771fc750aa4a76090b4beb2ddb29810a3f0a6c6edf6f",
+        "noErosion": true,
+        "noBrightnessKey": true
+      }
+    },
+    {
+      "backgroundResidualP95": 7.5774606336734225,
+      "headHandBackgroundPixelsCleared": 107,
+      "visiblePixels": 46980,
+      "softPixels": 1691,
+      "edgeRefinement": {
+        "changedPixels": 8479,
+        "protectedInteriorPixels": 56014,
+        "interiorExact": true,
+        "outerIsolatedPixelsCleared": 32,
+        "silhouetteContractionPx": 1,
+        "colourNeighborhoodPx": 1
+      },
+      "independentHandCoverage": {
+        "supportPixels": 1871,
+        "changedPixels": 1358,
+        "outsideSupportExact": true,
+        "sourceRgbaSha256": "9647015c9612e448cf5c0a7a4eba275f285e41a2926d63a80410dca478cef3b0",
+        "sourceSupportSha256": "c4cd75ee4c997466e67bd5bf99d24efddc1e906b4acc27c31dd72025ab5cd761",
+        "noErosion": true,
+        "noBrightnessKey": true
+      }
+    },
+    {
+      "backgroundResidualP95": 7.98542162623234,
+      "headHandBackgroundPixelsCleared": 109,
+      "visiblePixels": 47097,
+      "softPixels": 1548,
+      "edgeRefinement": {
+        "changedPixels": 7979,
+        "protectedInteriorPixels": 56564,
+        "interiorExact": true,
+        "outerIsolatedPixelsCleared": 34,
+        "silhouetteContractionPx": 1,
+        "colourNeighborhoodPx": 1
+      },
+      "independentHandCoverage": {
+        "supportPixels": 2114,
+        "changedPixels": 980,
+        "outsideSupportExact": true,
+        "sourceRgbaSha256": "883215dca299176561320ad65f1b82f2ba697b83f86f68ec04f4c8d20aba1f80",
+        "sourceSupportSha256": "f578852b368e7ec60d85c317e6b7dd52af2e53e6773e0cca909ca6552b1a335b",
+        "noErosion": true,
+        "noBrightnessKey": true
+      }
+    },
+    {
+      "backgroundResidualP95": 6.99921838614129,
+      "headHandBackgroundPixelsCleared": 64,
+      "visiblePixels": 46954,
+      "softPixels": 1528,
+      "edgeRefinement": {
+        "changedPixels": 7778,
+        "protectedInteriorPixels": 56499,
+        "interiorExact": true,
+        "outerIsolatedPixelsCleared": 42,
+        "silhouetteContractionPx": 1,
+        "colourNeighborhoodPx": 1
+      },
+      "independentHandCoverage": {
+        "supportPixels": 1699,
+        "changedPixels": 942,
+        "outsideSupportExact": true,
+        "sourceRgbaSha256": "25c9a173198c6ab3cb460c3de544b37d7145b8f90cd824af5494d0d9633484fa",
+        "sourceSupportSha256": "21857bef63ead986ffa41e034fae3f36b3ffddfcc68487925363330ad223cc12",
+        "noErosion": true,
+        "noBrightnessKey": true
+      }
+    },
+    {
+      "backgroundResidualP95": 7.660280097885504,
+      "headHandBackgroundPixelsCleared": 65,
+      "visiblePixels": 46876,
+      "softPixels": 1496,
+      "edgeRefinement": {
+        "changedPixels": 7720,
+        "protectedInteriorPixels": 56414,
+        "interiorExact": true,
+        "outerIsolatedPixelsCleared": 27,
+        "silhouetteContractionPx": 1,
+        "colourNeighborhoodPx": 1
+      },
+      "independentHandCoverage": {
+        "supportPixels": 1698,
+        "changedPixels": 947,
+        "outsideSupportExact": true,
+        "sourceRgbaSha256": "1bb1f9b028b21ae7534e7b4c9b31e2c171a31b00615d4df2903a7083c64f71af",
+        "sourceSupportSha256": "903f227cc7f24bc0d7485565e4ff73331ea31b499d7f88a77076a951e31c40d2",
+        "noErosion": true,
+        "noBrightnessKey": true
+      }
+    },
+    {
+      "backgroundResidualP95": 7.708436559892276,
+      "headHandBackgroundPixelsCleared": 87,
+      "visiblePixels": 47120,
+      "softPixels": 1585,
+      "edgeRefinement": {
+        "changedPixels": 8034,
+        "protectedInteriorPixels": 56586,
+        "interiorExact": true,
+        "outerIsolatedPixelsCleared": 36,
+        "silhouetteContractionPx": 1,
+        "colourNeighborhoodPx": 1
+      },
+      "independentHandCoverage": {
+        "supportPixels": 1907,
+        "changedPixels": 1025,
+        "outsideSupportExact": true,
+        "sourceRgbaSha256": "602eb5e52fa288e763ac79b2d7068a9fee704f8eb967207dd388068e17096296",
+        "sourceSupportSha256": "cc84827b7ba94b300298cdc69c0ea1841d07286174dfc64f0b1d329ca182c70d",
+        "noErosion": true,
+        "noBrightnessKey": true
+      }
+    },
+    {
+      "backgroundResidualP95": 8.01004387711021,
+      "headHandBackgroundPixelsCleared": 122,
+      "visiblePixels": 46928,
+      "softPixels": 1651,
+      "edgeRefinement": {
+        "changedPixels": 8379,
+        "protectedInteriorPixels": 56026,
+        "interiorExact": true,
+        "outerIsolatedPixelsCleared": 43,
+        "silhouetteContractionPx": 1,
+        "colourNeighborhoodPx": 1
+      },
+      "independentHandCoverage": {
+        "supportPixels": 1679,
+        "changedPixels": 1271,
+        "outsideSupportExact": true,
+        "sourceRgbaSha256": "6ac18a452a76ef7ae741176ec71dfffec6007e14828cdf2789c5fb8c3c177efc",
+        "sourceSupportSha256": "5aad0baa398cd234322282651f3ab78982e396939352cfa562b0e1abc0e8d972",
+        "noErosion": true,
+        "noBrightnessKey": true
+      }
+    },
+    {
+      "backgroundResidualP95": 7.181844712852811,
+      "headHandBackgroundPixelsCleared": 97,
+      "visiblePixels": 46909,
+      "softPixels": 1673,
+      "edgeRefinement": {
+        "changedPixels": 8477,
+        "protectedInteriorPixels": 55917,
+        "interiorExact": true,
+        "outerIsolatedPixelsCleared": 37,
+        "silhouetteContractionPx": 1,
+        "colourNeighborhoodPx": 1
+      },
+      "independentHandCoverage": {
+        "supportPixels": 1696,
+        "changedPixels": 1266,
+        "outsideSupportExact": true,
+        "sourceRgbaSha256": "35a73b44e451d7af5221aa707ca0614da5e0a60e9a5381398545e615bb826032",
+        "sourceSupportSha256": "2f9f729dde70fcc6e9011a1bd9cb5dc32e1ddab2a09d7277c3eac7a6e3019ed6",
+        "noErosion": true,
+        "noBrightnessKey": true
+      }
+    },
+    {
+      "backgroundResidualP95": 8.214286382313084,
+      "headHandBackgroundPixelsCleared": 78,
+      "visiblePixels": 47071,
+      "softPixels": 1563,
+      "edgeRefinement": {
+        "changedPixels": 7994,
+        "protectedInteriorPixels": 56553,
+        "interiorExact": true,
+        "outerIsolatedPixelsCleared": 24,
+        "silhouetteContractionPx": 1,
+        "colourNeighborhoodPx": 1
+      },
+      "independentHandCoverage": {
+        "supportPixels": 1925,
+        "changedPixels": 929,
+        "outsideSupportExact": true,
+        "sourceRgbaSha256": "6f71770975fa03f8ad79f2dc897afcc26347bbf32a73026d3cf8f160cb6fb2fd",
+        "sourceSupportSha256": "b98c3bb64c5ba0f39d25afa90209360bb023f79c143c23fe8cf609b53b99e2f0",
+        "noErosion": true,
+        "noBrightnessKey": true
+      }
+    },
+    {
+      "backgroundResidualP95": 8.199993078822834,
+      "headHandBackgroundPixelsCleared": 101,
+      "visiblePixels": 47150,
+      "softPixels": 1582,
+      "edgeRefinement": {
+        "changedPixels": 7919,
+        "protectedInteriorPixels": 56663,
+        "interiorExact": true,
+        "outerIsolatedPixelsCleared": 26,
+        "silhouetteContractionPx": 1,
+        "colourNeighborhoodPx": 1
+      },
+      "independentHandCoverage": {
+        "supportPixels": 1843,
+        "changedPixels": 1019,
+        "outsideSupportExact": true,
+        "sourceRgbaSha256": "95582377b5ded9e2b386b6c450abb3784eb9b5c1d1582b37ced37d215fd9877a",
+        "sourceSupportSha256": "77b604c1581104dd173165099638b94ab459f068209974aa264df4055868738a",
+        "noErosion": true,
+        "noBrightnessKey": true
+      }
+    },
+    {
+      "backgroundResidualP95": 8.465901746644468,
+      "headHandBackgroundPixelsCleared": 97,
+      "visiblePixels": 46996,
+      "softPixels": 1580,
+      "edgeRefinement": {
+        "changedPixels": 8126,
+        "protectedInteriorPixels": 56336,
+        "interiorExact": true,
+        "outerIsolatedPixelsCleared": 38,
+        "silhouetteContractionPx": 1,
+        "colourNeighborhoodPx": 1
+      },
+      "independentHandCoverage": {
+        "supportPixels": 1717,
+        "changedPixels": 971,
+        "outsideSupportExact": true,
+        "sourceRgbaSha256": "1d4f4452273cf242ba94e56e4e64d333d88cbde5ae108b844f1ea803d4c1665f",
+        "sourceSupportSha256": "6d306408d4163e07d089b36c5eb6480925028d2cac447a068e07958085a72fec",
+        "noErosion": true,
+        "noBrightnessKey": true
+      }
+    },
+    {
+      "backgroundResidualP95": 7.990397163833226,
+      "headHandBackgroundPixelsCleared": 94,
+      "visiblePixels": 47000,
+      "softPixels": 1577,
+      "edgeRefinement": {
+        "changedPixels": 8060,
+        "protectedInteriorPixels": 56435,
+        "interiorExact": true,
+        "outerIsolatedPixelsCleared": 25,
+        "silhouetteContractionPx": 1,
+        "colourNeighborhoodPx": 1
+      },
+      "independentHandCoverage": {
+        "supportPixels": 1790,
+        "changedPixels": 971,
+        "outsideSupportExact": true,
+        "sourceRgbaSha256": "eecdbeca25b909486fbb7f65aaa6b4fd8efe7a041ec82612da907e8397a86965",
+        "sourceSupportSha256": "4a75192add9330342458d4c13b1b2b03706a6169565ecfe37424dce022545dc7",
+        "noErosion": true,
+        "noBrightnessKey": true
+      }
+    },
+    {
+      "backgroundResidualP95": 8.399930209734256,
+      "headHandBackgroundPixelsCleared": 108,
+      "visiblePixels": 46922,
+      "softPixels": 1603,
+      "edgeRefinement": {
+        "changedPixels": 8098,
+        "protectedInteriorPixels": 56290,
+        "interiorExact": true,
+        "outerIsolatedPixelsCleared": 51,
+        "silhouetteContractionPx": 1,
+        "colourNeighborhoodPx": 1
+      },
+      "independentHandCoverage": {
+        "supportPixels": 1279,
+        "changedPixels": 839,
+        "outsideSupportExact": true,
+        "sourceRgbaSha256": "e08826af4b8223dd6247ba1c6be12a342851e10f301c41cd9dcdb3772faf37b0",
+        "sourceSupportSha256": "c3fc886ac1b1b39982d903930048cd18af49454c18c722441ae9cbf6b631d913",
+        "noErosion": true,
+        "noBrightnessKey": true
+      }
+    },
+    {
+      "backgroundResidualP95": 8.423499088530107,
+      "headHandBackgroundPixelsCleared": 122,
+      "visiblePixels": 46942,
+      "softPixels": 1534,
+      "edgeRefinement": {
+        "changedPixels": 7953,
+        "protectedInteriorPixels": 56362,
+        "interiorExact": true,
+        "outerIsolatedPixelsCleared": 16,
+        "silhouetteContractionPx": 1,
+        "colourNeighborhoodPx": 1
+      },
+      "independentHandCoverage": {
+        "supportPixels": 1760,
+        "changedPixels": 1012,
+        "outsideSupportExact": true,
+        "sourceRgbaSha256": "65ff3a7b6dde6818af6a8234c19cdc01d95b1edc90b5cadc2906a1569bcec80f",
+        "sourceSupportSha256": "32f13aa9625f4c052dff387136df60e187f9c140d9b90391b183a178491e8b8f",
+        "noErosion": true,
+        "noBrightnessKey": true
+      }
+    },
+    {
+      "backgroundResidualP95": 8.550318730857306,
+      "headHandBackgroundPixelsCleared": 121,
+      "visiblePixels": 46764,
+      "softPixels": 1590,
+      "edgeRefinement": {
+        "changedPixels": 8201,
+        "protectedInteriorPixels": 55940,
+        "interiorExact": true,
+        "outerIsolatedPixelsCleared": 43,
+        "silhouetteContractionPx": 1,
+        "colourNeighborhoodPx": 1
+      },
+      "independentHandCoverage": {
+        "supportPixels": 1667,
+        "changedPixels": 1183,
+        "outsideSupportExact": true,
+        "sourceRgbaSha256": "e98c7e78acd60bcb9f67a220d23c3b487827d70eab0c1721b58bd4c4d7d0afe2",
+        "sourceSupportSha256": "deabf681c234c24bca83d57142e9420ef24861f0325aa34cc95f9d6aab82d428",
+        "noErosion": true,
+        "noBrightnessKey": true
+      }
+    },
+    {
+      "backgroundResidualP95": 8.073431395072905,
+      "headHandBackgroundPixelsCleared": 70,
+      "visiblePixels": 46858,
+      "softPixels": 1627,
+      "edgeRefinement": {
+        "changedPixels": 8386,
+        "protectedInteriorPixels": 56000,
+        "interiorExact": true,
+        "outerIsolatedPixelsCleared": 26,
+        "silhouetteContractionPx": 1,
+        "colourNeighborhoodPx": 1
+      },
+      "independentHandCoverage": {
+        "supportPixels": 1599,
+        "changedPixels": 1180,
+        "outsideSupportExact": true,
+        "sourceRgbaSha256": "2c6172fc0f0d4b1145fc867a8ca721d9a8a9b5f65bff29318202642b955b1b69",
+        "sourceSupportSha256": "be3dab79a6163b609de3da6ef4ef15327d8009b8c4ae4009e59a8a6724967ef3",
+        "noErosion": true,
+        "noBrightnessKey": true
+      }
+    },
+    {
+      "backgroundResidualP95": 8.37413823182761,
+      "headHandBackgroundPixelsCleared": 61,
+      "visiblePixels": 46872,
+      "softPixels": 1603,
+      "edgeRefinement": {
+        "changedPixels": 7923,
+        "protectedInteriorPixels": 56312,
+        "interiorExact": true,
+        "outerIsolatedPixelsCleared": 19,
+        "silhouetteContractionPx": 1,
+        "colourNeighborhoodPx": 1
+      },
+      "independentHandCoverage": {
+        "supportPixels": 1856,
+        "changedPixels": 839,
+        "outsideSupportExact": true,
+        "sourceRgbaSha256": "619b0ad3a24fd6ed6f2867a9a9040a3c349c24d9cbdd48715ccac95e480d0d67",
+        "sourceSupportSha256": "27b548b990a2598a2101b2ad8ced7df088e56e68bc8db0e6f2c2f5b070eba1b2",
+        "noErosion": true,
+        "noBrightnessKey": true
+      }
+    },
+    {
+      "backgroundResidualP95": 8.365000308530435,
+      "headHandBackgroundPixelsCleared": 57,
+      "visiblePixels": 46733,
+      "softPixels": 1723,
+      "edgeRefinement": {
+        "changedPixels": 7929,
+        "protectedInteriorPixels": 56131,
+        "interiorExact": true,
+        "outerIsolatedPixelsCleared": 47,
+        "silhouetteContractionPx": 1,
+        "colourNeighborhoodPx": 1
+      },
+      "independentHandCoverage": {
+        "supportPixels": 1893,
+        "changedPixels": 752,
+        "outsideSupportExact": true,
+        "sourceRgbaSha256": "6a9c67e2936f5c030c3f83c7e3245fd3f5293d2a15c33084fda85d4fdf40bde5",
+        "sourceSupportSha256": "a8b400e1b20b0202b8e68b3eaaa6f8e42ab9729874f6ca7846a171a6ac375e21",
+        "noErosion": true,
+        "noBrightnessKey": true
+      }
+    },
+    {
+      "backgroundResidualP95": 8.3046112948465,
+      "headHandBackgroundPixelsCleared": 83,
+      "visiblePixels": 46638,
+      "softPixels": 1607,
+      "edgeRefinement": {
+        "changedPixels": 8033,
+        "protectedInteriorPixels": 55950,
+        "interiorExact": true,
+        "outerIsolatedPixelsCleared": 34,
+        "silhouetteContractionPx": 1,
+        "colourNeighborhoodPx": 1
+      },
+      "independentHandCoverage": {
+        "supportPixels": 1493,
+        "changedPixels": 819,
+        "outsideSupportExact": true,
+        "sourceRgbaSha256": "fdcf43f2d57864ad22070c0018652b2f285959ce1bf007899094997242c72485",
+        "sourceSupportSha256": "316f436bbb8bee9c7e18e843729de62a5ca8d78b7aaaa40ec0a3189fa38cdbc1",
+        "noErosion": true,
+        "noBrightnessKey": true
+      }
+    },
+    {
+      "backgroundResidualP95": 7.909802881701399,
+      "headHandBackgroundPixelsCleared": 53,
+      "visiblePixels": 46617,
+      "softPixels": 1559,
+      "edgeRefinement": {
+        "changedPixels": 7961,
+        "protectedInteriorPixels": 56013,
+        "interiorExact": true,
+        "outerIsolatedPixelsCleared": 30,
+        "silhouetteContractionPx": 1,
+        "colourNeighborhoodPx": 1
+      },
+      "independentHandCoverage": {
+        "supportPixels": 1448,
+        "changedPixels": 807,
+        "outsideSupportExact": true,
+        "sourceRgbaSha256": "81c1e6305c2a67fd1be24f50d7efd0c8e337ff756dec8838758b268e799e2b49",
+        "sourceSupportSha256": "85dc12a094b4faa56623439a6b48cf1c1e3aa06289b68ad68f1b1233a1f5de95",
+        "noErosion": true,
+        "noBrightnessKey": true
+      }
+    },
+    {
+      "backgroundResidualP95": 8.211672817448383,
+      "headHandBackgroundPixelsCleared": 66,
+      "visiblePixels": 45444,
+      "softPixels": 1518,
+      "edgeRefinement": {
+        "changedPixels": 7555,
+        "protectedInteriorPixels": 54672,
+        "interiorExact": true,
+        "outerIsolatedPixelsCleared": 15,
+        "silhouetteContractionPx": 1,
+        "colourNeighborhoodPx": 1
+      },
+      "independentHandCoverage": {
+        "supportPixels": 1149,
+        "changedPixels": 543,
+        "outsideSupportExact": true,
+        "sourceRgbaSha256": "a9275882db4210fbac866402ee2730d60ed02f021f13231018c03c2b9c5f1c14",
+        "sourceSupportSha256": "88305b49f71dd8d9478e49bb385b1c0285e4c18cfe409b451b5ec0287e149b57",
+        "noErosion": true,
+        "noBrightnessKey": true
+      }
+    },
+    {
+      "backgroundResidualP95": 8.283177509139527,
+      "headHandBackgroundPixelsCleared": 82,
+      "visiblePixels": 45191,
+      "softPixels": 1613,
+      "edgeRefinement": {
+        "changedPixels": 7450,
+        "protectedInteriorPixels": 54407,
+        "interiorExact": true,
+        "outerIsolatedPixelsCleared": 19,
+        "silhouetteContractionPx": 1,
+        "colourNeighborhoodPx": 1
+      },
+      "independentHandCoverage": {
+        "supportPixels": 0,
+        "changedPixels": 0,
+        "sourceRgbaSha256": "b262bd68d44f93637b9949caf7ff7ce0b6b6ed839c3a2468681952b215ec4d95"
+      }
+    },
+    {
+      "backgroundResidualP95": 8.321084915286276,
+      "headHandBackgroundPixelsCleared": 80,
+      "visiblePixels": 44562,
+      "softPixels": 1438,
+      "edgeRefinement": {
+        "changedPixels": 7251,
+        "protectedInteriorPixels": 53777,
+        "interiorExact": true,
+        "outerIsolatedPixelsCleared": 22,
+        "silhouetteContractionPx": 1,
+        "colourNeighborhoodPx": 1
+      },
+      "independentHandCoverage": {
+        "supportPixels": 0,
+        "changedPixels": 0,
+        "sourceRgbaSha256": "b262bd68d44f93637b9949caf7ff7ce0b6b6ed839c3a2468681952b215ec4d95"
+      }
+    },
+    {
+      "backgroundResidualP95": 8.044516698815992,
+      "headHandBackgroundPixelsCleared": 48,
+      "visiblePixels": 44085,
+      "softPixels": 1437,
+      "edgeRefinement": {
+        "changedPixels": 7162,
+        "protectedInteriorPixels": 53224,
+        "interiorExact": true,
+        "outerIsolatedPixelsCleared": 22,
+        "silhouetteContractionPx": 1,
+        "colourNeighborhoodPx": 1
+      },
+      "independentHandCoverage": {
+        "supportPixels": 0,
+        "changedPixels": 0,
+        "sourceRgbaSha256": "b262bd68d44f93637b9949caf7ff7ce0b6b6ed839c3a2468681952b215ec4d95"
+      }
+    },
+    {
+      "backgroundResidualP95": 8.30275354249678,
+      "headHandBackgroundPixelsCleared": 34,
+      "visiblePixels": 43603,
+      "softPixels": 1444,
+      "edgeRefinement": {
+        "changedPixels": 7041,
+        "protectedInteriorPixels": 52666,
+        "interiorExact": true,
+        "outerIsolatedPixelsCleared": 29,
+        "silhouetteContractionPx": 1,
+        "colourNeighborhoodPx": 1
+      },
+      "independentHandCoverage": {
+        "supportPixels": 0,
+        "changedPixels": 0,
+        "sourceRgbaSha256": "b262bd68d44f93637b9949caf7ff7ce0b6b6ed839c3a2468681952b215ec4d95"
+      }
+    },
+    {
+      "backgroundResidualP95": 8.402817752465397,
+      "headHandBackgroundPixelsCleared": 45,
+      "visiblePixels": 43260,
+      "softPixels": 1396,
+      "edgeRefinement": {
+        "changedPixels": 6975,
+        "protectedInteriorPixels": 52229,
+        "interiorExact": true,
+        "outerIsolatedPixelsCleared": 36,
+        "silhouetteContractionPx": 1,
+        "colourNeighborhoodPx": 1
+      },
+      "independentHandCoverage": {
+        "supportPixels": 0,
+        "changedPixels": 0,
+        "sourceRgbaSha256": "b262bd68d44f93637b9949caf7ff7ce0b6b6ed839c3a2468681952b215ec4d95"
+      }
+    },
+    {
+      "backgroundResidualP95": 8.622738249877738,
+      "headHandBackgroundPixelsCleared": 40,
+      "visiblePixels": 43235,
+      "softPixels": 1406,
+      "edgeRefinement": {
+        "changedPixels": 6959,
+        "protectedInteriorPixels": 52198,
+        "interiorExact": true,
+        "outerIsolatedPixelsCleared": 16,
+        "silhouetteContractionPx": 1,
+        "colourNeighborhoodPx": 1
+      },
+      "independentHandCoverage": {
+        "supportPixels": 0,
+        "changedPixels": 0,
+        "sourceRgbaSha256": "b262bd68d44f93637b9949caf7ff7ce0b6b6ed839c3a2468681952b215ec4d95"
+      }
+    },
+    {
+      "backgroundResidualP95": 8.219622429788874,
+      "headHandBackgroundPixelsCleared": 34,
+      "visiblePixels": 43255,
+      "softPixels": 1376,
+      "edgeRefinement": {
+        "changedPixels": 6899,
+        "protectedInteriorPixels": 52307,
+        "interiorExact": true,
+        "outerIsolatedPixelsCleared": 15,
+        "silhouetteContractionPx": 1,
+        "colourNeighborhoodPx": 1
+      },
+      "independentHandCoverage": {
+        "supportPixels": 0,
+        "changedPixels": 0,
+        "sourceRgbaSha256": "b262bd68d44f93637b9949caf7ff7ce0b6b6ed839c3a2468681952b215ec4d95"
+      }
+    },
+    {
+      "backgroundResidualP95": 8.938913078335204,
+      "headHandBackgroundPixelsCleared": 38,
+      "visiblePixels": 43222,
+      "softPixels": 1366,
+      "edgeRefinement": {
+        "changedPixels": 6916,
+        "protectedInteriorPixels": 52252,
+        "interiorExact": true,
+        "outerIsolatedPixelsCleared": 30,
+        "silhouetteContractionPx": 1,
+        "colourNeighborhoodPx": 1
+      },
+      "independentHandCoverage": {
+        "supportPixels": 0,
+        "changedPixels": 0,
+        "sourceRgbaSha256": "b262bd68d44f93637b9949caf7ff7ce0b6b6ed839c3a2468681952b215ec4d95"
+      }
+    },
+    {
+      "backgroundResidualP95": 8.895695329473888,
+      "headHandBackgroundPixelsCleared": 31,
+      "visiblePixels": 43243,
+      "softPixels": 1375,
+      "edgeRefinement": {
+        "changedPixels": 6950,
+        "protectedInteriorPixels": 52238,
+        "interiorExact": true,
+        "outerIsolatedPixelsCleared": 29,
+        "silhouetteContractionPx": 1,
+        "colourNeighborhoodPx": 1
+      },
+      "independentHandCoverage": {
+        "supportPixels": 0,
+        "changedPixels": 0,
+        "sourceRgbaSha256": "b262bd68d44f93637b9949caf7ff7ce0b6b6ed839c3a2468681952b215ec4d95"
+      }
+    },
+    {
+      "backgroundResidualP95": 8.686210159082899,
+      "headHandBackgroundPixelsCleared": 29,
+      "visiblePixels": 43259,
+      "softPixels": 1385,
+      "edgeRefinement": {
+        "changedPixels": 6914,
+        "protectedInteriorPixels": 52285,
+        "interiorExact": true,
+        "outerIsolatedPixelsCleared": 23,
+        "silhouetteContractionPx": 1,
+        "colourNeighborhoodPx": 1
+      },
+      "independentHandCoverage": {
+        "supportPixels": 0,
+        "changedPixels": 0,
+        "sourceRgbaSha256": "b262bd68d44f93637b9949caf7ff7ce0b6b6ed839c3a2468681952b215ec4d95"
+      }
+    },
+    {
+      "backgroundResidualP95": 8.057980706588339,
+      "headHandBackgroundPixelsCleared": 36,
+      "visiblePixels": 43253,
+      "softPixels": 1372,
+      "edgeRefinement": {
+        "changedPixels": 6909,
+        "protectedInteriorPixels": 52280,
+        "interiorExact": true,
+        "outerIsolatedPixelsCleared": 23,
+        "silhouetteContractionPx": 1,
+        "colourNeighborhoodPx": 1
+      },
+      "independentHandCoverage": {
+        "supportPixels": 0,
+        "changedPixels": 0,
+        "sourceRgbaSha256": "b262bd68d44f93637b9949caf7ff7ce0b6b6ed839c3a2468681952b215ec4d95"
+      }
+    },
+    {
+      "backgroundResidualP95": 8.875376008266018,
+      "headHandBackgroundPixelsCleared": 45,
+      "visiblePixels": 43216,
+      "softPixels": 1367,
+      "edgeRefinement": {
+        "changedPixels": 6908,
+        "protectedInteriorPixels": 52251,
+        "interiorExact": true,
+        "outerIsolatedPixelsCleared": 19,
+        "silhouetteContractionPx": 1,
+        "colourNeighborhoodPx": 1
+      },
+      "independentHandCoverage": {
+        "supportPixels": 0,
+        "changedPixels": 0,
+        "sourceRgbaSha256": "b262bd68d44f93637b9949caf7ff7ce0b6b6ed839c3a2468681952b215ec4d95"
+      }
+    }
+  ],
+  "entry": {
+    "flowMagnitudeMedian": 0.27351558208465576,
+    "flowMagnitudeP95": 1.2010592222213745,
+    "flowMagnitudeMax": 4.074037075042725,
+    "forwardBackwardResidualP95": 0.38844168186187744,
+    "warning": "Optical correspondence is not proof of correct anatomy. Morphing may remain."
+  },
+  "exit": {
+    "flowMagnitudeMedian": 0.3715515732765198,
+    "flowMagnitudeP95": 1.782753348350525,
+    "flowMagnitudeMax": 4.942586898803711,
+    "forwardBackwardResidualP95": 0.49352556467056274,
+    "warning": "Optical correspondence is not proof of correct anatomy. Morphing may remain."
+  },
+  "inputEndpointDifference": {
+    "start": {
+      "visibleRGB_MAE": 14.524964936886395,
+      "alphaIoU": 0.9626873642610461
+    },
+    "end": {
+      "visibleRGB_MAE": 16.382653299682183,
+      "alphaIoU": 0.9571057500711643
+    }
+  },
+  "finalCount": 312,
+  "durationMs": 11430,
+  "handRepairApplied": true,
+  "bridgeTiming": {
+    "intervals": 12,
+    "intervalDurationsMs": [
+      17,
+      17,
+      16,
+      17,
+      17,
+      16,
+      17,
+      17,
+      16,
+      17,
+      17,
+      16
+    ],
+    "durationPerSideMs": 200,
+    "waveClipDurationMs": 3463
+  },
+  "limitations": [
+    "Bidirectional optical-flow bridge is experimental, not pixel identity preservation.",
+    "Generated first/end faces and costume differ from approved anchor.",
+    "Matte may retain enclosed background holes; dark/white visual check required.",
+    "No whole-body anisotropic scaling, simple crossfade, single-frame substitution or RIFE."
+  ],
+  "localPocketRepairs": [
+    {
+      "frame": 14,
+      "roiXYXY": [
+        299,
+        110,
+        307,
+        120
+      ],
+      "changedPixels": 40,
+      "holePixels": 37,
+      "featherPixels": 3,
+      "outsideMaskExact": true,
+      "sourceSha256": "e1d8eff65bc913eae12fa2b4fe605397feecf96dfdb3b88dc886325390fcbc01",
+      "candidateSha256": "062460cbe3c9e04d83895fa9d652c31bcbc90e46d70142301824fa4df702fec7"
+    },
+    {
+      "frame": 25,
+      "roiXYXY": [
+        278,
+        144,
+        287,
+        154
+      ],
+      "changedPixels": 25,
+      "holePixels": 24,
+      "featherPixels": 1,
+      "outsideMaskExact": true,
+      "sourceSha256": "f03f2fc72c4d08469af53b88fc1b42c11163ac37f8eee4dfebd7223603200acb",
+      "candidateSha256": "24721eeeedcd10f8fa2b22cd210470ea390b51c96129c7e8fc62950525face46"
+    }
+  ],
+  "localPocketSource": "F25 bright pocket is byte-identical in v4 and v6; not introduced by hand override. F14 lower thumb/head closed pocket restricted mask."
+}

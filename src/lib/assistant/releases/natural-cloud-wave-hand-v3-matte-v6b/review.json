@@ -1,0 +1,32 @@
+{
+  "manifestVersion": "natural-cloud-wave-hand-v3-matte-v6b",
+  "manifestScopeSha256": "1f37af2a9ab285073f9874ffbb218e6a8a95386caa21441d93fd51527cae138a",
+  "art": {
+    "status": "PASS",
+    "reviewer": "/root/r3_style_review",
+    "reviewedAt": "2026-10-12T20:14:56Z",
+    "evidence": [
+      "src/lib/assistant/releases/natural-cloud-wave-hand-v3-matte-v6b/art-v6.json",
+      "src/lib/assistant/releases/natural-cloud-wave-hand-v3-matte-v6b/art-v6b.json"
+    ]
+  },
+  "technical": {
+    "status": "PASS",
+    "reviewer": "/root/suite_runtime_engineer",
+    "reviewedAt": "2026-10-12T20:13:50.144Z",
+    "evidence": [
+      "src/lib/assistant/releases/natural-cloud-wave-hand-v3-matte-v6b/technical.json",
+      "src/lib/assistant/releases/natural-cloud-wave-hand-v3-matte-v6b/technical-tests.tap"
+    ]
+  },
+  "transitions": {
+    "status": "PASS",
+    "reviewer": "/root",
+    "reviewedAt": "2026-10-12T20:21:18Z",
+    "evidence": [
+      "src/lib/assistant/releases/natural-cloud-wave-hand-v3-matte-v6b/browser-review.json",
+      "src/lib/assistant/releases/natural-cloud-wave-hand-v3-matte-v6b/browser-normal.jpg",
+      "src/lib/assistant/releases/natural-cloud-wave-hand-v3-matte-v6b/transition-pixel-report.json"
+    ]
+  }
+}
