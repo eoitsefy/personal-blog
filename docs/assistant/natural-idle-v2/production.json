@@ -1,0 +1,27 @@
+{
+  "status": "DEPLOYED_HEALTH_AND_ASSET_CHECKS_PASSED",
+  "completedServerTime": "2026-10-12T14:30:18+08:00",
+  "deployedCommit": "c3f6440653b0de90862f90645b43c3c433e35581",
+  "image": "sha256:bf834f802c5f82d9760fb09afc90635514cdb140ef70681e04e1aed01766c4ae",
+  "rollbackCommit": "cb42ad11b8f6449a2431245345b1701cd88594e7",
+  "rollbackImage": "personal-blog-web-app:rollback-natural-idle-20261012-142755",
+  "backupDirectory": "/root/backups/natural-idle-20261012-142755",
+  "deploymentLog": "/root/server-ops/logs/deploy-natural-idle-20261012-142755.log",
+  "checks": {
+    "appPostgresRedisHealthy": true,
+    "mapAndAssistantEnabled": true,
+    "httpsRoutes": ["/", "/posts", "/places", "/login", "/assistant", "/api/healthz", "/sitemap.xml", "/feed.xml"],
+    "wwwHttps": true,
+    "newAssetHashesMatchManifest": true,
+    "environmentNginxComposeUnchanged": true,
+    "uploadPermissionsUnchanged": true,
+    "publicBrowserNewAnimationLoaded": true,
+    "publicBrowserChatInputEnabled": true,
+    "publicBrowserLegacyCanvasesReady": true,
+    "publicBrowserPauseUsesStill": true,
+    "homepageFloatingDialogOpens": true,
+    "realModelRequests": 0
+  },
+  "retention": "Original artwork and complete legacy renderer retained. Select 原版 · 完整动作 in the dialog. New appearance uses only the accepted idle to prevent identity jumps to old gesture/sleep images.",
+  "buildNote": "Build printed an existing DATABASE_URL prerender warning but exited successfully. Runtime health, DB container and public routes passed after replacement."
+}
