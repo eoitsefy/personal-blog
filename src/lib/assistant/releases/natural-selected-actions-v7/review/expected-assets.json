@@ -1,0 +1,81 @@
+{
+  "version": "natural-selected-actions-v7",
+  "assets": [
+    {
+      "src": "/assistant/natural-cloud-wave-hand-v3-matte-v6b/idle-0.webp",
+      "sha256": "53aac47a3635c3341711fe48dc62083ab476c974c141b4bffa74d884694cff7c"
+    },
+    {
+      "src": "/assistant/natural-cloud-wave-hand-v3-matte-v6b/idle-1.webp",
+      "sha256": "2e7cb2940448b86ad89a163007d206b052aa409e4e6a7a46141e40a2e745a064"
+    },
+    {
+      "src": "/assistant/natural-cloud-wave-hand-v3-matte-v6b/idle-2.webp",
+      "sha256": "96fdfb3d0e5cec4921f73e018fd5ccf33f98633496ed97575887cae31b1f367e"
+    },
+    {
+      "src": "/assistant/natural-cloud-wave-hand-v3-matte-v6b/idle-3.webp",
+      "sha256": "30adcc280beb84472ab2291ba2f0ec6a142a180d392192be08652ac444d8f659"
+    },
+    {
+      "src": "/assistant/natural-cloud-wave-hand-v3-matte-v6b/idle-4.webp",
+      "sha256": "9879294dabb294eff24556520aeb9298793e02a9dbbc7cbbde8a41a306b65fa5"
+    },
+    {
+      "src": "/assistant/natural-cloud-wave-hand-v3-matte-v6b/wave-5.webp",
+      "sha256": "5ef71e908ec2f224a27abdf3b65545c0c716fcbeb7930648381c87d78eb18bd6"
+    },
+    {
+      "src": "/assistant/natural-cloud-wave-hand-v3-matte-v6b/wave-6.webp",
+      "sha256": "5f7cfaae4bc43466829d5992c1434e84faaa9c2573a5096bd5192db0fe0ecd95"
+    },
+    {
+      "src": "/assistant/natural-cloud-wave-hand-v3-matte-v6b/wave-7.webp",
+      "sha256": "0fecf01b5c2204701a6509b5ed4b0bf7541bd635b9e5cc5d1d33135803fd0888"
+    },
+    {
+      "src": "/assistant/natural-cloud-wave-hand-v3-matte-v6b/wave-8.webp",
+      "sha256": "0c8eab42ec754a653208e9917420fd108f79ec11cc7f8becea069cdfb586b5ba"
+    },
+    {
+      "src": "/assistant/natural-cloud-wave-hand-v3-matte-v6b/wave-9.webp",
+      "sha256": "5ba985349d701dd419704efec7e102cebcbef17e3a8797ca29e21629f56f8da5"
+    },
+    {
+      "src": "/assistant/natural-selected-actions-v7/selected-bow-0.webp",
+      "sha256": "a26a49b1e28adcc912c537d9fea2db27f581d29044d3ac224859f48e514c5935"
+    },
+    {
+      "src": "/assistant/natural-selected-actions-v7/selected-bow-1.webp",
+      "sha256": "9272a8e7776066a068df5e828eb10fbea41361de05b3297245fd8a9c3eda5b3f"
+    },
+    {
+      "src": "/assistant/natural-selected-actions-v7/selected-bow-2.webp",
+      "sha256": "ee49fbe1366e2e389db1d016d2e3d6c6850761d4ce98bc8a0107f5169a399c17"
+    },
+    {
+      "src": "/assistant/natural-selected-actions-v7/selected-bow-3.webp",
+      "sha256": "058de0edd2db9abc676f684c4181f416593d265d67be90864ef65b7ec0af414e"
+    },
+    {
+      "src": "/assistant/natural-selected-actions-v7/selected-thinking-4.webp",
+      "sha256": "b14cbfeaedaf1c581a62203ec31e6a730a6f4f57a49b9f0795e7d6198c48c1b7"
+    },
+    {
+      "src": "/assistant/natural-selected-actions-v7/selected-thinking-5.webp",
+      "sha256": "9081a0dcec6979915e3790bf7d8182bb8169a59cbdba7cce4d037f7c99bc4073"
+    },
+    {
+      "src": "/assistant/natural-selected-actions-v7/selected-thinking-6.webp",
+      "sha256": "3710752138fe823202413daba87bbaa4858e776e18c449342ee7126a5c28eaef"
+    },
+    {
+      "src": "/assistant/natural-selected-actions-v7/selected-thinking-7.webp",
+      "sha256": "eec5539b94233d4da18cb6e2f253b652ca9c5ca2b7caf3ebe71bf494b7d49513"
+    },
+    {
+      "src": "/assistant/natural-cloud-wave-hand-v3-matte-v6b/anchor.webp",
+      "sha256": "7ce9ab545b2bd0732a7460ce1ddab8166e3e70963e1517bfb2248fadf8b6749e"
+    }
+  ]
+}

@@ -1,0 +1,54 @@
+{
+  "status": "LOCAL_VISUAL_SUPPORTS_RUNTIME_ACCEPTANCE_TEST_NOT_DEPLOYMENT_PASS",
+  "reviewer": "selected_transition_audit",
+  "reviewedInputs": [
+    "thanks/same-action-v6b/continuous-hand-comparison.png",
+    "thinking/hand-v7/before-after-dark.png",
+    "thinking/hand-v7/before-after-light.png",
+    "thinking/hand-v7/source-neighborhood.png",
+    "thinking/hand-v7/rgba-512/frame-040.png",
+    "transition-v7/bow/frames/frame-000.png through frame-064.png",
+    "transition-v7/thinking/frames/frame-000.png through frame-064.png"
+  ],
+  "method": {
+    "actualPixelsViewed": true,
+    "allActionFrames": "Both 49-frame bodies displayed at 180px CSS-equivalent size on dark backgrounds in fixed-canvas sheets.",
+    "largeView": "Selected motion and entry/exit frames at 320px CSS-equivalent size on both pale and dark backgrounds.",
+    "bridge": "All nine entry and nine exit states compared at native 480 frame coordinates in face and clothing crops; complete bridge sheets also inspected.",
+    "sizeEvidence": "assistant-panel.module.css defines desktop floating 180px, mobile floating 128px, companion 160/120px and panel max 320px.",
+    "limits": "Static neighboring-frame inspection, not actual browser runtime playback or screen-recorded temporal validation. Source implementation metrics are not treated as acceptance proof."
+  },
+  "actionFindings": {
+    "bow": {
+      "source": "thanks/same-action-v6b",
+      "blockingDefectsObservedInThisReview": [],
+      "result": "Local hand repair maintains natural-source texture. At inspected application sizes the bow reads coherently with stable character identity, clothing and attached hands. No obvious new missing limb or major hand-shape jump found.",
+      "acceptableLowResolutionLimits": ["Small resting finger separations remain soft.", "Hair-edge antialiasing remains slightly rough on a dark background under close inspection."]
+    },
+    "thinking": {
+      "source": "thinking/hand-v7",
+      "blockingDefectsObservedInThisReview": [],
+      "result": "F039-F041 colour decontamination is conservative and does not introduce a changed palm direction or separate wrist. At 180px the remaining finger softness does not dominate the motion; at 320px fine edge softness is still visible but no new gross anatomy discontinuity was observed.",
+      "acceptableLowResolutionLimits": ["F039-F041 finger topology is not newly reconstructed and remains low-detail.", "Minor soft source-video textures remain in hands and moving sleeves."]
+    }
+  },
+  "bridgeFindings": {
+    "blockingGhostingObserved": false,
+    "observations": [
+      "No obvious doubled eye, jacket stripe or duplicate character outline observed in inspected entry/exit states.",
+      "Face, hair and clothing shift primarily in sharpness/fine detail; the interpolation distributes that residual difference over the transition rather than restoring identical source pixels.",
+      "No visually obvious identity replacement or 2D-to-3D change found at the actual assistant display sizes in these sheets."
+    ],
+    "doNotMisrepresent": "Do not describe this as a proof of anatomical flow or full style consistency. Small flow magnitude and exact endpoint hashes alone do not establish a good animated transition.",
+    "runtimeCheckStillRequired": [
+      "Play the actual idle -> bow/thinking -> idle route at native timing on both backgrounds.",
+      "Verify that the 320ms sharpness transition does not read as a colour pulse, ghosting or a conspicuous pause.",
+      "Verify arbitrary idle-phase trigger behavior, interruption/retrigger behavior and final return to idle in the real renderer."
+    ]
+  },
+  "recommendation": "Proceed to runtime/browser visual acceptance using current candidate files. Current static findings do not justify further whole-character redraw or broad destructive edge filtering, but also do not independently authorize a deployment PASS.",
+  "evidence": ["independent-review/bow-all49-at180.png", "independent-review/thinking-all49-at180.png", "independent-review/bow-samples-at320.png", "independent-review/thinking-samples-at320.png", "independent-review/bow-bridge-detail-native.png", "independent-review/thinking-bridge-detail-native.png"],
+  "runtimeBrowserReviewed": false,
+  "productionAcceptance": false,
+  "assetEditsByReviewer": false
+}

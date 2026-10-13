@@ -1,0 +1,64 @@
+{
+  "manifestVersion": "natural-selected-actions-v7",
+  "manifestScopeSha256": "a4b2a3021c73fbacd0a3db03825218e7810e1c0997e24bbdd2dd44b0c6f1eb97",
+  "art": {
+    "status": "PASS",
+    "reviewer": "selected_transition_audit",
+    "reviewedAt": "2026-10-13T10:43:37.836Z",
+    "evidence": [
+      "src/lib/assistant/releases/natural-selected-actions-v7/review/art.json",
+      "src/lib/assistant/releases/natural-selected-actions-v7/review/source-art.json",
+      "src/lib/assistant/releases/natural-selected-actions-v7/review/bow-runtime.png",
+      "src/lib/assistant/releases/natural-selected-actions-v7/review/thinking-runtime.png"
+    ]
+  },
+  "technical": {
+    "status": "PASS",
+    "reviewer": "deploy_selected_audit",
+    "reviewedAt": "2026-10-13T10:43:37.836Z",
+    "evidence": [
+      "src/lib/assistant/releases/natural-selected-actions-v7/review/technical.json",
+      "src/lib/assistant/releases/natural-selected-actions-v7/review/packaging.json"
+    ]
+  },
+  "transitions": {
+    "status": "PASS",
+    "reviewer": "root runtime verification + selected_transition_audit",
+    "reviewedAt": "2026-10-13T10:43:37.836Z",
+    "evidence": [
+      "src/lib/assistant/releases/natural-selected-actions-v7/review/art.json",
+      "src/lib/assistant/releases/natural-selected-actions-v7/review/runtime-samples.json",
+      "src/lib/assistant/releases/natural-selected-actions-v7/review/bow-mobile.png",
+      "src/lib/assistant/releases/natural-selected-actions-v7/review/thinking-mobile.png"
+    ]
+  },
+  "approvedChangeScope": [
+    "new bow",
+    "new thinking",
+    "their entry/exit transitions"
+  ],
+  "unchangedScope": [
+    "idle",
+    "wave",
+    "static anchor",
+    "all legacy choices"
+  ],
+  "knownLimitations": [
+    "The previously reported wave fringe/color issue is unchanged and is NOT marked repaired by this release.",
+    "Fine moving finger and hair textures remain soft at high magnification. New clips passed actual assistant-size review, not a claim of perfect source anatomy.",
+    "Optical-flow bridges distribute residual sharpness difference over 320ms; original sources are not pixel-identical.",
+    "Local all-tests run had 384 passes, 3 old wave-v9 reparse_path_rejected failures caused by migrated junctions, and 1 skip. Clean Linux CI is required before deploy."
+  ],
+  "runtimeVerification": {
+    "actualComponent": "NaturalMotionCanvas",
+    "bowDarkSamples": 90,
+    "thinkingDarkSamples": 120,
+    "mobileSizeSamples": 180,
+    "nativeThinkingSamples": 100,
+    "completionCallbacks": "6 completed plays, once each; returned to idle",
+    "reducedMotion": "canvas hidden, common static anchor",
+    "simulatedHidden": "canvas hidden, resumes",
+    "deviceLimit": "Mobile CSS display size tested on desktop browser, not physical mobile hardware."
+  },
+  "deploymentStatus": "NOT_DEPLOYED_CI_REQUIRED"
+}

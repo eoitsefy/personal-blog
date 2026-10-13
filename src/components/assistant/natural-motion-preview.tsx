@@ -16,7 +16,7 @@ export function NaturalMotionPreview({ manifest }: { manifest: NaturalRuntimeMan
   const [open, setOpen] = useState(false), [animate, setAnimate] = useState(true);
   const [reduced, setReduced] = useState(false), [hidden, setHidden] = useState(false);
   const [size, setSize] = useState("desktop"), [background, setBackground] = useState("light");
-  const [request, setRequest] = useState<{ action: "idle" | "wave"; playId: number }>({ action: "idle", playId: 0 });
+  const [request, setRequest] = useState<{ action: "idle" | "wave" | "bow" | "thinking"; playId: number }>({ action: "idle", playId: 0 });
   const [events, setEvents] = useState<string[]>([]), [callbacks, setCallbacks] = useState<Record<string, number>>({});
   const [frames, setFrames] = useState<string[]>([]), [failures, setFailures] = useState<string[]>([]);
   const area = useRef<HTMLDivElement>(null), switches = useRef<number[]>([]);
@@ -34,7 +34,9 @@ export function NaturalMotionPreview({ manifest }: { manifest: NaturalRuntimeMan
     }, 150);
     return () => { window.clearInterval(timer); switches.current.forEach(window.clearTimeout); };
   }, []);
-  function wave() { setRequest(previous => ({ action: "wave", playId: previous.playId + 1 })); }
+  function play(action: "wave" | "bow" | "thinking") {
+    if (manifest.clips[action]) setRequest(previous => ({ action, playId: previous.playId + 1 }));
+  }
   function handoff(next: boolean) {
     setOpen(next);
     setRequest(previous => ({ action: next ? "wave" : "idle", playId: previous.playId + 1 }));
@@ -44,6 +46,7 @@ export function NaturalMotionPreview({ manifest }: { manifest: NaturalRuntimeMan
     switches.current = Array.from({ length: 8 }, (_, index) => window.setTimeout(() => handoff(index % 2 === 0), index * 120));
   }
   const widths = size === "mobile" ? [128, 120] : size === "native" ? [manifest.width, manifest.width] : [180, 160];
+  const candidateWave = Object.values(manifest.assets).some(asset => asset.src.startsWith("/api/dev/assistant-motion/") && /\/wave-\d+\.webp(?:\?|$)/.test(asset.src));
   const countsByPlayId = Object.entries(callbacks).reduce<Record<string, number>>((counts, [key, count]) => {
     const id = key.slice(key.lastIndexOf(":") + 1); counts[id] = (counts[id] ?? 0) + count; return counts;
   }, {});
@@ -51,10 +54,13 @@ export function NaturalMotionPreview({ manifest }: { manifest: NaturalRuntimeMan
   return <main className={styles.page}>
     <h1>候选动画 · 本地验收</h1>
     <p>状态：PENDING，未批准、未部署。使用正式播放器同一个组件，不修改审查结果。</p>
-    <p>候选：<code>{manifest.version}</code>；待机 {manifest.clips.idle.frames.length} 帧，挥手 {manifest.clips.wave?.frames.length ?? 0} 帧。</p>
-    <p>资源测试（重新载入页面）：<a href="/dev/assistant-motion">正常</a> · <a href="?assetTest=fail-wave">挥手页加载失败</a> · <a href="?assetTest=delay-1200">挥手页延迟 1200ms</a>；当前：{Object.values(manifest.assets)[0]?.src.split("assetTest=")[1] ?? "正常"}。</p>
+    <p>候选：<code>{manifest.version}</code>；待机 {manifest.clips.idle.frames.length} 帧，挥手 {manifest.clips.wave?.frames.length ?? 0} 帧，鞠躬 {manifest.clips.bow?.frames.length ?? 0} 帧，思考 {manifest.clips.thinking?.frames.length ?? 0} 帧。</p>
+    {candidateWave ? <p>资源测试（重新载入页面）：<a href="/dev/assistant-motion">正常</a> · <a href="?assetTest=fail-wave">挥手页加载失败</a> · <a href="?assetTest=delay-1200">挥手页延迟 1200ms</a>；当前：{Object.values(manifest.assets)[0]?.src.split("assetTest=")[1] ?? "正常"}。</p>
+      : <p>待机与挥手使用已核验的旧版公开资源；本页新增鞠躬、思考仍为本地候选。旧挥手的故障模拟不适用于直接继承的资源。</p>}
     <div className={styles.controls}>
-      <button type="button" onClick={wave}>待机 → 挥手 → 待机</button>
+      <button type="button" disabled={!manifest.clips.wave} onClick={() => play("wave")}>待机 → 挥手 → 待机</button>
+      <button type="button" disabled={!manifest.clips.bow} onClick={() => play("bow")}>待机 → 鞠躬 → 待机</button>
+      <button type="button" disabled={!manifest.clips.thinking} onClick={() => play("thinking")}>待机 → 思考 → 待机</button>
       <button type="button" onClick={() => handoff(!open)}>{open ? "关闭对话框" : "打开对话框并挥手"}</button>
       <button type="button" onClick={rapidSwitch}>快速切换 8 次</button>
       <button type="button" onClick={() => { setCallbacks({}); setEvents([]); setFailures([]); }}>清空记录</button>

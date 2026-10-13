@@ -1,0 +1,10 @@
+{
+  "status": "ASSET_SCOPE_VERIFIED",
+  "manifestVersion": "natural-selected-actions-v7",
+  "manifestScopeSha256": "a4b2a3021c73fbacd0a3db03825218e7810e1c0997e24bbdd2dd44b0c6f1eb97",
+  "assets": 18,
+  "frames": 324,
+  "frameScopeSha256": "9f347bb87c117d6ee8954e94ee16a9e702d11ea93983460c799486b7990d45b7",
+  "rgbaHashEncoding": "srgb-u8-rgba-transparent-zero-v1",
+  "note": "Verifies supplied approval evidence and pixel identity; does not certify artistic truth or deployed website behavior."
+}

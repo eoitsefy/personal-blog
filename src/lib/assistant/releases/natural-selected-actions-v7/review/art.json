@@ -1,0 +1,40 @@
+{
+  "status": "PASS_NEW_BOW_THINKING_DESKTOP_RUNTIME_VISUAL_SCOPE",
+  "reviewer": "selected_transition_audit",
+  "approvedVisualScope": ["new bow clip and its sampled idle entry/exit", "new thinking clip and its sampled idle entry/exit"],
+  "notCovered": ["old wave repair or old wave PASS inheritance", "server deployment state", "every browser/GPU combination", "mobile runtime screenshots not yet independently viewed in this report"],
+  "evidence": {
+    "source": "Actual same-component local browser runtime screenshots supplied by primary agent, independently cropped and visually reviewed.",
+    "bowScreenshots": "browser/bow-dark-000.png through bow-dark-089.png (90 captures)",
+    "thinkingScreenshots": "browser/thinking-dark-000.png through thinking-dark-119.png (120 captures)",
+    "fullPageSamplesViewed": ["browser/bow-dark-055.png", "browser/thinking-dark-075.png", "browser/thinking-dark-100.png"],
+    "fixedCrop": [174,465,354,645],
+    "displaySize": "180px desktop launcher; crop preserves screenshot pixel scale and fixed position.",
+    "independentContactSheets": ["independent-review/browser-bow-000-044.png", "independent-review/browser-bow-045-089.png", "independent-review/browser-thinking-000-059.png", "independent-review/browser-thinking-060-119.png"],
+    "runtimeStateCrossCheck": "Read browser/runtime-samples.json: bow enters at screenshot 1 and returns idle at 65; thinking enters at 7 and returns idle at 72. This locates the visual boundary independently of endpoint hashes.",
+    "samplingLimit": "Screenshots sample runtime at approximately 50-60ms per primary-agent capture; this report does not claim every rendered intermediate frame was independently captured. Earlier source-frame review covers all action PNGs."
+  },
+  "findings": {
+    "bow": {
+      "result": "No visually blocking defect found in captured desktop runtime sequence.",
+      "entry": "Action begins without an obvious character replacement, duplicated face or body displacement.",
+      "body": "Hand-to-chest and bow are readable; local repaired return hand does not present an obvious new seam or isolated size jump at this display size.",
+      "exit": "Reviewed settling, bridge and actual return around screenshots 55-70, including idle change at 65. No conspicuous single-frame colour flash, doubled clothes or abrupt contour replacement observed. Last twenty captures remain visually stable idle."
+    },
+    "thinking": {
+      "result": "No visually blocking defect found in captured desktop runtime sequence.",
+      "entry": "Entry from moving idle to thinking is visually coherent in sampled screenshots.",
+      "body": "Thinking gesture and head tilt remain recognisable. Low-detail moving fingers do not read as a major extra/missing-limb event at the tested 180px display size.",
+      "exit": "Reviewed hand lowering and bridge through screenshots 50-79, including actual idle return at 72. No conspicuous colour flash or duplicate eye/clothing contour observed. Last twenty screenshots are idle, including its normal blink rather than an action-transition defect."
+    },
+    "edgeQuality": "Minor antialiasing/fine hair and finger softness remains, particularly under enlarged source inspection. In these actual-size dark-background runtime captures it does not form a large white fringe or blocking temporal artifact.",
+    "sharpness": "Subtle source sharpness differences still exist; the tested transition reduces abruptness. This approval is not a claim of pixel-identical style across every original source frame.",
+    "backgroundControl": "Bow screenshot 000 shows pale background and subsequent screenshots dark. This coincides with test background state and is not treated as a character-animation colour flash."
+  },
+  "recommendation": "New bow and thinking clips may pass the desktop runtime visual gate for this release, provided the separate functional, asset-integrity and deployment checks pass. Do not mark the old wave complaints solved or inherit any historic wave quality PASS into this decision.",
+  "oldWaveStatus": "User-reported old wave issues remain outside this repair scope and were not approved by this review.",
+  "browserInteractionByReviewer": false,
+  "actualBrowserScreenshotsReviewed": true,
+  "deploymentPerformedByReviewer": false,
+  "sourceAssetsModifiedByReviewer": false
+}

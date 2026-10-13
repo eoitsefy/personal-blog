@@ -1,5 +1,5 @@
 import type { CharacterAction } from "./character";
-import releasedMotion from "./releases/natural-cloud-wave-hand-v3-matte-v6b/manifest.json";
+import releasedMotion from "./releases/natural-selected-actions-v7/manifest.json";
 
 export type NaturalFrame = { asset: string; x: number; y: number; durationMs: number; rgbaSha256: string };
 export type NaturalClip = { frames: readonly NaturalFrame[] };

@@ -1,0 +1,71 @@
+{
+  "status": "PASS",
+  "scope": "Local candidate asset integrity, actual anchor equality, runtime budget and unit tests, revised deployment asset-verifier source and controlled negative tests. Not art, browser acceptance, container build, or deployment success.",
+  "reviewer": "/root/deploy_selected_audit",
+  "reviewedAt": "2026-10-13T10:41:03Z",
+  "manifestVersion": "natural-selected-actions-v7",
+  "manifestScopeSha256": "a4b2a3021c73fbacd0a3db03825218e7810e1c0997e24bbdd2dd44b0c6f1eb97",
+  "productionAllowedByThisReport": false,
+  "independenceDisclosure": "This reviewer authored the isolated candidate packager, then verified its output using a separate Python/Pillow/numpy decoding implementation instead of trusting its sharp self-check. Reviewer did not author hand repairs, transition frames, the runtime, Dockerfile change, or revised deploy verifier. Artistic judgment is assigned separately.",
+  "checks": {
+    "independentPillowDecode": "PASS",
+    "actualAtlasPages": 18,
+    "actualFrameCropsHashed": 324,
+    "newFrameCropsComparedPixelExactlyToTransitionPng": 130,
+    "oldIdleWaveAndStillUnchanged": true,
+    "allClipActualEndpointsEqualCommonAnchor": true,
+    "decodedLibraryPixels": 63590400,
+    "decodedLibraryPixelLimit": 67108864,
+    "remainingLibraryPixelBudget": 3518464,
+    "largestAtlasPixels": 3686400,
+    "currentPlusNextLargestPagesPixels": 7372800,
+    "sharedRuntimeCachePixelLimit": 25165824,
+    "bow": {"frames":65,"durationMs":3703},
+    "thinking": {"frames":65,"durationMs":3703},
+    "artTechnicalTransitionManifestFlagsAtAudit": "PENDING",
+    "nodeSyntaxChecks": "PASS package-selected-candidate-v7.mjs and verify-release-assets.cjs",
+    "unitTests": {"passed":25,"failed":0,"files":["src/lib/assistant/natural-motion.test.ts","scripts/animation/validate-natural-motion-assets.test.mjs"]},
+    "verifierActualAssetFixture": {"result":"PASS","assets":19,"disk":"Actual candidate plus inherited files","http":"Stubbed fetch returns actual file bytes; this is not real HTTP or container verification"},
+    "verifierNegativeFixtures": {
+      "completeMatchingExpectation":"ACCEPTED",
+      "tamperedDiskBytes":"REJECTED",
+      "tamperedHttpBytes":"REJECTED",
+      "http404":"REJECTED",
+      "pathTraversal":"REJECTED",
+      "emptyAssets":"REJECTED",
+      "incompleteSubset":"REJECTED",
+      "wrongReleaseVersion":"REJECTED",
+      "duplicateAssetEntry":"REJECTED"
+    }
+  },
+  "sourceChecks": {
+    "packageScriptSha256":"cb970e7a62bb73af8cfefc8718dbd461946799081b04c212721af3341a1fd467",
+    "assetVerifierSha256":"d3674b2e794319ad04b4b5b9adadf4f7842b06f06e37cf6d0d097e6e0dc83d79",
+    "deploymentScriptSha256":"af13ce2840cd9a63a0eb7a8daa4d3580d8783e405413ff756975b47b64d6e012",
+    "dockerfileSha256":"d35f3cb6f810c4ad8c2ac9099e451fb76cd4eb8f07d428500ac706e689585822"
+  },
+  "deploymentReview": {
+    "initialFinding":"Verifier originally accepted any nonempty supplied subset. Root revised it to read the immutable container release-motion-manifest.json, require matching version and deep-equal complete asset-plus-still set, and reject duplicate URLs.",
+    "findingResolvedInCurrentSource":true,
+    "dockerCopy":"Dockerfile includes verifier and intended natural-selected-actions-v7 manifest as release-motion-manifest.json.",
+    "checksAtPrepareAndPromote":true,
+    "boundedVerifierExecution":"timeout90 around docker exec, per-fetch10s timeout; failure during promotion enters existing image rollback trap.",
+    "noServingHostBuild":true,
+    "candidateIsolation":"Loopback3001,512MiB/no extra swap,0.5CPU,128PID,readonly upload mount,cap-drop and no-new-privileges retained.",
+    "rollback":"Existing previous-image tag and verified image health rollback retained. Git source is not rolled backward on image rollback; record both identities.",
+    "remainingExecutionRequirements":[
+      "Create and scope-validate final release manifest/assets/reviews before Docker build; intended manifest file did not yet exist at audit snapshot.",
+      "Include expected-assets.json in transferred SHA256SUMS as root plans; image-bound complete-set verification already rejects a tampered subset.",
+      "Run successful GitHub Linux build and container runtime CI; local tests do not prove the new Docker image builds.",
+      "Run actual candidate prepare health/database/native-sharp/all-assets HTTP checks, then promotion and external asset hashes.",
+      "Do not inherit old wave artistic PASS or claim this release repairs existing wave defects."
+    ]
+  },
+  "limitations":[
+    "Bash executable was not available on this Windows path, so deployment shell was source-reviewed, not syntax-run here; Linux CI/operator must run bash-n before execution.",
+    "No server, browser, paid cloud instance or production resource was accessed by this reviewer.",
+    "Server current health and free resource figures are root-provided and were not independently rechecked.",
+    "Optical-flow appearance, ghosting, hand anatomy, color continuity and real browser arbitrary-phase transition are outside this technical PASS.",
+    "Actual asset byte validation does not prove the client bundle selects the intended release; browser data-character-version and playback must confirm after deployment."
+  ]
+}

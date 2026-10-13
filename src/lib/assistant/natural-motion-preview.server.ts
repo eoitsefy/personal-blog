@@ -1,7 +1,9 @@
 import { readFile, realpath, stat } from "node:fs/promises";
 import { resolve, relative, isAbsolute } from "node:path";
 import { createHash } from "node:crypto";
+import { isDeepStrictEqual } from "node:util";
 import { validNaturalRuntime, type NaturalRuntimeManifest } from "./natural-motion";
+import frozenReleasedMotion from "./releases/natural-cloud-wave-hand-v3-matte-v6b/manifest.json";
 
 // Explicit version -> fixed directory mapping. Neither query strings nor manifest
 // entries may select arbitrary filesystem paths or another project directory.
@@ -9,9 +11,14 @@ const candidates = {
   "natural-cloud-wave-candidate-v1": "wave-atlas-candidate-v1",
   "natural-cloud-wave-hand-v3": "wave-atlas-candidate-v2",
   "natural-cloud-wave-hand-v3-matte-v6b": "wave-atlas-candidate-v4",
+  "natural-selected-actions-v7": "batch-v3/selected-repair-v1/staging-v7",
 } as const;
-export const DEFAULT_MOTION_CANDIDATE = "natural-cloud-wave-hand-v3-matte-v6b";
-const fileName = /^(?:anchor|idle-\d+|wave-\d+)\.webp$/;
+export const DEFAULT_MOTION_CANDIDATE = "natural-selected-actions-v7";
+const fileName = /^(?:anchor|idle-\d+|wave-\d+|selected-bow-\d+|selected-thinking-\d+)\.webp$/;
+const legacyFileName = /^(?:anchor|idle-\d+|wave-\d+)\.webp$/;
+const selectedFileName = /^selected-(?:bow|thinking)-\d+\.webp$/;
+const inheritedVersion = "natural-cloud-wave-hand-v3-matte-v6b";
+const frozenRelease = frozenReleasedMotion as NaturalRuntimeManifest;
 const digest = (data: Buffer) => createHash("sha256").update(data).digest("hex");
 function assertDevelopment() {
   if (process.env.NODE_ENV !== "development") throw new Error("Motion candidate preview is unavailable");
@@ -37,20 +44,56 @@ async function readContained(root: string, path: string, maxBytes: number) {
 }
 function nameFromSource(src: string, version: string) {
   const prefix = `/assistant/${version}/`;
-  if (!src.startsWith(prefix) || !fileName.test(src.slice(prefix.length))) throw new Error("Candidate filename is not allowed");
+  const allowed = version === DEFAULT_MOTION_CANDIDATE ? selectedFileName : legacyFileName;
+  if (!src.startsWith(prefix) || !allowed.test(src.slice(prefix.length))) throw new Error("Candidate filename is not allowed");
   return src.slice(prefix.length);
+}
+function inherited(src: string, version: string) {
+  return version === DEFAULT_MOTION_CANDIDATE && src.startsWith(`/assistant/${inheritedVersion}/`);
+}
+/** Fixed release inheritance, not permission to reference arbitrary public files. */
+export function validateMotionCandidateSources(value: NaturalRuntimeManifest) {
+  if (!allowedMotionCandidate(value.version)) throw new Error("Unknown motion candidate");
+  if (value.version !== DEFAULT_MOTION_CANDIDATE) {
+    nameFromSource(value.still.src, value.version);
+    Object.values(value.assets).forEach(asset => nameFromSource(asset.src, value.version));
+    return;
+  }
+  if (value.width !== frozenRelease.width || value.height !== frozenRelease.height ||
+    value.anchorRgbaSha256 !== frozenRelease.anchorRgbaSha256 ||
+    !isDeepStrictEqual(value.still, frozenRelease.still) ||
+    !isDeepStrictEqual(value.clips.idle, frozenRelease.clips.idle) ||
+    !isDeepStrictEqual(value.clips.wave, frozenRelease.clips.wave))
+    throw new Error("Inherited anchor/idle/wave differs from frozen release");
+  for (const [key, asset] of Object.entries(frozenRelease.assets)) {
+    if (!isDeepStrictEqual(value.assets[key], asset)) throw new Error("Inherited asset declaration differs from frozen release");
+  }
+  for (const [key, asset] of Object.entries(value.assets)) {
+    if (inherited(asset.src, value.version)) {
+      if (!isDeepStrictEqual(frozenRelease.assets[key], asset)) throw new Error("Inherited asset is not in frozen release");
+    } else nameFromSource(asset.src, value.version);
+  }
 }
 async function rawCandidate(version: string) {
   const root = await candidateRoot(version);
   const value: unknown = JSON.parse((await readContained(root, "manifest.json", 2 * 1024 * 1024)).toString("utf8"));
   if (!validNaturalRuntime(value) || value.version !== version) throw new Error("Invalid candidate pixel/timing structure");
-  nameFromSource(value.still.src, version);
-  Object.values(value.assets).forEach(asset => nameFromSource(asset.src, version));
+  validateMotionCandidateSources(value);
   return { root, value };
 }
 export async function readMotionCandidate(version = DEFAULT_MOTION_CANDIDATE): Promise<NaturalRuntimeManifest> {
   const { value } = await rawCandidate(version);
-  const source = (src: string) => `/api/dev/assistant-motion/${version}/${nameFromSource(src, version)}`;
+  // Verify inherited public bytes before exposing the fixed release URLs. Own
+  // candidate pages remain development-only and are hash checked per request.
+  if (version === DEFAULT_MOTION_CANDIDATE) {
+    const publicRoot = await realpath(resolve(process.cwd(), "public/assistant", inheritedVersion));
+    for (const asset of [value.still, ...Object.values(value.assets)].filter(asset => inherited(asset.src, version))) {
+      const name = nameFromSource(asset.src, inheritedVersion);
+      if (digest(await readContained(publicRoot, name, 32 * 1024 * 1024)) !== asset.sha256)
+        throw new Error("Inherited public asset hash changed");
+    }
+  }
+  const source = (src: string) => inherited(src, version) ? src : `/api/dev/assistant-motion/${version}/${nameFromSource(src, version)}`;
   // Explicit projection strips review claims instead of changing PENDING to PASS.
   return { version: value.version, width: value.width, height: value.height, anchorRgbaSha256: value.anchorRgbaSha256,
     still: { ...value.still, src: source(value.still.src) }, clips: value.clips,
@@ -61,7 +104,7 @@ export async function readMotionCandidateAsset(version: string, name: string) {
   if (!fileName.test(name)) throw new Error("Candidate filename is not allowed");
   const { root, value } = await rawCandidate(version);
   const declarations = [value.still, ...Object.values(value.assets)];
-  const declared = declarations.find(asset => nameFromSource(asset.src, version) === name);
+  const declared = declarations.find(asset => !inherited(asset.src, version) && nameFromSource(asset.src, version) === name);
   if (!declared) throw new Error("Candidate file is not in the manifest whitelist");
   const bytes = await readContained(root, `public/assistant/${version}/${name}`, 32 * 1024 * 1024);
   if (digest(bytes) !== declared.sha256) throw new Error("Candidate file hash changed");
