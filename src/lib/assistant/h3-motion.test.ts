@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { createHash } from "node:crypto";
 import sharp from "sharp";
-import frameIndex from "./releases/h3-v2/source-frame-hashes.json";
+import frameIndex from "./releases/h3-v3/source-frame-hashes.json";
 import { H3_CLIPS,H3_MOTION,H3MotionClock,h3Action,validH3Motion } from "./h3-motion";
 import { createH3Presence,reduceH3Presence,H3_REST_AFTER_MS,H3_SIP_AFTER_MS } from "./h3-presence";
 
@@ -11,6 +11,14 @@ test("all 24 selected clips have exact alpha, valid timings and honest authoriza
   assert(validH3Motion(H3_MOTION)); assert.equal(Object.keys(H3_MOTION.clips).length,24);
   assert.equal(H3_MOTION.review.aiArtReview,false); assert.equal(h3Action("bow"),"thanks");
   for (const name of H3_CLIPS) assert.equal(H3_MOTION.clips[name].frames,H3_MOTION.clips[name].durations.length);
+});
+
+test("release asset URLs stay within the exact local versioned directories",()=>{
+  for (const src of ["https://example.com/wave.webp", "/assistant/h3-v30/wave.webp", "/assistant/h3-v3/../wave.webp"]) {
+    const manifest=structuredClone(H3_MOTION);
+    manifest.assets[manifest.clips.wave.pages[0]].src=src;
+    assert.equal(validH3Motion(manifest),false,src);
+  }
 });
 test("every shipped H3 atlas and still matches its complete release hash",()=>{
   for (const asset of [...Object.values(H3_MOTION.assets),...Object.values(H3_MOTION.stills)]) {

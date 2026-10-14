@@ -1,4 +1,4 @@
-import release from "./releases/h3-v2/manifest.json";
+import release from "./releases/h3-v3/manifest.json";
 import type { CharacterAction } from "./character";
 
 export const H3_CLIPS = ["idle-blink", "wave", "nod", "thanks", "thinking", "cheer", "yawn",
@@ -25,8 +25,8 @@ export function validH3Motion(m: H3Manifest): boolean {
         c.durations.every(d => Number.isFinite(d) && d >= 16 && d <= 1000) &&
         c.durations.reduce((a,b) => a+b,0) === c.durationMs && c.pages.length === Math.ceil(c.frames/8) &&
         c.pages.every(key => { const a = m.assets[key]; return a?.width === 1920 && a.height === 960 && a.alpha &&
-          /^\/assistant\/h3-v2\/[a-z0-9-]+\.webp$/.test(a.src) && /^[a-f0-9]{64}$/.test(a.sha256); }) &&
-        /^\/assistant\/h3-v2\/[a-z0-9-]+\.webp$/.test(still.src) && /^[a-f0-9]{64}$/.test(still.sha256);
+          /^\/assistant\/h3-v[23]\/[a-z0-9-]+\.webp$/.test(a.src) && /^[a-f0-9]{64}$/.test(a.sha256); }) &&
+        /^\/assistant\/h3-v[23]\/[a-z0-9-]+\.webp$/.test(still.src) && /^[a-f0-9]{64}$/.test(still.sha256);
     });
   } catch { return false; }
 }

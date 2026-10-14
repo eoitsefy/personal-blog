@@ -58,4 +58,4 @@ echo 'container_http_and_auth_boundary=passed'
   http://127.0.0.1:3000/dev/assistant-h3/resources)" == 404 ]]
 echo 'assistant_resource_page_auth_and_dev_boundary=passed'
 
-docker exec -i "$name" node scripts/animation/verify-release-assets.cjs < src/lib/assistant/releases/h3-v2/expected-assets.json
+docker exec -i "$name" node scripts/animation/verify-release-assets.cjs < src/lib/assistant/releases/h3-v3/expected-assets.json
