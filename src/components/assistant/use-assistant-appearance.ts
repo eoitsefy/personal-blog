@@ -7,7 +7,7 @@ let sessionChoice: AssistantAppearance | undefined;
 function snapshot(): AssistantAppearance {
   if (sessionChoice) return sessionChoice;
   try { return parseAppearance(localStorage.getItem(APPEARANCE_STORAGE_KEY)); }
-  catch { return "natural"; }
+  catch { return "h3"; }
 }
 function subscribe(notify: () => void) {
   const storage = (event: StorageEvent) => {
@@ -25,5 +25,5 @@ export function setAssistantAppearance(value: AssistantAppearance) {
   window.dispatchEvent(new Event(changed));
 }
 export function useAssistantAppearance() {
-  return useSyncExternalStore(subscribe, snapshot, () => "natural" as const);
+  return useSyncExternalStore(subscribe, snapshot, () => "h3" as const);
 }

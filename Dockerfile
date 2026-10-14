@@ -31,6 +31,7 @@ COPY --chown=node:node prisma ./prisma
 COPY --chown=node:node scripts/create-admin.mjs ./scripts/create-admin.mjs
 COPY --chown=node:node scripts/animation/verify-release-assets.cjs ./scripts/animation/verify-release-assets.cjs
 COPY --chown=node:node src/lib/assistant/releases/natural-selected-actions-v7/manifest.json ./release-motion-manifest.json
+COPY --chown=node:node src/lib/assistant/releases/h3-v2/manifest.json ./release-h3-manifest.json
 COPY --chown=node:node src/lib/security/content-security-policy.ts ./src/lib/security/content-security-policy.ts
 
 RUN mkdir -p /app/uploads && chown node:node /app/uploads

@@ -69,3 +69,54 @@
 @media (max-width: 600px) { .panel { padding: 36px 0 60px; } .floating { width: 128px; right: 20px; bottom: max(12px, env(safe-area-inset-bottom)); } .dialog { inset: auto 12px max(12px, env(safe-area-inset-bottom)) auto; height: min(680px, calc(100dvh - 24px)); border-radius: 18px; } .companion { padding: 8px 14px 0; gap: 8px; } .companionCharacter { width: 120px; } .messages, .form { padding-left: 14px; padding-right: 14px; } }
 @media (max-height: 500px) { .companion { display: none; } .header { padding: 8px 14px; } .form textarea { max-height: 64px; } }
 @media (prefers-reduced-motion: reduce) { .spriteSheet, .dots { animation: none; left: 0; top: 0; } }
+
+/* Non-modal comic balloon: the actual character remains on the page. */
+.panel { position: relative; }
+.floating { width: 192px; }
+.sceneSlot:has([data-engine="h3-native-frames"]) { aspect-ratio: 1; }
+.floating .launcher > .sceneSlot:has([data-engine="h3-native-frames"]) { clip-path: inset(0); pointer-events: auto; }
+.chatBalloon { position: absolute; right: calc(100% + 8px); bottom: 52px; width: min(360px, calc(100vw - 242px)); height: min(510px, calc(100dvh - 90px)); color: #29271f; pointer-events: auto; text-align: left; z-index: 2; filter: drop-shadow(5px 7px 0 #241f1918); }
+.chatBalloon[hidden] { display: none; }
+.chatBalloon::after { content: ""; position: absolute; width: 20px; height: 20px; right: -10px; bottom: 47px; background: #fffdf7; border-top: 2px solid #423b30; border-right: 2px solid #423b30; transform: rotate(45deg); }
+.balloonBody { display: flex; flex-direction: column; height: 100%; min-height: 0; border: 2px solid #423b30; border-radius: 24px; background: #fffdf7; overflow: hidden; }
+.chatBalloon .header { background: #fffdf7; color: #29271f; padding: 10px 14px 6px; }
+.chatBalloon .header strong { font-size: 1rem; }
+.chatBalloon .header small { margin-top: 2px; color: #746b5b; font-size: .75rem; }
+.chatBalloon .header button { border: 0; color: #4b4234; }
+.preferences { padding: 0 14px 8px; border-bottom: 1px dashed #d8cbb2; font-size: .8rem; flex-shrink: 0; }
+.preferences summary { cursor: pointer; width: fit-content; min-height: 30px; line-height: 30px; color: #70614b; }
+.preferences > div { display: flex; flex-wrap: wrap; gap: 4px 14px; align-items: center; }
+.preferences .skinChoice { flex: 1 1 100%; margin-bottom: 0; }
+.preferences .skinChoice select { max-width: none; }
+.preferences label { display: flex; align-items: center; gap: 4px; }
+.chatBalloon .messages { padding: 12px 14px; }
+.chatBalloon .bubble { max-width: 100%; border: 0; padding: 4px 0 10px; background: none; font-size: .94rem; line-height: 1.75; }
+.chatBalloon .userBubble { background: #f8e8bf; padding: 8px 12px; max-width: 90%; border-radius: 16px 4px 16px 16px; }
+.chatBalloon .explore { gap: 6px; margin-top: 0; }
+.chatBalloon .explore a { font-size: .8rem; padding: 6px 9px; }
+.chatBalloon .form { padding: 10px 12px 12px; background: #fffdf7; }
+.chatBalloon .form textarea { resize: none; max-height: 90px; border-radius: 14px; }
+.chatBalloon .formMeta { flex-wrap: wrap; gap: 4px; font-size: .75rem; }
+.chatBalloon .formMeta button { padding: 8px; font-size: .875rem; }
+.chatBalloon .formMeta button[type="submit"] { padding: 8px 12px; border-radius: 16px; }
+.chatBalloon button:focus-visible, .chatBalloon textarea:focus-visible, .chatBalloon select:focus-visible, .chatBalloon summary:focus-visible, .chatBalloon a:focus-visible { outline: 3px solid #997222; outline-offset: 2px; }
+.panel > .chatBalloon { left: calc(50% + 75px); right: auto; top: 115px; bottom: auto; width: 360px; }
+.panel > .chatBalloon::after { left: -10px; right: auto; transform: rotate(-135deg); }
+@media (max-width: 900px) {
+  .panel > .chatBalloon { position: relative; left: auto; top: auto; width: min(380px,100%); margin: 22px auto; }
+  .panel > .chatBalloon::after { left: calc(50% - 10px); top: -10px; bottom: auto; transform: rotate(-45deg); }
+}
+@media (max-width: 600px) {
+  .floating { width: 140px; right: 12px; bottom: max(10px,env(safe-area-inset-bottom)); }
+  .floating .chatBalloon { position: fixed; right: 12px; bottom: calc(max(10px,env(safe-area-inset-bottom)) + 132px); width: min(380px,calc(100% - 24px)); height: min(460px,calc(100dvh - 170px)); }
+  .floating .chatBalloon::after { right: 48px; bottom: -10px; border-top: 0; border-right: 2px solid #423b30; border-bottom: 2px solid #423b30; transform: rotate(45deg); }
+  .balloonBody { border-radius: 22px; }
+}
+@media (max-height: 500px) {
+  .chatBalloon { height: calc(100dvh - 36px); bottom: 18px; }
+  .floating { width: 96px; }
+  .floating .chatBalloon { height: calc(100dvh - 130px); bottom: calc(max(10px,env(safe-area-inset-bottom)) + 96px); }
+  .chatBalloon .header { padding: 4px 12px; }
+  .chatBalloon .header small, .preferences { display: none; }
+  .chatBalloon .form textarea { height: 48px; }
+}

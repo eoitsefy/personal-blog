@@ -9,6 +9,10 @@ const nextConfig: NextConfig = {
   async headers() {
     return [
       {
+        source: "/assistant/h3-v2/:path*",
+        headers: [{ key: "Cache-Control", value: "public, max-age=31536000, immutable" }],
+      },
+      {
         source: "/:path*",
         headers: [
           { key: "Content-Security-Policy", value: contentSecurityPolicy },

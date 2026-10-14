@@ -1,8 +1,9 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { parseAppearance, NATURAL_IDLE } from "./appearance";
-test("new accepted idle is default; explicit legacy choice is preserved", () => {
-  for (const value of [null, undefined, "", "unknown", "natural"]) assert.equal(parseAppearance(value), "natural");
+test("H3 is the new default; both earlier appearances remain available", () => {
+  for (const value of [null, undefined, "", "unknown", "h3"]) assert.equal(parseAppearance(value), "h3");
+  assert.equal(parseAppearance("natural"), "natural");
   assert.equal(parseAppearance("legacy"), "legacy");
 });
 test("animation and accessible static fallback use distinct versioned resources", () => {

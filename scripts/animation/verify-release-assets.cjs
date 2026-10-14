@@ -6,12 +6,13 @@ const assert = require('node:assert/strict');
 const crypto = require('node:crypto');
 async function main() {
   const expected = JSON.parse(fs.readFileSync(0, 'utf8'));
-  const manifest = JSON.parse(fs.readFileSync('release-motion-manifest.json', 'utf8'));
+  const h3 = expected.kind === 'h3';
+  const manifest = JSON.parse(fs.readFileSync(h3 ? 'release-h3-manifest.json' : 'release-motion-manifest.json', 'utf8'));
   assert.equal(expected.version, manifest.version);
-  const complete = [...Object.values(manifest.assets), manifest.still].map(({src,sha256})=>({src,sha256}));
+  const complete = [...Object.values(manifest.assets), ...(h3 ? Object.values(manifest.stills) : [manifest.still])].map(({src,sha256})=>({src,sha256}));
   assert.equal(new Set(complete.map(a=>a.src)).size, complete.length);
   assert.deepEqual(expected.assets, complete, 'Expected list must cover the exact complete release');
-  assert(Array.isArray(expected.assets) && expected.assets.length > 0 && expected.assets.length < 100);
+  assert(Array.isArray(expected.assets) && expected.assets.length > 0 && expected.assets.length < (h3 ? 1024 : 100));
   for (const asset of expected.assets) {
     assert(/^\/assistant\/[a-z0-9-]+\/[a-z0-9-]+\.webp$/.test(asset.src));
     assert(/^[a-f0-9]{64}$/.test(asset.sha256));

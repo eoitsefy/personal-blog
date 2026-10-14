@@ -3,7 +3,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { createPortal } from "react-dom";
 import { FormEvent, useEffect, useId, useRef, useState } from "react";
 import { ASSISTANT_GREETINGS, parseAssistantAnswer, pickAssistantGreeting, type AssistantAnswer } from "@/lib/assistant/ui";
 import styles from "./assistant-panel.module.css";
@@ -17,6 +16,10 @@ import { NaturalIdleCharacter } from "./natural-idle-character";
 import { setAssistantAppearance, useAssistantAppearance } from "./use-assistant-appearance";
 import { parseAppearance } from "@/lib/assistant/appearance";
 import { NATURAL_MOTION, validNaturalMotion } from "@/lib/assistant/natural-motion";
+import { H3Character } from "./h3-character";
+import { H3_MOTION, h3Action, validH3Motion } from "@/lib/assistant/h3-motion";
+import { useH3Presence } from "./use-h3-presence";
+import { useBrowserVoice } from "./use-browser-voice";
 
 type Settings = { enabled: boolean; maxQuestionChars: number };
 type Turn = { question: string; result: AssistantAnswer };
@@ -165,13 +168,17 @@ export function ChibiAssistant({ floating = false, settings }: { floating?: bool
   const [animate, setAnimate] = useState(true);
   const appearance = useAssistantAppearance();
   const legacy = appearance === "legacy";
+  const h3 = appearance === "h3" && validH3Motion(H3_MOTION);
+  const scene = useH3Presence(animate && h3, open);
   const presence = useAssistantPresence(animate && legacy, open);
   const naturalActions = validNaturalMotion(NATURAL_MOTION);
-  const behavior = useAssistantBehavior(animate && (legacy || naturalActions) && (!legacy || presence.state.phase === "awake"));
+  const behavior = useAssistantBehavior(animate && (h3 || legacy || naturalActions) && (!legacy || presence.state.phase === "awake") && (!h3 || scene.state.phase === "awake"));
   const phase = legacy ? presence.state.phase : "awake";
   const sleepScene = phase === "entering" || phase === "sleeping" || phase === "waking";
   const trigger = useRef<HTMLButtonElement>(null);
   function show() {
+    if (open) { dismiss(); return; }
+    scene.send({ type: "click" });
     presence.send({ type: "click" });
     // A sleeping companion is woken first; this click never starts an AI query.
     if (phase !== "awake") return;
@@ -179,29 +186,40 @@ export function ChibiAssistant({ floating = false, settings }: { floating?: bool
     behavior.send({ type: "open" }); setOpen(true);
   }
   function dismiss() { behavior.send({ type: "close" }); setOpen(false); }
-  return <div className={`${floating ? styles.floating : styles.panel} ${animate ? "" : styles.still}`} data-behavior-version={ASSISTANT_BEHAVIOR_VERSION} data-presence={phase}>
+  return <div className={`${floating ? styles.floating : styles.panel} ${animate ? "" : styles.still}`} data-behavior-version={ASSISTANT_BEHAVIOR_VERSION} data-presence={h3 ? scene.state.phase : phase} data-scene={h3 ? scene.state.scene : "legacy"}>
     {!floating ? <><h1>小助手</h1><p className={styles.invitation}>有想找的记录吗？</p></> : null}
-    <button ref={trigger} type="button" className={styles.launcher} onClick={show} aria-label={phase === "awake" ? "打开小助手对话" : phase === "entering" || phase === "sleeping" ? "唤醒小助手" : "小助手正在起床"} aria-haspopup="dialog" aria-expanded={open}>
+    <button ref={trigger} type="button" className={styles.launcher} onClick={show} title={open ? "收起聊天气泡" : "点击和我聊聊"} aria-label={open ? "收起小助手对话" : phase === "awake" ? "打开小助手对话" : phase === "entering" || phase === "sleeping" ? "唤醒小助手" : "小助手正在起床"} aria-haspopup="dialog" aria-expanded={open}>
       <span className={styles.sceneSlot}>
-        <Character action={phase === "recovering" ? "yawn" : open || sleepScene ? "idle" : behavior.state.action} small={floating} animate={animate} active={!open && !sleepScene} playId={phase === "recovering" ? presence.state.cycle : behavior.state.playId} once onFinished={phase === "recovering" ? presence.finished : behavior.finished} />
+        {h3 ? <H3Character clip={scene.state.clip ?? h3Action(behavior.state.action)} playId={scene.state.clip ? -scene.state.cycle : behavior.state.playId} animate={animate}
+          onFinished={id => id < 0 ? scene.finished(id) : behavior.finished(id)} onFailed={scene.failed} /> :
+          <Character action={phase === "recovering" ? "yawn" : sleepScene ? "idle" : behavior.state.action} small={floating} animate={animate} active={!sleepScene} playId={phase === "recovering" ? presence.state.cycle : behavior.state.playId} once onFinished={phase === "recovering" ? presence.finished : behavior.finished} />}
         {sleepScene ? <SleepScene phase={phase} cycle={presence.state.cycle} animate={animate} onFinished={presence.finished} onFailed={presence.failed} /> : null}
-      </span><span className={styles.launcherLabel}>{phase === "sleeping" ? "轻点叫醒" : phase === "entering" ? "困了…" : phase === "waking" || phase === "recovering" ? "醒一醒…" : floating ? "聊聊" : "点击和我聊聊"}</span>
+      </span><span className={styles.screenReader}>点击人物展开聊天气泡</span>
     </button>
     {!floating ? <><div className={styles.introduction}>{ASSISTANT_GREETINGS[0]}</div><nav className={styles.explore} aria-label="浏览网站"><Link href="/posts">浏览日志 ↗</Link><Link href="/places">看看地点 ↗</Link></nav></> : null}
-    {started ? createPortal(<AssistantDialog open={open} greeting={greeting} initialSettings={settings} animate={animate} behavior={behavior} onAnimate={() => setAnimate(value => !value)} onClose={dismiss} returnFocus={() => trigger.current?.focus({ preventScroll: true })} />, document.body) : null}
+    {started ? <AssistantBubble open={open} greeting={greeting} initialSettings={settings} animate={animate} behavior={behavior} onAnimate={() => setAnimate(value => !value)} onClose={dismiss} returnFocus={() => trigger.current?.focus({ preventScroll: true })} /> : null}
   </div>;
 }
 
-function AssistantDialog({ open, greeting, initialSettings, animate, behavior, onAnimate, onClose, returnFocus }: {
+function AssistantBubble({ open, greeting, initialSettings, animate, behavior, onAnimate, onClose, returnFocus }: {
   open: boolean; greeting: string; initialSettings?: Settings; animate: boolean; behavior: ReturnType<typeof useAssistantBehavior>; onAnimate: () => void; onClose: () => void; returnFocus: () => void;
 }) {
   const appearance = useAssistantAppearance();
-  const dialog = useRef<HTMLDialogElement>(null), closeButton = useRef<HTMLButtonElement>(null);
+  const dialog = useRef<HTMLDivElement>(null), closeButton = useRef<HTMLButtonElement>(null);
   const controller = useRef<AbortController | null>(null), messages = useRef<HTMLDivElement>(null), focus = useRef(returnFocus);
   const id = useId();
   const [question, setQuestion] = useState(""), [turns, setTurns] = useState<Turn[]>([]);
   const [error, setError] = useState(""), [pending, setPending] = useState(false), [currentQuestion, setCurrentQuestion] = useState("");
   const [settings, setSettings] = useState<Settings | null>(initialSettings ?? null);
+  const [readAnswers,setReadAnswers]=useState(false);
+  const voice=useBrowserVoice(open,text => setQuestion(previous => (previous ? previous+" "+text : text).slice(0,settings?.maxQuestionChars??500)),setError);
+  useEffect(() => {
+    if (!open || !readAnswers || !turns.length || !("speechSynthesis" in window)) return;
+    window.speechSynthesis.cancel();
+    const utterance=new SpeechSynthesisUtterance(turns.at(-1)!.result.answer); utterance.lang="zh-CN";
+    window.speechSynthesis.speak(utterance);
+    return () => window.speechSynthesis.cancel();
+  },[open,readAnswers,turns]);
 
   useEffect(() => {
     if (initialSettings) return;
@@ -217,10 +235,11 @@ function AssistantDialog({ open, greeting, initialSettings, animate, behavior, o
   }, [initialSettings]);
   useEffect(() => {
     if (!open) return;
-    const element = dialog.current!, previous = document.body.style.overflow;
-    document.body.style.overflow = "hidden"; element.showModal(); closeButton.current?.focus();
+    closeButton.current?.focus({ preventScroll: true });
     const restore = focus.current;
-    return () => { element.close(); document.body.style.overflow = previous; restore(); };
+    const key=(event:KeyboardEvent) => { if (event.key==="Escape") { event.preventDefault(); closeButton.current?.click(); } };
+    document.addEventListener("keydown",key);
+    return () => { document.removeEventListener("keydown",key); restore(); };
   }, [open]);
   useEffect(() => () => controller.current?.abort(), []);
   useEffect(() => { messages.current?.scrollTo({ top: messages.current.scrollHeight }); }, [turns, pending, open]);
@@ -249,15 +268,10 @@ function AssistantDialog({ open, greeting, initialSettings, animate, behavior, o
     } finally { window.clearTimeout(timeout); if (controller.current === abort) { controller.current = null; setPending(false); setCurrentQuestion(""); } }
   }
 
-  return <dialog ref={dialog} className={`${styles.dialog} ${animate ? "" : styles.still}`} aria-labelledby={`${id}-title`} onCancel={event => { event.preventDefault(); close(); }} onClick={event => { if (event.target === event.currentTarget) close(); }} onKeyDown={event => {
-    if (event.key !== "Tab") return;
-    const controls = Array.from(event.currentTarget.querySelectorAll<HTMLElement>('button:not(:disabled), select:not(:disabled), a[href], textarea:not(:disabled), summary, [tabindex="0"]')).filter(element => element.getClientRects().length);
-    const first = controls[0], last = controls[controls.length - 1];
-    if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last?.focus(); }
-    else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first?.focus(); }
-  }}>
-    <header className={styles.header}><div><strong id={`${id}-title`}>小助手</strong><small>AI 回答仅供参考 · 公开文章检索</small></div><div className={styles.headerControls}><button className={styles.motion} type="button" onClick={onAnimate} aria-pressed={!animate}>{animate ? "暂停动作" : "开启动作"}</button><button ref={closeButton} type="button" onClick={close} aria-label="关闭小助手对话">×</button></div></header>
-    <div className={styles.companion} data-motion-source="automatic"><div className={styles.companionCharacter}><Character action={open ? behavior.state.action : "idle"} small animate={animate} active={open} playId={behavior.state.playId} once onFinished={behavior.finished} /></div><div><label className={styles.skinChoice}>助手形象<select value={appearance} onChange={event => setAssistantAppearance(parseAppearance(event.target.value))}><option value="natural">新版 · 自然待机</option><option value="legacy">原版 · 完整动作</option></select></label><p>{pending ? "让我找找相关记录…" : turns.length ? "还想了解什么？" : "你好，很高兴见到你！"}</p></div></div>
+  return <div ref={dialog} role="dialog" aria-modal="false" hidden={!open} className={`${styles.chatBalloon} ${animate ? "" : styles.still}`} aria-labelledby={`${id}-title`}>
+    <div className={styles.balloonBody}>
+    <header className={styles.header}><div><strong id={`${id}-title`}>和我聊聊</strong><small>AI 回答仅供参考</small></div><div className={styles.headerControls}><button ref={closeButton} type="button" onClick={close} aria-label="关闭小助手对话">×</button></div></header>
+    <details className={styles.preferences}><summary>形象与语音设置</summary><div><label className={styles.skinChoice}>助手形象<select value={appearance} onChange={event => setAssistantAppearance(parseAppearance(event.target.value))}><option value="h3">新版 · H3 完整动作</option><option value="natural">上一版 · 自然动作</option><option value="legacy">原版 · 序列帧</option></select></label><button className={styles.motion} type="button" onClick={onAnimate} aria-pressed={!animate}>{animate ? "暂停动作" : "开启动作"}</button><label><input type="checkbox" checked={readAnswers} onChange={event=>setReadAnswers(event.target.checked)} /> 朗读回复</label></div></details>
     <div ref={messages} className={styles.messages} aria-label="对话记录" tabIndex={0} onScroll={() => behavior.send({ type: "activity" })}>
       <p className={styles.bubble}>{greeting}</p>
       {!turns.length ? <nav className={styles.explore} aria-label="助手推荐入口"><Link href="/posts" onClick={close}>浏览日志 ↗</Link><Link href="/places" onClick={close}>看看地点 ↗</Link></nav> : null}
@@ -267,6 +281,7 @@ function AssistantDialog({ open, greeting, initialSettings, animate, behavior, o
       {error ? <p className={styles.error} role="alert">{error}</p> : null}
       {!settings ? <p role="status">正在连接助手…</p> : !settings.enabled ? <p className={styles.notice}>助手暂不可用，你仍可以浏览日志和地点。</p> : null}
     </div>
-    <form className={styles.form} onSubmit={submit} onPointerDown={() => behavior.send({ type: "activity" })}><label htmlFor={`${id}-question`}>你的问题</label><textarea id={`${id}-question`} value={question} onFocus={() => behavior.send({ type: "activity" })} onChange={event => { setQuestion(event.target.value); behavior.send({ type: "activity" }); }} maxLength={settings?.maxQuestionChars ?? 500} rows={2} disabled={!settings?.enabled || pending} placeholder="想找什么记录？" required minLength={2} /><div className={styles.formMeta}><button type="button" onClick={clear}>清空对话</button><span>{question.length} / {settings?.maxQuestionChars ?? 500}</span><button type="submit" disabled={!settings?.enabled || pending || question.trim().length < 2}>{pending ? "查找中…" : "发送 ↗"}</button></div></form>
-  </dialog>;
+    <form className={styles.form} onSubmit={submit} onPointerDown={() => behavior.send({ type: "activity" })}><label className={styles.screenReader} htmlFor={`${id}-question`}>你的问题</label><textarea id={`${id}-question`} value={question} onFocus={() => behavior.send({ type: "activity" })} onChange={event => { setQuestion(event.target.value); behavior.send({ type: "activity" }); }} maxLength={settings?.maxQuestionChars ?? 500} rows={2} disabled={!settings?.enabled || pending} placeholder="想聊些什么，或找哪篇记录？" required minLength={2} /><div className={styles.formMeta}><button type="button" onClick={clear} aria-label="清空对话">清空</button><button type="button" onClick={voice.toggle} disabled={!voice.available || !settings?.enabled || pending} aria-label={voice.listening?"停止语音输入":"语音输入"} aria-pressed={voice.listening} title={voice.available?"首次使用需允许麦克风，由浏览器提供识别":"此浏览器暂不支持语音输入，可使用文字"}>{voice.listening?"停止":"语音"}</button><span>{question.length}/{settings?.maxQuestionChars ?? 500}</span><button type="submit" disabled={!settings?.enabled || pending || question.trim().length < 2}>{pending ? "查找中…" : "发送 ↗"}</button></div>{voice.listening?<small role="status">正在听… 语音识别由浏览器提供。</small>:null}</form>
+    </div>
+  </div>;
 }
