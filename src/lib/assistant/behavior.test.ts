@@ -92,6 +92,17 @@ test("courtesy after a factual reply has its own cooldown, no fabricated factual
   assert.equal(reduceBehavior(disabled,{type:"social",action:"cheer",now:9000}).action,"idle");
 });
 
+test("social gesture during wardrobe/bed exit waits for availability and is not lost on close",()=>{
+  const resting=reduceBehavior(ready(),{type:"availability",enabled:false,now:1000});
+  const thanks=reduceBehavior(resting,{type:"social",action:"bow",now:2000});
+  assert.equal(thanks.action,"idle"); assert.equal(thanks.deferredSocial,"bow");
+  const closed=reduceBehavior(thanks,{type:"close",now:2100});
+  const resumed=reduceBehavior(closed,{type:"availability",enabled:true,now:30000});
+  assert.equal(resumed.action,"bow"); assert.equal(resumed.deferredSocial,null);
+  const cleared=reduceBehavior(thanks,{type:"clear",now:2200});
+  assert.equal(reduceBehavior(cleared,{type:"availability",enabled:true,now:30000}).action,"idle");
+});
+
 test("close, clear and errors always stop thinking without a cheerful success cue", () => {
   let state = reduceBehavior(ready(), { type: "submit", now: 100 });
   state = reduceBehavior(state, { type: "tick", now: 700 });

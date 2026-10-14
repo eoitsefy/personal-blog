@@ -27,6 +27,7 @@ export type BehaviorState = {
   lastYawnAt: number;
   lastReadingAt: number;
   lastSocialAt: number;
+  deferredSocial: CharacterAction | null;
   nextThinkingAt: number;
 };
 type ResponseSummary = Pick<AssistantAnswer, "mode" | "confidence" | "sources">;
@@ -41,7 +42,7 @@ export type BehaviorEvent = (
 export function createBehaviorState(now = 0): BehaviorState {
   return { action: "idle", playId: 0, enabled: false, pending: false,
     lastActivityAt: now, lastGreetingAt: -Infinity, lastResponseAt: -Infinity,
-    lastYawnAt: -Infinity, lastReadingAt: -Infinity, lastSocialAt: -Infinity, nextThinkingAt: Infinity };
+    lastYawnAt: -Infinity, lastReadingAt: -Infinity, lastSocialAt: -Infinity, deferredSocial:null, nextThinkingAt: Infinity };
 }
 
 export function responseAction(question: string, result: ResponseSummary): CharacterAction {
@@ -67,10 +68,13 @@ export function nextBehaviorDeadline(state: BehaviorState): number | null {
 export function reduceBehavior(state: BehaviorState, event: BehaviorEvent): BehaviorState {
   const now = Math.max(state.lastActivityAt, Number.isFinite(event.now) ? event.now : state.lastActivityAt);
   switch (event.type) {
-    case "availability":
+    case "availability": {
       if (state.enabled === event.enabled) return state;
+      const deferred=event.enabled ? state.deferredSocial : null;
       return cue({ ...state, enabled: event.enabled, lastActivityAt: now,
-        nextThinkingAt: state.pending && event.enabled ? now + BEHAVIOR_TIMING.thinkingDelay : Infinity }, "idle");
+        deferredSocial:null,lastSocialAt:deferred?now:state.lastSocialAt,
+        nextThinkingAt: state.pending && event.enabled ? now + BEHAVIOR_TIMING.thinkingDelay : Infinity }, deferred??"idle");
+    }
     case "arrive":
     case "open": {
       const next = { ...state, lastActivityAt: now };
@@ -85,8 +89,9 @@ export function reduceBehavior(state: BehaviorState, event: BehaviorEvent): Beha
         cue({ ...state, lastReadingAt: now, lastActivityAt: now }, "nod") : state;
     case "social": {
       const next={ ...state,pending:false,lastActivityAt:now,nextThinkingAt:Infinity };
-      if (!state.enabled || now-state.lastSocialAt < BEHAVIOR_TIMING.socialCooldown) return next;
-      return cue({ ...next,lastSocialAt:now },event.action);
+      if (!state.enabled) return {...next,deferredSocial:event.action};
+      if (now-state.lastSocialAt < BEHAVIOR_TIMING.socialCooldown) return next;
+      return cue({ ...next,lastSocialAt:now,deferredSocial:null },event.action);
     }
     case "close": {
       const next={ ...state,pending:false,lastActivityAt:now,nextThinkingAt:Infinity };
@@ -96,7 +101,7 @@ export function reduceBehavior(state: BehaviorState, event: BehaviorEvent): Beha
     }
     case "clear":
     case "error":
-      return cue({ ...state, pending: false, lastActivityAt: now, nextThinkingAt: Infinity }, "idle");
+      return cue({ ...state, pending: false, lastActivityAt: now, nextThinkingAt: Infinity, deferredSocial:null }, "idle");
     case "activity":
       return state.action === "yawn" ? cue({ ...state, lastActivityAt: now }, "idle") :
         { ...state, lastActivityAt: now };
