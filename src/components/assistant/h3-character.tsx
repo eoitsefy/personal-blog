@@ -23,12 +23,12 @@ function load(key: string) {
     image.onerror=() => done(new Error("Animation unavailable")); image.src=asset.src;
   }));
 }
-type Props={ clip:H3Clip; playId:number; animate:boolean; onFinished:(id:number)=>void; onFailed:()=>void };
+type Props={ clip:H3Clip; playId:number; animate:boolean; once?:boolean; onFinished:(id:number)=>void; onFailed:()=>void };
 export function H3Character(props: Props) {
   const canvas=useRef<HTMLCanvasElement>(null), fallback=useRef<HTMLSpanElement>(null);
   const controls=useRef(props), refresh=useRef<(()=>void)|null>(null);
   useEffect(() => { controls.current=props; },[props]);
-  useEffect(() => { refresh.current?.(); },[props.clip,props.playId,props.animate]);
+  useEffect(() => { refresh.current?.(); },[props.clip,props.playId,props.animate,props.once]);
   useEffect(() => {
     const element=canvas.current, context=element?.getContext("2d");
     if (!element || !context) return;
@@ -80,7 +80,7 @@ export function H3Character(props: Props) {
     }
     function update() {
       revision++; cancelAnimationFrame(tick); const c=controls.current;
-      clock.request({ clip:c.clip,playId:c.playId });
+      clock.request({ clip:c.clip,playId:c.playId,once:c.once });
       if (!c.animate || reduced.matches || document.hidden) { paused ??=performance.now(); return; }
       const now=performance.now(); if (paused!==null) clock.delay(now-paused); paused=null; paint(now);
     }

@@ -10,7 +10,7 @@ test("opening greets once per minute and stale completion cannot erase another c
   assert.equal(first.action, "wave");
   const closed = reduceBehavior(first, { type: "close", now: 200 });
   const again = reduceBehavior(closed, { type: "open", now: 300 });
-  assert.equal(again.action, "idle");
+  assert.equal(again.action, "wave"); assert.equal(again.playId,first.playId);
   const later = reduceBehavior(again, { type: "open", now: 60_100 });
   assert.equal(later.action, "wave");
   assert.equal(reduceBehavior(later, { type: "finished", playId: first.playId, now: 60_200 }), later);
@@ -43,12 +43,12 @@ test("answer interrupts thinking and response gestures have a cooldown", () => {
 
 test("typing postpones idle gestures, yawns never run while pending or repeat frequently", () => {
   const active = reduceBehavior(ready(), { type: "activity", now: 74_000 });
-  assert.equal(nextBehaviorDeadline(active), 149_000);
+  assert.equal(nextBehaviorDeadline(active), 109_000);
   assert.equal(reduceBehavior(active, { type: "tick", now: 75_000 }), active);
-  const yawn = reduceBehavior(active, { type: "tick", now: 149_000 });
+  const yawn = reduceBehavior(active, { type: "tick", now: 109_000 });
   assert.equal(yawn.action, "yawn");
-  const rest = reduceBehavior(yawn, { type: "finished", playId: yawn.playId, now: 153_100 });
-  assert.equal(nextBehaviorDeadline(rest), 269_000);
+  const rest = reduceBehavior(yawn, { type: "finished", playId: yawn.playId, now: 113_100 });
+  assert.equal(nextBehaviorDeadline(rest), 199_000);
   assert.equal(reduceBehavior(yawn, { type: "activity", now: 150_000 }).action, "idle");
   const pending = reduceBehavior(active, { type: "submit", now: 149_000 });
   assert.equal(reduceBehavior(pending, { type: "tick", now: 500_000 }).action, "thinking");
@@ -60,11 +60,36 @@ test("pause, hidden tabs and reduced motion cancel cues and resume without catch
   assert.equal(paused.action, "idle"); assert.equal(nextBehaviorDeadline(paused), null);
   assert.equal(reduceBehavior(paused, { type: "tick", now: 1_000_000 }), paused);
   const resumed = reduceBehavior(paused, { type: "availability", enabled: true, now: 1_000_000 });
-  assert.equal(resumed.action, "idle"); assert.equal(nextBehaviorDeadline(resumed), 1_075_000);
+  assert.equal(resumed.action, "idle"); assert.equal(nextBehaviorDeadline(resumed), 1_035_000);
   const hiddenQuery = reduceBehavior(paused, { type: "submit", now: 200 });
   const visible = reduceBehavior(hiddenQuery, { type: "availability", enabled: true, now: 300 });
   assert.equal(nextBehaviorDeadline(visible), 300 + BEHAVIOR_TIMING.thinkingDelay);
   assert.equal(reduceBehavior(paused, { type: "answer", action: "cheer", now: 200 }).action, "idle");
+});
+
+test("arrival waves once, reading acknowledges only idle visible-ready state",()=>{
+  const arrival=reduceBehavior(ready(),{type:"arrive",now:1200});
+  assert.equal(arrival.action,"wave");
+  assert.equal(reduceBehavior(arrival,{type:"reading",now:12000}),arrival);
+  const idle=reduceBehavior(arrival,{type:"finished",playId:arrival.playId,now:7000});
+  const reading=reduceBehavior(idle,{type:"reading",now:12000});
+  assert.equal(reading.action,"nod");
+  const next=reduceBehavior(reading,{type:"finished",playId:reading.playId,now:18000});
+  assert.equal(reduceBehavior(next,{type:"reading",now:20000}),next);
+  assert.equal(reduceBehavior(next,{type:"reading",now:60000}).action,"nod");
+  const waiting=reduceBehavior(next,{type:"submit",now:20000});
+  assert.equal(reduceBehavior(waiting,{type:"reading",now:90000}),waiting);
+});
+
+test("courtesy after a factual reply has its own cooldown, no fabricated factual affirmation",()=>{
+  const reply=reduceBehavior(ready(),{type:"answer",action:"nod",now:1000});
+  const thanks=reduceBehavior(reply,{type:"social",action:"bow",now:2000});
+  assert.equal(thanks.action,"bow");
+  assert.equal(reduceBehavior(thanks,{type:"close",now:2050}).action,"bow");
+  assert.equal(reduceBehavior(thanks,{type:"social",action:"cheer",now:2100}).action,"bow");
+  assert.equal(reduceBehavior(thanks,{type:"social",action:"cheer",now:9000}).action,"cheer");
+  const disabled=reduceBehavior(thanks,{type:"availability",enabled:false,now:3000});
+  assert.equal(reduceBehavior(disabled,{type:"social",action:"cheer",now:9000}).action,"idle");
 });
 
 test("close, clear and errors always stop thinking without a cheerful success cue", () => {

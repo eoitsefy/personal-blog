@@ -1,0 +1,22 @@
+.page {max-width:1200px;margin:auto;padding:32px 20px 64px;color:#282820;}
+.page h1 {font-size:2rem;font-weight:700;margin:4px 0 8px;}.page h2 {font-size:1.4rem;font-weight:700;}
+.eyebrow,.subtitle,.hint {color:#6d6a5f;font-size:.9rem;line-height:1.7;}.hint {margin:10px 0;}
+.studio {display:grid;grid-template-columns:minmax(260px,1fr) minmax(300px,1fr);gap:24px;margin:24px 0 32px;padding:20px;border:1px solid #dbd9d0;border-radius:20px;background:#fffdf8;}
+.stage {display:flex;min-width:0;flex-direction:column;align-items:center;justify-content:center;background:#efede7;border-radius:16px;min-height:380px;overflow:hidden;color:#514c40;}
+.actor {width:min(100%,420px);aspect-ratio:1;}.actor canvas {display:block;}
+.dark {background:#191d24;color:#eee;}.check {background-color:#eee;background-image:conic-gradient(#d0d0d0 25%,transparent 0 50%,#d0d0d0 0 75%,transparent 0);background-size:24px 24px;}
+.playStatus {background:#fffcefd9;border-radius:20px;padding:6px 12px;margin:8px 10px 16px;color:#514c40;font-size:.85rem;text-align:center;}
+.details {min-width:0;}.identifier {font-family:monospace;font-size:.9rem;color:#7f7255;overflow-wrap:anywhere;}
+.facts {display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:16px 0;}.facts div {padding:8px 12px;border-radius:10px;background:#f2f0e9;}.facts dt {font-size:.8rem;color:#716a59;}.facts dd {font-size:1rem;margin:3px 0 0;}
+.trigger {font-size:.95rem;line-height:1.8;border-left:3px solid #cba54f;padding-left:12px;}
+.controls {display:flex;gap:8px;flex-wrap:wrap;margin:14px 0;}.controls button,.tabs button {border:1px solid #cec6b4;background:#fff;border-radius:10px;padding:9px 12px;min-height:44px;font-size:.9rem;cursor:pointer;}
+.controls button:first-child {background:#302e27;color:#fff;border-color:#302e27;}.controls button:disabled {opacity:.4;cursor:not-allowed;}
+.option {display:flex;gap:8px;align-items:center;font-size:.9rem;line-height:1.6;min-height:36px;}.option input {width:16px;height:16px;}.option select {border:1px solid #d0c8b7;padding:6px 8px;background:#fff;border-radius:8px;}
+.toolbar {display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:16px;}.tabs {display:flex;gap:8px;flex-wrap:wrap;}.tabs [aria-pressed="true"] {background:#f8e4ae;border-color:#aa8333;}
+.toolbar label {font-size:.9rem;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}.toolbar input {border:1px solid #cec6b4;border-radius:10px;padding:9px 12px;font-size:1rem;max-width:100%;min-width:0;}
+.grid {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;}.card {display:flex;align-items:center;gap:8px;text-align:left;padding:10px;min-height:100px;background:#fffdf8;border:1px solid #ded9cd;border-radius:14px;cursor:pointer;min-width:0;}.card[aria-pressed="true"] {border-color:#aa8333;box-shadow:0 0 0 1px #aa8333;}.card img {flex-shrink:0;width:70px;height:70px;object-fit:contain;}.card span {min-width:0;}.card strong {display:block;font-size:.95rem;}.card small {display:block;overflow-wrap:anywhere;font-size:.75rem;color:#766d5b;margin-top:4px;}
+.resources {margin-top:28px;border:1px solid #ded9cd;border-radius:14px;padding:14px 18px;background:#fffdf8;font-size:.9rem;overflow-wrap:anywhere;}.resources summary {cursor:pointer;min-height:32px;}.resources p {line-height:1.7;margin:12px 0;}.resources li {display:flex;gap:16px;flex-wrap:wrap;margin:8px 0;}.resources code {font-size:.75rem;color:#766d5b;}.resources a {color:#826320;text-decoration:underline;text-underline-offset:3px;}
+.page button:focus-visible,.page input:focus-visible,.page select:focus-visible,.page a:focus-visible,.page summary:focus-visible {outline:3px solid #a47a22;outline-offset:3px;}
+@media(max-width:850px){.studio{grid-template-columns:1fr;}.stage{min-height:300px;}.actor{width:min(100%,360px);}.grid{grid-template-columns:repeat(2,minmax(0,1fr));}}
+@media(max-width:480px){.page{padding:24px 12px 48px;}.studio{padding:12px;gap:16px;}.grid{grid-template-columns:1fr;}.toolbar label{width:100%;}.toolbar input{width:100%;}}
+@media(prefers-color-scheme:dark){.page{color:#eee9de;}.studio,.card,.resources{background:#25251f;border-color:#514e42;}.facts div{background:#36342b;}.subtitle,.hint,.eyebrow,.card small,.identifier,.facts dt{color:#bcb5a6;}.controls button,.tabs button,.option select,.toolbar input{background:#34332c;color:#f8f0de;}.tabs [aria-pressed="true"]{background:#665225;}.resources a{color:#e8c67f;}}

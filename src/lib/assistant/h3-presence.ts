@@ -1,6 +1,6 @@
 import type { H3Clip } from "./h3-motion";
 
-export const H3_REST_AFTER_MS = 120_000;
+export const H3_REST_AFTER_MS = 60_000;
 export const H3_SIP_AFTER_MS = 20_000;
 export const H3_SCENES = {
   night: { enter: ["bed-pull", "bed-change", "headset-off", "bed-enter"], loop: "sleep-loop",

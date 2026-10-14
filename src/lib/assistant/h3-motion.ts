@@ -35,7 +35,7 @@ export function h3Frame(clip: H3Manifest["clips"][H3Clip], elapsed: number) {
   for (let i = 0; i < clip.frames; i++) { until += clip.durations[i]; if (elapsed < until) return i; }
   return clip.frames - 1;
 }
-type Request = { clip: H3Clip; playId: number };
+type Request = { clip: H3Clip; playId: number; once?:boolean };
 /** Native chronological frames only. Finish the current clip before switching.
  * A completed one-shot holds its genuine final frame until its owner advances.
  * No reverse-idle, crossfade, injected anchor or artificial bridge.
@@ -54,14 +54,14 @@ export class H3MotionClock {
     let elapsed = Math.max(0, now - this.started);
     if (elapsed >= c.durationMs) {
       const key = `${this.current.clip}:${this.current.playId}`;
-      if (!c.loop && !this.completed.has(key)) {
+      if ((!c.loop || this.current.once) && !this.completed.has(key)) {
         this.completed.add(key);
         if (this.completed.size > 64) this.completed.delete(this.completed.values().next().value!);
         finish(this.current.playId);
       }
       if (this.current.clip !== this.desired.clip || this.current.playId !== this.desired.playId) {
         this.current = this.desired; this.started = now; elapsed = 0; c = this.manifest.clips[this.current.clip];
-      } else if (c.loop) { elapsed %= c.durationMs; this.started = now - elapsed; }
+      } else if (c.loop && !this.current.once) { elapsed %= c.durationMs; this.started = now - elapsed; }
     }
     const frame = h3Frame(c, elapsed), slot = frame % this.manifest.pageFrames;
     return { clip: this.current.clip, frame, asset: c.pages[Math.floor(frame/8)],

@@ -20,6 +20,8 @@ import { H3Character } from "./h3-character";
 import { H3_MOTION, h3Action, validH3Motion } from "@/lib/assistant/h3-motion";
 import { useH3Presence } from "./use-h3-presence";
 import { useBrowserVoice } from "./use-browser-voice";
+import { useAssistantContext } from "./use-assistant-context";
+import { socialReply } from "@/lib/assistant/social";
 
 type Settings = { enabled: boolean; maxQuestionChars: number };
 type Turn = { question: string; result: AssistantAnswer };
@@ -173,6 +175,7 @@ export function ChibiAssistant({ floating = false, settings }: { floating?: bool
   const presence = useAssistantPresence(animate && legacy, open);
   const naturalActions = validNaturalMotion(NATURAL_MOTION);
   const behavior = useAssistantBehavior(animate && (h3 || legacy || naturalActions) && (!legacy || presence.state.phase === "awake") && (!h3 || scene.state.phase === "awake"));
+  useAssistantContext(animate && h3 && scene.state.phase === "awake",open,behavior.send);
   const phase = legacy ? presence.state.phase : "awake";
   const sleepScene = phase === "entering" || phase === "sleeping" || phase === "waking";
   const trigger = useRef<HTMLButtonElement>(null);
@@ -186,7 +189,7 @@ export function ChibiAssistant({ floating = false, settings }: { floating?: bool
     behavior.send({ type: "open" }); setOpen(true);
   }
   function dismiss() { behavior.send({ type: "close" }); setOpen(false); }
-  return <div className={`${floating ? styles.floating : styles.panel} ${animate ? "" : styles.still}`} data-behavior-version={ASSISTANT_BEHAVIOR_VERSION} data-presence={h3 ? scene.state.phase : phase} data-scene={h3 ? scene.state.scene : "legacy"}>
+  return <div className={`${floating ? styles.floating : styles.panel} ${animate ? "" : styles.still}`} data-behavior-version={ASSISTANT_BEHAVIOR_VERSION} data-requested-action={behavior.state.action} data-action-play-id={behavior.state.playId} data-presence={h3 ? scene.state.phase : phase} data-scene={h3 ? scene.state.scene : "legacy"}>
     {!floating ? <><h1>小助手</h1><p className={styles.invitation}>有想找的记录吗？</p></> : null}
     <button ref={trigger} type="button" className={styles.launcher} onClick={show} title={open ? "收起聊天气泡" : "点击和我聊聊"} aria-label={open ? "收起小助手对话" : phase === "awake" ? "打开小助手对话" : phase === "entering" || phase === "sleeping" ? "唤醒小助手" : "小助手正在起床"} aria-haspopup="dialog" aria-expanded={open}>
       <span className={styles.sceneSlot}>
@@ -250,6 +253,13 @@ function AssistantBubble({ open, greeting, initialSettings, animate, behavior, o
     event.preventDefault();
     if (!settings?.enabled || pending || question.trim().length < 2) return;
     const text = question.trim(), abort = new AbortController(); controller.current = abort;
+    const social=socialReply(text);
+    if (social) {
+      controller.current=null; setError(""); setQuestion("");
+      setTurns(previous=>[...previous,{question:text,result:social.result}].slice(-6));
+      behavior.send({ type:"social",action:social.action });
+      return;
+    }
     setPending(true); setCurrentQuestion(text); setError(""); behavior.send({ type: "submit" });
     const timeout = window.setTimeout(() => abort.abort(), 25_000);
     try {

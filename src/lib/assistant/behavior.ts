@@ -5,12 +5,16 @@ import type { AssistantAnswer } from "./ui";
 export const BEHAVIOR_TIMING = {
   greetingCooldown: 60_000,
   responseCooldown: 8_000,
+  socialCooldown: 6_000,
   thinkingDelay: 600,
   thinkingInterval: 12_000,
-  idleDelay: 75_000,
-  yawnCooldown: 120_000,
+  idleDelay: 35_000,
+  yawnCooldown: 90_000,
+  arrivalDelay: 1_200,
+  readingDwell: 12_000,
+  readingCooldown: 45_000,
 } as const;
-export const ASSISTANT_BEHAVIOR_VERSION = "conversation-events-v1";
+export const ASSISTANT_BEHAVIOR_VERSION = "context-events-v2";
 
 export type BehaviorState = {
   action: CharacterAction;
@@ -21,20 +25,23 @@ export type BehaviorState = {
   lastGreetingAt: number;
   lastResponseAt: number;
   lastYawnAt: number;
+  lastReadingAt: number;
+  lastSocialAt: number;
   nextThinkingAt: number;
 };
 type ResponseSummary = Pick<AssistantAnswer, "mode" | "confidence" | "sources">;
 export type BehaviorEvent = (
   | { type: "availability"; enabled: boolean }
-  | { type: "open" | "close" | "activity" | "clear" | "submit" | "error" | "tick" }
+  | { type: "arrive" | "reading" | "open" | "close" | "activity" | "clear" | "submit" | "error" | "tick" }
   | { type: "answer"; action: CharacterAction }
+  | { type: "social"; action: CharacterAction }
   | { type: "finished"; playId: number }
 ) & { now: number };
 
 export function createBehaviorState(now = 0): BehaviorState {
   return { action: "idle", playId: 0, enabled: false, pending: false,
     lastActivityAt: now, lastGreetingAt: -Infinity, lastResponseAt: -Infinity,
-    lastYawnAt: -Infinity, nextThinkingAt: Infinity };
+    lastYawnAt: -Infinity, lastReadingAt: -Infinity, lastSocialAt: -Infinity, nextThinkingAt: Infinity };
 }
 
 export function responseAction(question: string, result: ResponseSummary): CharacterAction {
@@ -64,12 +71,29 @@ export function reduceBehavior(state: BehaviorState, event: BehaviorEvent): Beha
       if (state.enabled === event.enabled) return state;
       return cue({ ...state, enabled: event.enabled, lastActivityAt: now,
         nextThinkingAt: state.pending && event.enabled ? now + BEHAVIOR_TIMING.thinkingDelay : Infinity }, "idle");
+    case "arrive":
     case "open": {
       const next = { ...state, lastActivityAt: now };
+      if (event.type === "arrive" && (state.pending || state.action !== "idle")) return state;
       return state.enabled && now - state.lastGreetingAt >= BEHAVIOR_TIMING.greetingCooldown ?
-        cue({ ...next, lastGreetingAt: now }, "wave") : cue(next, "idle");
+        cue({ ...next, lastGreetingAt: now }, "wave") : next;
     }
-    case "close":
+    case "reading":
+      // Decorative acknowledgement of reading, not a claim about answer accuracy.
+      return state.enabled && !state.pending && state.action === "idle" &&
+        now - state.lastReadingAt >= BEHAVIOR_TIMING.readingCooldown ?
+        cue({ ...state, lastReadingAt: now, lastActivityAt: now }, "nod") : state;
+    case "social": {
+      const next={ ...state,pending:false,lastActivityAt:now,nextThinkingAt:Infinity };
+      if (!state.enabled || now-state.lastSocialAt < BEHAVIOR_TIMING.socialCooldown) return next;
+      return cue({ ...next,lastSocialAt:now },event.action);
+    }
+    case "close": {
+      const next={ ...state,pending:false,lastActivityAt:now,nextThinkingAt:Infinity };
+      // Closing the balloon must not swallow a gratitude/wave already queued at
+      // the next native idle boundary. Thinking is cancelled, gestures finish.
+      return state.action==="thinking" ? cue(next,"idle") : next;
+    }
     case "clear":
     case "error":
       return cue({ ...state, pending: false, lastActivityAt: now, nextThinkingAt: Infinity }, "idle");

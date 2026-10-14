@@ -52,4 +52,10 @@ curl --fail --silent --show-error --max-time 10 http://127.0.0.1:3000/ >/dev/nul
   http://127.0.0.1:3000/api/admin/working-copies/new)" == 401 ]]
 echo 'container_http_and_auth_boundary=passed'
 
+[[ "$(curl --silent --show-error --max-time 5 --output /dev/null --write-out '%{http_code}' \
+  http://127.0.0.1:3000/admin/assistant/actions)" == 307 ]]
+[[ "$(curl --silent --show-error --max-time 5 --output /dev/null --write-out '%{http_code}' \
+  http://127.0.0.1:3000/dev/assistant-h3/resources)" == 404 ]]
+echo 'assistant_resource_page_auth_and_dev_boundary=passed'
+
 docker exec -i "$name" node scripts/animation/verify-release-assets.cjs < src/lib/assistant/releases/h3-v2/expected-assets.json
