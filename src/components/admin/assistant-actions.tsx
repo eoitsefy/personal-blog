@@ -21,7 +21,7 @@ export function AssistantActions() {
   const fail=()=>setPlay(p=>({...p,playing:false,error:true}));
   const visible=ACTION_GROUP_CLIPS[group].filter(c=>`${actionInfo(c).label} ${c}`.toLowerCase().includes(query.toLowerCase()));
   return <main className={styles.page}>
-    <header><p className={styles.eyebrow}>博客后台 · 小助手</p><h1>动作资源</h1><p className={styles.subtitle}>24 个动作 · 416 张无损资源 · 480 × 480 固定画布 · {H3_MOTION.version}</p><p className={styles.hint}>这里仅预览已上线素材，不修改网站配置，不调用 AI，也不会同时加载所有动作。前台仍按时机自然触发；动作会在当前周期结束后衔接，通常需等数秒，不强行跳帧。连续寒暄动作间隔 6 秒。</p></header>
+    <header><p className={styles.eyebrow}>博客后台 · 小助手</p><h1>动作资源</h1><p className={styles.subtitle}>24 个动作 · {Object.keys(H3_MOTION.assets).length+Object.keys(H3_MOTION.stills).length} 张无损资源 · 480 × 480 固定画布 · {H3_MOTION.version}</p><p className={styles.hint}>这里仅预览已上线素材，不修改网站配置，不调用 AI，也不会同时加载所有动作。前台仍按时机自然触发；动作会在当前周期结束后衔接，通常需等数秒，不强行跳帧。连续寒暄动作间隔 6 秒。</p></header>
     <section className={styles.studio} aria-label="动作预览工作台">
       <div className={`${styles.stage} ${background==="dark"?styles.dark:background==="check"?styles.check:""}`}>
         <div className={styles.actor}><H3Character key={play.run} clip={clip} playId={playId} once animate={play.playing&&!play.paused} onFinished={finished} onFailed={fail}/></div>
