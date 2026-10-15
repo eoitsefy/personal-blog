@@ -71,13 +71,34 @@ export async function validateImageUpload(file: File): Promise<ValidatedImage> {
     throw new MediaValidationError("图片尺寸超出允许范围");
   }
 
-  return {
-    bytes,
-    originalName,
-    mime: config.mime,
-    extension: config.extension,
-    size: bytes.byteLength,
-    width,
-    height,
-  };
+  try {
+    // Decode and encode a new public image. Sharp's default output removes
+    // EXIF (including GPS), XMP, IPTC and ICC metadata. Never keepMetadata here.
+    // Apply EXIF orientation first so stripping it does not turn photos sideways.
+    const image = sharp(bytes, {
+      failOn: "error", limitInputPixels: MAX_IMAGE_PIXELS, sequentialRead: true,
+    }).autoOrient().timeout({ seconds: 10 });
+    if (format === "jpeg") image.jpeg({ quality: 95, chromaSubsampling: "4:4:4" });
+    else if (format === "webp") image.webp({ lossless: true, exact: true, effort: 2 });
+    else {
+      if (metadata.depth === "ushort") image.toColourspace("rgb16");
+      image.png();
+    }
+    const { data, info } = await image.toBuffer({ resolveWithObject: true });
+    if (data.byteLength > maxBytes) {
+      throw new MediaValidationError(`处理后的图片不能超过 ${Math.floor(maxBytes / 1024 / 1024)} MiB`);
+    }
+    return {
+      bytes: data,
+      originalName,
+      mime: config.mime,
+      extension: config.extension,
+      size: data.byteLength,
+      width: info.width,
+      height: info.height,
+    };
+  } catch (error) {
+    if (error instanceof MediaValidationError) throw error;
+    throw new MediaValidationError("图片内容无效或处理失败");
+  }
 }

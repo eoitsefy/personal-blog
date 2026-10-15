@@ -1,9 +1,12 @@
 import assert from "node:assert/strict";
+import { createHash } from "node:crypto";
 import { access, mkdtemp, rm, readFile } from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import test from "node:test";
 import { PrismaClient } from "@prisma/client";
+import sharp from "sharp";
+import { PRIVATE_PHOTO_MARKER, privatePhotoFixture } from "@/test-support/image-privacy";
 import { DELETE as deleteAsset } from "@/app/api/admin/assets/[id]/route";
 import { DELETE as purgeAsset } from "@/app/api/admin/assets/[id]/purge/route";
 import { POST as restoreAsset } from "@/app/api/admin/assets/[id]/restore/route";
@@ -87,10 +90,6 @@ test("video uploads preserve references, range playback, fixed categories and de
 });
 
 const prisma = new PrismaClient();
-const PNG_1X1 = Buffer.from(
-  "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAusB9Y9ZlZsAAAAASUVORK5CYII=",
-  "base64",
-);
 
 test("places enforce privacy, published relations, recycle-bin rules and cover references", async () => {
   const suffix = `${Date.now()}-${Math.random().toString(36).slice(2)}`;
@@ -657,10 +656,11 @@ test("media upload, article references and protected deletion work end to end", 
     assert.ok(cookie);
 
     const formData = new FormData();
-    formData.set("file", new File([PNG_1X1], "pixel.png", { type: "image/png" }));
+    const privatePhoto = await privatePhotoFixture("png");
+    formData.set("file", new File([privatePhoto], "pixel.png", { type: "image/png" }));
     const uploadResponse = await uploadAsset(new Request("http://localhost/api/admin/assets", {
       method: "POST",
-      headers: { cookie, origin: "http://localhost", "content-length": "1024" },
+      headers: { cookie, origin: "http://localhost", "content-length": String(privatePhoto.byteLength + 1024) },
       body: formData,
     }));
     assert.equal(uploadResponse.status, 201);
@@ -668,6 +668,22 @@ test("media upload, article references and protected deletion work end to end", 
     assetId = uploaded.data.asset.id;
     const storedPath = path.join(uploadRoot, ...uploaded.data.asset.url.replace("/uploads/", "").split("/"));
     await access(storedPath);
+    const storedBytes = await readFile(storedPath);
+    const storedMetadata = await sharp(storedBytes).metadata();
+    assert.equal(storedMetadata.exif, undefined);
+    assert.equal(storedMetadata.xmp, undefined);
+    assert.equal(storedBytes.includes(Buffer.from(PRIVATE_PHOTO_MARKER)), false);
+    const storedAsset = await prisma.asset.findUniqueOrThrow({ where: { id: assetId } });
+    assert.equal(storedAsset.size, storedBytes.byteLength);
+    assert.equal(storedAsset.sha256, createHash("sha256").update(storedBytes).digest("hex"));
+    assert.equal(storedAsset.width, 2);
+    assert.equal(storedAsset.height, 3);
+    const publicResponse = await serveUpload(new Request(`http://localhost${storedAsset.url}`), {
+      params: Promise.resolve({ path: storedAsset.url.slice(9).split("/") }),
+    });
+    assert.equal(publicResponse.status, 200);
+    assert.equal(publicResponse.headers.get("content-length"), String(storedBytes.byteLength));
+    assert.deepEqual(Buffer.from(await publicResponse.arrayBuffer()), storedBytes);
 
     const audioFormData = new FormData();
     audioFormData.set("file", new File([pcmWav()], "field-note.wav", { type: "audio/wav" }));
