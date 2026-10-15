@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { createRequire } from "node:module";
 import test, { type TestContext } from "node:test";
-import type { Prisma } from "@prisma/client";
+import { Prisma } from "@prisma/client";
 import { POST as login } from "../app/api/auth/login/route";
 import { clearLoginPair, consumeLoginThrottle, loginThrottleKey, loginThrottleKeys } from "./login-throttle";
 import { prisma } from "./prisma";
@@ -156,6 +156,36 @@ test("a blocked login returns 429 before account lookup or password work", async
 test("database failures cannot silently admit a login", async (t) => {
   fixture(t);
   const failure = new Error("Database unavailable");
+  Reflect.set(prisma, "$transaction", async () => { throw failure; });
+  await assert.rejects(consumeLoginThrottle(loginThrottleKeys(request(), "error@example.test"), now), failure);
+});
+
+test("transaction acquisition contention backs off without admitting password work", async (t) => {
+  const db = fixture(t);
+  Reflect.set(prisma, "$transaction", async () => {
+    throw new Prisma.PrismaClientKnownRequestError("Transaction API error: Unable to start a transaction in the given time.", {
+      code: "P2028", clientVersion: "6.19.3",
+    });
+  });
+  const original = prisma.user.findUnique;
+  const lookup = t.mock.fn(() => { throw new Error("Account lookup must not run"); });
+  Reflect.set(prisma.user, "findUnique", lookup);
+  t.after(() => { Reflect.set(prisma.user, "findUnique", original); });
+  const response = await login(new Request("http://localhost/api/auth/login", {
+    method: "POST", headers: { "content-type": "application/json", "x-real-ip": "198.51.100.1" },
+    body: JSON.stringify({ email: "busy@example.test", password: "incorrect-password" }),
+  }));
+  assert.equal(response.status, 429);
+  assert.equal(response.headers.get("retry-after"), "1");
+  assert.equal(lookup.mock.callCount(), 0);
+  assert.deepEqual(db.rows(), []);
+});
+
+test("errors from an acquired transaction cannot be mistaken for pool contention", async (t) => {
+  fixture(t);
+  const failure = new Prisma.PrismaClientKnownRequestError("Transaction API error: Transaction already closed.", {
+    code: "P2028", clientVersion: "6.19.3",
+  });
   Reflect.set(prisma, "$transaction", async () => { throw failure; });
   await assert.rejects(consumeLoginThrottle(loginThrottleKeys(request(), "error@example.test"), now), failure);
 });

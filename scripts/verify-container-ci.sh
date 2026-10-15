@@ -41,6 +41,7 @@ cleanup() {
 }
 trap cleanup EXIT
 docker run --detach --name "$name" --network host --env DATABASE_URL \
+  --memory=512m --memory-swap=512m --cpus=0.5 --pids-limit=128 \
   --env MAP_PROVIDER=none --env AI_ASSISTANT_ENABLED=false --env UPLOAD_ROOT=/app/uploads \
   --cap-drop ALL --security-opt no-new-privileges:true "$image" >/dev/null
 
@@ -59,3 +60,5 @@ echo 'container_http_and_auth_boundary=passed'
 echo 'assistant_resource_page_auth_and_dev_boundary=passed'
 
 docker exec -i "$name" node scripts/animation/verify-release-assets.cjs < src/lib/assistant/releases/h3-v3/expected-assets.json
+
+docker exec -i "$name" node < scripts/verify-login-throttle.cjs

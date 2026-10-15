@@ -33,6 +33,9 @@ export function loginThrottleKeys(req: Request, email: string): LoginThrottleKey
 }
 
 export async function consumeLoginThrottle(keys: LoginThrottleKeys, now = new Date()): Promise<LoginThrottleResult> {
+  const startedAt = performance.now();
+  const retryAfter = (until: Date) => Math.max(1,
+    Math.ceil((until.getTime() - now.getTime() - (performance.now() - startedAt)) / 1000));
   const buckets = [
     { key: keys.ip, maxAttempts: IP_MAX_ATTEMPTS, blockMs: WINDOW_MS },
     { key: keys.account, maxAttempts: ACCOUNT_MAX_ATTEMPTS, blockMs: WINDOW_MS },
@@ -45,7 +48,7 @@ export async function consumeLoginThrottle(keys: LoginThrottleKeys, now = new Da
     orderBy: { blockedUntil: "desc" }, select: { blockedUntil: true },
   });
   if (blocked?.blockedUntil) {
-    return { limited: true, retryAfterSeconds: Math.max(1, Math.ceil((blocked.blockedUntil.getTime() - now.getTime()) / 1000)) };
+    return { limited: true, retryAfterSeconds: retryAfter(blocked.blockedUntil) };
   }
   try {
     await prisma.$transaction(async (tx) => {
@@ -74,13 +77,20 @@ export async function consumeLoginThrottle(keys: LoginThrottleKeys, now = new Da
           const record = await tx.loginThrottle.findUnique({ where: { key: bucket.key } });
           // Throwing rolls back reservations in the other buckets. Rejected
           // requests cannot consume their budgets or extend the current block.
-          throw new LoginThrottleExceeded(Math.max(1, Math.ceil(((record?.blockedUntil?.getTime() ?? now.getTime()) - now.getTime()) / 1000)));
+          throw new LoginThrottleExceeded(retryAfter(record?.blockedUntil ?? now));
         }
       }
     });
     return { limited: false };
   } catch (error) {
     if (error instanceof LoginThrottleExceeded) return { limited: true, retryAfterSeconds: error.retryAfterSeconds };
+    // No transaction was acquired, so no reservation can have committed.
+    // A CPU-constrained login burst must back off without admitting work or
+    // turning pool contention into a 500. Other database errors still fail.
+    if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === "P2028"
+      && error.message.includes("Unable to start a transaction")) {
+      return { limited: true, retryAfterSeconds: 1 };
+    }
     throw error;
   }
 }
