@@ -33,7 +33,7 @@ import { DELETE as purgePlace } from "@/app/api/admin/places/[id]/purge/route";
 import { GET as listPublicPlaces } from "@/app/api/places/route";
 import { hashPassword, hashSessionToken, issueUserSession, parseCookie, SESSION_COOKIE_NAME } from "@/lib/auth";
 import { commentRateLimitKey } from "@/lib/comments";
-import { loginThrottleKey } from "@/lib/login-throttle";
+import { loginThrottleKeys } from "@/lib/login-throttle";
 import { GET as serveUpload } from "@/app/uploads/[...path]/route";
 
 test("video uploads preserve references, range playback, fixed categories and deletion safety", async () => {
@@ -343,7 +343,7 @@ test("invited users register, reset passwords and lose access when disabled", as
   } finally {
     if (userId) await prisma.user.deleteMany({ where: { id: userId } });
     if (adminId) await prisma.user.deleteMany({ where: { id: adminId } });
-    await prisma.loginThrottle.deleteMany({ where: { key: { in: [loginThrottleKey(loginRequest(adminEmail, "x", "ADMIN"), adminEmail), loginThrottleKey(loginRequest(userEmail, "x", "USER"), userEmail)] } } });
+    await prisma.loginThrottle.deleteMany({ where: { key: { in: [...Object.values(loginThrottleKeys(loginRequest(adminEmail, "x", "ADMIN"), adminEmail)), ...Object.values(loginThrottleKeys(loginRequest(userEmail, "x", "USER"), userEmail))] } } });
     await prisma.$disconnect();
   }
 });
@@ -354,7 +354,7 @@ test("database sessions can be revoked and disabled accounts lose access", async
   const address = `198.51.100.${Math.floor(Math.random() * 200) + 1}`;
   let userId = "";
   let postId = "";
-  let throttleKey = "";
+  let throttleKeys: string[] = [];
 
   try {
     const user = await prisma.user.create({
@@ -373,7 +373,7 @@ test("database sessions can be revoked and disabled accounts lose access", async
       headers: { "content-type": "application/json", "x-real-ip": address },
       body: JSON.stringify({ email, password: "correct-horse-battery-staple" }),
     });
-    throttleKey = loginThrottleKey(loginRequest(), email);
+    throttleKeys = Object.values(loginThrottleKeys(loginRequest(), email));
     const loginResponse = await login(loginRequest());
     assert.equal(loginResponse.status, 200);
     const cookie = loginResponse.headers.get("set-cookie")?.split(";", 1)[0];
@@ -426,7 +426,7 @@ test("database sessions can be revoked and disabled accounts lose access", async
   } finally {
     if (postId) await prisma.post.deleteMany({ where: { id: postId } });
     if (userId) await prisma.user.deleteMany({ where: { id: userId } });
-    if (throttleKey) await prisma.loginThrottle.deleteMany({ where: { key: throttleKey } });
+    if (throttleKeys.length) await prisma.loginThrottle.deleteMany({ where: { key: { in: throttleKeys } } });
     await prisma.$disconnect();
   }
 });
@@ -456,7 +456,7 @@ test("authenticated article lifecycle integrates taxonomy, search and soft delet
   const slug = `phase1b-${suffix}`;
   let userId = "";
   let postId = "";
-  let throttleKey = "";
+  let throttleKeys: string[] = [];
 
   try {
     const user = await prisma.user.create({
@@ -528,7 +528,7 @@ test("authenticated article lifecycle integrates taxonomy, search and soft delet
       headers: { "content-type": "application/json" },
       body: JSON.stringify({ email: blockedEmail, password: "definitely-wrong-password" }),
     });
-    throttleKey = loginThrottleKey(blockedRequest(), blockedEmail);
+    throttleKeys = Object.values(loginThrottleKeys(blockedRequest(), blockedEmail));
     for (let attempt = 0; attempt < 5; attempt += 1) {
       assert.equal((await login(blockedRequest())).status, 401);
     }
@@ -538,7 +538,7 @@ test("authenticated article lifecycle integrates taxonomy, search and soft delet
   } finally {
     if (postId) await prisma.post.deleteMany({ where: { id: postId } });
     if (userId) await prisma.user.deleteMany({ where: { id: userId } });
-    if (throttleKey) await prisma.loginThrottle.deleteMany({ where: { key: throttleKey } });
+    if (throttleKeys.length) await prisma.loginThrottle.deleteMany({ where: { key: { in: throttleKeys } } });
     await prisma.category.deleteMany({ where: { posts: { none: {} } } });
     await prisma.tag.deleteMany({ where: { posts: { none: {} } } });
     await prisma.$disconnect();

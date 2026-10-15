@@ -23,4 +23,4 @@ function run(script, args) {
 }
 
 run(path.join(root, "node_modules", "prisma", "build", "index.js"), ["migrate", "deploy"]);
-run(path.join(root, "node_modules", "tsx", "dist", "cli.mjs"), ["--test", "--test-concurrency=1", "src/integration/content-management.integration.test.ts", "src/integration/editor.integration.test.ts"]);
+run(path.join(root, "node_modules", "tsx", "dist", "cli.mjs"), ["--test", "--test-concurrency=1", "src/integration/content-management.integration.test.ts", "src/integration/editor.integration.test.ts", "src/integration/login-throttle.integration.test.ts"]);

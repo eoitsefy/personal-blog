@@ -9,10 +9,9 @@ import {
   verifyPassword,
 } from "@/lib/auth";
 import {
-  clearLoginFailures,
-  getLoginThrottle,
-  loginThrottleKey,
-  recordLoginFailure,
+  clearLoginPair,
+  consumeLoginThrottle,
+  loginThrottleKeys,
 } from "@/lib/login-throttle";
 import { prisma } from "@/lib/prisma";
 import { readJsonMutation } from "@/lib/request-security";
@@ -39,8 +38,8 @@ export async function POST(req: Request) {
     }
 
     const email = parsed.data.email.toLowerCase();
-    const throttleKey = loginThrottleKey(req, email);
-    const throttle = await getLoginThrottle(throttleKey);
+    const throttleKeys = loginThrottleKeys(req, email);
+    const throttle = await consumeLoginThrottle(throttleKeys);
     if (throttle.limited) {
       return fail(
         "RATE_LIMITED",
@@ -67,7 +66,6 @@ export async function POST(req: Request) {
       ? user?.role === "ADMIN"
       : Boolean(user?.emailVerifiedAt);
     if (!user || !audienceAllowed || user.status !== "ACTIVE" || !passwordMatches) {
-      await recordLoginFailure(throttleKey);
       logApi({
         requestId,
         path: "/api/auth/login",
@@ -78,7 +76,7 @@ export async function POST(req: Request) {
       return fail("UNAUTHORIZED", "邮箱或密码错误", 401, requestId);
     }
 
-    await clearLoginFailures(throttleKey);
+    await clearLoginPair(throttleKeys);
 
     const session = await issueUserSession(user.id);
     const response = NextResponse.json(
