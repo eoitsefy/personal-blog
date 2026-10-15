@@ -1,6 +1,7 @@
 import { Prisma } from "@prisma/client";
 import Link from "next/link";
 import { CommentManager } from "@/components/admin/comment-manager";
+import { requireAdminPage } from "@/lib/admin-auth";
 import { prisma } from "@/lib/prisma";
 
 export const metadata = { title: "评论管理" };
@@ -18,6 +19,7 @@ function href(query: { q: string; status: string; trash: boolean; page: number }
 }
 
 export default async function CommentsPage({ searchParams }: PageProps) {
+  await requireAdminPage();
   const sp = await searchParams;
   const q = String(first(sp.q) ?? "").trim().slice(0, 80);
   const requestedStatus = String(first(sp.status) ?? "ALL");

@@ -1,9 +1,11 @@
 import { UserManager } from "@/components/admin/user-manager";
+import { requireAdminPage } from "@/lib/admin-auth";
 import { prisma } from "@/lib/prisma";
 
 export const metadata = { title: "用户管理" };
 
 export default async function UsersPage() {
+  await requireAdminPage();
   const now = new Date();
   const users = await prisma.user.findMany({
     orderBy: [{ role: "desc" }, { createdAt: "desc" }],
