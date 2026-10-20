@@ -39,6 +39,15 @@ function assertMicrophoneDisabled(policy) {
   assert(policy && /(?:^|,)\s*microphone=\(\)\s*(?:,|$)/.test(policy), 'Production microphone permission must remain disabled');
 }
 
+function assertH3AssetCache(policy, src) {
+  const directives = (policy ?? '').toLowerCase().split(',').map(value => value.trim());
+  const ages = directives.filter(value => /^max-age\s*=/.test(value));
+  assert(directives.includes('public') && directives.includes('immutable') &&
+    ages.length === 1 && /^max-age\s*=\s*31536000$/.test(ages[0]) &&
+    !directives.some(value => /^(?:private|no-cache|no-store)(?:\s*=|$)/.test(value)),
+  `Asset cache policy must be public, max-age=31536000, immutable: ${src}`);
+}
+
 async function verifyRelease(expected, io) {
   const filename = manifestFiles[expected.kind];
   assert(filename, 'Unknown release kind');
@@ -54,6 +63,7 @@ async function verifyRelease(expected, io) {
     assert.equal(metadata.height, asset.height, `Asset height mismatch: ${asset.src}`);
     const response = await io.fetch(`http://127.0.0.1:3000${asset.src}`, {signal:AbortSignal.timeout(10000)});
     assert.equal(response.status, 200, `Asset HTTP status: ${asset.src}`);
+    if (expected.kind === 'h3' || expected.kind === 'h3-mobile') assertH3AssetCache(response.headers.get('cache-control'), asset.src);
     assert.equal(sha256(Buffer.from(await response.arrayBuffer())), asset.sha256, `HTTP SHA mismatch: ${asset.src}`);
   }
   return complete.length;

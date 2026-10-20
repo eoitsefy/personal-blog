@@ -4,13 +4,15 @@ import crypto from 'node:crypto';
 import sharp from 'sharp';
 import verifier from './verify-release-assets.cjs';
 
+const immutableHeaders = {'Cache-Control':'public, max-age=31536000, immutable'};
+
 async function fixture(kind='h3-mobile') {
   const bytes = await sharp({create:{width:4,height:2,channels:4,background:'#f4c343'}}).webp().toBuffer();
   const sha256 = crypto.createHash('sha256').update(bytes).digest('hex');
   const asset = {src:'/assistant/h3-mobile-v2/idle-000.webp', sha256, width:4, height:2};
-  const manifest = {version:'fixture-v2',width:4,height:2,assets:{idle:asset},stills:{}};
+  const manifest = {version:'fixture-v2',width:4,height:2,...(kind === 'natural' ? {assets:{},still:asset} : {assets:{idle:asset},stills:{}})};
   const expected = {kind,version:manifest.version,assets:[{...asset,bytes:bytes.length}]};
-  const io = {readFile:path => path.startsWith('public') ? bytes : JSON.stringify(manifest), metadata:buffer => sharp(buffer).metadata(), fetch:async () => new Response(bytes)};
+  const io = {readFile:path => path.startsWith('public') ? bytes : JSON.stringify(manifest), metadata:buffer => sharp(buffer).metadata(), fetch:async () => new Response(bytes,{headers:immutableHeaders})};
   return {bytes,manifest,expected,io};
 }
 
@@ -35,7 +37,7 @@ test('correct hash cannot hide incorrect declared image dimensions', async () =>
 });
 test('HTTP bytes must match the same disk hash', async () => {
   const {expected,io} = await fixture();
-  io.fetch=async () => new Response('stale CDN bytes');
+  io.fetch=async () => new Response('stale CDN bytes',{headers:immutableHeaders});
   await assert.rejects(verifier.verifyRelease(expected,io),/HTTP SHA mismatch/);
 });
 test('path traversal and duplicate sources are rejected before reads', async () => {
@@ -48,4 +50,29 @@ test('path traversal and duplicate sources are rejected before reads', async () 
 test('microphone deny is explicit and rejects wildcard/self grants', () => {
   verifier.assertMicrophoneDisabled('camera=(), microphone=(), geolocation=()');
   for (const value of [null,'camera=()','microphone=*','microphone=(self)']) assert.throws(() => verifier.assertMicrophoneDisabled(value),/microphone/);
+});
+
+test('desktop and mobile assets reject missing long-cache directives', async () => {
+  for (const kind of ['h3','h3-mobile']) {
+    const {bytes,expected,io} = await fixture(kind);
+    for (const policy of [null,'public, max-age=31536000','max-age=31536000, immutable']) {
+      io.fetch=async () => new Response(bytes,{headers:policy ? {'Cache-Control':policy} : {}});
+      await assert.rejects(verifier.verifyRelease(expected,io),/Asset cache policy/);
+    }
+  }
+});
+test('desktop and mobile reject short, conflicting, or private caches', async () => {
+  for (const kind of ['h3','h3-mobile']) {
+    const {bytes,expected,io} = await fixture(kind);
+    for (const policy of ['public, max-age=0, immutable','public, max-age=3600, immutable','public, max-age=31536000, max-age=0, immutable','public, max-age=31536000, immutable, private','public, max-age=31536000, immutable, no-store','public, max-age=31536000, immutable, no-cache']) {
+      io.fetch=async () => new Response(bytes,{headers:{'Cache-Control':policy}});
+      await assert.rejects(verifier.verifyRelease(expected,io),/Asset cache policy/);
+    }
+    assert.equal(await verifier.verifyRelease(expected,{...io,fetch:async () => new Response(bytes,{headers:immutableHeaders})}),1);
+  }
+});
+test('natural assets retain their existing cache boundary', async () => {
+  const {bytes,expected,io} = await fixture('natural');
+  io.fetch=async () => new Response(bytes,{headers:{'Cache-Control':'public, max-age=0'}});
+  assert.equal(await verifier.verifyRelease(expected,io),1);
 });
