@@ -1,5 +1,5 @@
-import release from "./releases/h3-v5/manifest.json";
-import mobileRelease from "./releases/h3-mobile-v3/manifest.json";
+import release from "./releases/h3-v7/manifest.json";
+import mobileRelease from "./releases/h3-mobile-v5/manifest.json";
 import type { CharacterAction } from "./character";
 
 export const H3_CLIPS = ["idle-blink", "wave", "nod", "thanks", "thinking", "cheer", "yawn"] as const;
@@ -11,7 +11,7 @@ export type H3Manifest = {
   clips: Record<H3Clip, { pages: string[]; durations: number[]; frames: number; durationMs: number; loop: boolean; label: string; sourceRun: string; alphaExact: boolean; scaledAlphaPreserved?: boolean; rgbLossless?: boolean }>;
   review: { aiArtReview: boolean; userAuthorizedRelease: boolean };
   encoding?: { rgbQuality: number; alphaQuality: number; visibleRgbLossy: boolean; scaledAlphaPreserved: boolean };
-  release?: { sourceVersion: string; includedClips: string[]; sceneClipsRemoved: boolean; mediaBytesUnchanged: boolean };
+  release?: { sourceVersion: string; includedClips: string[]; sceneClipsRemoved: boolean; mediaBytesUnchanged: boolean; replacedClips?: string[] };
   candidate?: { localOnly: boolean; [key: string]: unknown };
 };
 export const H3_MOTION = release as H3Manifest;
@@ -20,24 +20,29 @@ export const H3_BASIC_CLIPS = H3_CLIPS;
 export const H3_DECODED_PIXEL_LIMIT = 6 * 1024 * 1024;
 export const h3Action = (action: CharacterAction): H3Clip => action === "idle" ? "idle-blink" : action === "bow" ? "thanks" : action;
 
-/** Seven selected basic clips only. Existing versioned media bytes are unchanged;
- * new manifests never inherit or fall back to removed day/night releases. */
+/** Seven selected basic clips. All use RMBG2 mattes at immutable URLs;
+ * the six newly processed cycles preserve the previously accepted cheer bytes. */
 export function validH3Motion(m: H3Manifest): boolean {
   try {
-    const mobile = m.version === "h3-motion-mobile-v3";
-    if (!mobile && m.version !== "h3-motion-v5") return false;
-    const size = mobile ? 320 : 480, prefix = mobile ? "h3-mobile-v2" : "h3-v4";
+    const mobile = m.version === "h3-motion-mobile-v5";
+    if (!mobile && m.version !== "h3-motion-v7") return false;
+    const size = mobile ? 320 : 480, prefix = mobile ? "h3-basics-rmbg2-mobile-v1" : "h3-basics-rmbg2-v1";
     if (m.width !== size || m.height !== size || m.columns !== 4 || m.pageFrames !== 8 ||
       m.review?.userAuthorizedRelease !== true || m.review.aiArtReview !== false || m.candidate !== undefined ||
       m.encoding?.rgbQuality !== (mobile ? 85 : 90) || m.encoding.alphaQuality !== 100 ||
       m.encoding.visibleRgbLossy !== true || m.encoding.scaledAlphaPreserved !== true ||
-      m.release?.sourceVersion !== (mobile ? "h3-motion-mobile-v2" : "h3-motion-v4") ||
-      m.release.sceneClipsRemoved !== true || m.release.mediaBytesUnchanged !== true ||
+      m.release?.sourceVersion !== (mobile ? "h3-motion-mobile-v4" : "h3-motion-v6") ||
+      m.release.sceneClipsRemoved !== true || m.release.mediaBytesUnchanged !== false ||
+      m.release.replacedClips?.length !== 6 ||
+      !H3_CLIPS.filter(clip => clip !== "cheer").every((clip, index) => m.release!.replacedClips![index] === clip) ||
       m.release.includedClips.length !== H3_CLIPS.length ||
       !H3_CLIPS.every((clip, index) => m.release!.includedClips[index] === clip) ||
       Object.keys(m.clips).length !== H3_CLIPS.length || Object.keys(m.stills).length !== H3_CLIPS.length) return false;
     const used = new Set<string>(), sources = new Set<string>();
-    const validSource = (src: string, hash: string) => new RegExp(`^/assistant/${prefix}/[a-z0-9-]+\\.webp$`).test(src) && /^[a-f0-9]{64}$/.test(hash);
+    const validSource = (name: H3Clip, src: string, hash: string) => {
+      const directory = name === "cheer" ? (mobile ? "h3-cheer-rmbg2-mobile-v1" : "h3-cheer-rmbg2-v1") : prefix;
+      return new RegExp(`^/assistant/${directory}/[a-z0-9-]+\\.webp$`).test(src) && /^[a-f0-9]{64}$/.test(hash);
+    };
     for (const name of H3_CLIPS) {
       const c = m.clips[name], still = m.stills[name];
       if (!c || !still || c.frames !== 124 || !Array.isArray(c.durations) || c.durations.length !== c.frames ||
@@ -47,12 +52,12 @@ export function validH3Motion(m: H3Manifest): boolean {
         !Array.isArray(c.pages) || c.pages.length !== Math.ceil(c.frames / 8) || new Set(c.pages).size !== c.pages.length ||
         c.scaledAlphaPreserved !== true || c.rgbLossless !== false || c.alphaExact !== false ||
         typeof c.label !== "string" || !c.label || typeof c.sourceRun !== "string" || !c.sourceRun ||
-        c.loop !== (name === "idle-blink") || !validSource(still.src, still.sha256) || sources.has(still.src)) return false;
+        c.loop !== (name === "idle-blink") || !validSource(name, still.src, still.sha256) || sources.has(still.src)) return false;
       sources.add(still.src);
       for (const key of c.pages) {
         const a = m.assets[key];
         if (!a || a.width !== size * 4 || a.height !== size * 2 || a.alpha !== true ||
-          used.has(key) || sources.has(a.src) || !validSource(a.src, a.sha256)) return false;
+          used.has(key) || sources.has(a.src) || !validSource(name, a.src, a.sha256)) return false;
         used.add(key); sources.add(a.src);
       }
     }

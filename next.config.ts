@@ -8,7 +8,7 @@ const nextConfig: NextConfig = {
   poweredByHeader: false,
   async headers() {
     return [
-      ...["h3-v2", "h3-v3", "h3-v4", "h3-mobile-v1", "h3-mobile-v2"].map(version => ({
+      ...["h3-v2", "h3-v3", "h3-v4", "h3-mobile-v1", "h3-mobile-v2", "h3-cheer-rmbg2-v1", "h3-cheer-rmbg2-mobile-v1", "h3-basics-rmbg2-v1", "h3-basics-rmbg2-mobile-v1"].map(version => ({
         source: `/assistant/${version}/:path*`,
         headers: [{ key: "Cache-Control", value: "public, max-age=31536000, immutable" }],
       })),

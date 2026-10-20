@@ -41,9 +41,11 @@ test("both sizes have complete real WebP files, exact release hashes, expected g
       assert.equal(metadata.width, release.width * (atlas ? 4 : 1));
       assert.equal(metadata.height, release.height * (atlas ? 2 : 1));
     }
-    const directory = release.width === 320 ? "h3-mobile-v2" : "h3-v4";
-    assert.equal(readdirSync(`public/assistant/${directory}`).length, paths.size);
-    const manifestDirectory = release.width === 320 ? "h3-mobile-v3" : "h3-v5";
+    const directory = release.width === 320 ? "h3-cheer-rmbg2-mobile-v1" : "h3-cheer-rmbg2-v1";
+    assert.equal(readdirSync(`public/assistant/${directory}`).length, 17);
+    const newDirectory = release.width === 320 ? "h3-basics-rmbg2-mobile-v1" : "h3-basics-rmbg2-v1";
+    assert.equal(readdirSync(`public/assistant/${newDirectory}`).length, 102);
+    const manifestDirectory = release.width === 320 ? "h3-mobile-v5" : "h3-v7";
     assert.deepEqual(JSON.parse(readFileSync(`public/assistant/${manifestDirectory}/manifest.json`, "utf8")), release);
   }
 });
@@ -63,11 +65,35 @@ test("malformed, stale, scene-injected, mixed and unreferenced resources fail cl
       (m: H3Manifest) => { m.encoding!.alphaQuality = 90; },
       (m: H3Manifest) => { m.release!.includedClips.reverse(); },
       (m: H3Manifest) => { m.release!.sceneClipsRemoved = false; },
+      (m: H3Manifest) => { m.release!.replacedClips = ["wave"]; },
+      (m: H3Manifest) => { m.assets[m.clips.cheer.pages[0]].src = "/assistant/h3-v4/cheer-000.webp"; },
+      (m: H3Manifest) => { m.assets[m.clips.wave.pages[0]].src = "/assistant/h3-cheer-rmbg2-v1/cheer-000.webp"; },
       (m: H3Manifest) => { m.assets.unreferenced = { ...m.assets[m.clips.wave.pages[0]] }; },
       (m: H3Manifest) => { (m.clips as Record<string, unknown>)["bed-pull"] = m.clips.wave; },
     ]) { const changed = structuredClone(release); mutate(changed); assert.equal(validH3Motion(changed), false); }
   }
   for (const value of [null, undefined, {}, {version:"h3-motion-v5"}]) assert.equal(validH3Motion(value as H3Manifest), false);
+});
+
+test("the six new mattes preserve cheer bytes and every selected action timeline", () => {
+  for (const release of [H3_MOTION, H3_MOBILE_MOTION]) {
+    const previousDirectory = release.width === 320 ? "h3-mobile-v4" : "h3-v6";
+    const previous = JSON.parse(readFileSync(`src/lib/assistant/releases/${previousDirectory}/manifest.json`, "utf8")) as H3Manifest;
+    assert.deepEqual(release.release?.replacedClips, basics.filter(name => name !== "cheer"));
+    for (const name of H3_CLIPS) {
+      assert.deepEqual(release.clips[name].durations, previous.clips[name].durations);
+      assert.equal(release.clips[name].frames, previous.clips[name].frames);
+      assert.equal(release.clips[name].loop, previous.clips[name].loop);
+      if (name !== "cheer") {
+        assert.notEqual(release.stills[name].src, previous.stills[name].src);
+        for (const key of release.clips[name].pages) assert.notEqual(release.assets[key].src, previous.assets[key].src);
+      } else {
+        assert.deepEqual(release.clips[name], previous.clips[name]);
+        assert.deepEqual(release.stills[name], previous.stills[name]);
+        for (const key of release.clips[name].pages) assert.deepEqual(release.assets[key], previous.assets[key]);
+      }
+    }
+  }
 });
 
 test("idle finishes its real cycle before a requested gesture; gestures hold genuine final frame and complete once", () => {

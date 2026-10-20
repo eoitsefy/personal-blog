@@ -38,13 +38,19 @@ function validateExpectation(expected, manifest) {
 function assertCurrentH3Release(manifest, kind) {
   const basic = ['idle-blink','wave','nod','thanks','thinking','cheer','yawn'];
   const mobile = kind === 'h3-mobile';
-  assert.equal(manifest.version, mobile ? 'h3-motion-mobile-v3' : 'h3-motion-v5', 'Current seven-action release required');
+  assert.equal(manifest.version, mobile ? 'h3-motion-mobile-v5' : 'h3-motion-v7', 'Current seven-action release required');
   assert.deepEqual(Object.keys(manifest.clips), basic, 'Only seven current basic actions may ship');
   assert.deepEqual(Object.keys(manifest.stills), basic, 'Only seven current basic stills may ship');
   assert.equal(Object.keys(manifest.assets).length, 112, 'Complete seven-action atlas inventory required');
   assert.equal(manifest.release?.sceneClipsRemoved, true, 'Retired scenes must remain removed');
-  const prefix = mobile ? '/assistant/h3-mobile-v2/' : '/assistant/h3-v4/';
-  for (const asset of completeAssets(manifest, kind)) assert(asset.src.startsWith(prefix), 'Retired H3 resource URL');
+  assert.deepEqual(manifest.release?.replacedClips, basic.filter(name => name !== 'cheer'), 'Only the six requested mattes may change');
+  const prefix = mobile ? '/assistant/h3-basics-rmbg2-mobile-v1/' : '/assistant/h3-basics-rmbg2-v1/';
+  const cheerPrefix = mobile ? '/assistant/h3-cheer-rmbg2-mobile-v1/' : '/assistant/h3-cheer-rmbg2-v1/';
+  for (const name of basic) {
+    const expectedPrefix = name === 'cheer' ? cheerPrefix : prefix;
+    for (const asset of [manifest.stills[name], ...manifest.clips[name].pages.map(key => manifest.assets[key])])
+      assert(asset.src.startsWith(expectedPrefix), 'Unexpected or retired H3 resource URL');
+  }
 }
 
 function assertMicrophoneDisabled(policy) {
