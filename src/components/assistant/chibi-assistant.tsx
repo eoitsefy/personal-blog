@@ -23,7 +23,7 @@ import { nextH3SceneClip } from "@/lib/assistant/h3-prefetch";
 import { useBrowserVoice } from "./use-browser-voice";
 import { useAssistantContext } from "./use-assistant-context";
 import { socialReply } from "@/lib/assistant/social";
-import { AssistantAnimationMenu } from "./assistant-animation-menu";
+import { AssistantAnimationMenu, AssistantTouchAnimationPicker } from "./assistant-animation-menu";
 import { createManualPlayback, reduceManualPlayback } from "@/lib/assistant/manual-playback";
 
 type Settings = { enabled: boolean; maxQuestionChars: number };
@@ -222,12 +222,12 @@ export function ChibiAssistant({ floating = false, settings }: { floating?: bool
     </button>
     <AssistantAnimationMenu trigger={trigger} onOpenChange={setMenuOpen} onSelect={selectAnimation} onAutomatic={() => sendManual({ type: "automatic" })} />
     {!floating ? <><div className={styles.introduction}>{ASSISTANT_GREETINGS[0]}</div><nav className={styles.explore} aria-label="浏览网站"><Link href="/posts">浏览日志 ↗</Link><Link href="/places">看看地点 ↗</Link></nav></> : null}
-    {started ? <AssistantBubble open={open} greeting={greeting} initialSettings={settings} animate={animate} behavior={behavior} onAnimate={() => setAnimate(value => !value)} onClose={dismiss} returnFocus={() => trigger.current?.focus({ preventScroll: true })} /> : null}
+    {started ? <AssistantBubble open={open} greeting={greeting} initialSettings={settings} animate={animate} behavior={behavior} onAnimate={() => setAnimate(value => !value)} onSelectAnimation={selectAnimation} onAutomatic={() => sendManual({ type: "automatic" })} onClose={dismiss} returnFocus={() => trigger.current?.focus({ preventScroll: true })} /> : null}
   </div>;
 }
 
-function AssistantBubble({ open, greeting, initialSettings, animate, behavior, onAnimate, onClose, returnFocus }: {
-  open: boolean; greeting: string; initialSettings?: Settings; animate: boolean; behavior: ReturnType<typeof useAssistantBehavior>; onAnimate: () => void; onClose: () => void; returnFocus: () => void;
+function AssistantBubble({ open, greeting, initialSettings, animate, behavior, onAnimate, onSelectAnimation, onAutomatic, onClose, returnFocus }: {
+  open: boolean; greeting: string; initialSettings?: Settings; animate: boolean; behavior: ReturnType<typeof useAssistantBehavior>; onAnimate: () => void; onSelectAnimation: (action: CharacterAction) => void; onAutomatic: () => void; onClose: () => void; returnFocus: () => void;
 }) {
   const appearance = useAssistantAppearance();
   const dialog = useRef<HTMLDivElement>(null), closeButton = useRef<HTMLButtonElement>(null);
@@ -302,7 +302,7 @@ function AssistantBubble({ open, greeting, initialSettings, animate, behavior, o
 
   return <div ref={dialog} role="dialog" aria-modal="false" hidden={!open} className={`${styles.chatBalloon} ${animate ? "" : styles.still}`} aria-labelledby={`${id}-title`}>
     <div className={styles.balloonBody}>
-    <header className={styles.header}><div><strong id={`${id}-title`}>和我聊聊</strong><small>AI 回答仅供参考</small></div><div className={styles.headerControls}><button ref={closeButton} type="button" onClick={close} aria-label="关闭小助手对话">×</button></div></header>
+    <header className={styles.header}><div><strong id={`${id}-title`}>和我聊聊</strong><small>AI 回答仅供参考</small></div><div className={styles.headerControls}>{open ? <AssistantTouchAnimationPicker onSelect={onSelectAnimation} onAutomatic={onAutomatic} /> : null}<button ref={closeButton} type="button" onClick={close} aria-label="关闭小助手对话">×</button></div></header>
     <details className={styles.preferences}><summary>形象与语音设置</summary><div><label className={styles.skinChoice}>助手形象<select value={appearance} onChange={event => setAssistantAppearance(parseAppearance(event.target.value))}><option value="h3">新版 · H3 完整动作</option><option value="natural">上一版 · 自然动作</option><option value="legacy">原版 · 序列帧</option></select></label><button className={styles.motion} type="button" onClick={onAnimate} aria-pressed={!animate}>{animate ? "暂停动作" : "开启动作"}</button><label><input type="checkbox" checked={readAnswers} onChange={event=>setReadAnswers(event.target.checked)} /> 朗读回复</label></div></details>
     <div ref={messages} className={styles.messages} aria-label="对话记录" tabIndex={0} onScroll={() => behavior.send({ type: "activity" })}>
       <p className={styles.bubble}>{greeting}</p>

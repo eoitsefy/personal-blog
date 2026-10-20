@@ -84,11 +84,18 @@
 .chatBalloon { position: absolute; right: calc(100% + 8px); bottom: 52px; width: min(360px, calc(100vw - 242px)); height: min(510px, calc(100dvh - 90px)); color: #29271f; pointer-events: auto; text-align: left; z-index: 2; filter: drop-shadow(5px 7px 0 #241f1918); }
 .chatBalloon[hidden] { display: none; }
 .chatBalloon::after { content: ""; position: absolute; width: 20px; height: 20px; right: -10px; bottom: 47px; background: #fffdf7; border-top: 2px solid #423b30; border-right: 2px solid #423b30; transform: rotate(45deg); }
-.balloonBody { display: flex; flex-direction: column; height: 100%; min-height: 0; border: 2px solid #423b30; border-radius: 24px; background: #fffdf7; overflow: hidden; }
+.balloonBody { position: relative; display: flex; flex-direction: column; height: 100%; min-height: 0; border: 2px solid #423b30; border-radius: 24px; background: #fffdf7; overflow: hidden; }
 .chatBalloon .header { background: #fffdf7; color: #29271f; padding: 10px 14px 6px; }
 .chatBalloon .header strong { font-size: 1rem; }
 .chatBalloon .header small { margin-top: 2px; color: #746b5b; font-size: .75rem; }
 .chatBalloon .header button { border: 0; color: #4b4234; }
+.touchActionTrigger, .touchAnimationMenu { display: none; }
+@media (max-width: 767px), (pointer: coarse) {
+  .chatBalloon .header .touchActionTrigger { display: inline-flex; align-items: center; justify-content: center; min-width: 52px; min-height: 44px; border: 1px solid #d8cbb2; border-radius: 12px; background: #f8e8bf; font-size: .875rem; }
+  .touchAnimationMenu { display: block; position: absolute; top: 56px; right: 10px; left: auto; max-width: calc(100% - 20px); max-height: calc(100% - 68px); overscroll-behavior: contain; }
+  .touchAnimationMenu button { min-height: 44px; }
+  .launcher { -webkit-touch-callout: none; user-select: none; }
+}
 .preferences { padding: 0 14px 8px; border-bottom: 1px dashed #d8cbb2; font-size: .8rem; flex-shrink: 0; }
 .preferences summary { cursor: pointer; width: fit-content; min-height: 30px; line-height: 30px; color: #70614b; }
 .preferences > div { display: flex; flex-wrap: wrap; gap: 4px 14px; align-items: center; }
