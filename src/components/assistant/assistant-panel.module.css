@@ -71,6 +71,12 @@
 @media (prefers-reduced-motion: reduce) { .spriteSheet, .dots { animation: none; left: 0; top: 0; } }
 
 /* Non-modal comic balloon: the actual character remains on the page. */
+.animationMenu { position: fixed; z-index: 100; width: 208px; max-height: calc(100dvh - 16px); overflow-y: auto; padding: 6px; border: 1px solid #c7b28b; border-radius: 14px; background: #fffdf7; color: #29271f; box-shadow: 0 6px 28px #241f1930; pointer-events: auto; text-align: left; }
+.animationMenu p { margin: 4px 10px 5px; font-size: .75rem; color: #70614b; }
+.animationMenu button { display: block; width: 100%; min-height: 36px; padding: 7px 10px; border: 0; border-radius: 8px; background: transparent; color: inherit; text-align: left; font: inherit; font-size: .875rem; cursor: pointer; }
+.animationMenu button:hover, .animationMenu button:focus { background: #f6e8c7; outline: none; }
+.animationMenu button:focus-visible { outline: 2px solid #997222; outline-offset: -2px; }
+.animationMenu [role="separator"] { height: 1px; margin: 5px 6px; background: #e2d6c0; }
 .panel { position: relative; }
 .floating { width: 192px; }
 .sceneSlot:has([data-engine="h3-native-frames"]) { aspect-ratio: 1; }

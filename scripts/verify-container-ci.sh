@@ -59,6 +59,16 @@ echo 'container_http_and_auth_boundary=passed'
   http://127.0.0.1:3000/dev/assistant-h3/resources)" == 404 ]]
 echo 'assistant_resource_page_auth_and_dev_boundary=passed'
 
-docker exec -i "$name" node scripts/animation/verify-release-assets.cjs < src/lib/assistant/releases/h3-v3/expected-assets.json
+node <<'JS' | docker exec -i "$name" node scripts/animation/verify-release-assets.cjs
+const fs = require('node:fs');
+const releases = [['h3','h3-v4'], ['h3-mobile','h3-mobile-v2']].map(([kind,directory]) => {
+  const manifest = JSON.parse(fs.readFileSync(`src/lib/assistant/releases/${directory}/manifest.json`, 'utf8'));
+  const assets = [...Object.values(manifest.assets), ...Object.values(manifest.stills)].map(asset => ({
+    src:asset.src, sha256:asset.sha256, width:asset.width ?? manifest.width, height:asset.height ?? manifest.height,
+  }));
+  return {kind, version:manifest.version, assets};
+});
+process.stdout.write(JSON.stringify({releases}));
+JS
 
 docker exec -i "$name" node < scripts/verify-login-throttle.cjs

@@ -4,7 +4,7 @@ import { readFileSync } from "node:fs";
 import { createHash } from "node:crypto";
 import sharp from "sharp";
 import frameIndex from "./releases/h3-v3/source-frame-hashes.json";
-import { H3_CLIPS,H3_MOTION,H3MotionClock,h3Action,validH3Motion } from "./h3-motion";
+import { H3_CLIPS,H3_LEGACY_MOTION as H3_MOTION,H3_MOTION as currentRelease,H3_MOBILE_MOTION,H3_BASIC_CLIPS,type H3Manifest,H3MotionClock,h3Action,validH3Motion } from "./h3-motion";
 import { createH3Presence,reduceH3Presence,H3_REST_AFTER_MS,H3_SIP_AFTER_MS } from "./h3-presence";
 
 test("all 24 selected clips have exact alpha, valid timings and honest authorization metadata",()=>{
@@ -90,4 +90,37 @@ test("paused clocks retain phase and stale scene completions are ignored",()=>{
   const clock=new H3MotionClock(H3_MOTION); clock.sample(0,()=>{}); const first=clock.sample(100,()=>{});
   clock.delay(3000); assert.equal(clock.sample(3100,()=>{}).frame,first.frame);
   const s=createH3Presence(); assert.equal(reduceH3Presence(s,{ type:"finished",cycle:999,now:100 }),s);
+});
+
+
+test("new production releases authorize RGB compression only with exact alpha/timing/source contracts", () => {
+  assert(validH3Motion(currentRelease)); assert(validH3Motion(H3_MOBILE_MOTION));
+  for (const release of [currentRelease, H3_MOBILE_MOTION]) {
+    for (const mutate of [
+      (m: H3Manifest) => { m.version += "-candidate"; },
+      (m: H3Manifest) => { m.review.userAuthorizedRelease = false; },
+      (m: H3Manifest) => { m.candidate = { localOnly: true, resampled: true, scaledAlphaPreserved: true, sourceVersion: H3_MOTION.version }; },
+      (m: H3Manifest) => { m.clips.wave.alphaExact = true; },
+      (m: H3Manifest) => { m.clips.wave.scaledAlphaPreserved = false; },
+      (m: H3Manifest) => { m.clips.wave.durations[0] = 42; },
+      (m: H3Manifest) => { m.clips.wave.pages[1] = m.clips.wave.pages[0]; },
+      (m: H3Manifest) => { m.assets[m.clips.wave.pages[0]].src = "/assistant/h3-v4/../wave.webp"; },
+      (m: H3Manifest) => { m.encoding!.alphaQuality = 90; },
+      (m: H3Manifest) => { m.release!.replacedClips.reverse(); },
+      (m: H3Manifest) => { m.assets[m.clips["bed-enter"].pages[0]].sha256 = "0".repeat(64); },
+      (m: H3Manifest) => { m.clips["bed-enter"].durations[0]++; },
+      (m: H3Manifest) => { m.clips["bed-enter"].sourceRun = "new-long-scene"; },
+      (m: H3Manifest) => { m.assets.unreferenced = { ...m.assets[m.clips.wave.pages[0]] }; },
+    ]) { const m = structuredClone(release); mutate(m); assert.equal(validH3Motion(m), false); }
+    for (const name of H3_BASIC_CLIPS) assert.equal(release.clips[name].frames, 124);
+  }
+});
+
+test("both new production sizes reference existing complete local asset hashes", () => {
+  const seen = new Set<string>();
+  for (const release of [currentRelease, H3_MOBILE_MOTION]) for (const asset of [...Object.values(release.assets), ...Object.values(release.stills)]) {
+    if (seen.has(asset.src)) continue;
+    seen.add(asset.src);
+    assert.equal(createHash("sha256").update(readFileSync(`public${asset.src}`)).digest("hex"), asset.sha256, asset.src);
+  }
 });
