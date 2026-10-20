@@ -61,7 +61,7 @@ echo 'assistant_resource_page_auth_and_dev_boundary=passed'
 
 node <<'JS' | docker exec -i "$name" node scripts/animation/verify-release-assets.cjs
 const fs = require('node:fs');
-const releases = [['h3','h3-v4'], ['h3-mobile','h3-mobile-v2']].map(([kind,directory]) => {
+const releases = [['h3','h3-v5'], ['h3-mobile','h3-mobile-v3']].map(([kind,directory]) => {
   const manifest = JSON.parse(fs.readFileSync(`src/lib/assistant/releases/${directory}/manifest.json`, 'utf8'));
   const assets = [...Object.values(manifest.assets), ...Object.values(manifest.stills)].map(asset => ({
     src:asset.src, sha256:asset.sha256, width:asset.width ?? manifest.width, height:asset.height ?? manifest.height,

@@ -18,8 +18,6 @@ import { parseAppearance } from "@/lib/assistant/appearance";
 import { NATURAL_MOTION, validNaturalMotion } from "@/lib/assistant/natural-motion";
 import { H3Character } from "./h3-character";
 import { H3_MOTION, h3Action, validH3Motion } from "@/lib/assistant/h3-motion";
-import { useH3Presence } from "./use-h3-presence";
-import { nextH3SceneClip } from "@/lib/assistant/h3-prefetch";
 import { useBrowserVoice } from "./use-browser-voice";
 import { useAssistantContext } from "./use-assistant-context";
 import { socialReply } from "@/lib/assistant/social";
@@ -177,31 +175,28 @@ export function ChibiAssistant({ floating = false, settings }: { floating?: bool
   const legacy = appearance === "legacy";
   const h3 = appearance === "h3" && validH3Motion(H3_MOTION);
   const manualPending = manual.request !== null;
-  const scene = useH3Presence(animate && h3, open || manualPending || menuOpen);
   const presence = useAssistantPresence(animate && legacy, open || manualPending || menuOpen);
   const naturalActions = validNaturalMotion(NATURAL_MOTION);
-  const behavior = useAssistantBehavior(animate && !manualPending && !menuOpen && (h3 || legacy || naturalActions) && (!legacy || presence.state.phase === "awake") && (!h3 || scene.state.phase === "awake"));
-  useAssistantContext(animate && h3 && !manualPending && !menuOpen && scene.state.phase === "awake",open,behavior.send);
+  const behavior = useAssistantBehavior(animate && !manualPending && !menuOpen && (h3 || legacy || naturalActions) && (!legacy || presence.state.phase === "awake"));
+  useAssistantContext(animate && h3 && !manualPending && !menuOpen,open,behavior.send);
   const phase = legacy ? presence.state.phase : "awake";
   const sleepScene = phase === "entering" || phase === "sleeping" || phase === "waking";
   const trigger = useRef<HTMLButtonElement>(null);
-  const manualReady = manualPending && (!h3 || scene.state.phase === "awake") && (!legacy || phase === "awake");
+  const manualReady = manualPending && (!legacy || phase === "awake");
   const action = manualReady ? manual.request!.action : behavior.state.action;
   const playId = manualReady ? manual.request!.playId : behavior.state.playId;
   function animationFinished(id: number) {
-    if (id < 0) scene.finished(id);
-    else if (id === manual.request?.playId) sendManual({ type: "finished", playId: id });
+    if (id === manual.request?.playId) sendManual({ type: "finished", playId: id });
     else behavior.finished(id);
   }
   function selectAnimation(action: CharacterAction) {
     setAnimate(true);
     sendManual({ type: "select", action });
-    // Existing scene exits finish in their original order before the choice plays.
-    scene.send({ type: "click" }); presence.send({ type: "click" });
+    // The legacy appearance retains its own natural wake-up sequence.
+    presence.send({ type: "click" });
   }
   function show() {
     if (open) { dismiss(); return; }
-    scene.send({ type: "click" });
     presence.send({ type: "click" });
     // A sleeping companion is woken first; this click never starts an AI query.
     if (phase !== "awake") return;
@@ -209,13 +204,13 @@ export function ChibiAssistant({ floating = false, settings }: { floating?: bool
     behavior.send({ type: "open" }); setOpen(true);
   }
   function dismiss() { behavior.send({ type: "close" }); setOpen(false); }
-  return <div className={`${floating ? styles.floating : styles.panel} ${animate ? "" : styles.still}`} data-behavior-version={ASSISTANT_BEHAVIOR_VERSION} data-requested-action={action} data-action-play-id={playId} data-manual-action={manual.request?.action} data-presence={h3 ? scene.state.phase : phase} data-scene={h3 ? scene.state.scene : "legacy"}>
+  return <div className={`${floating ? styles.floating : styles.panel} ${animate ? "" : styles.still}`} data-behavior-version={ASSISTANT_BEHAVIOR_VERSION} data-requested-action={action} data-action-play-id={playId} data-manual-action={manual.request?.action} data-presence={phase} data-scene={h3 ? "basic" : appearance}>
     {!floating ? <><h1>小助手</h1><p className={styles.invitation}>有想找的记录吗？</p></> : null}
     <button ref={trigger} type="button" className={styles.launcher} onClick={show} title={open ? "点击收起聊天，右键选择动作" : "点击聊天，右键选择动作"} aria-label={open ? "收起小助手对话" : phase === "awake" ? "打开小助手对话" : phase === "entering" || phase === "sleeping" ? "唤醒小助手" : "小助手正在起床"} aria-haspopup="dialog" aria-expanded={open}>
       <span className={styles.sceneSlot}>
-        {h3 ? <H3Character clip={scene.state.clip ?? h3Action(action)} playId={scene.state.clip ? -scene.state.cycle : playId} animate={animate} once={manualReady}
-          nextClip={scene.state.clip ? nextH3SceneClip(scene.state) : action !== "idle" || manualReady ? "idle-blink" : undefined}
-          onFinished={animationFinished} onFailed={() => { scene.failed(); sendManual({ type: "automatic" }); }} /> :
+        {h3 ? <H3Character clip={h3Action(action)} playId={playId} animate={animate} once={manualReady}
+          nextClip={action !== "idle" || manualReady ? "idle-blink" : undefined}
+          onFinished={animationFinished} onFailed={() => sendManual({ type: "automatic" })} /> :
           <Character action={phase === "recovering" ? "yawn" : sleepScene ? "idle" : action} small={floating} animate={animate} active={!sleepScene} playId={phase === "recovering" ? presence.state.cycle : playId} once onFinished={phase === "recovering" ? presence.finished : animationFinished} />}
         {sleepScene ? <SleepScene phase={phase} cycle={presence.state.cycle} animate={animate} onFinished={presence.finished} onFailed={presence.failed} /> : null}
       </span><span className={styles.screenReader}>点击人物展开聊天气泡；右键或 Shift+F10 选择动画</span>

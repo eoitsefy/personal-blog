@@ -1,24 +1,24 @@
 "use client";
 import Image from "next/image";
 import { useEffect, useRef, useState, useSyncExternalStore, useMemo } from "react";
-import { H3_MOTION, H3_LEGACY_MOTION, H3_MOBILE_MOTION, validH3CandidateRuntime, validH3Motion, type H3Clip, type H3Manifest } from "@/lib/assistant/h3-motion";
+import { H3_MOTION, H3_MOBILE_MOTION, validH3Motion, type H3Clip, type H3Manifest } from "@/lib/assistant/h3-motion";
 import { H3PageCache, H3Player, loadH3Image } from "@/lib/assistant/h3-player";
 import { getH3ResourceSnapshot, getH3ServerResourceSnapshot, subscribeH3Resource } from "@/lib/assistant/h3-resource-selection";
 import styles from "./assistant-panel.module.css";
 
 const desktopAvailable = validH3Motion(H3_MOTION);
-const desktopMotion = desktopAvailable ? H3_MOTION : H3_LEGACY_MOTION;
+const desktopMotion = H3_MOTION;
 const mobileAvailable = desktopAvailable && validH3Motion(H3_MOBILE_MOTION);
 const pages = new H3PageCache<HTMLImageElement>(undefined, undefined, image => { image.src = ""; });
 type Props = {
   clip: H3Clip; playId: number; animate: boolean; once?: boolean; nextClip?: H3Clip;
   onFinished: (id: number) => void; onFailed: () => void;
-  manifest?: H3Manifest; allowLocalCandidate?: boolean;
+  manifest?: H3Manifest;
 };
 export function H3Character(props: Props) {
   const candidate = props.manifest ?? desktopMotion;
-  // Explicit preview candidates never relax the approved production release gate.
-  const manifest = useMemo(() => validH3Motion(candidate) || (props.allowLocalCandidate && validH3CandidateRuntime(candidate)) ? candidate : desktopMotion, [candidate, props.allowLocalCandidate]);
+  // Invalid overrides can only fall back to the current seven-action release.
+  const manifest = useMemo(() => validH3Motion(candidate) ? candidate : desktopMotion, [candidate]);
   const preference = useSyncExternalStore(subscribeH3Resource, getH3ResourceSnapshot, getH3ServerResourceSnapshot);
   const wanted = !props.manifest && preference === "mobile" && mobileAvailable ? H3_MOBILE_MOTION : manifest;
   const [displayed, setDisplayed] = useState(manifest);

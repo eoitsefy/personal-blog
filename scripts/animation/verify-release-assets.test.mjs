@@ -1,4 +1,5 @@
 import test from 'node:test';
+import {readFileSync} from 'node:fs';
 import assert from 'node:assert/strict';
 import crypto from 'node:crypto';
 import sharp from 'sharp';
@@ -75,4 +76,18 @@ test('natural assets retain their existing cache boundary', async () => {
   const {bytes,expected,io} = await fixture('natural');
   io.fetch=async () => new Response(bytes,{headers:{'Cache-Control':'public, max-age=0'}});
   assert.equal(await verifier.verifyRelease(expected,io),1);
+});
+
+
+test('production release verifier rejects retired scenes and old H3 versions before media checks', () => {
+  for (const [kind, directory] of [['h3','h3-v5'],['h3-mobile','h3-mobile-v3']]) {
+    const manifest = JSON.parse(readFileSync(`src/lib/assistant/releases/${directory}/manifest.json`, 'utf8'));
+    verifier.assertCurrentH3Release(manifest, kind);
+    const stale = structuredClone(manifest); stale.version = 'h3-motion-v4';
+    assert.throws(() => verifier.assertCurrentH3Release(stale, kind), /Current seven-action/);
+    const scenes = structuredClone(manifest); scenes.clips['bed-pull'] = scenes.clips.wave;
+    assert.throws(() => verifier.assertCurrentH3Release(scenes, kind), /Only seven/);
+    const oldUrl = structuredClone(manifest); Object.values(oldUrl.assets)[0].src = '/assistant/h3-v2/bed-pull-000.webp';
+    assert.throws(() => verifier.assertCurrentH3Release(oldUrl, kind), /Retired H3/);
+  }
 });

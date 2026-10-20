@@ -1,7 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import mobile from "./releases/h3-mobile-v1/manifest.json";
-import { H3_CLIPS, H3_MOTION, H3MotionClock, validH3CandidateRuntime, validH3Motion, type H3Manifest, type H3Sample } from "./h3-motion";
+import { H3_MOBILE_MOTION as mobile } from "./h3-motion";
+import { H3_CLIPS, H3_MOTION, H3MotionClock, validH3Motion, type H3Manifest, type H3Sample } from "./h3-motion";
 import { H3PageCache, H3Player, loadH3Image, type H3PlayerRequest } from "./h3-player";
 
 function deferred<T>() {
@@ -34,17 +34,10 @@ function harness() {
     setTime: (now: number) => { time = now; }, failures: () => failures, maxPending: () => maxPending };
 }
 
-test("mobile runtime is an explicit local candidate and cannot satisfy approved release validation", () => {
-  assert(validH3CandidateRuntime(mobile)); assert.equal(validH3Motion(mobile as H3Manifest), false);
-  for (const mutate of [
-    (m: H3Manifest) => { m.review.userAuthorizedRelease = true; },
-    (m: H3Manifest) => { m.clips.wave.alphaExact = true; },
-    (m: H3Manifest) => { m.clips.wave.durations[0]++; },
-    (m: H3Manifest) => { m.assets[m.clips.wave.pages[0]].src = "/assistant/h3-mobile-v1/../wave.webp"; },
-    (m: H3Manifest) => { m.candidate!.localOnly = false; },
-  ]) { const m = structuredClone(mobile) as H3Manifest; mutate(m); assert.equal(validH3CandidateRuntime(m), false); }
-  assert.equal(validH3CandidateRuntime(null), false);
-  assert(validH3Motion(H3_MOTION));
+test("mobile uses only the approved current seven-action release", () => {
+  assert(validH3Motion(mobile)); assert.deepEqual(Object.keys(mobile.clips), [...H3_CLIPS]);
+  const stale = structuredClone(mobile); stale.version = "h3-mobile-v1";
+  assert.equal(validH3Motion(stale), false);
 });
 
 test("mobile sample uses manifest geometry and one-shot loops never prefetch a wrapped page", () => {

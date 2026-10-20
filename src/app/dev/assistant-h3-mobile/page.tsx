@@ -4,7 +4,7 @@ import { H3MobilePreview } from "@/components/assistant/h3-mobile-preview";
 import { H3_CLIPS, type H3Clip } from "@/lib/assistant/h3-motion";
 
 export const dynamic = "force-dynamic";
-export const metadata = { title: "手机动画候选预览", robots: { index: false, follow: false } };
+export const metadata = { title: "手机七动作预览", robots: { index: false, follow: false } };
 
 export default async function MobilePreviewPage({ searchParams }: {
   searchParams: Promise<{ clip?: string; mode?: string }>;

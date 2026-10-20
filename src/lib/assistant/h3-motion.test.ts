@@ -1,126 +1,94 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { readFileSync } from "node:fs";
+import { readFileSync, existsSync, readdirSync } from "node:fs";
 import { createHash } from "node:crypto";
 import sharp from "sharp";
-import frameIndex from "./releases/h3-v3/source-frame-hashes.json";
-import { H3_CLIPS,H3_LEGACY_MOTION as H3_MOTION,H3_MOTION as currentRelease,H3_MOBILE_MOTION,H3_BASIC_CLIPS,type H3Manifest,H3MotionClock,h3Action,validH3Motion } from "./h3-motion";
-import { createH3Presence,reduceH3Presence,H3_REST_AFTER_MS,H3_SIP_AFTER_MS } from "./h3-presence";
+import { H3_CLIPS, H3_MOTION, H3_MOBILE_MOTION, H3_BASIC_CLIPS, H3MotionClock, h3Action, validH3Motion, type H3Manifest } from "./h3-motion";
 
-test("all 24 selected clips have exact alpha, valid timings and honest authorization metadata",()=>{
-  assert(validH3Motion(H3_MOTION)); assert.equal(Object.keys(H3_MOTION.clips).length,24);
-  assert.equal(H3_MOTION.review.aiArtReview,false); assert.equal(h3Action("bow"),"thanks");
-  for (const name of H3_CLIPS) assert.equal(H3_MOTION.clips[name].frames,H3_MOTION.clips[name].durations.length);
-});
+const basics = ["idle-blink", "wave", "nod", "thanks", "thinking", "cheer", "yawn"];
+const retired = ["h3-v2", "h3-v3", "h3-mobile-v1"];
 
-test("release asset URLs stay within the exact local versioned directories",()=>{
-  for (const src of ["https://example.com/wave.webp", "/assistant/h3-v30/wave.webp", "/assistant/h3-v3/../wave.webp"]) {
-    const manifest=structuredClone(H3_MOTION);
-    manifest.assets[manifest.clips.wave.pages[0]].src=src;
-    assert.equal(validH3Motion(manifest),false,src);
-  }
-});
-test("every shipped H3 atlas and still matches its complete release hash",()=>{
-  for (const asset of [...Object.values(H3_MOTION.assets),...Object.values(H3_MOTION.stills)]) {
-    const data=readFileSync(`public${asset.src}`);
-    assert.equal(createHash("sha256").update(data).digest("hex"),asset.sha256,asset.src);
-  }
-});
-test("all deployed RGBA crops reproduce original delivered frames, including translucent edges",async()=>{
-  for (const name of H3_CLIPS) {
-    const clip=H3_MOTION.clips[name],hashes=frameIndex.rgbaSourceFrameHashes[name];
-    assert.equal(hashes.length,clip.frames);
-    for (let page=0;page<clip.pages.length;page++) {
-      const asset=H3_MOTION.assets[clip.pages[page]];
-      const {data,info}=await sharp(`public${asset.src}`).ensureAlpha().raw().toBuffer({ resolveWithObject:true });
-      assert.equal(info.channels,4);
-      for (let slot=0;slot<8 && page*8+slot<clip.frames;slot++) {
-        const frame=Buffer.alloc(480*480*4),x=(slot%4)*480,y=Math.floor(slot/4)*480;
-        for(let row=0;row<480;row++) {
-          const offset=((y+row)*info.width+x)*4;
-          data.copy(frame,row*480*4,offset,offset+480*4);
-        }
-        assert.equal(createHash("sha256").update(frame).digest("hex"),hashes[page*8+slot],`${name} frame ${page*8+slot}`);
-      }
+test("H3 publishes only the seven current basic actions; old scene releases have no runtime files", () => {
+  assert.deepEqual([...H3_CLIPS], basics); assert.deepEqual([...H3_BASIC_CLIPS], basics);
+  assert.equal(h3Action("bow"), "thanks"); assert.equal(h3Action("idle"), "idle-blink");
+  for (const release of [H3_MOTION, H3_MOBILE_MOTION]) {
+    assert(validH3Motion(release)); assert.deepEqual(Object.keys(release.clips), basics);
+    assert.deepEqual(Object.keys(release.stills), basics);
+    assert.equal(release.review.aiArtReview, false);
+    assert.equal(Object.keys(release.assets).length, 112);
+    for (const name of H3_CLIPS) {
+      const c = release.clips[name];
+      assert.equal(c.frames, 124); assert.equal(c.loop, name === "idle-blink");
+      assert.equal(c.alphaExact, false); assert.equal(c.rgbLossless, false);
+      assert.equal(c.scaledAlphaPreserved, true);
     }
   }
+  for (const directory of retired) assert.equal(existsSync(`public/assistant/${directory}`), false, directory);
+  for (const directory of [...retired, "h3-v4", "h3-mobile-v2"]) assert.equal(existsSync(`src/lib/assistant/releases/${directory}/manifest.json`), false, directory);
 });
-test("idle and gestures finish naturally; no reverse frames or forced end replacement",()=>{
-  const clock=new H3MotionClock(H3_MOTION),done:number[]=[];
-  clock.sample(0,id=>done.push(id)); clock.request({ clip:"wave",playId:1 });
-  assert.equal(clock.sample(100,id=>done.push(id)).clip,"idle-blink");
-  const start=H3_MOTION.clips["idle-blink"].durationMs;
-  assert.equal(clock.sample(start,id=>done.push(id)).frame,0);
-  clock.request({ clip:"nod",playId:2 });
-  assert.equal(clock.sample(start+100,id=>done.push(id)).clip,"wave");
-  assert.equal(clock.sample(start+H3_MOTION.clips.wave.durationMs,id=>done.push(id)).clip,"nod");
-  assert.deepEqual(done,[1]);
-});
-test("completed scene state holds its actual last frame until the owner advances",()=>{
-  const clock=new H3MotionClock(H3_MOTION),done:number[]=[];
-  clock.request({ clip:"bed-change",playId:-3 }); clock.sample(0,id=>done.push(id));
-  const end=H3_MOTION.clips["bed-change"].durationMs;
-  assert.equal(clock.sample(end+100,id=>done.push(id)).frame,H3_MOTION.clips["bed-change"].frames-1);
-  clock.sample(end+200,id=>done.push(id)); assert.deepEqual(done,[-3]);
-});
-test("night workflow cannot skip outfit/headset/bedside states when clicked mid-entry",()=>{
-  let s=reduceH3Presence(createH3Presence(),{ type:"availability",enabled:true,now:0 });
-  s=reduceH3Presence(s,{ type:"tick",hour:23,now:H3_REST_AFTER_MS });
-  s=reduceH3Presence(s,{ type:"click",now:H3_REST_AFTER_MS+1 });
-  const sequence:string[]=[];
-  for (let i=0;i<15 && s.phase!=="awake";i++) {
-    sequence.push(s.clip!); s=reduceH3Presence(s,{ type:"finished",cycle:s.cycle,now:H3_REST_AFTER_MS+100+i });
+
+test("both sizes have complete real WebP files, exact release hashes, expected geometry and alpha", async () => {
+  for (const release of [H3_MOTION, H3_MOBILE_MOTION]) {
+    const paths = new Set<string>();
+    for (const asset of [...Object.values(release.assets), ...Object.values(release.stills)]) {
+      assert(!paths.has(asset.src)); paths.add(asset.src);
+      const bytes = readFileSync(`public${asset.src}`);
+      assert.equal(createHash("sha256").update(bytes).digest("hex"), asset.sha256, asset.src);
+      const metadata = await sharp(bytes).metadata();
+      const atlas = "width" in asset;
+      assert.equal(metadata.format, "webp"); assert.equal(metadata.hasAlpha, true);
+      assert.equal(metadata.pages ?? 1, 1);
+      assert.equal(metadata.width, release.width * (atlas ? 4 : 1));
+      assert.equal(metadata.height, release.height * (atlas ? 2 : 1));
+    }
+    const directory = release.width === 320 ? "h3-mobile-v2" : "h3-v4";
+    assert.equal(readdirSync(`public/assistant/${directory}`).length, paths.size);
+    const manifestDirectory = release.width === 320 ? "h3-mobile-v3" : "h3-v5";
+    assert.deepEqual(JSON.parse(readFileSync(`public/assistant/${manifestDirectory}/manifest.json`, "utf8")), release);
   }
-  assert.deepEqual(sequence,["bed-pull","bed-change","headset-off","bed-enter","bed-wake","headset-on","bed-change-back","bed-remove","yawn"]);
-  assert.equal(s.phase,"awake");
-});
-test("day rest loops, drinks occasionally, and exits through standing and wardrobe",()=>{
-  let s=reduceH3Presence(createH3Presence(),{ type:"availability",enabled:true,now:0 });
-  s=reduceH3Presence(s,{ type:"tick",hour:14,now:H3_REST_AFTER_MS });
-  while(s.phase==="entering") s=reduceH3Presence(s,{ type:"finished",cycle:s.cycle,now:H3_REST_AFTER_MS+1 });
-  assert.equal(s.clip,"beach-loop");
-  s=reduceH3Presence(s,{ type:"tick",hour:14,now:s.lastActivityAt+H3_SIP_AFTER_MS }); assert.equal(s.clip,"coconut-sip");
-  s=reduceH3Presence(s,{ type:"finished",cycle:s.cycle,now:s.lastActivityAt+1 }); assert.equal(s.clip,"beach-loop");
-  s=reduceH3Presence(s,{ type:"click",now:s.lastActivityAt+1 });
-  const sequence:string[]=[];
-  while(s.phase!=="awake") { sequence.push(s.clip!); s=reduceH3Presence(s,{ type:"finished",cycle:s.cycle,now:s.lastActivityAt+1 }); }
-  assert.deepEqual(sequence,["beach-stand","beach-change-back","beach-remove"]);
-});
-test("paused clocks retain phase and stale scene completions are ignored",()=>{
-  const clock=new H3MotionClock(H3_MOTION); clock.sample(0,()=>{}); const first=clock.sample(100,()=>{});
-  clock.delay(3000); assert.equal(clock.sample(3100,()=>{}).frame,first.frame);
-  const s=createH3Presence(); assert.equal(reduceH3Presence(s,{ type:"finished",cycle:999,now:100 }),s);
 });
 
-
-test("new production releases authorize RGB compression only with exact alpha/timing/source contracts", () => {
-  assert(validH3Motion(currentRelease)); assert(validH3Motion(H3_MOBILE_MOTION));
-  for (const release of [currentRelease, H3_MOBILE_MOTION]) {
+test("malformed, stale, scene-injected, mixed and unreferenced resources fail closed", () => {
+  for (const release of [H3_MOTION, H3_MOBILE_MOTION]) {
     for (const mutate of [
-      (m: H3Manifest) => { m.version += "-candidate"; },
+      (m: H3Manifest) => { m.version = "h3-motion-v4"; },
       (m: H3Manifest) => { m.review.userAuthorizedRelease = false; },
-      (m: H3Manifest) => { m.candidate = { localOnly: true, resampled: true, scaledAlphaPreserved: true, sourceVersion: H3_MOTION.version }; },
+      (m: H3Manifest) => { m.candidate = { localOnly: true }; },
       (m: H3Manifest) => { m.clips.wave.alphaExact = true; },
-      (m: H3Manifest) => { m.clips.wave.scaledAlphaPreserved = false; },
-      (m: H3Manifest) => { m.clips.wave.durations[0] = 42; },
+      (m: H3Manifest) => { m.clips.wave.durations[0]++; },
       (m: H3Manifest) => { m.clips.wave.pages[1] = m.clips.wave.pages[0]; },
-      (m: H3Manifest) => { m.assets[m.clips.wave.pages[0]].src = "/assistant/h3-v4/../wave.webp"; },
+      (m: H3Manifest) => { m.assets[m.clips.wave.pages[0]].src = "/assistant/h3-v2/bed-pull-000.webp"; },
+      (m: H3Manifest) => { m.stills.wave.src = "/assistant/h3-v4/../wave.webp"; },
+      (m: H3Manifest) => { m.assets[m.clips.wave.pages[0]].src = "https://example.com/wave.webp"; },
       (m: H3Manifest) => { m.encoding!.alphaQuality = 90; },
-      (m: H3Manifest) => { m.release!.replacedClips.reverse(); },
-      (m: H3Manifest) => { m.assets[m.clips["bed-enter"].pages[0]].sha256 = "0".repeat(64); },
-      (m: H3Manifest) => { m.clips["bed-enter"].durations[0]++; },
-      (m: H3Manifest) => { m.clips["bed-enter"].sourceRun = "new-long-scene"; },
+      (m: H3Manifest) => { m.release!.includedClips.reverse(); },
+      (m: H3Manifest) => { m.release!.sceneClipsRemoved = false; },
       (m: H3Manifest) => { m.assets.unreferenced = { ...m.assets[m.clips.wave.pages[0]] }; },
-    ]) { const m = structuredClone(release); mutate(m); assert.equal(validH3Motion(m), false); }
-    for (const name of H3_BASIC_CLIPS) assert.equal(release.clips[name].frames, 124);
+      (m: H3Manifest) => { (m.clips as Record<string, unknown>)["bed-pull"] = m.clips.wave; },
+    ]) { const changed = structuredClone(release); mutate(changed); assert.equal(validH3Motion(changed), false); }
   }
+  for (const value of [null, undefined, {}, {version:"h3-motion-v5"}]) assert.equal(validH3Motion(value as H3Manifest), false);
 });
 
-test("both new production sizes reference existing complete local asset hashes", () => {
-  const seen = new Set<string>();
-  for (const release of [currentRelease, H3_MOBILE_MOTION]) for (const asset of [...Object.values(release.assets), ...Object.values(release.stills)]) {
-    if (seen.has(asset.src)) continue;
-    seen.add(asset.src);
-    assert.equal(createHash("sha256").update(readFileSync(`public${asset.src}`)).digest("hex"), asset.sha256, asset.src);
-  }
+test("idle finishes its real cycle before a requested gesture; gestures hold genuine final frame and complete once", () => {
+  const clock = new H3MotionClock(H3_MOTION), done: number[] = [];
+  clock.sample(0, id => done.push(id)); clock.request({clip:"wave", playId:1});
+  assert.equal(clock.sample(100, id => done.push(id)).clip, "idle-blink");
+  const length = H3_MOTION.clips["idle-blink"].durationMs;
+  assert.equal(clock.sample(length, id => done.push(id)).clip, "wave");
+  assert.equal(clock.sample(length + H3_MOTION.clips.wave.durationMs + 1, id => done.push(id)).frame, 123);
+  clock.sample(length * 3, id => done.push(id)); assert.deepEqual(done, [1]);
+  clock.request({clip:"idle-blink", playId:2});
+  assert.equal(clock.sample(length * 3 + 1, id => done.push(id)).clip, "idle-blink");
+});
+
+test("pausing retains phase and a one-shot idle finishes once without fetching removed scenes", () => {
+  const clock = new H3MotionClock(H3_MOTION), done: number[] = [];
+  clock.request({clip:"idle-blink", playId:3, once:true});
+  clock.sample(0, id => done.push(id)); const first = clock.sample(100, id => done.push(id));
+  clock.delay(3000); assert.equal(clock.sample(3100, id => done.push(id)).frame, first.frame);
+  const end = H3_MOTION.clips["idle-blink"].durationMs + 3000;
+  const last = clock.sample(end + 1, id => done.push(id));
+  assert.equal(last.frame, 123); assert.equal(last.nextAsset, undefined);
+  clock.sample(end + 100, id => done.push(id)); assert.deepEqual(done, [3]);
 });

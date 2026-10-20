@@ -1,36 +1,30 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { H3_CLIPS,H3_MOTION,H3MotionClock } from "./h3-motion";
-import { ACTION_GROUPS,ACTION_GROUP_CLIPS,actionInfo,actionPreviewPlan,scenePreviewPlan } from "./action-catalog";
+import { ACTION_GROUPS,ACTION_GROUP_CLIPS,actionInfo,actionPreviewPlan } from "./action-catalog";
 import { socialReply } from "./social";
 
-test("action inventory covers exactly the 24 published clips with real metadata and trigger rules",()=>{
+test("action inventory covers exactly the seven published basic clips with real metadata and trigger rules",()=>{
   const clips=ACTION_GROUPS.flatMap(g=>ACTION_GROUP_CLIPS[g.id]);
-  assert.deepEqual(clips,[...H3_CLIPS]); assert.equal(new Set(clips).size,24);
+  assert.deepEqual(clips,[...H3_CLIPS]); assert.equal(new Set(clips).size,7);
   for (const clip of clips) {
     const a=actionInfo(clip); assert.equal(a.frames,H3_MOTION.clips[clip].frames);
     assert(a.trigger.length>10); assert(a.before && a.after);
     assert(a.files.every(f=>f.sha256.length===64));
   }
   assert(actionInfo("thanks").trigger.includes("不依赖 AI"));
-  assert(actionInfo("bed-pull").trigger.includes("60 秒"));
 });
-test("scene previews preserve wardrobe, headset and bedside order; isolated scene pieces do not get fake idle bridges",()=>{
-  assert.deepEqual(scenePreviewPlan("night"),["idle-blink","bed-pull","bed-change","headset-off","bed-enter","sleep-loop","sleep-loop","bed-wake","headset-on","bed-change-back","bed-remove","yawn","idle-blink"]);
-  assert.deepEqual(scenePreviewPlan("day"),["idle-blink","beach-props","beach-change","beach-sit","beach-loop","coconut-sip","beach-loop","beach-stand","beach-change-back","beach-remove","idle-blink"]);
-  assert.deepEqual(actionPreviewPlan("wave",true),["idle-blink","wave","idle-blink"]);
-  assert.deepEqual(actionPreviewPlan("bed-change",true),["bed-change"]);
+test("resource preview plans retain full basic cycles without retired day/night controls", () => {
+  assert.deepEqual(ACTION_GROUPS.map(group => group.id), ["basic"]);
+  assert.deepEqual(actionPreviewPlan("wave", true), ["idle-blink", "wave", "idle-blink"]);
+  assert.deepEqual(actionPreviewPlan("idle-blink", true), ["idle-blink"]);
+  assert.deepEqual(actionPreviewPlan("thinking", false), ["thinking"]);
+  const clock = new H3MotionClock(H3_MOTION), completed: number[] = [];
+  clock.request({clip:"idle-blink", playId:11, once:true}); clock.sample(0, id => completed.push(id));
+  clock.sample(H3_MOTION.clips["idle-blink"].durationMs + 1, id => completed.push(id));
+  assert.deepEqual(completed, [11]);
 });
-test("native loop can be previewed exactly once and keeps its real final frame until next entry",()=>{
-  const clock=new H3MotionClock(H3_MOTION),completed:number[]=[];
-  clock.request({clip:"sleep-loop",playId:11,once:true});
-  assert.equal(clock.sample(0,id=>completed.push(id)).frame,0);
-  const length=H3_MOTION.clips["sleep-loop"].durationMs;
-  assert.equal(clock.sample(length+20,id=>completed.push(id)).frame,H3_MOTION.clips["sleep-loop"].frames-1);
-  clock.sample(length+100,id=>completed.push(id)); assert.deepEqual(completed,[11]);
-  clock.request({clip:"bed-wake",playId:12,once:true});
-  assert.equal(clock.sample(length+200,id=>completed.push(id)).clip,"bed-wake");
-});
+
 test("only complete short social phrases bypass retrieval, mixed questions never do",()=>{
   for (const text of ["谢谢你！","辛苦了","感谢你的帮助","thank you"])
     assert.equal(socialReply(text)?.action,"bow");

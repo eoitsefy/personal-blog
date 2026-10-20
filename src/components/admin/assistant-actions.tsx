@@ -3,7 +3,7 @@ import Image from "next/image";
 import { useState } from "react";
 import { H3Character } from "@/components/assistant/h3-character";
 import { H3_MOTION,type H3Clip } from "@/lib/assistant/h3-motion";
-import { ACTION_GROUPS,ACTION_GROUP_CLIPS,actionInfo,actionPreviewPlan,scenePreviewPlan,type ActionGroup } from "@/lib/assistant/action-catalog";
+import { ACTION_GROUPS,ACTION_GROUP_CLIPS,actionInfo,actionPreviewPlan,type ActionGroup } from "@/lib/assistant/action-catalog";
 import styles from "./assistant-actions.module.css";
 
 type Playback={run:number;plan:H3Clip[];index:number;playing:boolean;paused:boolean;complete:boolean;error:boolean};
@@ -21,7 +21,7 @@ export function AssistantActions() {
   const fail=()=>setPlay(p=>({...p,playing:false,error:true}));
   const visible=ACTION_GROUP_CLIPS[group].filter(c=>`${actionInfo(c).label} ${c}`.toLowerCase().includes(query.toLowerCase()));
   return <main className={styles.page}>
-    <header><p className={styles.eyebrow}>博客后台 · 小助手</p><h1>动作资源</h1><p className={styles.subtitle}>24 个动作 · {Object.keys(H3_MOTION.assets).length+Object.keys(H3_MOTION.stills).length} 张无损资源 · 480 × 480 固定画布 · {H3_MOTION.version}</p></header>
+    <header><p className={styles.eyebrow}>博客后台 · 小助手</p><h1>动作资源</h1><p className={styles.subtitle}>7 个动作 · {Object.keys(H3_MOTION.assets).length+Object.keys(H3_MOTION.stills).length} 张动画资源 · 480 × 480 固定画布 · {H3_MOTION.version}</p></header>
     <section className={styles.studio} aria-label="动作预览工作台">
       <div className={`${styles.stage} ${background==="dark"?styles.dark:background==="check"?styles.check:""}`}>
         <div className={styles.actor}><H3Character key={play.run} clip={clip} playId={playId} once animate={play.playing&&!play.paused} onFinished={finished} onFailed={fail}/></div>
@@ -33,7 +33,6 @@ export function AssistantActions() {
         <div className={styles.controls}><button onClick={()=>start(actionPreviewPlan(selected,withIdle))}>播放所选动作</button><button disabled={!play.playing} onClick={()=>setPlay(p=>({...p,paused:!p.paused}))}>{play.paused?"继续":"暂停"}</button><button disabled={!play.playing} onClick={()=>setPlay(p=>({...p,playing:false}))}>停止</button></div>
         <label className={styles.option}><input type="checkbox" checked={withIdle} onChange={e=>setWithIdle(e.target.checked)}/>基础动作前后连上完整待机周期</label>
         <label className={styles.option}>检查背景<select value={background} onChange={e=>setBackground(e.target.value)}><option value="light">浅色</option><option value="dark">深色</option><option value="check">透明棋盘</option></select></label>
-        <div className={styles.controls}><button onClick={()=>{setGroup("night");setSelected("bed-pull");start(scenePreviewPlan("night"));}}>播放夜间完整流程</button><button onClick={()=>{setGroup("day");setSelected("beach-props");start(scenePreviewPlan("day"));}}>播放日间完整流程</button></div>
       </div>
     </section>
     <section aria-label="动作资源列表">

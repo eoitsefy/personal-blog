@@ -2,9 +2,7 @@
 
 import { useState, useSyncExternalStore } from "react";
 import { H3Character } from "./h3-character";
-import { H3_CLIPS, H3_LEGACY_MOTION as H3_MOTION, type H3Clip, type H3Manifest } from "@/lib/assistant/h3-motion";
-import mobileCandidate from "@/lib/assistant/releases/h3-mobile-v1/manifest.json";
-import { scenePreviewPlan } from "@/lib/assistant/action-catalog";
+import { H3_CLIPS, H3_MOTION, H3_MOBILE_MOTION, type H3Clip } from "@/lib/assistant/h3-motion";
 import styles from "./h3-mobile-preview.module.css";
 
 type Mode = "mobile" | "native" | "auto";
@@ -13,7 +11,7 @@ type Playback = {
   run: number; plan: H3Clip[]; index: number; playing: boolean; paused: boolean;
   complete: boolean; error: boolean; variant: Variant;
 };
-const candidate = mobileCandidate as H3Manifest;
+const candidate = H3_MOBILE_MOTION;
 function subscribeMobile(notify: () => void) {
   const media = matchMedia("(max-width: 600px)");
   media.addEventListener("change", notify);
@@ -52,11 +50,11 @@ export function H3MobilePreview({ initialClip = "wave", initialMode = "mobile" }
     });
   }
   return <main className={styles.page} data-mobile-candidate-preview data-resource-mode={variant}>
-    <header><p className={styles.note}>本机候选 · 尚未发布</p><h1>手机动画预览</h1>
-      <p>切换版本检查清晰度与流畅度。手机轻量版经过缩放和压缩，画质仍待确认。</p></header>
+    <header><p className={styles.note}>本机七动作预览</p><h1>手机动画预览</h1>
+      <p>切换桌面与手机资源检查七项基础动作。</p></header>
     <section className={styles.controls} aria-label="预览设置">
       <label>资源版本<select aria-label="资源版本" value={mode} onChange={e => reset(selected, e.target.value as Mode)}>
-        <option value="mobile">手机轻量版</option><option value="native">原画质版</option><option value="auto">按屏幕选择</option>
+        <option value="mobile">手机轻量版</option><option value="native">桌面版</option><option value="auto">按屏幕选择</option>
       </select></label>
       <label>动作<select aria-label="动作" value={selected} onChange={e => reset(e.target.value as H3Clip)}>
         {H3_CLIPS.map(name => <option key={name} value={name}>{H3_MOTION.clips[name].label}</option>)}
@@ -68,7 +66,7 @@ export function H3MobilePreview({ initialClip = "wave", initialMode = "mobile" }
     </section>
     <section className={`${styles.stage} ${background === "dark" ? styles.dark : background === "check" ? styles.check : ""}`} aria-label="动画播放区">
       <div className={styles.actor} style={{ width: enlarged ? 320 : 140 }}>
-        <H3Character key={`${variant}:${play.run}`} manifest={manifest} allowLocalCandidate={variant === "mobile"}
+        <H3Character key={`${variant}:${play.run}`} manifest={manifest}
           clip={clip} nextClip={play.plan[play.index + 1]} playId={playId} once animate={play.playing && !play.paused}
           onFinished={finished} onFailed={() => setPlay(p => ({ ...p, playing: false, error: true }))} />
       </div>
@@ -80,8 +78,6 @@ export function H3MobilePreview({ initialClip = "wave", initialMode = "mobile" }
       <button disabled={!play.playing} onClick={() => setPlay(p => ({ ...p, paused: !p.paused }))}>{play.paused ? "继续" : "暂停"}</button>
       <button disabled={!play.playing} onClick={() => setPlay(p => ({ ...p, playing: false }))}>停止</button>
       <button onClick={() => start(["idle-blink", "idle-blink"])}>连续待机两轮</button>
-      <button onClick={() => start(scenePreviewPlan("day"))}>日间完整流程</button>
-      <button onClick={() => start(scenePreviewPlan("night"))}>夜间完整流程</button>
     </div>
   </main>;
 }

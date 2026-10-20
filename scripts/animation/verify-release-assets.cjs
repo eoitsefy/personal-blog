@@ -35,6 +35,18 @@ function validateExpectation(expected, manifest) {
   return complete;
 }
 
+function assertCurrentH3Release(manifest, kind) {
+  const basic = ['idle-blink','wave','nod','thanks','thinking','cheer','yawn'];
+  const mobile = kind === 'h3-mobile';
+  assert.equal(manifest.version, mobile ? 'h3-motion-mobile-v3' : 'h3-motion-v5', 'Current seven-action release required');
+  assert.deepEqual(Object.keys(manifest.clips), basic, 'Only seven current basic actions may ship');
+  assert.deepEqual(Object.keys(manifest.stills), basic, 'Only seven current basic stills may ship');
+  assert.equal(Object.keys(manifest.assets).length, 112, 'Complete seven-action atlas inventory required');
+  assert.equal(manifest.release?.sceneClipsRemoved, true, 'Retired scenes must remain removed');
+  const prefix = mobile ? '/assistant/h3-mobile-v2/' : '/assistant/h3-v4/';
+  for (const asset of completeAssets(manifest, kind)) assert(asset.src.startsWith(prefix), 'Retired H3 resource URL');
+}
+
 function assertMicrophoneDisabled(policy) {
   assert(policy && /(?:^|,)\s*microphone=\(\)\s*(?:,|$)/.test(policy), 'Production microphone permission must remain disabled');
 }
@@ -79,8 +91,12 @@ async function main() {
   assert.equal(page.status, 200);
   assertMicrophoneDisabled(page.headers.get('permissions-policy'));
   let count = 0;
-  for (const release of releases) count += await verifyRelease(release, io);
+  for (const release of releases) {
+    if (release.kind === 'h3' || release.kind === 'h3-mobile')
+      assertCurrentH3Release(JSON.parse(io.readFile(manifestFiles[release.kind], 'utf8')), release.kind);
+    count += await verifyRelease(release, io);
+  }
   console.log(`release_assets_verified=${count};releases=${releases.length};microphone=disabled`);
 }
-module.exports = {completeAssets, validateExpectation, assertMicrophoneDisabled, verifyRelease};
+module.exports = {completeAssets, validateExpectation, assertMicrophoneDisabled, assertCurrentH3Release, verifyRelease};
 if (require.main === module) main().catch(error => {console.error(error.message);process.exitCode=1;});
