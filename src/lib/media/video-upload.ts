@@ -1,9 +1,10 @@
 import { MediaValidationError, safeOriginalName } from "./image";
+import { MAX_VIDEO_UPLOAD_BYTES } from "./upload-limits";
 
 export function getMaxVideoUploadBytes() {
   const configured = Number(process.env.MAX_VIDEO_UPLOAD_BYTES);
   return Number.isSafeInteger(configured) && configured > 0
-    ? Math.min(configured, 64 * 1024 * 1024) : 64 * 1024 * 1024;
+    ? Math.min(configured, MAX_VIDEO_UPLOAD_BYTES) : MAX_VIDEO_UPLOAD_BYTES;
 }
 
 function invalid(): never { throw new MediaValidationError("视频容器不完整或不含有效视频轨道，请导出为 MP4（H.264）或 WebM 后重试"); }
@@ -30,7 +31,7 @@ function boxes(bytes: Buffer, start = 0, end = bytes.length): Box[] {
   return result;
 }
 
-function inspectMp4(bytes: Buffer, extension: string) {
+export function inspectMp4(bytes: Buffer, extension: string) {
   const top = boxes(bytes);
   const ftyp = top.find(b => b.type === "ftyp");
   const moov = top.find(b => b.type === "moov");
@@ -89,7 +90,7 @@ function uint(bytes: Buffer, element?: Element) {
   if (!element || element.end <= element.start || element.end - element.start > 4) invalid();
   return bytes.readUIntBE(element.start, element.end - element.start);
 }
-function inspectWebm(bytes: Buffer) {
+export function inspectWebm(bytes: Buffer) {
   const top = elements(bytes, 0, bytes.length);
   if (top[0]?.id !== 0x1a45dfa3) invalid();
   const header = elements(bytes, top[0].start, top[0].end);
@@ -112,15 +113,20 @@ function inspectWebm(bytes: Buffer) {
   invalid();
 }
 
+export function normalizeVideoUpload(name: string, mimeType: string) {
+  const originalName = safeOriginalName(name, "video");
+  const extension = originalName.toLowerCase().split(".").pop() ?? "";
+  const mime = ({ mp4: "video/mp4", mov: "video/quicktime", webm: "video/webm" } as Record<string, string>)[extension];
+  if (!mime) throw new MediaValidationError("视频仅支持 MP4、MOV 或 WebM");
+  if (![mime, "application/octet-stream", ""].includes(mimeType)) throw new MediaValidationError("视频 MIME 类型与扩展名不一致");
+  return { originalName, mime, extension };
+}
+
 export async function validateVideoUpload(file: File) {
   const maxBytes = getMaxVideoUploadBytes();
   if (!file.size) throw new MediaValidationError("视频文件不能为空");
   if (file.size > maxBytes) throw new MediaValidationError(`视频不能超过 ${Math.floor(maxBytes / 1024 / 1024)} MiB`);
-  const originalName = safeOriginalName(file.name, "video");
-  const extension = originalName.toLowerCase().split(".").pop() ?? "";
-  const mime = ({ mp4: "video/mp4", mov: "video/quicktime", webm: "video/webm" } as Record<string, string>)[extension];
-  if (!mime) throw new MediaValidationError("视频仅支持 MP4、MOV 或 WebM");
-  if (![mime, "application/octet-stream", ""].includes(file.type)) throw new MediaValidationError("视频 MIME 类型与扩展名不一致");
+  const { originalName, mime, extension } = normalizeVideoUpload(file.name, file.type);
   const bytes = Buffer.from(await file.arrayBuffer());
   const dimensions = extension === "webm" ? inspectWebm(bytes) : inspectMp4(bytes, extension);
   return { bytes, originalName, kind: "VIDEO" as const, mime, extension, size: bytes.length, ...dimensions, durationMs: null };

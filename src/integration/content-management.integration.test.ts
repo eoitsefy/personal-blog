@@ -53,7 +53,7 @@ test("video uploads preserve references, range playback, fixed categories and de
     for (const [ext, mime] of [["mp4", "video/mp4"], ["mov", "video/quicktime"], ["webm", "video/webm"]]) {
       const bytes = await readFile(`src/integration/fixtures/video.${ext}`);
       const data = new FormData(); data.set("file", new File([bytes], `video.${ext}`, { type: mime }));
-      const response = await uploadAsset(new Request("http://localhost/api/admin/assets", { method: "POST", headers: { cookie, origin: "http://localhost", "content-length": String(bytes.length + 1024) }, body: data }));
+      const response = await uploadAsset(await multipartUploadRequest(data, cookie));
       assert.equal(response.status, 201); const asset = (await response.json()).data.asset; videos.push(asset); assetIds.push(asset.id);
       assert.equal(asset.kind, "VIDEO");
       const served = await serveUpload(new Request(`http://localhost${asset.url}`, { headers: { range: "bytes=0-15" } }), { params: Promise.resolve({ path: asset.url.slice(9).split("/") }) });
@@ -88,6 +88,15 @@ test("video uploads preserve references, range playback, fixed categories and de
     await rm(root, { recursive: true, force: true }); await prisma.$disconnect();
   }
 });
+
+async function multipartUploadRequest(form: FormData, cookie: string) {
+  const encoded = new Response(form);
+  const body = await encoded.arrayBuffer();
+  return new Request("http://localhost/api/admin/assets", { method: "POST", headers: {
+    cookie, origin: "http://localhost", "content-type": encoded.headers.get("content-type")!,
+    "content-length": String(body.byteLength),
+  }, body });
+}
 
 const prisma = new PrismaClient();
 
@@ -658,11 +667,7 @@ test("media upload, article references and protected deletion work end to end", 
     const formData = new FormData();
     const privatePhoto = await privatePhotoFixture("png");
     formData.set("file", new File([privatePhoto], "pixel.png", { type: "image/png" }));
-    const uploadResponse = await uploadAsset(new Request("http://localhost/api/admin/assets", {
-      method: "POST",
-      headers: { cookie, origin: "http://localhost", "content-length": String(privatePhoto.byteLength + 1024) },
-      body: formData,
-    }));
+    const uploadResponse = await uploadAsset(await multipartUploadRequest(formData, cookie));
     assert.equal(uploadResponse.status, 201);
     const uploaded = await uploadResponse.json() as { data: { asset: { id: string; url: string } } };
     assetId = uploaded.data.asset.id;
@@ -687,11 +692,7 @@ test("media upload, article references and protected deletion work end to end", 
 
     const audioFormData = new FormData();
     audioFormData.set("file", new File([pcmWav()], "field-note.wav", { type: "audio/wav" }));
-    const audioUploadResponse = await uploadAsset(new Request("http://localhost/api/admin/assets", {
-      method: "POST",
-      headers: { cookie, origin: "http://localhost", "content-length": "9000" },
-      body: audioFormData,
-    }));
+    const audioUploadResponse = await uploadAsset(await multipartUploadRequest(audioFormData, cookie));
     assert.equal(audioUploadResponse.status, 201);
     const audioUploaded = await audioUploadResponse.json() as {
       data: { asset: { id: string; url: string; kind: string; durationMs: number | null } };
@@ -704,11 +705,7 @@ test("media upload, article references and protected deletion work end to end", 
 
     const documentFormData = new FormData();
     documentFormData.set("file", new File(["# Packing list\n\n- recorder\n"], "packing-list.md", { type: "text/markdown" }));
-    const documentUploadResponse = await uploadAsset(new Request("http://localhost/api/admin/assets", {
-      method: "POST",
-      headers: { cookie, origin: "http://localhost", "content-length": "512" },
-      body: documentFormData,
-    }));
+    const documentUploadResponse = await uploadAsset(await multipartUploadRequest(documentFormData, cookie));
     assert.equal(documentUploadResponse.status, 201);
     const documentUploaded = await documentUploadResponse.json() as {
       data: { asset: { id: string; url: string; kind: string; mime: string } };
@@ -782,11 +779,7 @@ test("media upload, article references and protected deletion work end to end", 
     process.env.MAX_MEDIA_STORAGE_BYTES = "1";
     const quotaFormData = new FormData();
     quotaFormData.set("file", new File(["quota check"], "quota.txt", { type: "text/plain" }));
-    const quotaResponse = await uploadAsset(new Request("http://localhost/api/admin/assets", {
-      method: "POST",
-      headers: { cookie, origin: "http://localhost", "content-length": "256" },
-      body: quotaFormData,
-    }));
+    const quotaResponse = await uploadAsset(await multipartUploadRequest(quotaFormData, cookie));
     assert.equal(quotaResponse.status, 507);
     process.env.MAX_MEDIA_STORAGE_BYTES = String(2 * 1024 * 1024 * 1024);
 

@@ -1,9 +1,11 @@
 # Include inside the HTTPS server. Keep the default body limit for all other routes.
 # Validate and back up the site config before installing; do not duplicate an existing exact location.
 location = /api/admin/assets {
-    client_max_body_size 65m;
-    client_body_timeout 180s;
-    proxy_read_timeout 180s;
+    client_max_body_size 1025m;
+    client_body_timeout 600s;
+    proxy_read_timeout 600s;
+    proxy_send_timeout 600s;
+    # Keep default proxy_request_buffering on; timeouts are idle timeouts.
     proxy_pass http://127.0.0.1:3000;
     proxy_http_version 1.1;
     proxy_set_header Host $host;

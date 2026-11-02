@@ -1,15 +1,14 @@
-import { createHash } from "node:crypto";
 import { Prisma } from "@prisma/client";
+import { mkdir } from "node:fs/promises";
 import { fail, logApi, ok } from "@/lib/api";
-import { getMaxUploadBytes, MediaValidationError } from "@/lib/media/image";
-import { getMaxVideoUploadBytes } from "@/lib/media/video-upload";
+import { MediaValidationError } from "@/lib/media/image";
+import { ensureUploadSpace, receiveAssetUpload, UploadRequestError, UploadSpaceError, UploadTooLargeError, type ReceivedUpload } from "@/lib/media/receive-upload";
 import { getMediaStorageQuotaBytes, mediaStorageStatus, wouldExceedMediaStorageQuota } from "@/lib/media/quota";
-import { validateAssetUpload } from "@/lib/media/upload";
 import { ADMIN_ASSET_PAGE_SIZE, adminAssetListQuerySchema } from "@/lib/media/validators";
 import { prisma } from "@/lib/prisma";
 import { requireAdmin } from "@/lib/require-admin";
 import { validateMutationOrigin } from "@/lib/request-security";
-import { createAssetKey, getLocalStorage, publicAssetUrl } from "@/lib/storage/local";
+import { createAssetKey, getLocalStorage, getUploadRoot, publicAssetUrl } from "@/lib/storage/local";
 
 const assetSelect = {
   id: true,
@@ -74,30 +73,20 @@ export async function POST(req: Request) {
   const originFailure = validateMutationOrigin(req);
   if (originFailure) return fail("FORBIDDEN", originFailure.message, originFailure.status, auth.requestId);
 
-  const contentType = req.headers.get("content-type")?.toLowerCase() ?? "";
-  if (!contentType.startsWith("multipart/form-data;")) {
-    return fail("BAD_REQUEST", "上传请求必须使用 multipart/form-data", 415, auth.requestId);
-  }
-
-  const maxBytes = Math.max(getMaxUploadBytes(), getMaxVideoUploadBytes());
-  const rawContentLength = req.headers.get("content-length");
-  const contentLength = Number(rawContentLength);
-  if (!rawContentLength || !Number.isSafeInteger(contentLength) || contentLength <= 0) {
-    return fail("BAD_REQUEST", "上传请求必须提供有效的 Content-Length", 411, auth.requestId);
-  }
-  if (contentLength > maxBytes + 1_000_000) {
-    return fail("BAD_REQUEST", "上传请求过大", 413, auth.requestId);
-  }
-
   let key = "";
+  let received: ReceivedUpload | undefined;
   const storage = getLocalStorage();
   try {
-    const formData = await req.formData();
-    const file = formData.get("file");
-    if (!(file instanceof File)) return fail("BAD_REQUEST", "请选择媒体文件", 400, auth.requestId);
-
-    const upload = await validateAssetUpload(file);
+    received = await receiveAssetUpload(req);
+    const { upload, sha256 } = received;
+    await mkdir(getUploadRoot(), { recursive: true, mode: 0o750 });
+    await ensureUploadSpace(getUploadRoot(), upload.size);
     const quotaBytes = getMediaStorageQuotaBytes();
+    // The potentially large disk copy must not hold a database transaction open.
+    key = createAssetKey(upload.extension);
+    if (upload.sourcePath) await storage.writeFromFile(key, upload.sourcePath);
+    else if (upload.bytes) await storage.write(key, upload.bytes);
+    else throw new Error("Validated upload has no content");
     const asset = await prisma.$transaction(async (tx) => {
       // Prisma cannot deserialize PostgreSQL's void return type, so expose the lock result as text.
       await tx.$queryRaw`SELECT pg_advisory_xact_lock(734281946)::text AS "lockResult"`;
@@ -106,8 +95,6 @@ export async function POST(req: Request) {
         throw new MediaStorageQuotaError();
       }
 
-      key = createAssetKey(upload.extension);
-      await storage.write(key, upload.bytes);
       return tx.asset.create({
         data: {
           ossKey: key,
@@ -119,7 +106,7 @@ export async function POST(req: Request) {
           width: upload.width,
           height: upload.height,
           durationMs: upload.durationMs,
-          sha256: createHash("sha256").update(upload.bytes).digest("hex"),
+          sha256,
           ownerId: auth.user.id,
         },
         select: assetSelect,
@@ -136,7 +123,12 @@ export async function POST(req: Request) {
     });
     return ok({ asset }, auth.requestId, 201);
   } catch (error) {
-    if (key) await storage.delete(key).catch(() => undefined);
+    if (key && !(error && typeof error === "object" && "code" in error && error.code === "EEXIST")) {
+      await storage.delete(key).catch(() => undefined);
+    }
+    if (error instanceof UploadTooLargeError) return fail("BAD_REQUEST", error.message, 413, auth.requestId);
+    if (error instanceof UploadRequestError) return fail("BAD_REQUEST", error.message, error.status, auth.requestId);
+    if (error instanceof UploadSpaceError) return fail("CONFLICT", error.message, 507, auth.requestId);
     if (error instanceof MediaStorageQuotaError) {
       return fail("CONFLICT", "媒体存储空间不足，请永久删除不再使用的回收站文件后重试", 507, auth.requestId);
     }
@@ -145,5 +137,7 @@ export async function POST(req: Request) {
     }
     console.error("[POST /api/admin/assets] failed", error);
     return fail("INTERNAL_ERROR", "媒体上传失败", 500, auth.requestId);
+  } finally {
+    await received?.cleanup().catch(() => undefined);
   }
 }

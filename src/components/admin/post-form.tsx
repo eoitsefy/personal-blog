@@ -10,6 +10,8 @@ import { usePostWorkingCopy } from "./use-post-working-copy";
 import type { MediaAsset } from "@/lib/media/types";
 import { parseTrustedVideoUrl } from "@/lib/media/video";
 import { LocalVideo } from "@/components/content/local-video";
+import { uploadWithProgress } from "@/lib/media/client-upload";
+import { MAX_VIDEO_UPLOAD_BYTES } from "@/lib/media/upload-limits";
 import { readUploadResponse } from "@/lib/media/upload-response";
 import { fixedCategory, POST_CATEGORIES } from "@/lib/post-categories";
 import { CreatePostInputSchema, type CreatePostInput } from "@/lib/validators/post";
@@ -63,6 +65,7 @@ export function PostForm({
   const [videoError, setVideoError] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [uploading, setUploading] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState(0);
   const uploadBusy = useRef(false);
   const textarea = useRef<HTMLTextAreaElement>(null);
   const [availableMedia, setAvailableMedia] = useState(mediaOptions);
@@ -119,15 +122,16 @@ export function PostForm({
     if (!video && !["image/jpeg", "image/png", "image/webp"].includes(file.type)) {
       setMessage("仅支持 JPEG、PNG、WebP 图片或 MP4、MOV、WebM 视频。"); return;
     }
-    if (file.size > (video ? 64 : 20) * 1024 * 1024 || form.assetIds.length >= 20) {
-      setMessage("文件过大（视频最多 64 MiB）或文章已关联 20 个媒体文件。"); return;
+    if (file.size > (video ? MAX_VIDEO_UPLOAD_BYTES : 8 * 1024 * 1024) || form.assetIds.length >= 20) {
+      setMessage("文件过大（视频最多 1 GiB，图片最多 8 MiB）或文章已关联 20 个媒体文件。"); return;
     }
     uploadBusy.current = true;
     setUploading(true);
+    setUploadProgress(0);
     setMessage("");
     try {
       const data = new FormData(); data.set("file", file);
-      const response = await fetch("/api/admin/assets", { method: "POST", body: data, signal: AbortSignal.timeout(180_000) });
+      const response = await uploadWithProgress(data, setUploadProgress);
       const asset = await readUploadResponse(response) as MediaAsset;
       setAvailableMedia((current) => [asset, ...current.filter(({ id }) => id !== asset.id)]);
       insertAsset(asset);
@@ -331,7 +335,7 @@ export function PostForm({
 
       <div className="flex flex-wrap items-center gap-3">
         <button type="button" aria-pressed={preview} onClick={() => setPreview(!preview)} className="rounded-lg border px-3 py-2 text-sm">{preview ? "隐藏预览" : "显示预览"}</button>
-        <label className="cursor-pointer rounded-lg border px-3 py-2 text-sm">{uploading ? "上传中…" : "插入图片"}
+        <label className="cursor-pointer rounded-lg border px-3 py-2 text-sm">{uploading ? (uploadProgress >= 100 ? "正在验证并保存…" : `上传中 ${uploadProgress}%`) : "插入图片"}
           <input type="file" aria-label="上传正文图片" accept="image/jpeg,image/png,image/webp" disabled={uploading} className="sr-only"
             onChange={(event) => { void uploadMedia(event.target.files?.[0]); event.target.value = ""; }} />
         </label>
@@ -339,7 +343,7 @@ export function PostForm({
           <input type="file" aria-label="上传正文视频" accept="video/mp4,video/quicktime,video/webm,.mp4,.mov,.webm" disabled={uploading} className="sr-only"
             onChange={(event) => { void uploadMedia(event.target.files?.[0]); event.target.value = ""; }} />
         </label>
-        <span className="text-xs text-neutral-500">正文可直接粘贴图片；视频最多 64 MiB，上传后自动插入正文。</span>
+        <span className="text-xs text-neutral-500">正文可直接粘贴图片；视频最多 1 GiB，上传后自动插入正文。</span>
       </div>
       <div className={`grid min-w-0 gap-4 ${preview ? "lg:grid-cols-2" : ""}`}>
       <label className="grid min-w-0 gap-2">

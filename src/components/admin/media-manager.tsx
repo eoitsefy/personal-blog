@@ -2,7 +2,8 @@
 
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useRef, useState } from "react";
+import { uploadWithProgress } from "@/lib/media/client-upload";
 import type { MediaAsset } from "@/lib/media/types";
 import { ImagePreview } from "@/components/content/image-preview";
 import { LocalVideo } from "@/components/content/local-video";
@@ -40,20 +41,21 @@ export function MediaManager({ assets, deletedView, storage }: MediaManagerProps
   const router = useRouter();
   const [busyId, setBusyId] = useState("");
   const [uploading, setUploading] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState(0);
+  const uploadBusy = useRef(false);
   const [message, setMessage] = useState("");
 
   async function upload(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    if (uploadBusy.current) return;
+    uploadBusy.current = true;
     const form = event.currentTarget;
     const formData = new FormData(form);
     setUploading(true);
+    setUploadProgress(0);
     setMessage("");
     try {
-      const response = await fetch("/api/admin/assets", {
-        method: "POST",
-        credentials: "include",
-        body: formData,
-      });
+      const response = await uploadWithProgress(formData, setUploadProgress);
       if (response.status === 401) {
         router.replace("/admin/login");
         return;
@@ -65,6 +67,7 @@ export function MediaManager({ assets, deletedView, storage }: MediaManagerProps
     } catch (error) {
       setMessage(error instanceof TypeError ? "网络连接失败，请检查网络后重试" : error instanceof Error ? error.message : "上传失败，请重试");
     } finally {
+      uploadBusy.current = false;
       setUploading(false);
     }
   }
@@ -139,10 +142,10 @@ export function MediaManager({ assets, deletedView, storage }: MediaManagerProps
           <label className="grid min-w-64 flex-1 gap-2">
             <span className="font-medium">上传图片、音频、视频或文档</span>
             <input name="file" type="file" accept="image/jpeg,image/png,image/webp,audio/mpeg,audio/wav,audio/ogg,audio/opus,video/mp4,video/quicktime,video/webm,.mp4,.mov,.webm,application/pdf,text/plain,text/markdown,.md,.markdown" required className="rounded-xl border border-neutral-300 p-3 text-sm dark:border-neutral-700" />
-            <span className="text-xs text-neutral-500">视频支持 MP4、MOV、WebM，最多 64 MiB；推荐 MP4（H.264/AAC），不做自动转码。其他文件沿用原大小限制。</span>
+            <span className="text-xs text-neutral-500">视频支持 MP4、MOV、WebM，最多 1 GiB；推荐 MP4（H.264/AAC），不做自动转码。其他文件沿用原大小限制。</span>
           </label>
           <button type="submit" disabled={uploading} className="rounded-xl bg-neutral-900 px-5 py-3 font-medium text-white disabled:opacity-60 dark:bg-white dark:text-neutral-900">
-            {uploading ? "上传中…" : "上传"}
+            {uploading ? (uploadProgress >= 100 ? "正在验证并保存…" : `上传中 ${uploadProgress}%`) : "上传"}
           </button>
         </form>
       ) : null}

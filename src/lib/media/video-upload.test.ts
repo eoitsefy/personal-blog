@@ -29,7 +29,7 @@ test("video limits are bounded and enforced before reading the file", async () =
   try {
     process.env.MAX_VIDEO_UPLOAD_BYTES = "100";
     await assert.rejects(validateVideoUpload(new File([fixture("mp4")], "big.mp4", { type: "video/mp4" })), /超过/);
-    process.env.MAX_VIDEO_UPLOAD_BYTES = "999999999";
-    assert.equal(getMaxVideoUploadBytes(), 64 * 1024 * 1024);
+    process.env.MAX_VIDEO_UPLOAD_BYTES = "9999999999";
+    assert.equal(getMaxVideoUploadBytes(), 1024 * 1024 * 1024);
   } finally { if (previous === undefined) delete process.env.MAX_VIDEO_UPLOAD_BYTES; else process.env.MAX_VIDEO_UPLOAD_BYTES = previous; }
 });

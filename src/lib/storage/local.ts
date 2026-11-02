@@ -1,9 +1,12 @@
 import { randomUUID } from "node:crypto";
-import { mkdir, readFile, rm, writeFile } from "node:fs/promises";
+import { createReadStream, createWriteStream } from "node:fs";
+import { mkdir, readFile, rm, stat, writeFile } from "node:fs/promises";
+import { pipeline } from "node:stream/promises";
 import path from "node:path";
 
 export interface StorageAdapter {
   write(key: string, bytes: Uint8Array): Promise<void>;
+  writeFromFile(key: string, source: string): Promise<void>;
   read(key: string): Promise<Buffer>;
   delete(key: string): Promise<void>;
 }
@@ -39,8 +42,30 @@ export class LocalStorageAdapter implements StorageAdapter {
     await writeFile(destination, bytes, { flag: "wx", mode: 0o640 });
   }
 
+  async writeFromFile(key: string, source: string) {
+    const destination = resolveKey(this.root, key);
+    await mkdir(path.dirname(destination), { recursive: true, mode: 0o750 });
+    let created = false;
+    const output = createWriteStream(destination, { flags: "wx", mode: 0o640 });
+    output.once("open", () => { created = true; });
+    try {
+      await pipeline(createReadStream(source), output);
+    } catch (error) {
+      if (created) await rm(destination, { force: true });
+      throw error;
+    }
+  }
+
   read(key: string) {
     return readFile(resolveKey(this.root, key));
+  }
+
+  stat(key: string) {
+    return stat(resolveKey(this.root, key));
+  }
+
+  stream(key: string, start?: number, end?: number) {
+    return createReadStream(resolveKey(this.root, key), { start, end });
   }
 
   async delete(key: string) {

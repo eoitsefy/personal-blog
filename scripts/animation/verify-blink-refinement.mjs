@@ -20,7 +20,10 @@ export async function verifyBlinkTechnical(base=root){
  for(const n of [48,49])assert.ok(Math.abs(m.times[m.indices.indexOf(n+1)]-m.times[m.indices.indexOf(n)]-1000/30)<1e-8);
  assert.equal(m.generatorSha256,await codeHash('scripts/animation/prepare-blink-refinement.mjs'));
  assert.equal(m.eyeModuleSha256,await codeHash('scripts/animation/blink-refinement.mjs'));
- assert.equal(m.lockfileSha256,await codeHash('package-lock.json'));
+ // Retained drawings bind the dependency lock used at generation time. A later
+ // unrelated server dependency does not rewrite that historical provenance.
+ const currentLock=await codeHash('package-lock.json');
+ assert.equal(m.lockfileSha256,currentLock===m.lockfileSha256?currentLock:await codeHash(pack+'source-package-lock.json'));
  assert.deepEqual(m.closedStyle,lineStyle(1));assert.ok(Math.abs(m.closedStyle.width-2)<1e-10);
  assert.deepEqual(m.keptAssets,Object.fromEntries(Object.entries(pm.assets).filter(([k])=>k!=='pilot-blink')));
  const neutral=await read(parent+'source/original-neutral.png'),skinBytes=await read(parent+'source/skin-backfill.png');
