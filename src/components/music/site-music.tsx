@@ -1,40 +1,43 @@
 "use client";
-import { createContext, useContext, useRef, useSyncExternalStore, type ReactNode } from "react";
+import { createContext, useContext, useState, useSyncExternalStore, type ReactNode } from "react";
 import { usePathname } from "next/navigation";
-import { useNeteasePlayer, type MusicPlayer } from "./use-netease-player";
-import { MusicStarfield } from "./music-starfield";
-import { MusicDock } from "./music-dock";
-import { isMusicEffectPreset, type MusicEffectPreset } from "./music-effect-presets";
+import { neteaseEmbedUrl, neteaseResourceUrl, parseStoredMusic, validMusicSelection, type MusicSelection } from "@/lib/music/netease-embed";
+import styles from "./music-embed.module.css";
 
-type MusicContext = { player: MusicPlayer; effectsEnabled: boolean; toggleEffects: () => void; effectPreset: MusicEffectPreset; selectEffect: (preset: MusicEffectPreset) => void; pageVisible: boolean };
+const storageKey = "eastherphil.music.selection.v1";
+let memorySelection = "";
+let memoryOverride = false;
+function readSelection() { if (memoryOverride) return memorySelection; try { return localStorage.getItem(storageKey) ?? ""; } catch { return memorySelection; } }
+function subscribeSelection(notify: () => void) { window.addEventListener("storage", notify); window.addEventListener("music-selection-change", notify); return () => { window.removeEventListener("storage", notify); window.removeEventListener("music-selection-change", notify); }; }
+function saveSelection(selection: MusicSelection | null) {
+  const validated = selection ? validMusicSelection(selection) : null;
+  const value = validated ? JSON.stringify(validated) : "";
+  memorySelection = value;
+  try { if (value) localStorage.setItem(storageKey, value); else localStorage.removeItem(storageKey); memoryOverride = false; } catch { memoryOverride = true; }
+  window.dispatchEvent(new Event("music-selection-change"));
+}
+type MusicContext = { selection: MusicSelection | null; selectMusic: (selection: MusicSelection) => void; openPlayer: () => void; stopPlayer: () => void };
 const Context = createContext<MusicContext | null>(null);
-const serverFalse = () => false;
-const serverTrue = () => true;
-let effectsFallback = true;
-let presetFallback: MusicEffectPreset = "stars";
-const serverPreset = () => "stars" as const;
-function readEffects() { try { return localStorage.getItem("eastherphil.music.effects") !== "off"; } catch { return effectsFallback; } }
-function readPreset(): MusicEffectPreset { try { const value = localStorage.getItem("eastherphil.music.effect-preset"); return isMusicEffectPreset(value) ? value : "stars"; } catch { return presetFallback; } }
-function subscribeEffects(notify: () => void) { window.addEventListener("storage", notify); window.addEventListener("music-effects-preference", notify); return () => { window.removeEventListener("storage", notify); window.removeEventListener("music-effects-preference", notify); }; }
-function subscribeVisibility(notify: () => void) { document.addEventListener("visibilitychange", notify); return () => document.removeEventListener("visibilitychange", notify); }
-function readVisibility() { return document.visibilityState === "visible"; }
 export function useSiteMusic() { const context = useContext(Context); if (!context) throw new Error("Music provider is required"); return context; }
 
 export function SiteMusicHost({ children }: { children: ReactNode; sampleContent?: boolean }) {
   const pathname = usePathname();
+  const raw = useSyncExternalStore(subscribeSelection, readSelection, () => "");
+  const selection = parseStoredMusic(raw);
+  const [open, setOpen] = useState(false);
   const enabled = pathname === "/" || pathname === "/posts" || pathname.startsWith("/posts/") || pathname === "/places" || pathname === "/assistant" || pathname === "/music";
-  const audioRef = useRef<HTMLAudioElement>(null);
-  const player = useNeteasePlayer(enabled, audioRef);
-  const pageVisible = useSyncExternalStore(subscribeVisibility, readVisibility, serverFalse);
-  const effectsEnabled = useSyncExternalStore(subscribeEffects, readEffects, serverTrue);
-  const effectPreset = useSyncExternalStore(subscribeEffects, readPreset, serverPreset);
-  function toggleEffects() { effectsFallback = !effectsEnabled; try { localStorage.setItem("eastherphil.music.effects", effectsFallback ? "on" : "off"); } catch {} window.dispatchEvent(new Event("music-effects-preference")); }
-  function selectEffect(preset: MusicEffectPreset) { presetFallback = preset; try { localStorage.setItem("eastherphil.music.effect-preset", preset); } catch {} window.dispatchEvent(new Event("music-effects-preference")); }
-  return <Context.Provider value={{ player, pageVisible, effectsEnabled, toggleEffects, effectPreset, selectEffect }}>
+  function selectMusic(value: MusicSelection) { if (!validMusicSelection(value)) return; saveSelection(value); setOpen(true); }
+  function stopPlayer() { saveSelection(null); setOpen(false); }
+  return <Context.Provider value={{ selection, selectMusic, openPlayer: () => setOpen(true), stopPlayer }}>
     {children}
-    <audio ref={audioRef} {...player.audioProps} data-testid="site-music-audio" />
-    {enabled && <><MusicStarfield active={player.playing && !player.waiting} enabled={effectsEnabled} preset={effectPreset} />{pathname !== "/music" && <MusicDock pathname={pathname} />}</>}
+    {selection && <div className={styles.dock} data-testid="site-music-dock" hidden={!enabled}>
+      <button type="button" className={styles.launcher} onClick={() => setOpen(!open)} aria-expanded={open} aria-controls="site-music-panel">{open ? "收起播放器" : "♫ 沿途留声"}</button>
+      <section id="site-music-panel" className={styles.panel} hidden={!open} aria-label="网易云音乐播放器">
+        <div className={styles.panelHead}><div><span>E / ALONG THE WAY</span><strong>沿途留声</strong></div><div className={styles.actions}><button type="button" onClick={() => setOpen(false)}>收起</button><button type="button" onClick={stopPlayer}>关闭并停止</button></div></div>
+        <iframe title="网易云音乐官方播放器" src={neteaseEmbedUrl(selection)} className={styles.frame} style={{ height: selection.type === "song" ? 86 : 450 }} sandbox="allow-scripts allow-same-origin allow-popups" allow="autoplay" referrerPolicy="no-referrer" />
+        <p className={styles.footnote}>如无法播放，请<a href={neteaseResourceUrl(selection)} target="_blank" rel="noopener noreferrer">在网易云打开</a>。播放与版权限制以网易云为准。</p>
+      </section>
+    </div>}
   </Context.Provider>;
 }
-
 export const LocalMusicHost = SiteMusicHost;

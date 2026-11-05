@@ -9,7 +9,7 @@ export function buildContentSecurityPolicy(isDevelopment: boolean) {
     "img-src 'self' data: blob: https:",
     "font-src 'self' data:",
     "media-src 'self' https:",
-    "frame-src https://player.bilibili.com https://www.youtube-nocookie.com",
+    "frame-src https://player.bilibili.com https://www.youtube-nocookie.com https://music.163.com",
     `connect-src 'self' https://*.amap.com https://*.autonavi.com${isDevelopment ? " ws: wss:" : ""}`,
     "worker-src 'self' blob:",
     "object-src 'none'",

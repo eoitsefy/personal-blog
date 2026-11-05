@@ -84,20 +84,21 @@ async function main() {
   const published = await (await request(commentsPath)).json();
   check(published.data.comments.some((comment) => comment.id === commentId), stage);
 
-  stage = 'music session boundary';
-  const guestMusic = await (await request('/api/music')).json();
-  const userMusic = await (await request('/api/music', { cookie: userCookie })).json();
-  const adminMusic = await (await request('/api/music', { cookie: adminCookie })).json();
-  check(guestMusic.signedIn === false && guestMusic.authenticated === false && userMusic.signedIn === true && userMusic.authenticated === false && adminMusic.signedIn === true && adminMusic.authenticated === false, stage);
-  for (const status of [guestMusic, userMusic, adminMusic]) {
-    check(Object.keys(status).every((key) => ['ok', 'ready', 'signedIn', 'accountId', 'authenticated', 'message'].includes(key)), stage);
+  stage = 'retired music API';
+  const expectedMusic = { ok: true, mode: 'official-embed', ready: true, message: '音乐已改用网易云官方播放器。' };
+  for (const cookie of [undefined, userCookie, adminCookie]) {
+    const result = await request('/api/music', { cookie });
+    check(result.status === 200 && /no-store/i.test(result.headers.get('cache-control') || ''), stage);
+    const body = await result.json();
+    check(JSON.stringify(body) === JSON.stringify(expectedMusic), stage);
+    for (const action of ['search', 'play', 'login-start', 'login-check']) {
+      const response = await request('/api/music', { method: 'POST', cookie, body: { action } });
+      check(response.status === 410 && /no-store/i.test(response.headers.get('cache-control') || ''), stage);
+      const retired = await response.json();
+      check(retired.ok === false && retired.code === 'MUSIC_EMBED_ONLY', stage);
+    }
   }
-  check(guestMusic.accountId === null && userMusic.accountId === userId && adminMusic.accountId !== userId, stage);
-  check((await request('/api/music', { method: 'POST', body: { action: 'search', query: 'test' } })).status === 401, stage);
-  check((await request('/api/music', { method: 'POST', cookie: userCookie, site: 'cross-site', body: { action: 'search', query: 'test' } })).status === 403, stage);
-  // No provider request is sent: the CI container intentionally has no music configuration.
-  check(userMusic.ready === false, 'CI music configuration must be absent');
-  check((await request('/api/music', { method: 'POST', cookie: userCookie, body: { action: 'search', query: 'test' } })).status === 503, stage);
+  check((await request('/api/music', { method: 'POST', cookie: userCookie, site: 'cross-site', body: { action: 'search' } })).status === 410, stage);
   console.log('community_music_http_regression=passed');
 }
 (async () => {

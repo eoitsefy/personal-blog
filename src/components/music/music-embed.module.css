@@ -1,0 +1,39 @@
+.page { width: min(1120px, calc(100% - 64px)); margin: 0 auto; padding: 62px 0 165px; }
+.header { margin-bottom: 38px; }
+.header h1 { margin: 0; font: 500 clamp(32px,4vw,46px)/1.35 Georgia,"Noto Serif SC","Songti SC",serif; letter-spacing: .08em; }
+.header > p:last-child { color: var(--ink-soft); font-size: 14px; margin-top: 16px; }
+.eyebrow { margin: 0 0 12px; font-size: 10px; font-weight: 700; letter-spacing: .19em; color: var(--ink-soft); }
+.columns { display: grid; grid-template-columns: minmax(0,1fr) 390px; gap: 28px; align-items: start; }
+.library { min-width: 0; min-height: 420px; padding: 32px; border: 1px solid var(--line); background: var(--paper-bright); }
+.library h2 { font-size: 24px; margin: 0 0 20px; }
+.library > p:not(.eyebrow), .hint { color: var(--ink-soft); line-height: 1.8; font-size: 13px; }
+.form { margin-top: 26px; }
+.form label { display: block; font-size: 12px; font-weight: 600; margin-bottom: 9px; }
+.form > div { display: flex; border: 1px solid var(--line); }
+.form input { min-width: 0; width: 100%; flex: 1; padding: 13px; border: 0; background: transparent; color: var(--ink); }
+.form button { border: 0; background: #25231e; color: #f2ecdf; padding: 0 17px; white-space: nowrap; cursor: pointer; }
+.error { color: #9b4133 !important; }
+.current { margin: 28px 0; padding: 18px; background: #f2eee5; font-size: 13px; }
+.current > div { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; margin-top: 12px; }
+.current button, .current a, .search { border: 0; padding: 0; background: none; color: #765b26; text-decoration: underline; text-underline-offset: 4px; cursor: pointer; font-size: 12px; }
+.search { display: inline-block; margin-top: 20px; }
+.art { border: 1px solid #71603c; border-radius: 18px; background: #25231e; padding: 26px 28px; color: #f2ecdf; text-align: center; }
+.art > p:first-child { text-align: left; color: #d5b061; font-size: 10px; letter-spacing: .15em; }
+.art h2 { margin: 22px 0 8px; font-size: 20px; }
+.art > p:last-child { color: #c6baa4; font-size: 12px; }
+.record { width: min(100%, 260px); margin: 28px auto 0; }
+.note { color: var(--ink-soft); line-height: 1.8; font-size: 12px; margin-top: 24px; }
+.dock { position: fixed; z-index: 60; left: max(12px,env(safe-area-inset-left)); bottom: max(16px,env(safe-area-inset-bottom)); }
+.dock[hidden], .panel[hidden] { display: none; }
+.launcher { min-height: 48px; padding: 10px 17px; border: 1px solid #8d7545; border-radius: 30px; color: #f2ecdf; background: #25231e; box-shadow: 0 6px 22px #0003; font-size: 12px; cursor: pointer; }
+.panel { position: fixed; z-index: 61; left: max(12px,env(safe-area-inset-left)); bottom: max(76px,calc(env(safe-area-inset-bottom) + 66px)); width: min(440px,calc(100vw - 24px)); max-height: calc(100dvh - 100px); overflow: auto; overscroll-behavior: contain; background: #25231e; color: #f2ecdf; padding: 16px; border: 1px solid #8f7547; border-radius: 16px; box-shadow: 0 22px 65px #0005; }
+.panelHead { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 14px; }
+.panelHead span { display: block; color: #b69b62; font-size: 9px; letter-spacing: .12em; }
+.panelHead strong { display: block; font: 500 18px/1.5 Georgia,"Songti SC",serif; }
+.actions { display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-end; }
+.actions button { min-height: 40px; border: 1px solid #ad976b; border-radius: 4px; background: transparent; color: #f2ecdf; padding: 7px 9px; cursor: pointer; font-size: 12px; }
+.frame { display: block; width: 100%; border: 0; background: #fff; }
+.footnote { margin: 12px 0 0; font-size: 11px; line-height: 1.7; color: #c6baa4; }
+.footnote a { color: #ead098; text-decoration: underline; text-underline-offset: 3px; }
+@media (max-width:900px) { .page { width: calc(100% - 40px); padding-top: 40px; } .columns { grid-template-columns: 1fr; } .record { width: 190px; } }
+@media (max-width:600px) { .page { width: calc(100% - 32px); padding: 24px 0 165px; } .header { margin-bottom: 24px; } .library { padding: 20px; min-height: 0; } .form > div { flex-wrap: wrap; } .form input { flex-basis: 100%; } .form button { min-height: 44px; width: 100%; } .panel { padding: 12px; } }

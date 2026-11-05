@@ -22,3 +22,15 @@ test("development CSP adds local websocket connections only", () => {
   assert.doesNotMatch(policy, /upgrade-insecure-requests/);
 });
 
+
+
+test("official music iframe is allowed without widening other directives", () => {
+  for (const development of [false, true]) {
+    const directives = Object.fromEntries(buildContentSecurityPolicy(development).split("; ").map(item => { const [name, ...sources] = item.split(" "); return [name, sources]; }));
+    assert.deepEqual(directives["frame-src"], ["https://player.bilibili.com", "https://www.youtube-nocookie.com", "https://music.163.com"]);
+    assert.deepEqual(directives["default-src"], ["'self'"]);
+    for (const name of ["script-src", "connect-src"]) {
+      assert.ok(!directives[name].some(source => source.includes("163.com")));
+    }
+  }
+});
