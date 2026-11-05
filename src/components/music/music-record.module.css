@@ -1,0 +1,20 @@
+.scene { position: relative; display: grid; place-items: center; width: 100%; aspect-ratio: 1; padding: 13px; }
+.record { width: 100%; height: 100%; display: grid; place-items: center; position: relative; border-radius: 50%; background: repeating-radial-gradient(circle,#28251f 0px,#28251f 1px,#171611 2px,#171611 3px); box-shadow: 0 13px 25px #0004,inset 0 0 0 2px #494030; animation: rotate 16s linear infinite paused; }
+.record::after { content: ""; position: absolute; inset: 0; border-radius: 50%; background: conic-gradient(from 18deg,transparent 0deg,#ffffff18 35deg,transparent 66deg,transparent 180deg,#ffffff12 215deg,transparent 246deg); pointer-events: none; }
+.spinning { animation-play-state: running; }
+.label { width: 37%; height: 37%; border-radius: 50%; background: #d5b267; color: #302715; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 3px; overflow: hidden; position: relative; }
+.label span { font-size: 6px; letter-spacing: .9px; }
+.label strong { font: 400 28px Georgia,serif; }
+.label small { font-size: 5px; letter-spacing: .7px; }
+.label::after { content: ""; position: absolute; width: 7px; height: 7px; border-radius: 50%; background: #292318; inset: calc(50% - 3.5px); }
+.label img { width: 100%; height: 100%; object-fit: cover; }
+.arm { position: absolute; right: 18px; top: 2px; width: 7px; height: 50%; background: linear-gradient(90deg,#80735c,#d5cbb1,#8d7c5b); border-radius: 5px; transform: rotate(-22deg); transform-origin: 50% 8px; transition: transform .4s; }
+.arm::before { content: ""; position: absolute; width: 20px; height: 20px; left: -6.5px; top: 0; border-radius: 50%; border: 5px solid #b4a27b; background: #514831; }
+.arm::after { content: ""; position: absolute; width: 15px; height: 22px; left: -4px; bottom: -8px; border-radius: 3px; background: #b4a27b; }
+.engaged { transform: rotate(10deg); }
+.compact { padding: 4px; }
+.compact .label strong { font-size: 18px; }
+.compact .label span,.compact .label small { display: none; }
+.compact .label::after { width: 4px; height: 4px; inset: calc(50% - 2px); }
+@keyframes rotate { to { transform: rotate(360deg); } }
+@media(prefers-reduced-motion:reduce) { .record { animation: none; } .arm { transition: none; } }

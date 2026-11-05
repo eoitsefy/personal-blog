@@ -3,12 +3,12 @@ import { fail, ok } from "@/lib/api";
 import { CommentContentSchema } from "@/lib/comments";
 import { prisma } from "@/lib/prisma";
 import { readJsonMutation, validateMutationOrigin } from "@/lib/request-security";
-import { requireVerifiedUser } from "@/lib/require-user";
+import { requireActiveUser } from "@/lib/require-user";
 
 const UpdateSchema = z.object({ content: CommentContentSchema });
 
 export async function PATCH(req: Request, context: RouteContext<"/api/comments/[id]">) {
-  const auth = await requireVerifiedUser(req);
+  const auth = await requireActiveUser(req);
   if (!auth.ok) return auth.response;
   const body = await readJsonMutation(req, 8_192);
   if (!body.ok) return fail("BAD_REQUEST", body.failure.message, body.failure.status, auth.requestId);
@@ -34,7 +34,7 @@ export async function PATCH(req: Request, context: RouteContext<"/api/comments/[
 }
 
 export async function DELETE(req: Request, context: RouteContext<"/api/comments/[id]">) {
-  const auth = await requireVerifiedUser(req);
+  const auth = await requireActiveUser(req);
   if (!auth.ok) return auth.response;
   const originFailure = validateMutationOrigin(req);
   if (originFailure) return fail("FORBIDDEN", originFailure.message, originFailure.status, auth.requestId);

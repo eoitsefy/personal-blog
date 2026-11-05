@@ -4,12 +4,12 @@ import { fail, ok } from "@/lib/api";
 import { CommentReportReasonSchema } from "@/lib/comments";
 import { prisma } from "@/lib/prisma";
 import { readJsonMutation } from "@/lib/request-security";
-import { requireVerifiedUser } from "@/lib/require-user";
+import { requireActiveUser } from "@/lib/require-user";
 
 const ReportSchema = z.object({ reason: CommentReportReasonSchema });
 
 export async function POST(req: Request, context: RouteContext<"/api/comments/[id]/reports">) {
-  const auth = await requireVerifiedUser(req);
+  const auth = await requireActiveUser(req);
   if (!auth.ok) return auth.response;
   const body = await readJsonMutation(req, 4_096);
   if (!body.ok) return fail("BAD_REQUEST", body.failure.message, body.failure.status, auth.requestId);

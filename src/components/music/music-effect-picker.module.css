@@ -1,0 +1,5 @@
+.picker { display: inline-flex; align-items: center; gap: 8px; color: #75613e; font-size: 11px; }
+.picker select { min-width: 118px; max-width: 100%; border: 1px solid #bfaa7f; border-radius: 7px; padding: 8px 24px 8px 10px; background: #f7f2e6; color: #604619; font: inherit; cursor: pointer; }
+.compact { display: flex; justify-content: space-between; margin: 0 0 18px; padding-bottom: 13px; border-bottom: 1px solid #ffffff18; color: #c6b594; }
+.compact select { background: #342f24; border-color: #8f754766; color: #ead7ae; color-scheme: dark; }
+@media (pointer: coarse) { .picker select { min-height: 44px; } }

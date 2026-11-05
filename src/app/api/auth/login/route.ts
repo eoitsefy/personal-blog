@@ -64,7 +64,7 @@ export async function POST(req: Request) {
 
     const audienceAllowed = parsed.data.audience === "ADMIN"
       ? user?.role === "ADMIN"
-      : Boolean(user?.emailVerifiedAt);
+      : true;
     if (!user || !audienceAllowed || user.status !== "ACTIVE" || !passwordMatches) {
       logApi({
         requestId,

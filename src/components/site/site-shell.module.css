@@ -138,8 +138,13 @@
   background: var(--signal);
 }
 
-.consoleLink {
+.identityLinks {
   justify-self: end;
+  display: flex;
+  gap: 8px;
+}
+
+.consoleLink {
   padding: 9px 13px;
   border: 1px solid currentColor;
   font-size: .875rem;
@@ -203,6 +208,8 @@
 }
 
 @media (max-width: 760px) {
+  .nav.localNav { gap: 4px; }
+  .nav.localNav a { min-width: 0; flex: 1 1 0; }
   .headerInner,
   .footerInner {
     width: min(100% - 30px, 1320px);
@@ -230,9 +237,9 @@
     display: none;
   }
 
+  .identityLinks { grid-column: 2; grid-row: 1; }
+
   .consoleLink {
-    grid-column: 2;
-    grid-row: 1;
     min-height: 44px;
     display: inline-flex;
     align-items: center;

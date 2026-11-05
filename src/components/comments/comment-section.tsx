@@ -124,7 +124,7 @@ export function CommentSection({
       <label htmlFor="comment-content" className="font-medium">写下评论</label>
       <textarea id="comment-content" required minLength={2} maxLength={1000} rows={5} value={content} onChange={(event) => setContent(event.target.value)} placeholder="2–1000 字，最多包含 2 个链接" className="w-full rounded-xl border border-black/20 bg-white p-3" />
       <div className="flex items-center justify-between gap-3 text-xs text-neutral-500"><span>提交即表示同意<Link href="/community-guidelines" className="mx-1 underline">评论规则与隐私说明</Link>；内容将进入审核队列。</span><button disabled={busy === "submit"} className="rounded-lg bg-neutral-900 px-5 py-2.5 text-sm font-medium text-white disabled:opacity-50">{busy === "submit" ? "提交中…" : "提交评论"}</button></div>
-    </form> : !signedIn && !commentsLocked ? <p className="mt-6 rounded-xl border border-black/10 bg-white/60 p-4 text-sm">游客可以阅读评论。<Link href={`/login?next=${encodeURIComponent(`/posts/${slug}`)}`} className="ml-1 font-medium underline">登录已验证账号后参与讨论</Link>。</p> : null}
+    </form> : !signedIn && !commentsLocked ? <p className="mt-6 rounded-xl border border-black/10 bg-white/60 p-4 text-sm">游客可以阅读评论。<Link href={`/login?next=${encodeURIComponent(`/posts/${slug}`)}`} className="ml-1 font-medium underline">登录后参与讨论</Link>。</p> : null}
     {comments.length ? <ol className="mt-8 grid gap-5">{comments.map((comment) => renderComment(comment))}</ol> : <p className="mt-8 rounded-2xl border border-dashed border-black/20 p-8 text-center text-neutral-500">这里还没有公开评论。</p>}
   </section>;
 }

@@ -210,7 +210,7 @@ export default async function PostDetailPage({ params }: PageProps) {
             slug={post.slug}
             initialComments={comments}
             commentsLocked={post.commentsLocked}
-            signedIn={Boolean(currentUser?.emailVerifiedAt)}
+            signedIn={Boolean(currentUser)}
           />
         </article>
       </main>

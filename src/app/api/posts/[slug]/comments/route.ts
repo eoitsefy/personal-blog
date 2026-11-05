@@ -10,7 +10,7 @@ import {
 import { getUserFromRequest } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { readJsonMutation } from "@/lib/request-security";
-import { requireVerifiedUser } from "@/lib/require-user";
+import { requireActiveUser } from "@/lib/require-user";
 
 const CreateCommentSchema = z.object({
   content: CommentContentSchema,
@@ -30,12 +30,12 @@ export async function GET(req: Request, context: RouteContext<"/api/posts/[slug]
   return ok({
     comments: await listPublicComments(post.id, user?.id ?? null),
     commentsLocked: post.commentsLocked,
-    canComment: Boolean(user?.emailVerifiedAt) && !post.commentsLocked,
+    canComment: Boolean(user) && !post.commentsLocked,
   }, requestId);
 }
 
 export async function POST(req: Request, context: RouteContext<"/api/posts/[slug]/comments">) {
-  const auth = await requireVerifiedUser(req);
+  const auth = await requireActiveUser(req);
   if (!auth.ok) return auth.response;
   const body = await readJsonMutation(req, 8_192);
   if (!body.ok) return fail("BAD_REQUEST", body.failure.message, body.failure.status, auth.requestId);

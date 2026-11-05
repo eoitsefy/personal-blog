@@ -126,7 +126,7 @@ export async function resetPasswordWithToken(token: string | undefined, password
 
     await tx.user.update({
       where: { id: user.id },
-      data: { passwordHash, emailVerifiedAt: user.emailVerifiedAt ?? now },
+      data: { passwordHash },
     });
     await tx.userSession.updateMany({ where: { userId: user.id, revokedAt: null }, data: { revokedAt: now } });
     return { ok: true, userId: user.id, email: user.email } as const;

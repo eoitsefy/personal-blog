@@ -74,3 +74,5 @@ JS
 docker exec -i "$name" node < scripts/verify-login-throttle.cjs
 
 docker exec -i --env CI=true "$name" node < scripts/verify-large-video-upload.cjs
+
+docker exec -i --env CI=true "$name" node < scripts/verify-community-music.cjs

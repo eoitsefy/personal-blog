@@ -16,6 +16,7 @@ import { DELETE as deletePost, PATCH as updatePost } from "@/app/api/admin/posts
 import { DELETE as purgePost } from "@/app/api/admin/posts/[id]/purge/route";
 import { POST as restorePost } from "@/app/api/admin/posts/[id]/restore/route";
 import { POST as login } from "@/app/api/auth/login/route";
+import { POST as register } from "@/app/api/auth/register/route";
 import { POST as logout } from "@/app/api/auth/logout/route";
 import { POST as createInvitation } from "@/app/api/admin/users/invitations/route";
 import { PATCH as updateUserStatus } from "@/app/api/admin/users/[id]/route";
@@ -197,7 +198,7 @@ test("verified comments integrate moderation, replies, reports, locking and dele
   try {
     const [admin, reader, reporter] = await Promise.all([
       prisma.user.create({ data: { email: `comment-admin-${suffix}@example.test`, passwordHash: "unused", role: "ADMIN", emailVerifiedAt: new Date() } }),
-      prisma.user.create({ data: { email: `comment-reader-${suffix}@example.test`, passwordHash: "unused", role: "USER", emailVerifiedAt: new Date() } }),
+      prisma.user.create({ data: { email: `comment-reader-${suffix}@example.test`, passwordHash: "unused", role: "USER", emailVerifiedAt: null } }),
       prisma.user.create({ data: { email: `comment-reporter-${suffix}@example.test`, passwordHash: "unused", role: "USER", emailVerifiedAt: new Date() } }),
     ]);
     userIds.push(admin.id, reader.id, reporter.id);
@@ -840,6 +841,32 @@ test("media upload, article references and protected deletion work end to end", 
     if (previousStorageQuota === undefined) delete process.env.MAX_MEDIA_STORAGE_BYTES;
     else process.env.MAX_MEDIA_STORAGE_BYTES = previousStorageQuota;
     await rm(uploadRoot, { recursive: true, force: true });
+    await prisma.$disconnect();
+  }
+});
+
+
+test("self registration cannot elevate and unverified user can log in", async () => {
+  const email = `self-${Date.now()}-${Math.random().toString(36).slice(2)}@example.test`;
+  const password = "ValidPassword123";
+  const makeRequest = (body: object, origin = "http://localhost") => new Request("http://localhost/api/auth/register", { method: "POST", headers: { origin, "content-type": "application/json", "x-real-ip": "192.0.2.87" }, body: JSON.stringify(body) });
+  const throttle = loginThrottleKeys(makeRequest({}), `registration:${email}`);
+  const loginReq = () => new Request("http://localhost/api/auth/login", { method: "POST", headers: { origin: "http://localhost", "content-type": "application/json", "x-real-ip": "192.0.2.87" }, body: JSON.stringify({ email, password, audience: "USER" }) });
+  const loginKeys = loginThrottleKeys(loginReq(), email);
+  let userId = "";
+  try {
+    assert.equal((await register(makeRequest({ email, password, role: "ADMIN" }))).status, 400);
+    assert.equal((await register(makeRequest({ email, password }, "https://evil.example"))).status, 403);
+    const response = await register(makeRequest({ email, password }));
+    assert.equal(response.status, 201);
+    const created = await prisma.user.findUniqueOrThrow({ where: { email } }); userId = created.id;
+    assert.equal(created.role, "USER"); assert.equal(created.status, "ACTIVE"); assert.equal(created.emailVerifiedAt, null);
+    assert.match(response.headers.get("set-cookie") ?? "", /blog_session=/);
+    assert.equal((await register(makeRequest({ email, password }))).status, 409);
+    assert.equal((await login(loginReq())).status, 200);
+  } finally {
+    if (userId) await prisma.user.deleteMany({ where: { id: userId } });
+    await prisma.loginThrottle.deleteMany({ where: { key: { in: [...Object.values(throttle), ...Object.values(loginKeys)] } } });
     await prisma.$disconnect();
   }
 });

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { absoluteUrl, SITE_AUTHOR, SITE_DESCRIPTION, SITE_NAME, SITE_OG_IMAGE, SITE_URL } from "@/lib/site";
 import "./globals.css";
+import { SiteMusicHost } from "@/components/music/site-music";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -57,7 +58,7 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col">
         <a className="skip-link" href="#content-start">跳到主要内容</a>
         <span id="content-start" tabIndex={-1} />
-        {children}
+        <SiteMusicHost>{children}</SiteMusicHost>
       </body>
     </html>
   );

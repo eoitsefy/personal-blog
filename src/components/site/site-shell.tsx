@@ -1,11 +1,13 @@
 import Link from "next/link";
 import { FloatingAssistant } from "@/components/assistant/chibi-assistant";
 import { ICP_FILING_NUMBER, ICP_FILING_URL } from "@/lib/site";
+import { getCurrentUser } from "@/lib/user-auth";
+import { identityLinks } from "@/lib/registration-navigation";
 import styles from "./site-shell.module.css";
 
 type SiteHeaderProps = {
   tone?: "dark" | "light";
-  active?: "home" | "posts" | "places" | "assistant";
+  active?: "home" | "posts" | "places" | "assistant" | "music";
   overlay?: boolean;
 };
 
@@ -18,7 +20,9 @@ export function SiteMark() {
   );
 }
 
-export function SiteHeader({ tone = "dark", active, overlay = false }: SiteHeaderProps) {
+export async function SiteHeader({ tone = "dark", active, overlay = false }: SiteHeaderProps) {
+  const user = await getCurrentUser();
+  const links = identityLinks(user?.role);
   return (
     <header className={`${styles.header} ${styles[tone]} ${overlay ? styles.overlay : ""}`}>
       <div className={styles.headerInner}>
@@ -29,7 +33,7 @@ export function SiteHeader({ tone = "dark", active, overlay = false }: SiteHeade
           </span>
         </Link>
 
-        <nav className={styles.nav} aria-label="主导航">
+        <nav className={`${styles.nav} ${styles.localNav}`} aria-label="主导航">
           <Link href="/" aria-current={active === "home" ? "page" : undefined}>
             首页
           </Link>
@@ -42,11 +46,10 @@ export function SiteHeader({ tone = "dark", active, overlay = false }: SiteHeade
           <Link href="/assistant" aria-current={active === "assistant" ? "page" : undefined}>
             助手
           </Link>
+          <Link href="/music" aria-current={active === "music" ? "page" : undefined}>音乐</Link>
         </nav>
 
-        <Link href="/admin" className={styles.consoleLink}>
-          管理台 <span aria-hidden="true">↗</span>
-        </Link>
+        <div className={styles.identityLinks}>{links.map(({ href, label }) => <Link key={href} href={href} className={styles.consoleLink}>{label}</Link>)}</div>
       </div>
     </header>
   );
