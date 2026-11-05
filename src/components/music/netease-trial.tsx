@@ -2,11 +2,12 @@
 import { useState, type FormEvent } from "react";
 import { parseNeteaseShare, neteaseResourceUrl } from "@/lib/music/netease-embed";
 import { useSiteMusic } from "./site-music";
+import { MusicAmbienceControls } from "./music-ambience-controls";
 import { MusicRecord } from "./music-record";
 import styles from "./music-embed.module.css";
 
 export function MusicPageContent() {
-  const { selection, selectMusic, openPlayer, stopPlayer } = useSiteMusic();
+  const { selection, selectMusic, openPlayer, stopPlayer, effectPreset, ambienceEnabled, pageVisible } = useSiteMusic();
   const [input, setInput] = useState("");
   const [error, setError] = useState("");
   function submit(event: FormEvent<HTMLFormElement>) {
@@ -28,7 +29,7 @@ export function MusicPageContent() {
         {selection && <div className={styles.current}><strong>已选择{names[selection.type]}</strong><div><button type="button" onClick={openPlayer}>展开播放器</button><button type="button" onClick={stopPlayer}>关闭并停止</button><a href={neteaseResourceUrl(selection)} target="_blank" rel="noopener noreferrer">在网易云打开 ↗</a></div></div>}
         <a className={styles.search} href="https://music.163.com/" target="_blank" rel="noopener noreferrer">前往网易云寻找音乐 ↗</a>
       </section>
-      <aside className={styles.art} aria-label="沿途留声"><p>E / 沿途留声</p><div className={styles.record}><MusicRecord playing={false} /></div><h2>留一段旋律</h2><p>用网易云音乐官方播放器收听。</p></aside>
+      <aside className={styles.art} data-effect-preset={effectPreset} aria-label="沿途留声"><p>E / 沿途留声</p><div className={styles.record}><MusicRecord rotating={ambienceEnabled && pageVisible} /></div><h2>留一段旋律</h2><p>用网易云音乐官方播放器收听。</p><MusicAmbienceControls id="music-page-style" /></aside>
     </div>
     <p className={styles.note}>音乐由网易云音乐提供。若播放器无法加载或歌曲无法播放，可在网易云音乐打开；实际播放取决于平台和歌曲权限。</p>
   </main>;

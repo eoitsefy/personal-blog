@@ -37,3 +37,19 @@
 .footnote a { color: #ead098; text-decoration: underline; text-underline-offset: 3px; }
 @media (max-width:900px) { .page { width: calc(100% - 40px); padding-top: 40px; } .columns { grid-template-columns: 1fr; } .record { width: 190px; } }
 @media (max-width:600px) { .page { width: calc(100% - 32px); padding: 24px 0 165px; } .header { margin-bottom: 24px; } .library { padding: 20px; min-height: 0; } .form > div { flex-wrap: wrap; } .form input { flex-basis: 100%; } .form button { min-height: 44px; width: 100%; } .panel { padding: 12px; } }
+/* Style choices affect the surrounding design, not the official iframe. */
+.art[data-effect-preset="glow"], .dock[data-effect-preset="glow"] .panel { border-color: #d4ad58; box-shadow: 0 0 30px #b8863442; }
+.art[data-effect-preset="glow"] .record { filter: sepia(.16) brightness(1.15); }
+.dock[data-effect-preset="glow"] .launcher { border-color: #e3be67; background: #4b391e; }
+.art[data-effect-preset="stars"], .dock[data-effect-preset="stars"] .panel { background-color: #22232c; border-color: #9695b5; background-image: radial-gradient(circle at 14% 18%, #d6cba8 0 1px, transparent 2px), radial-gradient(circle at 83% 27%, #d6cba8 0 1px, transparent 2px); background-size: 86px 100px, 120px 100px; }
+.dock[data-effect-preset="stars"] .launcher { background: #262837; border-color: #9695b5; }
+.art[data-effect-preset="spectrum"], .dock[data-effect-preset="spectrum"] .panel { border-color: #bd8567; background-image: repeating-linear-gradient(90deg,transparent 0 27px,#dca46b12 28px 30px); }
+.art[data-effect-preset="spectrum"] .record { filter: hue-rotate(-18deg); }
+.dock[data-effect-preset="spectrum"] .launcher { background: #48312c; border-color: #bd8567; }
+.art[data-effect-preset="companion"], .dock[data-effect-preset="companion"] .panel { border-color: #b9a373; background-image: radial-gradient(ellipse at 50% 65%,#a9874833,transparent 62%); }
+.art[data-effect-preset="companion"] .record { filter: sepia(.25); }
+.dock[data-effect-preset="companion"] .launcher { background: #3c3524; border-color: #c7aa72; }
+.ambienceControls { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 18px 0 14px; font-size: 11px; text-align: left; color: #e0d6c4; }
+.ambienceControls select, .ambienceControls button { min-height: 40px; border: 1px solid #ad976b; border-radius: 4px; background: #302c25; color: #f2ecdf; padding: 7px 9px; font-size: 12px; }
+.ambienceControls button { cursor: pointer; }
+.ambienceControls span { flex-basis: 100%; color: #c6baa4; font-size: 10px; }

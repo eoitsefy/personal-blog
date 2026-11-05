@@ -54,7 +54,9 @@ Then open `/posts` and select any preview article. Unset `UI_PREVIEW_MODE` or re
 
 ## Music
 
-The `/music` page is available without a blog account. Paste a complete NetEase Cloud Music song, playlist, or album share link to open the official embedded player. For a short link, open it first and copy the full address. If the embedded player cannot play a selection, use **在网易云打开** to open it on NetEase Cloud Music. Use the official controls for playback; **关闭并停止** closes the player and stops playback. The browser stores only the selected resource type and ID. No music App ID or RSA key is required for this page.
+The `/music` page is available without a blog account. Paste a complete NetEase Cloud Music song, playlist, or album share link to open the official embedded player. For a short link, open it first and copy the full address. If the embedded player cannot play a selection, use **在网易云打开** to open it on NetEase Cloud Music. Use the official controls for playback; **关闭并停止** closes the player and stops playback. For the selected music, the browser stores only the resource type and ID; no music App ID or RSA key is required.
+
+Choose one of four appearances: 金色呼吸, 星轨留声, 页边音律, or 助手共鸣. Decorative ambience is controlled by its own manual switch and is off by default; the appearance and switch preference are remembered in the browser. Reduced-motion settings disable the decorative motion, and **关闭并停止** also turns ambience off. The decoration is independent of the official player and does not follow its playback or audio.
 
 ## Verification
 
