@@ -42,6 +42,7 @@ export function NeteaseTrial() {
     <section className={styles.login} aria-labelledby="music-login-title">
       {connection && !signedIn && !checking && <p>请先<Link href="/login?next=%2Fmusic">登录博客</Link>，然后连接自己的网易云音乐账号。</p>}
       <div className={styles.loginIntro}><h2 id="music-login-title">{authenticated ? "网易云音乐已登录" : "登录网易云音乐"}</h2><p>{authenticated ? "播放权限按你的账号权益和应用授权判断。" : "使用自己的账号授权，查看可播放歌曲与会员权益。"}</p></div>
+      {authenticated && !loginInProgress && <button type="button" className={styles.loginButton} disabled={!ready || !signedIn || checking} onClick={startLogin}>更换网易云账号</button>}
       {!authenticated && !loginInProgress && <button type="button" className={styles.loginButton} disabled={!ready || !signedIn || checking} onClick={startLogin}>{loginStatus === "idle" ? "登录网易云" : "重新获取二维码"}</button>}
       {loginInProgress && <button type="button" className={styles.textButton} onClick={() => cancelLogin()}>取消登录</button>}
       {(loginMessage || loginQrCode) && <div className={styles.loginDetails}>

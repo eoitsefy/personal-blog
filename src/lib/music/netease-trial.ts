@@ -95,8 +95,10 @@ export function cleanProviderMessage(value: unknown, secrets: readonly string[] 
     .replace(/[\u0000-\u001f\u007f]/g, " ").slice(0, 220);
 }
 
+export type NeteaseDiagnostic = { reference: string; operation: "anonymous" | "login_start" | "login_check" | "profile" | "manifest" | "search" | "track"; httpStatus: number | null; providerCode: string | null; elapsedMs: number };
+
 export class NeteaseTrialError extends Error {
-  constructor(message: string, public readonly code: string, public readonly status = 502) {
+  constructor(message: string, public readonly code: string, public readonly status = 502, public readonly details?: NeteaseDiagnostic) {
     super(message);
     this.name = "NeteaseTrialError";
   }

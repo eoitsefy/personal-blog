@@ -42,6 +42,7 @@ type ApiResponse = {
   accountId?: string | null;
   code?: string;
   message?: string;
+  reference?: string;
   authenticated?: boolean;
   songs?: Song[];
   track?: Track;
@@ -83,7 +84,7 @@ async function readMusicResponse(response: Response): Promise<ApiResponse> {
     if (result === null || typeof result !== "object" || Array.isArray(result)) throw new Error();
     return result as ApiResponse;
   } catch {
-    if (response.status >= 500) throw new Error(`音乐服务暂时无法响应（${response.status}），请稍后重试。`);
+    if (response.status >= 500) throw new Error(`音乐服务暂时无法响应，请稍后重试。`);
     if (response.status === 401) throw new Error("请先登录博客，再连接网易云音乐。");
     throw new Error("音乐服务返回格式异常，请稍后重试。");
   }
@@ -106,6 +107,14 @@ function safeQrCode(value: unknown) {
   return undefined;
 }
 
+function safeErrorMessage(result: ApiResponse, fallback: string) {
+  const message = typeof result.message === "string" ? result.message.trim() : "";
+  // The API supplies user-facing text; reject URLs, stack traces and unexpected markup.
+  const safe = message.length <= 160 && /^[\u3400-\u9fff\s，。！？、：；（）《》“”‘’…—,.!?：;0-9]+$/u.test(message) ? message : fallback;
+  const reference = typeof result.reference === "string" && /^(?:[a-f0-9]{8,32}|[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12})$/i.test(result.reference) ? result.reference : "";
+  return reference ? `${safe}（参考号 ${reference}）` : safe;
+}
+
 class MusicError extends Error {
   constructor(message: string, readonly code?: string) { super(message); }
 }
@@ -121,7 +130,7 @@ async function requestMusic(body: { action: "search"; query: string } | { action
   });
   const result = await readMusicResponse(response);
   if (!response.ok || result.ok !== true) {
-    throw new MusicError(result.message || "音乐服务暂时无法响应，请稍后重试。", result.code);
+    throw new MusicError(safeErrorMessage(result, "音乐服务暂时无法响应，请稍后重试。"), result.code);
   }
   return result;
 }
@@ -138,7 +147,7 @@ async function readConnection(signal: AbortSignal): Promise<Connection> {
       cache: "no-store", credentials: "same-origin", signal: request.signal,
     });
     const result = await readMusicResponse(response);
-    if (!response.ok || result.ok !== true) throw new Error(result.message || "无法检查音乐服务连接。");
+    if (!response.ok || result.ok !== true) throw new Error(safeErrorMessage(result, "无法检查音乐服务连接。"));
     return { ready: result.ready === true, signedIn: result.signedIn === true, accountId: typeof result.accountId === "string" ? result.accountId : null, message: result.message || "", authenticated: result.authenticated === true };
   } catch (error) {
     if (timedOut) throw new Error("连接检查超时，请点击重新检查。");
@@ -182,6 +191,7 @@ export function useNeteasePlayer(enabled: boolean, audioRef: RefObject<HTMLAudio
   const loginPollTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const loginExpiryTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const loginGeneration = useRef(0);
+  const reconnectPending = useRef(false);
 
   const stopLoginRequests = useCallback(() => {
     loginGeneration.current += 1;
@@ -213,6 +223,7 @@ export function useNeteasePlayer(enabled: boolean, audioRef: RefObject<HTMLAudio
   }, [audioRef, stopLoginRequests]);
 
   const checkConnection = useCallback(async () => {
+    if (loginRequest.current) return;
     connectionRequest.current?.abort();
     const controller = new AbortController();
     connectionRequest.current = controller;
@@ -222,9 +233,9 @@ export function useNeteasePlayer(enabled: boolean, audioRef: RefObject<HTMLAudio
       const result = await readConnection(controller.signal);
       if (!controller.signal.aborted) {
         const previous = lastIdentity.current;
-        if (previous && ((previous.signedIn && !result.signedIn) || (previous.accountId !== null && previous.accountId !== result.accountId))) clearAccountMusic();
+        if (previous && ((previous.signedIn && !result.signedIn) || (previous.accountId !== null && previous.accountId !== result.accountId))) { clearAccountMusic(); reconnectPending.current = false; }
         lastIdentity.current = { signedIn: result.signedIn, accountId: result.accountId };
-        setConnection(result);
+        setConnection(reconnectPending.current ? { ...result, authenticated: false } : result);
         if (!result.authenticated) setLoginStatus(status => status === "authorized" ? "idle" : status);
       }
     } catch (error) {
@@ -332,7 +343,11 @@ export function useNeteasePlayer(enabled: boolean, audioRef: RefObject<HTMLAudio
 
   const startLogin = useCallback(async () => {
     if (!connection?.ready || !connection.signedIn) return;
-    stopLoginRequests();
+    connectionRequest.current?.abort();
+    setChecking(false);
+    clearAccountMusic();
+    reconnectPending.current = true;
+    setConnection(previous => previous ? { ...previous, authenticated: false } : null);
     const controller = new AbortController();
     loginRequest.current = controller;
     const generation = loginGeneration.current;
@@ -375,6 +390,7 @@ export function useNeteasePlayer(enabled: boolean, audioRef: RefObject<HTMLAudio
             setLoginStatus("idle");
             setLoginMessage("");
             setSearchError("");
+            reconnectPending.current = false;
             await checkConnection();
             return;
           }
@@ -392,7 +408,7 @@ export function useNeteasePlayer(enabled: boolean, audioRef: RefObject<HTMLAudio
     } catch (error) {
       if (isCurrent()) { handleAuthError(error); finishLogin("error", error instanceof Error ? error.message : "无法获取登录二维码，请稍后重试。"); }
     }
-  }, [checkConnection, finishLogin, stopLoginRequests, handleAuthError, connection]);
+  }, [checkConnection, finishLogin, stopLoginRequests, handleAuthError, connection, clearAccountMusic]);
 
   useEffect(() => {
     if (!enabled) return;

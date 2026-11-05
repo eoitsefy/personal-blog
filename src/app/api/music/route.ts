@@ -1,8 +1,9 @@
-import { getUserFromRequest } from "@/lib/auth";
+import { getUserFromRequest, parseCookie, SESSION_COOKIE_NAME } from "@/lib/auth";
 import { readJsonMutation } from "@/lib/request-security";
 import { readNeteaseConfiguration } from "@/lib/music/netease-config.server";
 import { createNeteaseClient, getNeteaseStatus } from "@/lib/music/netease.server";
 import { NeteaseTrialError, safeMusicId } from "@/lib/music/netease-trial";
+import { musicSessionKey } from "@/lib/music/netease-session-key";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -17,10 +18,11 @@ const json = (value: unknown, status = 200) => Response.json(value, { status, he
 
 export async function GET(request: Request) {
   const user = await getUserFromRequest(request);
+  const scope = user ? musicSessionKey(user.id, parseCookie(request.headers.get("cookie"))[SESSION_COOKIE_NAME]) : undefined;
   const configuration = readNeteaseConfiguration();
   return json({ ok: true, ready: Boolean(configuration.config), signedIn: Boolean(user),
     accountId: user?.id ?? null,
-    authenticated: user ? getNeteaseStatus(user.id).authenticated : false,
+    authenticated: scope ? getNeteaseStatus(scope).authenticated : false,
     message: configuration.config ? "音乐接入已配置，连接自己的网易云账号后即可搜索播放。" : "音乐服务暂未开放，请稍后再来。" });
 }
 
@@ -36,8 +38,10 @@ export async function POST(request: Request) {
   if (input.action === "play" && !safeMusicId(input.songId)) return json({ ok: false, message: "歌曲编号无效" }, 400);
   const user = await getUserFromRequest(request);
   if (!user) return json({ ok: false, code: "LOGIN_REQUIRED", message: "请先登录博客，再连接网易云音乐。" }, 401);
+  const scope = musicSessionKey(user.id, parseCookie(request.headers.get("cookie"))[SESSION_COOKIE_NAME]);
+  if (!scope) return json({ ok: false, code: "LOGIN_REQUIRED", message: "博客登录已失效，请重新登录。" }, 401);
   try {
-    const client = createNeteaseClient(user.id);
+    const client = createNeteaseClient(scope);
     client.reserveRequest();
     const { config } = readNeteaseConfiguration();
     if (!config) return json({ ok: false, code: "MISSING_CONFIGURATION", message: "音乐服务暂未开放，请稍后再来。" }, 503);
@@ -46,7 +50,8 @@ export async function POST(request: Request) {
     if (input.action === "search") return json({ ok: true, songs: await client.searchNeteaseSongs(input.query as string, config) });
     return json({ ok: true, track: await client.getNeteaseTrack(input.songId as string, config) });
   } catch (error) {
-    if (error instanceof NeteaseTrialError) return json({ ok: false, code: error.code, message: error.message }, error.status);
+    if (error instanceof NeteaseTrialError) return json({ ok: false, code: error.code, message: error.message,
+      ...(error.details ? { reference: error.details.reference } : {}) }, error.status);
     return json({ ok: false, code: "UPSTREAM_ERROR", message: "音乐服务暂时无法响应，请稍后重试。" }, 502);
   }
 }
