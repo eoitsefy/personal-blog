@@ -53,3 +53,20 @@
 .ambienceControls select, .ambienceControls button { min-height: 40px; border: 1px solid #ad976b; border-radius: 4px; background: #302c25; color: #f2ecdf; padding: 7px 9px; font-size: 12px; }
 .ambienceControls button { cursor: pointer; }
 .ambienceControls span { flex-basis: 100%; color: #c6baa4; font-size: 10px; }
+.searchSection { min-width: 0; }
+.searchSection .form { margin-top: 18px; }
+.resultStatus { min-height: 36px; color: var(--ink-soft); font-size: 12px; line-height: 1.7; margin: 12px 0 0; }
+.results { list-style: none; padding: 0; margin: 12px 0 0; }
+.results li { display: flex; align-items: center; gap: 12px; padding: 14px 0; border-top: 1px solid var(--line); }
+.resultInfo { flex: 1; min-width: 0; }
+.resultInfo strong, .resultInfo span { display: block; overflow-wrap: anywhere; }
+.resultInfo strong { font-size: 13px; line-height: 1.5; }
+.resultInfo span { margin-top: 5px; color: var(--ink-soft); font-size: 11px; line-height: 1.6; }
+.resultActions { display: flex; flex-wrap: wrap; justify-content: flex-end; align-items: center; gap: 10px; }
+.resultActions a { color: #765b26; font-size: 12px; text-decoration: underline; text-underline-offset: 3px; }
+.resultActions button { min-height: 40px; padding: 8px 10px; border: 1px solid #aa9873; border-radius: 3px; background: transparent; color: var(--ink); font-size: 12px; cursor: pointer; }
+.pasteDetails { margin-top: 22px; padding-top: 18px; border-top: 1px solid var(--line); }
+.pasteDetails summary { cursor: pointer; font-size: 13px; font-weight: 600; color: #765b26; }
+.pasteDetails > p { color: var(--ink-soft); font-size: 12px; line-height: 1.7; }
+.pasteDetails .form { margin-top: 16px; }
+@media (max-width: 600px) { .results li { align-items: flex-start; flex-direction: column; } .resultActions { justify-content: flex-start; } }

@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-require-imports -- Executed inside the isolated CI container. */
 const { createHash, randomBytes, randomUUID } = require('node:crypto');
+const http = require('node:http');
 const { PrismaClient } = require('@prisma/client');
 
 // This probe is forbidden against anything except CI's disposable database.
@@ -99,6 +100,24 @@ async function main() {
     }
   }
   check((await request('/api/music', { method: 'POST', cookie: userCookie, site: 'cross-site', body: { action: 'search' } })).status === 410, stage);
+  stage = 'anonymous music search rejection boundaries';
+  // These cases are rejected before the search service can call the provider.
+  for (const body of [{}, { query: '' }, { query: 42 }, { query: 'x'.repeat(81) }]) {
+    check((await request('/api/music/search', { method: 'POST', body })).status === 400, stage);
+  }
+  check((await request('/api/music/search', { method: 'POST', body: { query: 'x' }, origin: 'https://evil.example' })).status === 403, stage);
+  // Node fetch can overwrite Sec-Fetch-Site; use raw HTTP for the exact header.
+  for (const site of ['cross-site', 'same-site']) {
+    const siteStatus = await new Promise((resolve, reject) => {
+      const req = http.request(base + '/api/music/search', { method: 'POST', headers: { 'content-type': 'application/json', origin: base, 'sec-fetch-site': site }, timeout: 30000 }, (res) => { res.resume(); res.on('end', () => resolve(res.statusCode)); });
+      req.on('error', reject); req.on('timeout', () => req.destroy(new Error('timeout'))); req.end(JSON.stringify({ query: 'x' }));
+    });
+    check(siteStatus === 403, stage);
+  }
+  check((await request('/api/music/search', { method: 'POST', body: { query: 'x'.repeat(1025) } })).status === 413, stage);
+  const malformed = await fetch(base + '/api/music/search', { method: 'POST', headers: { 'content-type': 'application/json', origin: base }, body: '{', redirect: 'manual', signal: AbortSignal.timeout(30000) });
+  check(malformed.status === 400, stage);
+  check((await request('/api/music/search')).status === 405, stage);
   console.log('community_music_http_regression=passed');
 }
 (async () => {
