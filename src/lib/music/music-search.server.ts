@@ -30,7 +30,11 @@ export function createMusicSearchService(options: Options = {}) {
       const url = new URL("https://music.163.com/api/search/get");
       url.search = new URLSearchParams({ s: query, type: "1", limit: "10", offset: "0" }).toString();
       const response = await fetcher(url, { method: "GET", redirect: "error", signal: controller.signal, cache: "no-store", credentials: "omit" });
-      if (!response.ok || !response.body) throw new MusicSearchError("UPSTREAM");
+      if (!response.ok) {
+        await response.body?.cancel().catch(() => undefined);
+        throw new MusicSearchError("UPSTREAM");
+      }
+      if (!response.body) throw new MusicSearchError("UPSTREAM");
       const reader = response.body.getReader(); const chunks: Uint8Array[] = []; let size = 0;
       try { while (true) { const next = await reader.read(); if (next.done) break; size += next.value.byteLength; if (size > 512 * 1024) { await reader.cancel(); throw new MusicSearchError("UPSTREAM"); } chunks.push(next.value); } } finally { reader.releaseLock(); }
       let parsed: unknown;

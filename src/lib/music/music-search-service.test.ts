@@ -27,6 +27,17 @@ test("service handles bounded caching, deduplication, failures, privacy and limi
   const html = createMusicSearchService({ fetcher: async () => new Response("<html>not search JSON</html>") }); await assert.rejects(html.search("x", "ip"), { reason: "UPSTREAM" });
   let emptyCount = 0; let emptyClock = 1_000_000; const empty = createMusicSearchService({ now: () => emptyClock, fetcher: async () => { emptyCount++; return Response.json({ code: 200, result: { songCount: 0 } }); } });
   await empty.search("empty", "ip"); await empty.search("empty", "ip"); assert.equal(emptyCount, 1); emptyClock += 30_001; await empty.search("empty", "ip"); assert.equal(emptyCount, 2);
+  for (const status of [401, 429]) {
+    let calls = 0, cancellations = 0;
+    const denied = createMusicSearchService({ fetcher: async () => {
+      calls++;
+      return new Response(new ReadableStream({ cancel() { cancellations++; } }), { status });
+    } });
+    await assert.rejects(denied.search("denied", "ip"), { reason: "UPSTREAM" });
+    assert.equal(calls, 1); assert.equal(cancellations, 1);
+    await assert.rejects(denied.search("denied", "ip"), { reason: "UPSTREAM" });
+    assert.equal(calls, 2); assert.equal(cancellations, 2);
+  }
   const big = createMusicSearchService({ fetcher: async () => new Response("x".repeat(512 * 1024 + 1)) }); await assert.rejects(big.search("x", "ip"), { reason: "UPSTREAM" });
   const timeout = createMusicSearchService({ timeoutMs: 15, fetcher: async (_input, init) => new Promise((_resolve, reject) => init!.signal!.addEventListener("abort", () => reject(new Error("abort")))) }); await assert.rejects(timeout.search("x", "ip"), { reason: "TIMEOUT" });
   const releases: Array<() => void> = []; const busy = createMusicSearchService({ inflightMax: 2, fetcher: async () => { await new Promise<void>(resolve => releases.push(resolve)); return Response.json(fixture); } });
